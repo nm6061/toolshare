@@ -1,4 +1,4 @@
-ToolShare
-==========
+What is ToolShare?
+==================
 
-ToolShare is a community-oriented collaborative application that facilitates a workflow driven approach to sharing tools with members of a community.
+Well ToolShare is a community-oriented application that facilitates sharing tools between members of a community in a simple, easy-to-use way.
