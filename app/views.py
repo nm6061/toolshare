@@ -13,5 +13,5 @@ def index(request):
     )
 
 def signin(request):
-    """Renders the user login page"""
+    """Renders the user sign in page"""
     return render_to_response('signin.html')
