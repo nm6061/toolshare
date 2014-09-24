@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="login-box" class="login-box">
+        <h3>Sign in to your ToolShare account</h3>
+        <form role="form" action="/signin/" class="horizontal-form">
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Email">
+                <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+        </form>
+    </div>
+{% endblock %}
