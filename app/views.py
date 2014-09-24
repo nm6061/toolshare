@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
 from django.template.context import RequestContext
 
 def index(request):
@@ -7,7 +7,11 @@ def index(request):
         request,
         'index.html',
         RequestContext(request, {
-            'title' : 'Welcome to Tool Share',
-            'message' : 'Watch this space for more...'
+            'title': 'Welcome to Tool Share',
+            'message': 'Watch this space for more...'
         })
     )
+
+def signin(request):
+    """Renders the user login page"""
+    return render_to_response('signin.html')
