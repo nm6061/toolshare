@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to ToolShare</title>
+    <title>{% block title %}Welcome to ToolShare{% endblock %}</title>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet"/>
@@ -18,32 +18,35 @@
 
     {% load staticfiles %}
     <link href="{% static "styles/global.css" %}" rel="stylesheet"/>
+    <link href="{% static "styles/bootstrap-overrides.css" %}" rel="stylesheet"/>
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="navbar-collapse">
+                    data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">ToolShare</a>
+            <a class="navbar-brand" href="{% block brand-link %}/{% endblock %}">ToolShare</a>
         </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Create an account</a></li>
-            </ul>
-        </div>
+        {% block navbar-right %}
+        {% endblock %}
     </div>
 </nav>
-<div id="content-container">
-    {% block content %}
-    {% endblock %}
-</div>
+{% block content %}
+{% endblock %}
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    {% block tail-scripts %}
+    {% endblock %}
+</script>
 </body>
 </html>
