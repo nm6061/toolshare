@@ -1,17 +1,16 @@
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.template.context import RequestContext
 
-def index(request):
-    """Renders home page"""
-    return render(
-        request,
-        'index.html',
-        RequestContext(request, {
-            'title': 'Welcome to Tool Share',
-            'message': 'Watch this space for more...'
-        })
-    )
+
+def home(request):
+    return render_to_response('home.html')
+
 
 def signin(request):
-    """Renders the user sign in page"""
+    if request.method == 'POST':
+        return redirect('/dashboard')
     return render_to_response('signin.html')
+
+
+def dashboard(request):
+    return render_to_response('dashboard.html')
