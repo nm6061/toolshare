@@ -13,9 +13,8 @@ class User(AbstractUser):
     def UpdatePreferences(self):
         pass
 
-        # TODO : DEFINE METHOD AS SOON AS TOOL IS DEFINED
-        # def Register(self, Tool):
-        #    pass
+    def Register(self, Tool):
+        pass
 
 
 class Address(models.Model):
