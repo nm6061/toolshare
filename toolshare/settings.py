@@ -15,6 +15,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Application's sign in page
 LOGIN_URL = '/sigin'
 
+# Custom user
+AUTH_USER_MODEL = 'app.User'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
