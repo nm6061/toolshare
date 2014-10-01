@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Create an account{% endblock %}
+{% block navbar-right %}
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/signin"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+        </ul>
+    </div>
+{% endblock %}
+{% block content %}
+    <div id="signup-box" class="auth-box">
+        <form role="form" action="." method="post">
+            {% csrf_token %}
+            {% if user_form.errors or address_from.errors %}
+                <div class="alert alert-danger" role="alert"><strong>Oops!</strong> there were errors in the highlighted
+                    fields.
+                </div>{% endif %}
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Sign up for a ToolShare account</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Name</label>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-6{% if user_form.first_name.errors %} has-error{% endif %}">
+                            <input type="text" class="form-control" name="first_name" id="first_name"
+                                   placeholder="First"/>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last"/>
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-12{% if user_form.email.errors %} has-error{% endif %}">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="email" id="email"
+                                   placeholder="example@contoso.com"/>
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Address</label>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="apartment_number" id="apartment_number"
+                                   placeholder="Apt."/>
+                        </div>
+                        <div class="col-md-9{% if address_form.street.errors %} has-error{% endif %}">
+                            <input type="text" class="form-control" name="street" id="street"
+                                   placeholder="Street"/>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="county" id="county"
+                                   placeholder="County"/>
+                        </div>
+                        <div class="col-md-8{% if address_form.city.errors %} has-error{% endif %}">
+                            <input type="text" class="form-control" name="city" id="city"
+                                   placeholder="City"/>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-8{% if address_form.state.errors %} has-error{% endif %}">
+                            <select class="form-control">
+                                <option value="-1">Select State</option>
+                                {% for value,text in address_form.states.field.choices %}
+                                    <option value="{{ value }}">{{ text }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4{% if address_form.zip.errors %} has-error{% endif %}">
+                            <input type="text" class="form-control" name="zip" id="zip"
+                                   placeholder="Zip"/>
+                        </div>
+                    </div>
+                    <div class="spacer-5"></div>
+                    <div class="row">
+                        <div class="col-md-12{% if user_form.phone_number.errors %} has-error{% endif %}">
+                            <label>Phone number</label>
+                            <input type="text" class="form-control" name="phone_number" id="phone_number"
+                                   placeholder="(555) 555-5555"/>
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-12{% if user_form.username.errors %} has-error{% endif %}">
+                            <label>Choose your user name</label>
+                            <input type="text" class="form-control" name="username" id="username"
+                                   placeholder="User name"/>
+                        </div>
+                    </div>
+                    <div class="spacer-5"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Password</label>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-6{% if user_form.password1.errors %} has-error{% endif %}">
+                            <input type="password" class="form-control" name="password1" id="password1"
+                                   placeholder="Password"/>
+                        </div>
+                        <div class="col-md-6{% if user_form.password2.errors %} has-error{% endif %}">
+                            <input type="password" class="form-control" name="password2" id="password2"
+                                   placeholder="Confirm"/>
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Pickup arrangement</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" name="pickup_arrangements" id="pickup_arrangements"
+                                      placeholder="Example - Knock on my door"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+        </form>
+    </div>
+{% endblock %}
