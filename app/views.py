@@ -34,3 +34,8 @@ def signup(request):
         return render(request, 'signup.html',
                       RequestContext(request, {'user_form': signup_user_form, 'address_form': signup_address_form}))
 
+def browsetool(request):
+    return render_to_response('browsetool.html')
+
+def Borrow(request):
+    return render_to_response('Borrow.html')

@@ -8,4 +8,6 @@ urlpatterns = patterns('',
     url(r'^signin/$', 'app.views.signin', name = 'signin'),
     url(r'^signup/$', 'app.views.signup', name = 'signup'),
     url(r'^dashboard/$', 'app.views.dashboard', name = 'dashboard'),
+    url(r'^browsetool/$', 'app.views.browsetool', name = 'browsetool'),
+    url(r'^Borrow/$', 'app.views.Borrow', name = 'Borrow'),
 )
