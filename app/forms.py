@@ -1,7 +1,7 @@
-from django.contrib.admin import widgets
 from app.constants import Constants
 from app import models
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class SignUpForm(forms.ModelForm):
@@ -33,3 +33,11 @@ class SignUpForm(forms.ModelForm):
             user.save()
 
         return user
+
+
+class SignInForm(AuthenticationForm):
+    # TODO : Figure out how to get username to be rendered as an input of type=email
+    AuthenticationForm.error_messages['invalid_login'] = "Invalid login"
+
+    class Meta:
+        model = models.User
