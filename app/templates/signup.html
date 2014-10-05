@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load filters %}
 {% block title %}Create an account{% endblock %}
 {% block navbar-right %}
     <div id="navbar-collapse" class="collapse navbar-collapse">
@@ -11,10 +12,10 @@
     <div id="signup-box" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if user_form.errors or address_from.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Oops!</strong> there were errors in the highlighted
-                    fields.
-                </div>{% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
+                </div>
+            {% endif %}
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
@@ -28,20 +29,11 @@
                         </div>
                     </div>
                     <div class="row no-gutter">
-                        <div class="col-md-6{% if user_form.first_name.errors %} has-error{% endif %}">
-                            <input type="text" class="form-control" name="first_name" id="first_name"
-                                   placeholder="First"/>
+                        <div class="col-md-6{% if form.first_name.errors %} has-error{% endif %}">
+                            {{ form.first_name|add_attrs:"{'class':'form-control','placeholder':'First'}" }}
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last"/>
-                        </div>
-                    </div>
-                    <div class="spacer-15"></div>
-                    <div class="row">
-                        <div class="col-md-12{% if user_form.email.errors %} has-error{% endif %}">
-                            <label>Email</label>
-                            <input type="email" class="form-control" name="email" id="email"
-                                   placeholder="example@contoso.com"/>
+                            {{ form.last_name|add_attrs:"{'class':'form-control','placeholder':'Last'}" }}
                         </div>
                     </div>
                     <div class="spacer-15"></div>
@@ -52,52 +44,40 @@
                     </div>
                     <div class="row no-gutter">
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" name="apartment_number" id="apartment_number"
-                                   placeholder="Apt."/>
+                            {{ form.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
                         </div>
-                        <div class="col-md-9{% if address_form.street.errors %} has-error{% endif %}">
-                            <input type="text" class="form-control" name="street" id="street"
-                                   placeholder="Street"/>
+                        <div class="col-md-9{% if form.street.errors %} has-error{% endif %}">
+                            {{ form.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
                         </div>
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="county" id="county"
-                                   placeholder="County"/>
+                            {{ form.county|add_attrs:"{'class':'form-control','placeholder':'County'}" }}
                         </div>
-                        <div class="col-md-8{% if address_form.city.errors %} has-error{% endif %}">
-                            <input type="text" class="form-control" name="city" id="city"
-                                   placeholder="City"/>
+                        <div class="col-md-8{% if form.city.errors %} has-error{% endif %}">
+                            {{ form.city|add_attrs:"{'class':'form-control','placeholder':'City'}" }}
                         </div>
                     </div>
                     <div class="row no-gutter">
-                        <div class="col-md-8{% if address_form.state.errors %} has-error{% endif %}">
-                            <select class="form-control">
-                                <option value="-1">Select State</option>
-                                {% for value,text in address_form.states.field.choices %}
-                                    <option value="{{ value }}">{{ text }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="col-md-8{% if form.states.errors %} has-error{% endif %}">
+                            {{ form.states|add_attrs:"{'class':'form-control'}" }}
                         </div>
-                        <div class="col-md-4{% if address_form.zip.errors %} has-error{% endif %}">
-                            <input type="text" class="form-control" name="zip" id="zip"
-                                   placeholder="Zip"/>
+                        <div class="col-md-4{% if form.zip.errors %} has-error{% endif %}">
+                            {{ form.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
                         </div>
                     </div>
                     <div class="spacer-5"></div>
                     <div class="row">
-                        <div class="col-md-12{% if user_form.phone_number.errors %} has-error{% endif %}">
+                        <div class="col-md-12{% if form.phone_num.errors %} has-error{% endif %}">
                             <label>Phone number</label>
-                            <input type="text" class="form-control" name="phone_number" id="phone_number"
-                                   placeholder="(555) 555-5555"/>
+                            {{ form.phone_num|add_attrs:"{'class':'form-control','placeholder':'(555) 555-5555'}" }}
                         </div>
                     </div>
                     <div class="spacer-15"></div>
                     <div class="row">
-                        <div class="col-md-12{% if user_form.username.errors %} has-error{% endif %}">
-                            <label>Choose your user name</label>
-                            <input type="text" class="form-control" name="username" id="username"
-                                   placeholder="User name"/>
+                        <div class="col-md-12{% if form.email.errors %} has-error{% endif %}">
+                            <label>Email</label>
+                            {{ form.email|add_attrs:"{'class':'form-control','placeholder':'Email'}" }}
                         </div>
                     </div>
                     <div class="spacer-5"></div>
@@ -107,13 +87,11 @@
                         </div>
                     </div>
                     <div class="row no-gutter">
-                        <div class="col-md-6{% if user_form.password1.errors %} has-error{% endif %}">
-                            <input type="password" class="form-control" name="password1" id="password1"
-                                   placeholder="Password"/>
+                        <div class="col-md-6{% if form.password1.errors %} has-error{% endif %}">
+                            {{ form.password1|add_attrs:"{'class':'form-control','placeholder':'Password'}" }}
                         </div>
-                        <div class="col-md-6{% if user_form.password2.errors %} has-error{% endif %}">
-                            <input type="password" class="form-control" name="password2" id="password2"
-                                   placeholder="Confirm"/>
+                        <div class="col-md-6{% if form.password2.errors %} has-error{% endif %}">
+                            {{ form.password2|add_attrs:"{'class':'form-control','placeholder':'Confirm'}" }}
                         </div>
                     </div>
                     <div class="spacer-15"></div>
@@ -124,8 +102,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <textarea class="form-control" name="pickup_arrangements" id="pickup_arrangements"
-                                      placeholder="Example - Knock on my door"></textarea>
+                            {{ form.pickup_arrangements|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
                         </div>
                     </div>
                 </div>
