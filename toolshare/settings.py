@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application's sign in page
-LOGIN_URL = '/sigin'
+LOGIN_URL = '/signin/'
 
 # Custom user
 AUTH_USER_MODEL = 'app.User'
