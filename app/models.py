@@ -1,28 +1,33 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 
 
-class Address(models.Model):
-    apartment_number = models.CharField(max_length=10)
-    street = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    county = models.CharField(max_length=50)
-    state = models.CharField(max_length=2)
-    country = models.CharField(max_length=50)
-    zip = models.CharField(max_length=9)
+class User(AbstractBaseUser):
+    first_name = models.CharField(max_length=30, blank=False)
+    middle_name = models.CharField(max_length=25, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
 
-
-class User(AbstractUser):
-    middle_name = models.CharField(max_length=25)
-    pickup_arrangements = models.CharField(max_length=100, default='', blank=True)
     phone_num = models.CharField(max_length=11, default='', blank=True)
-    reputation = models.PositiveIntegerField(default=0)
-    address = models.OneToOneField(Address)
 
-    def UpdateUserInfo(self):
-        pass
+    email = models.EmailField(unique=True, blank=False)
 
-    def UpdatePreferences(self):
+    pickup_arrangements = models.TextField(max_length=100, default='', blank=True)
+
+    reputation = models.PositiveIntegerField(default=0, blank=True)
+
+    # TODO : Figure out a way to move address-related fields to a separate model
+    apt_num = models.CharField(max_length=10, default='', blank=True)
+    street = models.CharField(max_length=50, default='', blank=False)
+    city = models.CharField(max_length=50, default='', blank=False)
+    county = models.CharField(max_length=50, default='', blank=True)
+    state = models.CharField(max_length=2, default='', blank=False)
+    country = models.CharField(max_length=50, default='USA', blank=False)
+    zip = models.CharField(max_length=9, default='', blank=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name']
+
+    def Update(self):
         pass
 
     def Register(self, Tool):
