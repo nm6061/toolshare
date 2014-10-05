@@ -1,5 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
+
+class UserManager(BaseUserManager):
+    def create_user(self):
+        pass
+
+    def create_superuser(self):
+        pass
 
 
 class User(AbstractBaseUser):
@@ -26,12 +34,27 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name']
+    objects = UserManager()
 
     def Update(self):
         pass
 
     def Register(self, Tool):
         pass
+
+    def get_short_name(self):
+        return self.first_name
+
+    def get_full_name(self):
+        full_name = self.first_name
+
+        if self.middle_name:
+            full_name = full_name + ' ' + self.middle_name
+
+        if self.last_name:
+            full_name = full_name + ' ' + self.last_name
+
+        return full_name
 
 
 class BlackoutDate(models.Model):
@@ -46,5 +69,3 @@ class Tool(models.Model):
     # location = Address()
     status = models.CharField(max_length=10)
     blackoutDates = models.ForeignKey(BlackoutDate)
-
-
