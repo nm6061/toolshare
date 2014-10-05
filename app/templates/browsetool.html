@@ -1,20 +1,22 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}TOOL LISTING{% endblock %}
 {% block head %}
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
     <script src="{% static "scripts/holder.js" %}"></script>
 {% endblock %}
-{% block brand-link %}/dashboard{% endblock %}
+{% block brand-link %}/TOOL LISTING{% endblock %}
 {% block navbar-right %}
-    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a></li>
+
             <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
             <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
         </ul>
     </div>
 {% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -26,86 +28,106 @@
                 <li><a href="#">My requests <span class="badge">5</span></a></li>
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Dashboard</h1>
 
-            <h2 class="sub-header">My tools</h2>
+     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Tools Listing</h1>
 
-            <h3>Shared from home</h3>
+            <h2 class="sub-header">Tools Available</h2>
+
+            <h3>Tools Available from home</h3>
 
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/vine" alt="...">
+                            <img data-src="holder.js/150x100/vine/text:Hammer" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
+                        </a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="#" class="thumbnail">
+                            <img data-src="holder.js/150x100/sky/text:Opener" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/sky" alt="...">
+                            <img data-src="holder.js/150x100/industrial/text:Computer" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/industrial" alt="...">
+                            <img data-src="holder.js/150x100/gray/text:Laptop" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/lava" alt="...">
+                            <img data-src="holder.js/150x100/gray/text:Mobile" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Lent Out" alt="...">
+
+                            <img data-src="holder.js/150x100/gray/text:Car" alt="...">
+                        <a href="/Borrow" class="thumbnail"><li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
+
                         </a>
                     </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Lent Out" alt="...">
-                        </a>
-                    </div>
+
                 </div>
             </div>
 
-            <h4>Tools available from shed</h4>
+
+      <h4>Tools available from shed</h4>
 
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/vine" alt="...">
+                            <img data-src="holder.js/150x100/vine/text:Bulbs" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/sky" alt="...">
+                            <img data-src="holder.js/150x100/sky/text:Screw driver" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/industrial" alt="...">
+                            <img data-src="holder.js/150x100/industrial/text:Bags" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Lent Out" alt="...">
+                            <img data-src="holder.js/150x100/gray/text:Hangers" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Lent Out" alt="...">
+                            <img data-src="holder.js/150x100/gray/text:Belt" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                     <div class="col-md-2">
                         <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Lent Out" alt="...">
+                            <img data-src="holder.js/150x100/gray/text:Shoes" alt="...">
+                            <li><a href="/Borrow"><span class="glyphicon glyphicon-log-in"></span> Borrow ...</a></li>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 {% endblock %}
 {% block tail-scripts %}
     $('.thumbnail').click(function(){
