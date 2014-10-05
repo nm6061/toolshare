@@ -19,17 +19,23 @@ def dashboard(request):
 
 def signup(request):
     if request.method == 'POST':
-        signup_form = forms.SignUpForm(request.POST)
+        signup_user_form = forms.SignUpUserForm(request.POST)
+        signup_address_form = forms.SignUpAddressForm(request.POST)
 
-        if signup_form.is_valid():
-            signup_form.save()
-
+        if signup_user_form.is_valid() and signup_address_form.is_valid():
             # TODO : REVIEW AND REWORK
-            return render(request, 'dashboard.html', RequestContext(request, {}))
+            return render(request, 'signin.html', RequestContext(request,{}))
         else:
             return render(request, 'signup.html',
-                          RequestContext(request, {'form': signup_form}))
+                          RequestContext(request, {'user_form': signup_user_form, 'address_form': signup_address_form}))
     else:
-        signup_form = forms.SignUpForm()
+        signup_user_form = forms.SignUpUserForm()
+        signup_address_form = forms.SignUpAddressForm()
         return render(request, 'signup.html',
-                      RequestContext(request, {'form': signup_form}))
+                      RequestContext(request, {'user_form': signup_user_form, 'address_form': signup_address_form}))
+
+def browsetool(request):
+    return render_to_response('browsetool.html')
+
+def Borrow(request):
+    return render_to_response('Borrow.html')
