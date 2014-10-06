@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from app import forms
 
 
@@ -52,6 +53,7 @@ def signin(request):
     return render(request, 'signin.html', RequestContext(request, {'form': signin_form}))
 
 
+@login_required(redirect_field_name='o')
 def dashboard(request):
     return render_to_response('dashboard.html')
 
