@@ -2,6 +2,25 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
+class System(object):
+    @staticmethod
+    def get_share_zones():
+        return ShareZone.objects.all()
+
+    @staticmethod
+    def get_or_create_share_zone(zip):
+        share_zone, created = ShareZone.objects.get_or_create(zip=zip)
+        return share_zone
+
+
+class ShareZone(models.Model):
+    zip = models.CharField(max_length=9, default='', blank=False)
+
+    # TODO : Define get_tools method
+    def get_tools(self):
+        pass
+
+
 class UserManager(BaseUserManager):
     def create_user(self):
         pass
@@ -35,6 +54,9 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name']
     objects = UserManager()
+
+    # Foreign keys
+    share_zone = models.ForeignKey(ShareZone)
 
     def Update(self):
         pass
