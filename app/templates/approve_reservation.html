@@ -1,0 +1,51 @@
+ <!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome to ToolShare{% endblock %}</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% load staticfiles %}
+    <link href="{% static "styles/global.css" %}" rel="stylesheet"/>
+    <link href="{% static "styles/bootstrap-overrides.css" %}" rel="stylesheet"/>
+    {% block head %}
+    {% endblock %}
+</head>
+
+
+<html lang="en">
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ToolShare Reservation</title>
+ <head> 
+ <br><br> 
+<p><B><center>Toolshare</center></p><br><br><br>
+<body><center>
+<form name="input" action="demo_form_action.asp" method="get">
+Search Tool <input type="text" name="user">
+<input type="submit" value="Submit"><br><br><br>
+<p>You have a request waiting for approval  </p><br><br><br>
+</form> 
+<form name="input" action="demo_form_action.asp" method="get">
+<p> Following person has send you a request for approve:</p>
+<input type="submit" value="Approve request">
+<input type="submit" value="Reject request">
+</center>
+</form>
+</body>
+</html> 
