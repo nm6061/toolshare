@@ -29,6 +29,19 @@ class SignUpForm(forms.ModelForm):
         user.set_password(self.cleaned_data['password1'])
         user.state = self.cleaned_data['states']
 
+        # ShareZone creation
+
+        # ShareZone.zip is 9 characters wide for flexibility
+        zip = (user.zip[:5]).ljust(9,'0')
+        share_zone = models.System.get_or_create_share_zone(zip)
+
+        if share_zone == None:
+            share_zone = models.ShareZone()
+            share_zone.zip = zip
+            share_zone.save()
+
+        user.share_zone = share_zone
+
         if commit:
             user.save()
 
@@ -37,6 +50,7 @@ class SignUpForm(forms.ModelForm):
 
 class SignInForm(AuthenticationForm):
     # TODO : Figure out how to get username to be rendered as an input of type=email
+
     AuthenticationForm.error_messages['invalid_login'] = "Invalid login"
 
     class Meta:
