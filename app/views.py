@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from app import forms
 
 
@@ -19,7 +20,8 @@ def signup(request):
         signup_form = forms.SignUpForm(request.POST)
 
         if signup_form.is_valid():
-            signup_form.save()
+            with transaction.atomic():
+                signup_form.save()
 
             # TODO : REVIEW AND REWORK
             return render(request, 'dashboard.html', RequestContext(request, {}))
