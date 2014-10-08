@@ -58,4 +58,18 @@ class SignInForm(AuthenticationForm):
 
 
 class addToolForm(forms.ModelForm):
-    pass
+    class Meta:
+        model = models.Tool
+        fields = ['name', 'pictureURL', 'description']
+
+    def clean(self):
+        cleaned_data = super(addToolForm, self).clean()
+        return self.cleaned_data
+
+    def save(self, commit=True):
+        tool = super(addToolForm, self).save(commit=False)
+
+        if commit:
+            tool.save()
+
+        return tool

@@ -85,8 +85,13 @@ class BlackoutDate(models.Model):
 
 
 class Tool(models.Model):
+    STATUS = (
+        ('A', 'Available'),
+        ('D', 'Deactivated'),
+        ('L', 'Lent out'),
+    )
     name = models.CharField(max_length=20)
     pictureURL = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
-    status = models.CharField(max_length=10)
+    status = models.CharField(max_length=1, choices=STATUS)
     blackoutDates = models.ForeignKey(BlackoutDate)

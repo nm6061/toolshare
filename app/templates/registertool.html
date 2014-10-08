@@ -17,16 +17,18 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label>Upload a picture of the tool</label>
+                            {{ form.pictureURL|add_attrs:"{'class':'form-control','rows':'2','placeholder':'URL link to picture.'}" }}
                             <label>Name of the tool</label>
+                            {{ form.name|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Example: Scizzor'}" }}
                             <label>Please add a detailed description of the tool</label>
-
+                            {{ form.description|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Please provide a description of your tool.'}" }}
 
                         </div>
-
-
-
+                    </div>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary btn-block">Register Tool</button>
             <a href="/dashboard" class="btn btn-danger btn-block" role="button">Cancel</a>
         </form>
