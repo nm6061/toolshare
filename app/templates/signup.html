@@ -12,6 +12,12 @@
     <div id="signup-box" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
+            {% if signup_successful %}
+                <div class="alert alert-success" role="alert">
+                    <p><strong>Congratulations!</strong> You now have your own ToolShare account. </p>
+                    <p><a href="{% url "signin" %}">Sign in</a> to begin building a better community.</p>
+                </div>
+            {% endif %}
             {% if form.errors %}
                 <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
                 </div>
