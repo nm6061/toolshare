@@ -78,10 +78,6 @@ def registertool(request):
     if request.method == 'POST':
         toolForm = forms.addToolForm(request, request.POST)
 
-
-def approve_reservation(request):
-    if request.method == 'GET':
-        return render(request, 'approve_success.html')
         if toolForm.is_valid():
             with transaction.atomic():
                 toolForm.save()
@@ -91,6 +87,11 @@ def approve_reservation(request):
     else:
         toolForm = forms.addToolForm()
         return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
+
+def approve_reservation(request):
+    if request.method == 'GET':
+        return render(request, 'approve_success.html')
+
 
 
 # def profile(request):

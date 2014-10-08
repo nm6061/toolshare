@@ -72,3 +72,10 @@ class addToolForm(forms.ModelForm):
         if commit:
             tool.save()
         return tool
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
+                  'pickup_arrangements']
