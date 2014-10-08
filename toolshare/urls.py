@@ -15,5 +15,5 @@ urlpatterns = patterns('',
     url(r'^registertool/$', 'app.views.registertool', name = 'registertool'),
 
     url(r'^approve_reservation/$', 'app.views.approve_reservation', name = 'approve_reservation'),
-
+    url(r'^approve_success/$', 'app.views.approve_success', name = 'approve_success'),
 )

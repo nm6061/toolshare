@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from app import forms
-
+from django.http import HttpResponse
 
 def home(request):
     return render_to_response('home.html')
@@ -72,5 +72,7 @@ def registertool(request):
     # TODO : Add register functionality
 
 def approve_reservation(request):
-    return render_to_response('approve_reservation.html')
-
+    if request.method == 'GET':
+        return render(request, 'approve_success.html')
+    else:
+        return HttpResponse('success')
