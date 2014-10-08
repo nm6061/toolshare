@@ -11,5 +11,9 @@ urlpatterns = patterns('',
     url(r'^dashboard/$', 'app.views.dashboard', name = 'dashboard'),
     url(r'^browsetool/$', 'app.views.browsetool', name = 'browsetool'),
     url(r'^Borrow/$', 'app.views.Borrow', name = 'Borrow'),
+
     url(r'^registertool/$', 'app.views.registertool', name = 'registertool'),
+
+    url(r'^approve_reservation/$', 'app.views.approve_reservation', name = 'approve_reservation'),
+
 )

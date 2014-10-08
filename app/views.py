@@ -70,3 +70,7 @@ def Borrow(request):
 def registertool(request):
     return render_to_response('registerTool.html')
     # TODO : Add register functionality
+
+def approve_reservation(request):
+    return render_to_response('approve_reservation.html')
+
