@@ -98,13 +98,6 @@ class Tool(models.Model):
     blackoutDates = models.ForeignKey(BlackoutDate)
 
 
-class Reservation(models.Model):
-    # Foreign keys
-    User = models.ForeignKey(User)
-    get_message = models.CharField(max_length=50, default='', blank=False)
-    get_date = models.DateField()
-    get_status = models.CharField(max_length=20, default='', blank=False)
-
 
 class UserProfile(models.Model):
     first_name = models.CharField(max_length=30, blank=False)
@@ -130,6 +123,7 @@ class UserProfile(models.Model):
 class Reservation(models.Model):
     # Foreign KEY
     User = models.ForeignKey(User)
+
 
     From_Date = models.DateField()
     To_Date = models.DateField()
