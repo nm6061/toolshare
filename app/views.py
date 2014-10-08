@@ -68,5 +68,16 @@ def Borrow(request):
     return render_to_response('Borrow.html')
 
 def registertool(request):
-    return render_to_response('registerTool.html')
-    # TODO : Add register functionality
+    if request.method == 'POST':
+        toolForm = forms.addToolForm(request, request.POST)
+
+        if toolForm.is_valid():
+            with transaction.atomic():
+                toolForm.save()
+            return render(request, 'dashboard.html', RequestContext(request, {}))
+        else:
+            return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
+    else:
+        toolForm = forms.addToolForm()
+        return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
+
