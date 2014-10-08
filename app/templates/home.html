@@ -20,30 +20,34 @@
             <li data-target="#myCarousel" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="item active" style="background-color: #A4E7F3;">
+            <div class="item active" style="background-color: #A7A4F3;">
+                <img src="{% static "images/community.png" %}" alt="Community"/>
+
                 <div class="container">
                     <div class="carousel-caption">
-                        <h1>First Image</h1>
+                        <h1 style="color: black;">Community</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="background-color: #A4E7F3;">
+                <img src="{% static "images/tools.png" %}" alt="Tools"/>
 
-                        <p>HI A ipsum dolor sit amet, consectetur adipiscing elit. Nunc id. </p>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1 style="color: white;">Tools</h1>
+
+                        <p></p>
                     </div>
                 </div>
             </div>
             <div class="item" style="background-color: #F3A4A4;">
+                <img src="{% static "images/sharing.png" %}" alt="Sharing"/>
+
                 <div class="container">
                     <div class="carousel-caption">
-                        <h1>Second Image</h1>
+                        <h1 style="color: black;">Sharing</h1>
 
-                        <p>hi B ipsum dolor sit amet, consectetur adipiscing elit. Nunc id. </p>
-                    </div>
-                </div>
-            </div>
-            <div class="item" style="background-color: #A7A4F3;">
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1>Third Image</h1>
-
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id. </p>
+                        <p style="color: #8C8C8C;"></p>
                     </div>
                 </div>
             </div>
@@ -57,41 +61,32 @@
         <div class="row">
             <div class="col-lg-4">
                 <img class="img-circle"
-                     src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                     alt="Alternate Text" class="img-circle" style="width: 140px; height: 140px;"/>
+                     src="{% static "images/shovel.png" %}"
+                     alt="Shovel" class="img-circle" style="width: 150px; height: 150px;"/>
 
-                <h2>Heading</h2>
+                <h2>Winter is here</h2>
 
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
-                    vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-                    cursus magna.</p>
-
-                <p><a href="#" role="button">more...</a></p>
+                <p>Recently moved to a snowy city from California, or Hawaii? Need a shovel for the winter? We've got you
+                    covered. <a href="/signup">Sign up</a> and borrow a shovel from your community.</p>
             </div>
             <div class="col-lg-4">
                 <img class="img-circle"
-                     src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                     alt="Alternate Text" class="img-circle" style="width: 140px; height: 140px;"/>
+                     src="{% static "images/spanner.png" %}"
+                     alt="Spanner" class="img-circle" style="width: 150px; height: 150px;"/>
 
-                <h2>Heading</h2>
+                <h2>Rusting tools</h2>
 
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
-                    mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                    condimentum nibh.</p>
-
-                <p><a href="#" role="button">more...</a></p>
+                <p>Got tools rusting in your garage? <a href="/signup">Sign up</a> today, there may be someone in your
+                    community looking for a tool that you are not using.</p>
             </div>
             <div class="col-lg-4">
                 <img class="img-circle"
-                     src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                     alt="Alternate Text" class="img-circle" style="width: 140px; height: 140px;"/>
+                     src="{% static "images/connections.png" %}"
+                     alt="Connections" class="img-circle" style="width: 150px; height: 150px;"/>
 
-                <h2>Heading</h2>
+                <h2>Connections</h2>
 
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
-                    porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-                    ut
-                    fermentum massa justo sit amet risus.</p>
+                <p>What's in it for you? Meet new people, increase connections, build the community, and more...</p>
 
                 <p><a href="#" role="button">more...</a></p>
             </div>
