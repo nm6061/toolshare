@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.urlresolvers import reverse
 
 
 class System(object):
@@ -95,3 +96,32 @@ class Tool(models.Model):
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     blackoutDates = models.ForeignKey(BlackoutDate)
+
+
+class Reservation(models.Model):
+    # Foreign keys
+    User = models.ForeignKey(User)
+    get_message = models.CharField(max_length=50, default='', blank=False)
+    get_date = models.DateField()
+    get_status = models.CharField(max_length=20, default='', blank=False)
+
+
+class UserProfile(models.Model):
+    first_name = models.CharField(max_length=30, blank=False)
+    last_name = models.CharField(max_length=30, blank=True)
+    phone_num = models.CharField(max_length=11, default='', blank=True)
+    email = models.EmailField(unique=True, blank=False)
+    pickup_arrangements = models.TextField(max_length=100, default='', blank=True)
+    apt_num = models.CharField(max_length=10, default='', blank=True)
+    street = models.CharField(max_length=50, default='', blank=False)
+    city = models.CharField(max_length=50, default='', blank=False)
+    county = models.CharField(max_length=50, default='', blank=True)
+    state = models.CharField(max_length=2, default='', blank=False)
+    country = models.CharField(max_length=50, default='USA', blank=False)
+    zip = models.CharField(max_length=9, default='', blank=False)
+
+    def __unicode__(self):
+        return self.user.username
+
+    def get_absolute_url(self):
+        return reverse('profile', kwargs={'username': self.user.username})
