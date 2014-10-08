@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends "approve_reservation.html" %}
+{% block title %}Request To Borrow notification{% endblock %}
+{% block head %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
+    <script src="{% static "scripts/holder.js" %}"></script>
+{% endblock %}
+{% block brand-link %}/Request To Borrow{% endblock %}
+{% block navbar-right %}
+<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+        <ul class="nav navbar-nav">
+
+            <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Accept</a></li>
+            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+        </ul>
+    </div>
+{% endblock %}
+<html>
+<br>
+<br>
+<body>
+<p><b>You have Succefully accept reservation </b></p>
+ <a href="dashboard.html">return to dashboard</a>
+ </body>
+ </html>

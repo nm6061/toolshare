@@ -4,7 +4,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from app import forms
-
+from django.http import HttpResponse
+from app.models import UserProfile
+from app.forms import UserUpdateForm
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib import messages
+from django.views.generic.edit import *
 
 def home(request):
     return render_to_response('home.html')
@@ -66,3 +72,33 @@ def browsetool(request):
 
 def Borrow(request):
     return render_to_response('Borrow.html')
+
+def registertool(request):
+    return render_to_response('registerTool.html')
+    # TODO : Add register functionality
+
+def approve_reservation(request):
+    if request.method == 'GET':
+        return render(request, 'approve_success.html')
+    else:
+        return HttpResponse('success')
+
+
+# def profile(request):
+#     return render_to_response('profile.html')
+# @login_required(redirect_field_name='o')
+class UserUpdateView(UpdateView):
+    form_class = UserUpdateForm
+    model = UserProfile
+    # fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
+    #           'pickup_arrangements']
+    template_name = 'profile.html'
+    permission_required = 'auth.change_user'
+    headline = 'Change Profile'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_success_url(self):
+        messages.success(self.request, 'Your profile settings has been saved')
+        return reverse_lazy('profile')

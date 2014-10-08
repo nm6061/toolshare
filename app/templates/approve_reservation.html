@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% extends "dashboard.html" %}
+{% block title %}Request To Borrow notification{% endblock %}
+{% block head %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
+    <script src="{% static "scripts/holder.js" %}"></script>
+{% endblock %}
+{% block brand-link %}/Request To Borrow{% endblock %}
+{% block navbar-right %}
+<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+        <ul class="nav navbar-nav">
+
+            <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Accept</a></li>
+            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="#">My tools</a></li>
+                <li><a href="#">My sheds</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="#">My requests <span class="badge">5</span></a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Accept request for Borrowing your Tools </h1>
+     </div>
+
+
+    <div id="Fill in-box" class="auth-box">
+        <form role="form" action="." method="post">
+            {% csrf_token %}
+            {% if user_form.errors or address_from.errors %}
+                <div class="alert alert-danger" role="alert"><strong>Oops!</strong> there were errors in the highlighted
+                    fields.
+                </div>{% endif %}
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Request to borrow</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="From Date" id="From Date"
+                                   placeholder="From Date">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="To Date" id="To Date"
+                                   placeholder="To Date">
+                        </div>
+                    </div>
+
+
+
+
+                   <div class="container-fluid">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary">Accept Reservation</button>
+                    <button type="submit" class="btn btn-primary">Reject Reservation</button>
+                </div>
+            </div>
+{% endblock %}
