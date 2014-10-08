@@ -87,7 +87,6 @@ class BlackoutDate(models.Model):
 class Tool(models.Model):
     name = models.CharField(max_length=20)
     pictureURL = models.CharField(max_length=200)
-    description = models.CharField(max_length=500)
-    # location = Address()
+    description = models.TextField(max_length=500)
     status = models.CharField(max_length=10)
     blackoutDates = models.ForeignKey(BlackoutDate)

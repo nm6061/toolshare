@@ -66,3 +66,7 @@ def browsetool(request):
 
 def Borrow(request):
     return render_to_response('Borrow.html')
+
+def registertool(request):
+    return render_to_response('registerTool.html')
+    # TODO : Add register functionality

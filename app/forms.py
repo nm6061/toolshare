@@ -55,3 +55,7 @@ class SignInForm(AuthenticationForm):
 
     class Meta:
         model = models.User
+
+
+class addToolForm(forms.ModelForm):
+    pass
