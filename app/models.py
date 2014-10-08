@@ -90,3 +90,11 @@ class Tool(models.Model):
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=10)
     blackoutDates = models.ForeignKey(BlackoutDate)
+
+
+class Reservation(models.Model):
+    # Foreign keys
+    User = models.ForeignKey(User)
+    get_message = models.CharField(max_length=50, default='', blank=False)
+    get_date = models.DateField()
+    get_status = models.CharField(max_length=20, default='', blank=False)
