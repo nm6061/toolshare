@@ -71,5 +71,4 @@ class addToolForm(forms.ModelForm):
 
         if commit:
             tool.save()
-
         return tool
