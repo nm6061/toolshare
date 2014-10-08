@@ -125,3 +125,11 @@ class UserProfile(models.Model):
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'username': self.user.username})
+
+
+class Reservation(models.Model):
+    # Foreign KEY
+    User = models.ForeignKey(User)
+
+    From_Date = models.DateField()
+    To_Date = models.DateField()

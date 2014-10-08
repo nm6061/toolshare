@@ -5,12 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from app import forms
 from django.http import HttpResponse
-from app.models import UserProfile
+from app.models import UserProfile, Reservation
 from app.forms import UserUpdateForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
 from django.views.generic.edit import *
+
 
 def home(request):
     return render_to_response('home.html')
@@ -72,7 +73,26 @@ def browsetool(request):
 
 
 def Borrow(request):
-    return render_to_response('Borrow.html')
+    # return render_to_response('Borrow.html')
+    if request.method == 'POST':
+        object = Reservation()
+        object.user = request.user
+        object.From_date = request.POST['From_Date']
+        object.To_date = request.POST['To_Date']
+
+        object.save()
+
+        return HttpResponse("Your request is sent to  the owner")
+        # fillup_form = forms.FillUpForm(request.POST)
+
+        #if fillup_form.is_valid():
+        #with transaction.atomic():
+        #fillup_form.save()
+        #return render(request, 'Borrow.html', RequestContext(request, {}))
+    else:
+        return render(request, 'Borrow.html',
+                      RequestContext(request))
+
 
 def registertool(request):
     if request.method == 'POST':
@@ -88,10 +108,10 @@ def registertool(request):
         toolForm = forms.addToolForm()
         return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
 
+
 def approve_reservation(request):
     if request.method == 'GET':
         return render(request, 'approve_success.html')
-
 
 
 # def profile(request):
