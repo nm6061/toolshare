@@ -2,6 +2,9 @@ from app.constants import Constants
 from app import models
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+# Imported for Profile Update
+from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 
 class SignUpForm(forms.ModelForm):
@@ -59,3 +62,10 @@ class SignInForm(AuthenticationForm):
 
 class addToolForm(forms.ModelForm):
     pass
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
+                  'pickup_arrangements']

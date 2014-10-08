@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from app.views import UserUpdateView
 
 from django.contrib import admin
 admin.autodiscover()
@@ -11,9 +12,9 @@ urlpatterns = patterns('',
     url(r'^dashboard/$', 'app.views.dashboard', name = 'dashboard'),
     url(r'^browsetool/$', 'app.views.browsetool', name = 'browsetool'),
     url(r'^Borrow/$', 'app.views.Borrow', name = 'Borrow'),
-
+    # url(r'^profile/$', 'app.views.profile', name = 'profile'),
+    url(r'^profile/$', UserUpdateView.as_view(), name='profile'),
     url(r'^registertool/$', 'app.views.registertool', name = 'registertool'),
-
     url(r'^approve_reservation/$', 'app.views.approve_reservation', name = 'approve_reservation'),
     url(r'^approve_success/$', 'app.views.approve_success', name = 'approve_success'),
 )
