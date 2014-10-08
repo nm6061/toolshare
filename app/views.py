@@ -12,7 +12,6 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
 from django.views.generic.edit import *
 
-
 def home(request):
     return render_to_response('home.html')
 
@@ -75,17 +74,23 @@ def browsetool(request):
 def Borrow(request):
     return render_to_response('Borrow.html')
 
-
 def registertool(request):
-    return render_to_response('registerTool.html')
-    # TODO : Add register functionality
+    if request.method == 'POST':
+        toolForm = forms.addToolForm(request, request.POST)
 
 
 def approve_reservation(request):
     if request.method == 'GET':
         return render(request, 'approve_success.html')
+        if toolForm.is_valid():
+            with transaction.atomic():
+                toolForm.save()
+            return render(request, 'dashboard.html', RequestContext(request, {}))
+        else:
+            return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
     else:
-        return HttpResponse('success')
+        toolForm = forms.addToolForm()
+        return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
 
 
 # def profile(request):
