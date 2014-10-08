@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
 from django.views.generic.edit import *
 
+
 def home(request):
     return render_to_response('home.html')
 
@@ -29,8 +30,9 @@ def signup(request):
             with transaction.atomic():
                 signup_form.save()
 
-            # TODO : REVIEW AND REWORK
-            return render(request, 'dashboard.html', RequestContext(request, {}))
+            signup_form = forms.SignUpForm()
+            return render(request, 'signup.html',
+                          RequestContext(request, {'form': signup_form, 'signup_successful': True}))
         else:
             return render(request, 'signup.html',
                           RequestContext(request, {'form': signup_form}))
@@ -73,9 +75,11 @@ def browsetool(request):
 def Borrow(request):
     return render_to_response('Borrow.html')
 
+
 def registertool(request):
     return render_to_response('registerTool.html')
     # TODO : Add register functionality
+
 
 def approve_reservation(request):
     if request.method == 'GET':
@@ -85,13 +89,13 @@ def approve_reservation(request):
 
 
 # def profile(request):
-#     return render_to_response('profile.html')
+# return render_to_response('profile.html')
 # @login_required(redirect_field_name='o')
 class UserUpdateView(UpdateView):
     form_class = UserUpdateForm
     model = UserProfile
     # fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
-    #           'pickup_arrangements']
+    # 'pickup_arrangements']
     template_name = 'profile.html'
     permission_required = 'auth.change_user'
     headline = 'Change Profile'
