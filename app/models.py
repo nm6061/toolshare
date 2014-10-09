@@ -91,10 +91,17 @@ class Tool(models.Model):
         ('D', 'Deactivated'),
         ('L', 'Lent out'),
     )
+
+    # CATEGORY = (
+    #     ('A', 'Available'),
+    #     ('D', 'Deactivated'),
+    #     ('L', 'Lent out'),
+    # )
     name = models.CharField(max_length=20)
     pictureURL = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
+    # category = models.CharField(max_length=10, choices=CATEGORY)
     blackoutDates = models.ForeignKey(BlackoutDate)
 
 

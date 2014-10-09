@@ -85,5 +85,38 @@
             "zip": "029204587",
             "share_zone": 3
         }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 1,
+        "fields": {
+            "name": "Scissor",
+            "pictureURL": null,
+            "description": "A scissor",
+            "status": null,
+            "blackoutDates": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 2,
+        "fields": {
+            "name": "Hammer",
+            "pictureURL": null,
+            "description": "Hammer time!",
+            "status": null,
+            "blackoutDates": null
+        }
+    },
+        {
+        "model": "app.Tool",
+        "pk": 3,
+        "fields": {
+            "name": "Wrench",
+            "pictureURL": null,
+            "description": "This is a wrench",
+            "status": null,
+            "blackoutDates": null
+        }
     }
 ]
