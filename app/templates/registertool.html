@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 {% load filters %}
 {% block brand-link %}/dashboard{% endblock %}
+{% block title %}Register Tool{% endblock %}
 {% block content %}
     <div class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if form.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
+
+            {% if tool_added %}
+                <div class="alert alert-success" role="alert">
+                    <p><strong>Congratulations!</strong> You have registered a new tool. </p>
+                    <p><a href="{% url "dashboard" %}">Return to your dashboard</a> or add another tool.</p>
                 </div>
             {% endif %}
+
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
@@ -24,7 +29,7 @@
                             {{ form.name|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Example: Scizzor'}" }}
                             <label>Please add a detailed description of the tool</label>
                             {{ form.description|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Please provide a description of your tool.'}" }}
-
+                            {{ form.status }}
                         </div>
                     </div>
                 </div>

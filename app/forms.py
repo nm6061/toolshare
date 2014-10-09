@@ -58,9 +58,10 @@ class SignInForm(AuthenticationForm):
 
 
 class addToolForm(forms.ModelForm):
+
     class Meta:
         model = models.Tool
-        fields = ['name', 'pictureURL', 'description']
+        # fields = ['name', 'pictureURL', 'description', 'category']
 
     def clean(self):
         cleaned_data = super(addToolForm, self).clean()
