@@ -85,13 +85,13 @@ class addReservationForm(forms.ModelForm):
     class Meta:
         model = models.Reservation
 
-        def clean(self):
+    def clean(self):
             cleaned_data=super(addReservationForm,self).clean()
             return self.cleaned_data
 
-        def save(self,commit=True):
+    def save(self,commit=True):
             reservation=super(addReservationForm,self).save(commit=False)
 
             if commit:
-                reservation.save()
-                return reservation
+             reservation.save()
+            return reservation

@@ -79,11 +79,11 @@ def Borrow(request,tool_id):
     if request.method == 'POST':
         reserve = Reservation()
         tool = Tool.objects.get(pk=tool_id)
-        object.user = request.user
-        object.tool = tool
-        object.From_date = request.POST['from_date']
-        object.To_date = request.POST['to_date']
-        object.save()
+        reserve.user = request.user
+        reserve.tool = tool
+        reserve.From_date = request.POST['from_date']
+        reserve.To_date = request.POST['to_date']
+        reserve.save()
 
         #tool = Tool.objects.gto_dateet(pk = tool_id)
         return HttpResponse(tool.description)
