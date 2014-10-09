@@ -96,12 +96,15 @@ def Borrow(request):
 
 def registertool(request):
     if request.method == 'POST':
-        toolForm = forms.addToolForm(request, request.POST)
+        toolForm = forms.addToolForm(request.POST)
 
         if toolForm.is_valid():
             with transaction.atomic():
                 toolForm.save()
-            return render(request, 'dashboard.html', RequestContext(request, {}))
+
+            toolForm = forms.addToolForm()
+            return render(request, 'registertool.html',
+                          RequestContext(request, {'form': toolForm, 'tool_added': True}))
         else:
             return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
     else:

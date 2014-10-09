@@ -58,6 +58,10 @@ class SignInForm(AuthenticationForm):
 
 
 class addToolForm(forms.ModelForm):
+    toolName = forms.CharField(widget=forms.TextInput, required=True)
+    toolPic = forms.CharField(widget=forms.TextInput, required=True)
+    toolDesc = forms.CharField(widget=forms.TextInput, required=True)
+
     class Meta:
         model = models.Tool
         fields = ['name', 'pictureURL', 'description']
