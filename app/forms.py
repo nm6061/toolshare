@@ -79,3 +79,19 @@ class UserUpdateForm(forms.ModelForm):
         model = models.User
         fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
                   'pickup_arrangements']
+
+
+class addReservationForm(forms.ModelForm):
+    class Meta:
+        model = models.Reservation
+
+        def clean(self):
+            cleaned_data=super(addReservationForm,self).clean()
+            return self.cleaned_data
+
+        def save(self,commit=True):
+            reservation=super(addReservationForm,self).save(commit=False)
+
+            if commit:
+                reservation.save()
+                return reservation

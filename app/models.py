@@ -122,8 +122,7 @@ class UserProfile(models.Model):
 
 class Reservation(models.Model):
     # Foreign KEY
-    User = models.ForeignKey(User)
-
-
-    From_Date = models.DateField()
-    To_Date = models.DateField()
+    user = models.ForeignKey(User)
+    tool=models.ForeignKey(Tool)
+    from_date = models.DateField()
+    to_date = models.DateField()

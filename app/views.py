@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from app import forms
 from django.http import HttpResponse
-from app.models import UserProfile, Reservation
+from app.models import UserProfile, Reservation, Tool
 from app.forms import UserUpdateForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -72,26 +72,32 @@ def browsetool(request):
     return render_to_response('browsetool.html')
 
 
-def Borrow(request):
+
+
+def Borrow(request,tool_id):
     # return render_to_response('Borrow.html')
     if request.method == 'POST':
-        object = Reservation()
+        reserve = Reservation()
+        tool = Tool.objects.get(pk=tool_id)
         object.user = request.user
-        object.From_date = request.POST['From_Date']
-        object.To_date = request.POST['To_Date']
-
+        object.tool = tool
+        object.From_date = request.POST['from_date']
+        object.To_date = request.POST['to_date']
         object.save()
 
-        return HttpResponse("Your request is sent to  the owner")
+        #tool = Tool.objects.gto_dateet(pk = tool_id)
+        return HttpResponse(tool.description)
+        #return HttpResponse(tool_id)
+
+        #return HttpResponse("Your request is sent to  the owner")
         # fillup_form = forms.FillUpForm(request.POST)
 
         #if fillup_form.is_valid():
         #with transaction.atomic():
-        #fillup_form.save()
+        #fillup_form.save()to_date
         #return render(request, 'Borrow.html', RequestContext(request, {}))
     else:
-        return render(request, 'Borrow.html',
-                      RequestContext(request))
+        return render(request, 'Borrow.html', RequestContext(request,{'tool_id': tool_id}))
 
 
 def registertool(request):
