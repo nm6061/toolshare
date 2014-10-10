@@ -160,7 +160,14 @@ class UserProfile(models.Model):
 class Reservation(models.Model):
     # Foreign KEY
     User = models.ForeignKey(User)
-
-
     From_Date = models.DateField()
     To_Date = models.DateField()
+    # Foreign KEY
+    Tool = models.ForeignKey(Tool)
+    status = models.CharField(max_length=15)
+
+    def approve_reservation(self):
+        return self.user.username
+
+    def reject_reservation(self):
+        return self.user.username

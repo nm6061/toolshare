@@ -73,8 +73,20 @@ class addToolForm(forms.ModelForm):
     #     return tool
 
 
+
+
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
                   'pickup_arrangements']
+
+
+
+class approve_reservation(forms.ModelForm):
+    class Meta:
+        model = models.Reservation
+        Fields = ['from date','to date','accept reservation', 'reject reservation','tool']
+
+    def clean(self):
+        return self.cleaned_data
