@@ -92,17 +92,47 @@ class Tool(models.Model):
         ('L', 'Lent out'),
     )
 
-    # CATEGORY = (
-    #     ('A', 'Available'),
-    #     ('D', 'Deactivated'),
-    #     ('L', 'Lent out'),
-    # )
+    CATEGORY = (
+        ('BL', 'Blades'),
+        ('BR', 'Braces'),
+        ('BS', 'Brushes'),
+        ('CA', 'Calipers'),
+        ('CH', 'Chisel'),
+        ('CL', 'Clamps'),
+        ('CP', 'Clips'),
+        ('CM', 'Compressors'),
+        ('CU', 'Cutters'),
+        ('DI', 'Dispenser'),
+        ('DR', 'Drills'),
+        ('GA', 'Gauges'),
+        ('GR', 'Grinder'),
+        ('HA', 'Hammer'),
+        ('HX', 'Hand Axe'),
+        ('HT', 'Hedge Trimmers'),
+        ('LA', 'Ladders'),
+        ('LM', 'Lawn Mowers'),
+        ('MT', 'Measuring Tape/Ruler'),
+        ('MI', 'Micrometer'),
+        ('NG', 'Nail Gun'),
+        ('PL', 'Pliers'),
+        ('SA', 'Sanders'),
+        ('SW', 'Saws'),
+        ('SC', 'Scissors'),
+        ('SD', 'Screwdrivers'),
+        ('SH', 'Shovel'),
+        ('TB', 'Toolbox'),
+        ('TR', 'Trowel'),
+        ('WE', 'Welding/ Soldering'),
+        ('WR', 'Wrenches'),
+        ('OT', 'Other'),
+    )
+
     name = models.CharField(max_length=20)
     pictureURL = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
-    # category = models.CharField(max_length=10, choices=CATEGORY)
-    blackoutDates = models.ForeignKey(BlackoutDate)
+    category = models.CharField(max_length=2, choices=CATEGORY)
+    # blackoutDates = models.ForeignKey(BlackoutDate, blank=True)
 
 
 

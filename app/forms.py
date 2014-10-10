@@ -61,18 +61,16 @@ class addToolForm(forms.ModelForm):
 
     class Meta:
         model = models.Tool
-        # fields = ['name', 'pictureURL', 'description', 'category']
+        fields = ['name', 'pictureURL', 'description', 'category']
 
-    def clean(self):
-        cleaned_data = super(addToolForm, self).clean()
-        return self.cleaned_data
 
-    def save(self, commit=True):
-        tool = super(addToolForm, self).save(commit=False)
-
-        if commit:
-            tool.save()
-        return tool
+    #
+    # def save(self, commit=True):
+    #     tool = super(addToolForm, self).save(commit=False)
+    #
+    #     if commit:
+    #         tool.save()
+    #     return tool
 
 
 class UserUpdateForm(forms.ModelForm):

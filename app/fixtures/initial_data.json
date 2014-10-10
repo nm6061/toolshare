@@ -91,10 +91,10 @@
         "pk": 1,
         "fields": {
             "name": "Scissor",
-            "pictureURL": null,
+            "pictureURL": "xyz.com",
             "description": "A scissor",
-            "status": null,
-            "blackoutDates": null
+            "status": "A",
+            "category": "SC"
         }
     },
     {
@@ -102,10 +102,10 @@
         "pk": 2,
         "fields": {
             "name": "Hammer",
-            "pictureURL": null,
+            "pictureURL": "123.com",
             "description": "Hammer time!",
-            "status": null,
-            "blackoutDates": null
+            "status": "L",
+            "category": "HA"
         }
     },
         {
@@ -113,10 +113,10 @@
         "pk": 3,
         "fields": {
             "name": "Wrench",
-            "pictureURL": null,
+            "pictureURL": "abc.com",
             "description": "This is a wrench",
-            "status": null,
-            "blackoutDates": null
+            "status": "D",
+            "category": "WR"
         }
     }
 ]
