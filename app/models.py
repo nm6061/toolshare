@@ -136,7 +136,7 @@ class Tool(models.Model):
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
     location = models.CharField(max_length=1, choices=LOCATION)
-    owner = models.ForeignKey(ToolShareUser)
+    owner = models.ForeignKey(User)
 
     def __str__(self):
         return self.name
