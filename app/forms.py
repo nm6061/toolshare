@@ -8,7 +8,7 @@ class SignUpForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput, required=True)
 
     class Meta:
-        model = models.ToolShareUser
+        model = models.User
         fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements', 'apt_num', 'street',
                   'county', 'city', 'state', 'zip']
 
@@ -50,7 +50,7 @@ class SignInForm(AuthenticationForm):
     AuthenticationForm.error_messages['invalid_login'] = "Invalid login"
 
     class Meta:
-        model = models.ToolShareUser
+        model = models.User
 
 
 class addToolForm(forms.ModelForm):
@@ -61,7 +61,7 @@ class addToolForm(forms.ModelForm):
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
-        model = models.ToolShareUser
+        model = models.User
         fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
                   'pickup_arrangements']
 

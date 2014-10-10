@@ -21,7 +21,7 @@
         }
     },
     {
-        "model": "app.ToolShareUser",
+        "model": "app.User",
         "pk": 1,
         "fields": {
             "email": "john.smith@toolshare.com",
@@ -43,7 +43,7 @@
         }
     },
     {
-        "model": "app.ToolShareUser",
+        "model": "app.User",
         "pk": 2,
         "fields": {
             "email": "cameron@toolshare.com",
@@ -65,7 +65,7 @@
         }
     },
     {
-        "model": "app.ToolShareUser",
+        "model": "app.User",
         "pk": 3,
         "fields": {
             "email": "rob.chase@toolshare.com",
