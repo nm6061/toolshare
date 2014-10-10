@@ -61,18 +61,18 @@ class addToolForm(forms.ModelForm):
 
     class Meta:
         model = models.Tool
-        # fields = ['name', 'pictureURL', 'description', 'category']
+        fields = ['name', 'pictureURL', 'description', 'category']
 
-    def clean(self):
-        cleaned_data = super(addToolForm, self).clean()
-        return self.cleaned_data
 
-    def save(self, commit=True):
-        tool = super(addToolForm, self).save(commit=False)
+    #
+    # def save(self, commit=True):
+    #     tool = super(addToolForm, self).save(commit=False)
+    #
+    #     if commit:
+    #         tool.save()
+    #     return tool
 
-        if commit:
-            tool.save()
-        return tool
+
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -80,6 +80,16 @@ class UserUpdateForm(forms.ModelForm):
         model = models.User
         fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
                   'pickup_arrangements']
+
+
+
+class approve_reservation(forms.ModelForm):
+    class Meta:
+        model = models.Reservation
+        Fields = ['from date','to date','accept reservation', 'reject reservation','tool']
+
+    def clean(self):
+        return self.cleaned_data
 
 
 class addReservationForm(forms.ModelForm):

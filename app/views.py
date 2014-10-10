@@ -120,7 +120,8 @@ def registertool(request):
 
 def approve_reservation(request):
     if request.method == 'GET':
-        return render(request, 'approve_success.html')
+        return render(request, 'approve_success.html',
+                      RequestContext(request))
 
 
 # def profile(request):
