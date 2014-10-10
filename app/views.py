@@ -115,6 +115,12 @@ def registertool(request):
 
 
 def approve_reservation(request):
+#TODO GET CONTEXT
+    def get_context_data(self, **kwargs):
+        context = super(app.views.approve_reservation, self).get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+#TODO CHANGE STATUS TO RESERVED ON ACCEPT REQUEST
     if request.method == 'POST':
         toolForm = forms.ApproveReservationForm(request.POST)
 
