@@ -4,7 +4,7 @@
 {% block title %}Register Tool{% endblock %}
 {% block content %}
     <div class="auth-box">
-        <form enctype="multipart/form-data" role="form" action="." method="post">
+        <form enctype="multipart/form-data" action="." method="post">
             {% csrf_token %}
 
             {% if tool_added %}
@@ -38,7 +38,7 @@
                             <div class="spacer-20"></div>
 
                             <label for="id_name">Enter the name of your tool</label>
-                            {{ form.name|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Example: Scissor'}" }}
+                            {{ form.name|add_attrs:"{'class':'form-control','placeholder':'Example: Scissor'}" }}
 
                             <div class="spacer-20"></div>
 
@@ -53,7 +53,7 @@
                             <div class="spacer-20"></div>
 
                             <label>Please add a detailed description of the tool</label>
-                            {{ form.description|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Please provide a description of your tool.'}" }}
+                            {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'10','placeholder':'Please provide a description of your tool.'}" }}
 
 
                         </div>
