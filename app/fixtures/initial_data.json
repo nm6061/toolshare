@@ -94,7 +94,9 @@
             "pictureURL": "xyz.com",
             "description": "A scissor",
             "status": "A",
-            "category": "SC"
+            "category": "SC",
+            "owner": 1,
+            "location": "H"
         }
     },
     {
@@ -105,7 +107,9 @@
             "pictureURL": "123.com",
             "description": "Hammer time!",
             "status": "L",
-            "category": "HA"
+            "category": "HA",
+            "owner": 1,
+            "location": "S"
         }
     },
         {
@@ -116,7 +120,9 @@
             "pictureURL": "abc.com",
             "description": "This is a wrench",
             "status": "D",
-            "category": "WR"
+            "category": "WR",
+            "owner": 2,
+            "location": "H"
         }
     },
 

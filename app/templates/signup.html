@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load filters %}
-{% block title %}Create an account{% endblock %}
+{% block title %}Sign up for a ToolShare account{% endblock %}
 {% block navbar-right %}
     <div id="navbar-collapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -15,6 +15,7 @@
             {% if signup_successful %}
                 <div class="alert alert-success" role="alert">
                     <p><strong>Congratulations!</strong> You now have your own ToolShare account. </p>
+
                     <p><a href="{% url "signin" %}">Sign in</a> to begin building a better community.</p>
                 </div>
             {% endif %}
@@ -66,7 +67,7 @@
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-8">
-                            {{ form.states|add_attrs:"{'class':'form-control'}" }}
+                            {{ form.state|add_attrs:"{'class':'form-control'}" }}
                         </div>
                         <div class="col-md-4{% if form.zip.errors %} has-error{% endif %}">
                             {{ form.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
@@ -108,7 +109,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            {{ form.pickup_arrangements|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
+                            {{ form.pickup_arrangements|add_attrs:"{'class':'form-control no-resize','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
                         </div>
                     </div>
                 </div>

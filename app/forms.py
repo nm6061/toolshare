@@ -1,4 +1,3 @@
-from app.constants import Constants
 from app import models
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -8,12 +7,10 @@ class SignUpForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(widget=forms.PasswordInput, required=True)
 
-    states = forms.ChoiceField(choices=Constants.US_STATES)
-
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements', 'apt_num', 'street',
-                  'county', 'city', 'zip']
+                  'county', 'city', 'state', 'zip']
 
     def clean(self):
         cleaned_data = super(SignUpForm, self).clean()
@@ -27,7 +24,6 @@ class SignUpForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(SignUpForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        user.state = self.cleaned_data['states']
 
         # ShareZone creation
 
@@ -60,16 +56,7 @@ class SignInForm(AuthenticationForm):
 class addToolForm(forms.ModelForm):
     class Meta:
         model = models.Tool
-        fields = ['name', 'pictureURL', 'description', 'category']
-
-
-        #
-        # def save(self, commit=True):
-        # tool = super(addToolForm, self).save(commit=False)
-        #
-        #     if commit:
-        #         tool.save()
-        #     return tool
+        fields = ['name', 'pictureURL', 'description', 'category', 'location']
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -79,27 +66,16 @@ class UserUpdateForm(forms.ModelForm):
                   'pickup_arrangements']
 
 
-class approve_reservation(forms.ModelForm):
+class ApproveReservationForm(forms.ModelForm):
     class Meta:
         model = models.Reservation
-        Fields = ['from date', 'to date', 'accept reservation', 'reject reservation', 'tool']
+        Fields = ['from_date', 'to_date', 'tool', 'reservedBy']
 
     def clean(self):
         return self.cleaned_data
 
 
-class addReservationForm(forms.ModelForm):
+class BorrowToolForm(forms.ModelForm):
     class Meta:
         model = models.Reservation
-        fields = ['from_date','to_date']
-
-    def clean(self):
-        cleaned_data = super(addReservationForm, self).clean()
-        return self.cleaned_data
-
-    def save(self, commit=True):
-        reservation = super(addReservationForm, self).save(commit=False)
-
-        if commit:
-            reservation.save()
-        return reservation
+        fields = ['from_date', 'to_date']

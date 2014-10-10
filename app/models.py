@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
+from django.conf import settings
+import app.constants
 
 
 class System(object):
@@ -31,26 +33,26 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    first_name = models.CharField(max_length=30, blank=False)
+    first_name = models.CharField(max_length=30)
     middle_name = models.CharField(max_length=25, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
 
-    phone_num = models.CharField(max_length=11, default='', blank=True)
+    phone_num = models.CharField(max_length=11, blank=True)
 
-    email = models.EmailField(unique=True, blank=False)
+    email = models.EmailField(unique=True)
 
-    pickup_arrangements = models.TextField(max_length=100, default='', blank=True)
+    pickup_arrangements = models.TextField(max_length=100, blank=True)
 
     reputation = models.PositiveIntegerField(default=0, blank=True)
 
     # TODO : Figure out a way to move address-related fields to a separate model
-    apt_num = models.CharField(max_length=10, default='', blank=True)
-    street = models.CharField(max_length=50, default='', blank=False)
-    city = models.CharField(max_length=50, default='', blank=False)
+    apt_num = models.CharField(max_length=10, blank=True)
+    street = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
     county = models.CharField(max_length=50, default='', blank=True)
-    state = models.CharField(max_length=2, default='', blank=False)
-    country = models.CharField(max_length=50, default='USA', blank=False)
-    zip = models.CharField(max_length=9, default='', blank=False)
+    state = models.CharField(max_length=2, default='', choices=app.constants.US_STATES)
+    country = models.CharField(max_length=50, default='USA')
+    zip = models.CharField(max_length=9)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name']
@@ -80,16 +82,17 @@ class User(AbstractBaseUser):
         return full_name
 
 
-class BlackoutDate(models.Model):
-    blackoutStart = models.DateField()
-    blackoutEnd = models.DateField()
-
 
 class Tool(models.Model):
     STATUS = (
         ('A', 'Available'),
         ('D', 'Deactivated'),
         ('L', 'Lent out'),
+    )
+
+    LOCATION = (
+        ('H', 'Home'),
+        ('S', 'Shed')
     )
 
     CATEGORY = (
@@ -132,8 +135,17 @@ class Tool(models.Model):
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
-    # blackoutDates = models.ForeignKey(BlackoutDate, blank=True)
+    location = models.CharField(max_length=1, choices=LOCATION)
+    owner = models.ForeignKey(User)
 
+    def __str__(self):
+        return self.name
+
+
+class BlackoutDate(models.Model):
+    tool = models.ForeignKey(Tool)
+    blackoutStart = models.DateField()
+    blackoutEnd = models.DateField()
 
 
 class UserProfile(models.Model):
@@ -158,13 +170,12 @@ class UserProfile(models.Model):
 
 
 class Reservation(models.Model):
-    # Foreign KEY
-    User = models.ForeignKey(User)
-    From_Date = models.DateField()
-    To_Date = models.DateField()
-    # Foreign KEY
-    Tool = models.ForeignKey(Tool)
+    from_date = models.DateField()
+    to_date = models.DateField()
     status = models.CharField(max_length=15)
+
+    tool = models.ForeignKey(Tool)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def approve_reservation(self):
         return self.user.username

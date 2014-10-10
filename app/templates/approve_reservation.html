@@ -23,11 +23,11 @@
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">My tools</a></li>
                 <li><a href="#">My sheds</a></li>
-            </ul>s
+            </ul>
             <ul class="nav nav-sidebar">
                 <li><a href="#">My requests <span class="badge">1</span></a></li>
             </ul>
-        </div>s
+        </div>
 
     </div>
 
@@ -50,12 +50,19 @@
                             <h3>Request to borrow</h3>
                         </div>
 
-                    <div class="row">
+                   <div class="row">
                         <div class="col-md-12">
-                            <input type="label" class="form-control">
-                            <label>From Date </label>
-                            <br>
-                            <label>To Date </label>
+                            <label>From Date</label>
+                            {{ form.from_date }}
+                            <div class="spacer-15"></div>
+                            <label>To Date</label>
+                            {{ form.to_date }}
+                            <div class="spacer-15"></div>
+                            <label>Tool</label>
+                            {{ form.ApproveReservationFrom }}
+                            <div class="spacer-15"></div>
+                            <label>User </label>
+                            {{ form.user }}
                         </div>
                     </div>
 
@@ -64,9 +71,8 @@
 
                    <div class="container-fluid">
                 <div class="pull-right">
-                    <button type="submit" class="btn btn-primary">Accept Reservation</button>
-
-                    <button type="submit" class="btn btn-primary">Reject Reservation</button>
+                    <button type="submit" class="btn btn-primary btn-block">Accept Request</button>
+                    <a href="/dashboard" class="btn btn-danger btn-block" role="button">Reject Request</a>
                 </div>
             </div>
 {% endblock %}
