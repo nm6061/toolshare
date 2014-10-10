@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load filters %}
-{% block title %}Create an account{% endblock %}
+{% block title %}Sign up for a ToolShare account{% endblock %}
 {% block navbar-right %}
     <div id="navbar-collapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-8">
-                            {{ form.states|add_attrs:"{'class':'form-control'}" }}
+                            {{ form.state|add_attrs:"{'class':'form-control'}" }}
                         </div>
                         <div class="col-md-4{% if form.zip.errors %} has-error{% endif %}">
                             {{ form.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
