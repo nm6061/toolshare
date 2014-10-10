@@ -21,7 +21,7 @@
         }
     },
     {
-        "model": "app.User",
+        "model": "app.ToolShareUser",
         "pk": 1,
         "fields": {
             "email": "john.smith@toolshare.com",
@@ -43,7 +43,7 @@
         }
     },
     {
-        "model": "app.User",
+        "model": "app.ToolShareUser",
         "pk": 2,
         "fields": {
             "email": "cameron@toolshare.com",
@@ -65,7 +65,7 @@
         }
     },
     {
-        "model": "app.User",
+        "model": "app.ToolShareUser",
         "pk": 3,
         "fields": {
             "email": "rob.chase@toolshare.com",
@@ -91,10 +91,12 @@
         "pk": 1,
         "fields": {
             "name": "Scissor",
-            "pictureURL": "xyz.com",
+            "picture": "toolpics/scissor.jpg",
             "description": "A scissor",
             "status": "A",
-            "category": "SC"
+            "category": "SC",
+            "owner": 1,
+            "location": "H"
         }
     },
     {
@@ -102,10 +104,12 @@
         "pk": 2,
         "fields": {
             "name": "Hammer",
-            "pictureURL": "123.com",
+            "picture": "toolpics/hammer.jpg",
             "description": "Hammer time!",
             "status": "L",
-            "category": "HA"
+            "category": "HA",
+            "owner": 1,
+            "location": "S"
         }
     },
         {
@@ -113,17 +117,19 @@
         "pk": 3,
         "fields": {
             "name": "Wrench",
-            "pictureURL": "abc.com",
+            "picture": "toolpics/wrench.jpg",
             "description": "This is a wrench",
             "status": "D",
-            "category": "WR"
+            "category": "WR",
+            "owner": 2,
+            "location": "H"
         }
     },
     {
         "model": "app.Reservation",
         "pk":1,
         "fields": {
-            "user": 1,
+            "reservedBy": 1,
             "tool": 1,
             "from_date":"2014-12-01",
             "to_date": "2014-12-10"
@@ -133,7 +139,7 @@
         "model": "app.Reservation",
         "pk":2,
         "fields": {
-            "user": 2,
+            "reservedBy": 2,
             "tool": 2,
             "from_date":"2014-12-01",
             "to_date": "2014-12-10"
@@ -143,7 +149,7 @@
         "model": "app.Reservation",
         "pk":3,
         "fields": {
-            "user": 3,
+            "reservedBy": 3,
             "tool": 3,
             "from_date":"2014-12-01",
             "to_date": "2014-12-10"

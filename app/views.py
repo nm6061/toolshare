@@ -6,7 +6,7 @@ from django.db import transaction
 from app import forms
 from app import models
 from django.http import HttpResponse
-from app.models import UserProfile, Reservation
+from app.models import UserProfile, Reservation, Tool
 from app.forms import UserUpdateForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -97,7 +97,7 @@ def Borrow(request, tool_id):
 
 def registertool(request):
     if request.method == 'POST':
-        tool_form = forms.addToolForm(request.POST)
+        tool_form = forms.addToolForm(request.POST, request.FILES)
 
         if tool_form.is_valid():
             with transaction.atomic():
