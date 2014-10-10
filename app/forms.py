@@ -1,4 +1,3 @@
-from app.constants import Constants
 from app import models
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -8,12 +7,10 @@ class SignUpForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(widget=forms.PasswordInput, required=True)
 
-    states = forms.ChoiceField(choices=Constants.US_STATES)
-
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements', 'apt_num', 'street',
-                  'county', 'city', 'zip']
+                  'county', 'city', 'state', 'zip']
 
     def clean(self):
         cleaned_data = super(SignUpForm, self).clean()
@@ -27,7 +24,6 @@ class SignUpForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(SignUpForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        user.state = self.cleaned_data['states']
 
         # ShareZone creation
 
@@ -68,7 +64,7 @@ class addToolForm(forms.ModelForm):
         # tool = super(addToolForm, self).save(commit=False)
         #
         # if commit:
-        #         tool.save()
+        # tool.save()
         #     return tool
 
 
