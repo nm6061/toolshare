@@ -6,9 +6,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'app.views.home', name = 'home'),
-    url(r'^signin/$', 'app.views.signin', name = 'signin'),
-    url(r'^signup/$', 'app.views.signup', name = 'signup'),
-    url(r'^signout/$', 'app.views.signout', name = 'signout'),
+    url(r'^account/signin/$', 'app.views.signin', name = 'signin'),
+    url(r'^account/signup/$', 'app.views.signup', name = 'signup'),
+    url(r'^account/signout/$', 'app.views.signout', name = 'signout'),
     url(r'^dashboard/$', 'app.views.dashboard', name = 'dashboard'),
     url(r'^browsetool/$', 'app.views.browsetool', name = 'browsetool'),
     url(r'^Borrow/(?P<tool_id>\d+)/$', 'app.views.Borrow', name = 'Borrow'),
