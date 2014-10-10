@@ -56,7 +56,7 @@ class SignInForm(AuthenticationForm):
 class addToolForm(forms.ModelForm):
     class Meta:
         model = models.Tool
-        fields = ['name', 'pictureURL', 'description', 'category', 'location']
+        fields = ['name', 'description', 'category', 'location', 'picture']
 
 
 class UserUpdateForm(forms.ModelForm):

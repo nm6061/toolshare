@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
 from django.core.urlresolvers import reverse
 from django.conf import settings
 import app.constants
@@ -131,7 +131,7 @@ class Tool(models.Model):
     )
 
     name = models.CharField(max_length=20)
-    pictureURL = models.CharField(max_length=200)
+    picture = models.FileField(upload_to = 'toolpics')
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
@@ -175,7 +175,7 @@ class Reservation(models.Model):
     status = models.CharField(max_length=15)
 
     tool = models.ForeignKey(Tool)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    reservedBy = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def approve_reservation(self):
         return self.user.username
