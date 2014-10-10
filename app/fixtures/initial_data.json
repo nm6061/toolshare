@@ -21,7 +21,7 @@
         }
     },
     {
-        "model": "app.User",
+        "model": "app.ToolShareUser",
         "pk": 1,
         "fields": {
             "email": "john.smith@toolshare.com",
@@ -43,7 +43,7 @@
         }
     },
     {
-        "model": "app.User",
+        "model": "app.ToolShareUser",
         "pk": 2,
         "fields": {
             "email": "cameron@toolshare.com",
@@ -65,7 +65,7 @@
         }
     },
     {
-        "model": "app.User",
+        "model": "app.ToolShareUser",
         "pk": 3,
         "fields": {
             "email": "rob.chase@toolshare.com",
@@ -94,7 +94,9 @@
             "pictureURL": "xyz.com",
             "description": "A scissor",
             "status": "A",
-            "category": "SC"
+            "category": "SC",
+            "owner": 1,
+            "location": "H"
         }
     },
     {
@@ -105,7 +107,9 @@
             "pictureURL": "123.com",
             "description": "Hammer time!",
             "status": "L",
-            "category": "HA"
+            "category": "HA",
+            "owner": 1,
+            "location": "S"
         }
     },
         {
@@ -116,14 +120,16 @@
             "pictureURL": "abc.com",
             "description": "This is a wrench",
             "status": "D",
-            "category": "WR"
+            "category": "WR",
+            "owner": 2,
+            "location": "H"
         }
     },
     {
         "model": "app.Reservation",
         "pk":1,
         "fields": {
-            "User": 1,
+            "reservedBy": 1,
             "Tool": 1,
             "From_Date":"2014-12-01",
             "To_Date": "2014-12-10"
@@ -133,7 +139,7 @@
         "model": "app.Reservation",
         "pk":2,
         "fields": {
-            "User": 2,
+            "reservedBy": 2,
             "Tool": 2,
             "From_Date":"2014-12-01",
             "To_Date": "2014-12-10"
@@ -143,7 +149,7 @@
         "model": "app.Reservation",
         "pk":3,
         "fields": {
-            "User": 3,
+            "reservedBy": 3,
             "Tool": 3,
             "From_Date":"2014-12-01",
             "To_Date": "2014-12-10"

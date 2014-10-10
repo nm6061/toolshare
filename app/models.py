@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
 from django.core.urlresolvers import reverse
 
 
@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
         pass
 
 
-class User(AbstractBaseUser):
+class ToolShareUser(AbstractBaseUser):
     first_name = models.CharField(max_length=30, blank=False)
     middle_name = models.CharField(max_length=25, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
@@ -80,16 +80,17 @@ class User(AbstractBaseUser):
         return full_name
 
 
-class BlackoutDate(models.Model):
-    blackoutStart = models.DateField()
-    blackoutEnd = models.DateField()
-
 
 class Tool(models.Model):
     STATUS = (
         ('A', 'Available'),
         ('D', 'Deactivated'),
         ('L', 'Lent out'),
+    )
+
+    LOCATION = (
+        ('H', 'Home'),
+        ('S', 'Shed')
     )
 
     CATEGORY = (
@@ -132,13 +133,17 @@ class Tool(models.Model):
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
-    # blackoutDates = models.ForeignKey(BlackoutDate, blank=True)
+    location = models.CharField(max_length=1, choices=LOCATION)
+    owner = models.ForeignKey(ToolShareUser)
 
     def __str__(self):
         return self.name
 
 
-
+class BlackoutDate(models.Model):
+    tool = models.ForeignKey(Tool)
+    blackoutStart = models.DateField()
+    blackoutEnd = models.DateField()
 
 class UserProfile(models.Model):
     first_name = models.CharField(max_length=30, blank=False)
@@ -163,7 +168,7 @@ class UserProfile(models.Model):
 
 class Reservation(models.Model):
     # Foreign KEY
-    User = models.ForeignKey(User)
+    reservedBy = models.ForeignKey(ToolShareUser)
     From_Date = models.DateField()
     To_Date = models.DateField()
     # Foreign KEY
