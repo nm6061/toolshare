@@ -1,16 +1,18 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.template.context import RequestContext
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from app import forms
+from app import forms, models
 from django.http import HttpResponse
 from app.models import UserProfile, Reservation, Tool
-from app.forms import UserUpdateForm
-from django.contrib.auth.models import User
+from app.forms import UserUpdateForm, addReservationForm
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
 from django.views.generic.edit import *
+
+# TODO : REMOVE
+from django.contrib.auth.models import AnonymousUser
 
 
 def home(request):
@@ -72,32 +74,27 @@ def browsetool(request):
     return render_to_response('browsetool.html')
 
 
-
-
-def Borrow(request,tool_id):
-    # return render_to_response('Borrow.html')
+@login_required
+def Borrow(request, tool_id):
     if request.method == 'POST':
-        reserve = Reservation()
-        tool = Tool.objects.get(pk=tool_id)
-        reserve.user = request.user
-        reserve.tool = tool
-        reserve.From_date = request.POST['from_date']
-        reserve.To_date = request.POST['to_date']
-        reserve.save()
+        reservation = Reservation()
 
-        #tool = Tool.objects.gto_dateet(pk = tool_id)
-        return HttpResponse(tool.description)
-        #return HttpResponse(tool_id)
+        return HttpResponse(isinstance(get_user_model(), ))
+        reservation.tool = Tool.objects.get(pk=tool_id)
+        reservation.user = get_user_model()
 
-        #return HttpResponse("Your request is sent to  the owner")
-        # fillup_form = forms.FillUpForm(request.POST)
 
-        #if fillup_form.is_valid():
-        #with transaction.atomic():
-        #fillup_form.save()to_date
-        #return render(request, 'Borrow.html', RequestContext(request, {}))
+        reservation_form = addReservationForm(request.POST, instance=reservation)
+
+        if reservation_form.is_valid():
+            reservation_form.save()
+
+            return HttpResponse('Saved...')
+        else:
+            return render(request, 'Borrow.html', RequestContext(request, {'form': reservation_form}))
     else:
-        return render(request, 'Borrow.html', RequestContext(request,{'tool_id': tool_id}))
+        reservation_form = addReservationForm()
+        return render(request, 'Borrow.html', RequestContext(request, {'form': reservation_form}))
 
 
 def registertool(request):
