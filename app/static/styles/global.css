@@ -24,6 +24,10 @@ body {
     padding-left: 0;
 }
 
+.no-resize {
+    resize: none;
+}
+
 .spacer-5 {
     height: 5px;
     width: 100%;
