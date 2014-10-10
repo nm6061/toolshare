@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 
 class System(object):
@@ -135,7 +136,6 @@ class Tool(models.Model):
     # blackoutDates = models.ForeignKey(BlackoutDate, blank=True)
 
 
-
 class UserProfile(models.Model):
     first_name = models.CharField(max_length=30, blank=False)
     last_name = models.CharField(max_length=30, blank=True)
@@ -158,13 +158,12 @@ class UserProfile(models.Model):
 
 
 class Reservation(models.Model):
-    # Foreign KEY
-    User = models.ForeignKey(User)
-    From_Date = models.DateField()
-    To_Date = models.DateField()
-    # Foreign KEY
-    Tool = models.ForeignKey(Tool)
+    from_date = models.DateField()
+    to_date = models.DateField()
     status = models.CharField(max_length=15)
+
+    tool = models.ForeignKey(Tool)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def approve_reservation(self):
         return self.user.username
