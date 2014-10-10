@@ -123,30 +123,30 @@
         "model": "app.Reservation",
         "pk":1,
         "fields": {
-            "user": 1,
-            "tool": 1,
-            "from_date":"2014-12-01",
-            "to_date": "2014-12-10"
+            "User": 1,
+            "Tool": 1,
+            "From_Date":"2014-12-01",
+            "To_Date": "2014-12-10"
         }
     },
     {
         "model": "app.Reservation",
         "pk":2,
         "fields": {
-            "user": 2,
-            "tool": 2,
-            "from_date":"2014-12-01",
-            "to_date": "2014-12-10"
+            "User": 2,
+            "Tool": 2,
+            "From_Date":"2014-12-01",
+            "To_Date": "2014-12-10"
         }
     },
     {
         "model": "app.Reservation",
         "pk":3,
         "fields": {
-            "user": 3,
-            "tool": 3,
-            "from_date":"2014-12-01",
-            "to_date": "2014-12-10"
+            "User": 3,
+            "Tool": 3,
+            "From_Date":"2014-12-01",
+            "To_Date": "2014-12-10"
         }
     }
 ]
