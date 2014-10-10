@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
-
+from toolshare import settings
 
 class System(object):
     @staticmethod
@@ -158,12 +158,11 @@ class UserProfile(models.Model):
 
 
 class Reservation(models.Model):
-    # Foreign KEY
-    User = models.ForeignKey(User)
-    From_Date = models.DateField()
-    To_Date = models.DateField()
-    # Foreign KEY
-    Tool = models.ForeignKey(Tool)
+    from_date = models.DateField()
+    to_date = models.DateField()
+
+    tool = models.ForeignKey(Tool)
+    user = models.ForeignKey(User)
     status = models.CharField(max_length=15)
 
     def approve_reservation(self):

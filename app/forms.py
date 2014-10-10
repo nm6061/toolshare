@@ -32,7 +32,7 @@ class SignUpForm(forms.ModelForm):
         # ShareZone creation
 
         # ShareZone.zip is 9 characters wide for flexibility
-        zip = (user.zip[:5]).ljust(9,'0')
+        zip = (user.zip[:5]).ljust(9, '0')
         share_zone = models.System.get_or_create_share_zone(zip)
 
         if share_zone == None:
@@ -58,21 +58,18 @@ class SignInForm(AuthenticationForm):
 
 
 class addToolForm(forms.ModelForm):
-
     class Meta:
         model = models.Tool
         fields = ['name', 'pictureURL', 'description', 'category']
 
 
-    #
-    # def save(self, commit=True):
-    #     tool = super(addToolForm, self).save(commit=False)
-    #
-    #     if commit:
-    #         tool.save()
-    #     return tool
-
-
+        #
+        # def save(self, commit=True):
+        # tool = super(addToolForm, self).save(commit=False)
+        #
+        #     if commit:
+        #         tool.save()
+        #     return tool
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -82,11 +79,10 @@ class UserUpdateForm(forms.ModelForm):
                   'pickup_arrangements']
 
 
-
 class approve_reservation(forms.ModelForm):
     class Meta:
         model = models.Reservation
-        Fields = ['from date','to date','accept reservation', 'reject reservation','tool']
+        Fields = ['from date', 'to date', 'accept reservation', 'reject reservation', 'tool']
 
     def clean(self):
         return self.cleaned_data
@@ -95,14 +91,15 @@ class approve_reservation(forms.ModelForm):
 class addReservationForm(forms.ModelForm):
     class Meta:
         model = models.Reservation
+        fields = ['from_date','to_date']
 
     def clean(self):
-            cleaned_data=super(addReservationForm,self).clean()
-            return self.cleaned_data
+        cleaned_data = super(addReservationForm, self).clean()
+        return self.cleaned_data
 
-    def save(self,commit=True):
-            reservation=super(addReservationForm,self).save(commit=False)
+    def save(self, commit=True):
+        reservation = super(addReservationForm, self).save(commit=False)
 
-            if commit:
-             reservation.save()
-            return reservation
+        if commit:
+            reservation.save()
+        return reservation
