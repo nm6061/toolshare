@@ -1,4 +1,3 @@
-from app.constants import Constants
 from app import models
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -11,7 +10,7 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements', 'apt_num', 'street',
-                  'county', 'city', 'zip']
+                  'county', 'city', 'state', 'zip']
 
     def clean(self):
         cleaned_data = super(SignUpForm, self).clean()
