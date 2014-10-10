@@ -79,10 +79,10 @@ class UserUpdateForm(forms.ModelForm):
                   'pickup_arrangements']
 
 
-class approve_reservation(forms.ModelForm):
+class ApproveReservationForm(forms.ModelForm):
     class Meta:
         model = models.Reservation
-        Fields = ['from date', 'to date', 'accept reservation', 'reject reservation', 'tool']
+        Fields = ['from_date', 'to_date', 'tool', 'user']
 
     def clean(self):
         return self.cleaned_data
