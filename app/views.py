@@ -118,6 +118,9 @@ def approve_reservation(request):
                       RequestContext(request))
 
 
+
+
+
 # def profile(request):
 # return render_to_response('profile.html')
 # @login_required(redirect_field_name='o')

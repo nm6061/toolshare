@@ -166,8 +166,9 @@ class Reservation(models.Model):
     Tool = models.ForeignKey(Tool)
     status = models.CharField(max_length=15)
 
-    def approve_reservation(self):
-        return self.user.username
 
-    def reject_reservation(self):
-        return self.user.username
+def approve_reservation(self):
+    return self.user.username
+
+def reject_reservation(self):
+    return self.user.username

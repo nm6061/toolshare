@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-{% extends "dashboard.html" %}
+{% extends "base.html" %}
 {% block title %}Request To Borrow notification{% endblock %}
 {% block head %}
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
     <script src="{% static "scripts/holder.js" %}"></script>
 {% endblock %}
-{% block brand-link %}/Request To Borrow{% endblock %}
+{% block brand-link %}/dashboard{% endblock %}
 {% block navbar-right %}
 <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
 
-            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+            <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> signout</a></li>
         </ul>
     </div>
 {% endblock %}
@@ -22,12 +22,12 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">My tools</a></li>
-                <li><a href="/">My sheds</a></li>
-            </ul>
+                <li><a href="#">My sheds</a></li>
+            </ul>s
             <ul class="nav nav-sidebar">
-                <li><a href="/">My requests <span class="badge">1</span></a></li>
+                <li><a href="#">My requests <span class="badge">1</span></a></li>
             </ul>
-        </div>
+        </div>s
 
     </div>
 
@@ -65,6 +65,7 @@
                    <div class="container-fluid">
                 <div class="pull-right">
                     <button type="submit" class="btn btn-primary">Accept Reservation</button>
+
                     <button type="submit" class="btn btn-primary">Reject Reservation</button>
                 </div>
             </div>
