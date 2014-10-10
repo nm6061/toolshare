@@ -58,6 +58,7 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ['first_name']
     objects = UserManager()
 
+    # Foreign keys
     share_zone = models.ForeignKey(ShareZone)
 
     def Update(self):
@@ -81,16 +82,17 @@ class User(AbstractBaseUser):
         return full_name
 
 
-class BlackoutDate(models.Model):
-    blackoutStart = models.DateField()
-    blackoutEnd = models.DateField()
-
 
 class Tool(models.Model):
     STATUS = (
         ('A', 'Available'),
         ('D', 'Deactivated'),
         ('L', 'Lent out'),
+    )
+
+    LOCATION = (
+        ('H', 'Home'),
+        ('S', 'Shed')
     )
 
     CATEGORY = (
@@ -133,12 +135,17 @@ class Tool(models.Model):
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
-    # blackoutDates = models.ForeignKey(BlackoutDate, blank=True)
+    location = models.CharField(max_length=1, choices=LOCATION)
+    owner = models.ForeignKey(ToolShareUser)
 
     def __str__(self):
         return self.name
 
 
+class BlackoutDate(models.Model):
+    tool = models.ForeignKey(Tool)
+    blackoutStart = models.DateField()
+    blackoutEnd = models.DateField()
 
 
 class UserProfile(models.Model):

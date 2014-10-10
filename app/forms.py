@@ -8,7 +8,7 @@ class SignUpForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput, required=True)
 
     class Meta:
-        model = models.User
+        model = models.ToolShareUser
         fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements', 'apt_num', 'street',
                   'county', 'city', 'state', 'zip']
 
@@ -50,27 +50,18 @@ class SignInForm(AuthenticationForm):
     AuthenticationForm.error_messages['invalid_login'] = "Invalid login"
 
     class Meta:
-        model = models.User
+        model = models.ToolShareUser
 
 
 class addToolForm(forms.ModelForm):
     class Meta:
         model = models.Tool
-        fields = ['name', 'pictureURL', 'description', 'category']
-
-
-        #
-        # def save(self, commit=True):
-        # tool = super(addToolForm, self).save(commit=False)
-        #
-        #     if commit:
-        #         tool.save()
-        #     return tool
+        fields = ['name', 'pictureURL', 'description', 'category', 'location']
 
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
-        model = models.User
+        model = models.ToolShareUser
         fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
                   'pickup_arrangements']
 
@@ -78,7 +69,7 @@ class UserUpdateForm(forms.ModelForm):
 class ApproveReservationForm(forms.ModelForm):
     class Meta:
         model = models.Reservation
-        Fields = ['from_date', 'to_date', 'tool', 'user']
+        Fields = ['from_date', 'to_date', 'tool', 'reservedBy']
 
     def clean(self):
         return self.cleaned_data
