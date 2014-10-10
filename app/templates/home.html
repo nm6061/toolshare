@@ -60,35 +60,32 @@
     <div class="container marketing">
         <div class="row">
             <div class="col-lg-4">
-                <img class="img-circle"
-                     src="{% static "images/shovel.png" %}"
-                     alt="Shovel" class="img-circle" style="width: 150px; height: 150px;"/>
+                <img class="img-circle" src="{% static "images/shovel.png" %}" alt="Shovel" class="img-circle"
+                     style="width: 150px; height: 150px;"/>
 
-                <h2>Winter is here</h2>
+                <h2>Are you winter ready?</h2>
 
-                <p>Recently moved to a snowy city from California, or Hawaii? Need a shovel for the winter? We've got you
-                    covered. <a href="/signup">Sign up</a> and borrow a shovel from your community.</p>
+                <p>Recently moved to a snowy city from California, or Hawaii? Need a shovel for the winter? We've got
+                    you covered. <a href="{% url 'signup' %}">Sign up</a> today, and be winter ready.
+                </p>
             </div>
             <div class="col-lg-4">
-                <img class="img-circle"
-                     src="{% static "images/spanner.png" %}"
-                     alt="Spanner" class="img-circle" style="width: 150px; height: 150px;"/>
+                <img class="img-circle" src="{% static "images/spanner.png" %}" alt="Spanner" class="img-circle"
+                     style="width: 150px; height: 150px;"/>
 
-                <h2>Rusting tools</h2>
+                <h2>Got tools rusting?</h2>
 
-                <p>Got tools rusting in your garage? <a href="/signup">Sign up</a> today, there may be someone in your
-                    community looking for a tool that you are not using.</p>
+                <p>Are tools rusting in your garage? <a href="{% url 'signup' %}">Sign up</a> today, there may be
+                    someone in your community looking for a tool that you are not using.</p>
             </div>
             <div class="col-lg-4">
-                <img class="img-circle"
-                     src="{% static "images/connections.png" %}"
-                     alt="Connections" class="img-circle" style="width: 150px; height: 150px;"/>
+                <img class="img-circle" src="{% static "images/connections.png" %}" alt="Connections" class="img-circle"
+                     style="width: 150px; height: 150px;"/>
 
-                <h2>Connections</h2>
+                <h2>Want to meet new people?</h2>
 
-                <p>What's in it for you? Meet new people, increase connections, build the community, and more...</p>
-
-                <p><a href="#" role="button">more...</a></p>
+                <p>Sharing helps a community grow organically. As an incentive you get to meet new people, build
+                    connections, and much much more...</p>
             </div>
         </div>
 {% endblock %}
