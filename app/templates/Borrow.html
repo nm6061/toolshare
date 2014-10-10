@@ -8,13 +8,15 @@
 {% endblock %}
 {% block brand-link %}/Request To Borrow{% endblock %}
 {% block navbar-right %}
-    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
+
             <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
             <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
         </ul>
     </div>
 {% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -26,21 +28,20 @@
                 <li><a href="#">My requests <span class="badge">5</span></a></li>
             </ul>
         </div>
+
     </div>
+
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header">Please enter details for Borrowing Tools </h1>
-    </div>
+            <h1 class="page-header">Please enter details for Borrowing Tools </h1>
+     </div>
+
+
     <div id="Fill in-box" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if success %}
-                <div class="alert alert-success" role="alert">
-                    <p><strong>Done!</strong> Your request was successfully submitted.</p>
-                </div>
-            {% endif %}
-            {% if form.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Oops!</strong> there were errors in the information
-                    you provided.
+            {% if user_form.errors or address_from.errors %}
+                <div class="alert alert-danger" role="alert"><strong>Oops!</strong> there were errors in the highlighted
+                    fields.
                 </div>{% endif %}
             <div class="form-group">
                 <div class="container-fluid">
@@ -51,21 +52,28 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="Date" class="form-control" name="from_date" id="from_date"
+                            <input type="Date" class="form-control" name="From_Date" id="From_Date"
                                    placeholder="From Date">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="date" class="form-control" name="to_date" id="to_date"
+                            <input type="date" class="form-control" name="To_Date" id="To_Date"
                                    placeholder="To Date">
                         </div>
                     </div>
+
+
+
+
+
+                    </div>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Borrow</button>
-        </form>
-    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Borrow</button>
+                  </form>
+              </div>
+
 {% endblock %}
 
 

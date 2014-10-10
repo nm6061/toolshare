@@ -1,3 +1,4 @@
+from app.constants import Constants
 from app import models
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -7,10 +8,12 @@ class SignUpForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(widget=forms.PasswordInput, required=True)
 
+    states = forms.ChoiceField(choices=Constants.US_STATES)
+
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements', 'apt_num', 'street',
-                  'county', 'city', 'state', 'zip']
+                  'county', 'city', 'zip']
 
     def clean(self):
         cleaned_data = super(SignUpForm, self).clean()
@@ -24,6 +27,7 @@ class SignUpForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(SignUpForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
+        user.state = self.cleaned_data['states']
 
         # ShareZone creation
 
@@ -63,8 +67,8 @@ class addToolForm(forms.ModelForm):
         # def save(self, commit=True):
         # tool = super(addToolForm, self).save(commit=False)
         #
-        # if commit:
-        # tool.save()
+        #     if commit:
+        #         tool.save()
         #     return tool
 
 
@@ -84,7 +88,18 @@ class approve_reservation(forms.ModelForm):
         return self.cleaned_data
 
 
-class BorrowToolForm(forms.ModelForm):
+class addReservationForm(forms.ModelForm):
     class Meta:
         model = models.Reservation
-        fields = ['from_date', 'to_date']
+        fields = ['from_date','to_date']
+
+    def clean(self):
+        cleaned_data = super(addReservationForm, self).clean()
+        return self.cleaned_data
+
+    def save(self, commit=True):
+        reservation = super(addReservationForm, self).save(commit=False)
+
+        if commit:
+            reservation.save()
+        return reservation

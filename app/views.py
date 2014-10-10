@@ -3,13 +3,14 @@ from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from app import forms
+from django.http import HttpResponse
+from app.models import UserProfile, Reservation
+from app.forms import UserUpdateForm
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
 from django.views.generic.edit import *
-from django.http import HttpResponse
-
-from app import forms
-from app import models
 
 
 def home(request):
@@ -71,25 +72,26 @@ def browsetool(request):
     return render_to_response('browsetool.html')
 
 
-def Borrow(request, tool_id):
+def Borrow(request):
+    # return render_to_response('Borrow.html')
     if request.method == 'POST':
-        reservation = models.Reservation()
-        reservation.status = 'Pending'
-        reservation.user = request.user
-        reservation.tool = models.Tool.objects.get(pk=tool_id)
+        object = Reservation()
+        object.user = request.user
+        object.From_date = request.POST['From_Date']
+        object.To_date = request.POST['To_Date']
 
-        borrow_tool_form = forms.BorrowToolForm(request.POST, instance=reservation)
+        object.save()
 
-        if borrow_tool_form.is_valid():
-            borrow_tool_form.save()
+        return HttpResponse("Your request is sent to  the owner")
+        # fillup_form = forms.FillUpForm(request.POST)
 
-            borrow_tool_form = forms.BorrowToolForm()
-            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
-        else:
-            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
+        #if fillup_form.is_valid():
+        #with transaction.atomic():
+        #fillup_form.save()
+        #return render(request, 'Borrow.html', RequestContext(request, {}))
     else:
-        borrow_tool_form = forms.BorrowToolForm()
-        return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
+        return render(request, 'Borrow.html',
+                      RequestContext(request))
 
 
 def registertool(request):
@@ -120,8 +122,8 @@ def approve_reservation(request):
 # return render_to_response('profile.html')
 # @login_required(redirect_field_name='o')
 class UserUpdateView(UpdateView):
-    form_class = forms.UserUpdateForm
-    model = models.UserProfile
+    form_class = UserUpdateForm
+    model = UserProfile
     # fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'zip', 'phone_num', 'email',
     # 'pickup_arrangements']
     template_name = 'profile.html'
