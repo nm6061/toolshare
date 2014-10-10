@@ -83,3 +83,8 @@ class ApproveReservationForm(forms.ModelForm):
     def clean(self):
         return self.cleaned_data
 
+
+class BorrowToolForm(forms.ModelForm):
+    class Meta:
+        model = models.Reservation
+        fields = ['from_date','to_date']

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from app import forms
+from app import models
 from django.http import HttpResponse
 from app.models import UserProfile, Reservation
 from app.forms import UserUpdateForm
@@ -72,26 +73,26 @@ def browsetool(request):
     return render_to_response('browsetool.html')
 
 
-def Borrow(request):
-    # return render_to_response('Borrow.html')
+def Borrow(request, tool_id):
     if request.method == 'POST':
-        object = Reservation()
-        object.user = request.user
-        object.From_date = request.POST['From_Date']
-        object.To_date = request.POST['To_Date']
+        reservation = models.Reservation()
+        reservation.user = request.user
+        reservation.tool = models.Tool.objects.get(pk=tool_id)
+        reservation.status = 'Pending'
 
-        object.save()
+        borrow_tool_form = forms.BorrowToolForm(request.POST, instance=reservation)
 
-        return HttpResponse("Your request is sent to  the owner")
-        # fillup_form = forms.FillUpForm(request.POST)
+        if borrow_tool_form.is_valid():
+            borrow_tool_form.save()
 
-        #if fillup_form.is_valid():
-        #with transaction.atomic():
-        #fillup_form.save()
-        #return render(request, 'Borrow.html', RequestContext(request, {}))
+            borrow_tool_form = forms.BorrowToolForm()
+            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
+        else:
+            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
+
     else:
-        return render(request, 'Borrow.html',
-                      RequestContext(request))
+        borrow_tool_form = forms.BorrowToolForm()
+        return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
 
 def registertool(request):
@@ -112,15 +113,14 @@ def registertool(request):
         return render(request, 'registertool.html', RequestContext(request, {'form': toolForm}))
 
 
-
-
 def approve_reservation(request):
-#TODO GET CONTEXT
+    # TODO GET CONTEXT
     def get_context_data(self, **kwargs):
         context = super(app.views.approve_reservation, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
-#TODO CHANGE STATUS TO RESERVED ON ACCEPT REQUEST
+
+    # TODO CHANGE STATUS TO RESERVED ON ACCEPT REQUEST
     if request.method == 'POST':
         toolForm = forms.ApproveReservationForm(request.POST)
 
