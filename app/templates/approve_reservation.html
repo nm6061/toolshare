@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
 {% block title %}Request To Borrow notification{% endblock %}
 {% block head %}
@@ -6,76 +5,34 @@
     <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
     <script src="{% static "scripts/holder.js" %}"></script>
 {% endblock %}
-{% block brand-link %}/dashboard{% endblock %}
+{% block brand-link %}
+    {% url "dashboard" %}
+{% endblock %}
 {% block navbar-right %}
-<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-
-            <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> signout</a></li>
+            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
+            </li>
+            <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
+            <li><a href="{% url "signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
+                out</a></li>
         </ul>
     </div>
 {% endblock %}
-
 {% block content %}
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">My tools</a></li>
+                <li><a href="{% url "dashboard" %}">My tools</a></li>
                 <li><a href="#">My sheds</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="#">My requests <span class="badge">1</span></a></li>
+                <li><a href="{% url "reservation" %}">My requests</a></li>
             </ul>
         </div>
-
     </div>
-
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Accept request for Borrowing your Tools </h1>
-     </div>
-
-
-    <div id="Fill in-box" class="auth-box">
-        <form role="form" action="." method="post">
-            {% csrf_token %}
-            {% if user_form.errors or address_from.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Oops!</strong> there were errors in the highlighted
-                    fields.
-                </div>
-                {% endif %}
-            <div class="form-group">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>Request to borrow</h3>
-                        </div>
-
-                   <div class="row">
-                        <div class="col-md-12">
-                            <label>From Date</label>
-                            {{ form.from_date }}
-                            <div class="spacer-15"></div>
-                            <label>To Date</label>
-                            {{ form.to_date }}
-                            <div class="spacer-15"></div>
-                            <label>Tool</label>
-                            {{ form.ApproveReservationFrom }}
-                            <div class="spacer-15"></div>
-                            <label>User </label>
-                            {{ form.user }}
-                        </div>
-                    </div>
-
-
-
-
-
-
-                   <div class="container-fluid">
-                <div class="pull-right">
-                    <button type="submit" class="btn btn-primary btn-block">Accept Request</button>
-                    <a href="/dashboard" class="btn btn-danger btn-block" role="button">Reject Request</a>
-                </div>
-            </div>
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            <p><strong>Done,</strong> a request to borrow your {{ reservation.tool.name }} was approved.</p>
+        </div>
+        <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</button>
+    </div>
 {% endblock %}

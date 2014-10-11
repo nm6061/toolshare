@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
 {% block title %}Request To Borrow notification{% endblock %}
 {% block head %}
@@ -8,42 +7,64 @@
 {% endblock %}
 {% block brand-link %}/dashboard{% endblock %}
 {% block navbar-right %}
-<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-
-            <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> signout</a></li>
+            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
+            </li>
+            <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
+            <li><a href="{% url "signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
+                out</a></li>
         </ul>
     </div>
 {% endblock %}
-
 {% block content %}
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">My tools</a></li>
-                <li><a href="#">My sheds</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="#">My requests <span class="badge">1</span></a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="/reservation">My requests </a></li>
-            </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="{% url 'dashboard' %}">My tools</a></li>
+                    <li><a href="#">My sheds</a></li>
+                    <li class="active"><a href="{% url 'reservation' %}">My requests</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <h1>My requests</h1>
 
+        <div class="spacer-50"></div>
+        {% if reservations %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Tool Name</th>
+                    <th>Requested By</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.tool.name }}</td>
+                        <td>{{ reservation.user.get_full_name }}</td>
+                        <td>{{ reservation.from_date }}</td>
+                        <td>{{ reservation.to_date }}</td>
+                        <td>
+                            <form action="{% url 'approve' reservation.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Approve</button>
+                                <button type="submit" class="btn btn-link" disabled="disabled">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                <strong>Aww,</strong> you have no requests.
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
-
-{% Reservation request %}
-
-<div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-              <li class="user">user</a></li>
-              <li class="tool">tool</li>
-              <li class="from date">from date</li>
-              <li class="todate">todate</li>
-            </ul>
-
-        </div>
