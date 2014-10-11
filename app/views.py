@@ -66,7 +66,10 @@ def signin(request):
 
 @login_required(redirect_field_name='o')
 def dashboard(request):
-    return render_to_response('dashboard.html')
+    user = request.user
+    homeTools = models.Tool.objects.filter(owner_id=user).filter(location='H')
+    context = {'homeTools': homeTools}
+    return render(request, 'dashboard.html', context)
 
 
 def browsetool(request):
@@ -163,3 +166,4 @@ class UserUpdateView(UpdateView):
     def get_success_url(self):
         messages.success(self.request, 'Your profile settings has been saved')
         return reverse_lazy('profile')
+

@@ -3,6 +3,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
 from django.core.urlresolvers import reverse
 from django.conf import settings
 import app.constants
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+
+
 
 
 class System(object):
@@ -131,7 +135,8 @@ class Tool(models.Model):
     )
 
     name = models.CharField(max_length=20)
-    picture = models.FileField(upload_to = 'toolpics')
+    picture = ProcessedImageField(upload_to='toolpics',processors=[ResizeToFill(250, 250)],
+        format='JPEG',options={'quality': 60})
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
@@ -158,9 +163,12 @@ class UserProfile(models.Model):
     street = models.CharField(max_length=50, default='', blank=False)
     city = models.CharField(max_length=50, default='', blank=False)
     county = models.CharField(max_length=50, default='', blank=True)
-    state = models.CharField(max_length=2, default='', blank=False)
+    state = models.CharField(max_length=2, default='app.models.User.state', blank=False)
     country = models.CharField(max_length=50, default='USA', blank=False)
     zip = models.CharField(max_length=9, default='', blank=False)
+
+    # def __iadd__(self, state):
+    #     state = app.models.User.state
 
     def __unicode__(self):
         return self.user.username

@@ -11,7 +11,7 @@
         <ul class="nav navbar-nav">
             <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a></li>
             <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
+            <li><a href="{% url "signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
         </ul>
     </div>
 {% endblock %}
@@ -38,6 +38,18 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
+                        {% if homeTools %}
+                            <ul>
+                                {% for tool in homeTools %}
+                                    <li>{{ tool.picture }}</li>
+{#                                    <img src="{{tool.picture.url}}"/>#}
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No tools are available.</p>
+                        {% endif %}
+
+
                         <a href="#" class="thumbnail">
                             <img data-src="holder.js/150x100/vine" alt="...">
                         </a>
