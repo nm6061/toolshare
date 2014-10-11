@@ -167,3 +167,7 @@ class UserUpdateView(UpdateView):
         messages.success(self.request, 'Your profile settings has been saved')
         return reverse_lazy('profile')
 
+def tool(request, tool_id):
+    tooldata = models.Tool.objects.filter(id=tool_id)
+
+    return HttpResponse(tooldata)

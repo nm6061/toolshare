@@ -135,7 +135,7 @@ class Tool(models.Model):
     )
 
     name = models.CharField(max_length=20)
-    picture = ProcessedImageField(upload_to='toolpics',processors=[ResizeToFill(250, 250)],
+    picture = ProcessedImageField(upload_to='toolpics',
         format='JPEG',options={'quality': 60})
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
