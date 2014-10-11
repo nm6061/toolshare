@@ -41,7 +41,8 @@
                         {% if homeTools %}
                             <ul>
                                 {% for tool in homeTools %}
-                                    <li>{{ tool.name }}</li>
+                                    <li>{{ tool.picture }}</li>
+{#                                    <img src="{{tool.picture.url}}"/>#}
                                 {% endfor %}
                             </ul>
                         {% else %}
