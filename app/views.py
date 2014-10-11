@@ -18,9 +18,10 @@ def home(request):
     return render_to_response('home.html')
 
 
+@login_required(redirect_field_name='o')
 def signout(request):
     logout(request)
-    return render(request, 'home.html')
+    return redirect(reverse('home'))
 
 
 def signup(request):
@@ -56,7 +57,7 @@ def signin(request):
                 return render(request, 'signin.html',
                               RequestContext(request, {'form': signin_form, 'errors': 'Incorrect email or password'}))
             else:
-                return render(request, 'dashboard.html')
+                return redirect(reverse('dashboard'))
         else:
             return render(request, 'signin.html', RequestContext(request, {'form': signin_form}))
     else:
@@ -72,13 +73,17 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
+@login_required(redirect_field_name='o')
 def browsetool(request):
     return render_to_response('browsetool.html')
 
+
+@login_required(redirect_field_name='o')
 def reservation(request):
     reservations = models.Reservation.objects.filter(tool__owner=request.user)
 
 
+@login_required(redirect_field_name='o')
 def Borrow(request, tool_id):
     if request.method == 'POST':
         reservation = models.Reservation()
@@ -101,6 +106,7 @@ def Borrow(request, tool_id):
         return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
 
+@login_required(redirect_field_name='o')
 def registertool(request):
     if request.method == 'POST':
         tool_form = forms.addToolForm(request.POST, request.FILES)
@@ -123,6 +129,7 @@ def registertool(request):
         return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
 
 
+@login_required(redirect_field_name='o')
 def approve_reservation(request):
     # TODO GET CONTEXT
     def get_context_data(self, **kwargs):
@@ -148,9 +155,7 @@ def approve_reservation(request):
         return render(request, 'approve_reservation.html', RequestContext(request, {'form': toolForm}))
 
 
-# def profile(request):
-# return render_to_response('profile.html')
-# @login_required(redirect_field_name='o')
+@login_required(redirect_field_name='o')
 class UserUpdateView(UpdateView):
     form_class = UserUpdateForm
     model = UserProfile
