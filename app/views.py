@@ -189,6 +189,6 @@ class UserUpdateView(edit.UpdateView):
         return reverse_lazy('profile')
 
 def tool(request, tool_id):
-    tooldata = models.Tool.objects.filter(id=tool_id)
-
-    return HttpResponse(tooldata)
+    tooldata = models.Tool.objects.get(id=tool_id)
+    context = {'tooldata': tooldata}
+    return render(request, 'tool.html', context)

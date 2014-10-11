@@ -4,9 +4,6 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 import app.constants
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
-
-
 
 
 class System(object):
