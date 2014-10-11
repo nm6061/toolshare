@@ -41,8 +41,8 @@
                         {% if homeTools %}
                             <ul>
                                 {% for tool in homeTools %}
-                                    <li>{{ tool.picture }}</li>
-{#                                    <img src="{{tool.picture.url}}"/>#}
+                                    <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.picture}}" class="img-circle"
+                                    style="width: 150px; height: 150px;"/>
                                 {% endfor %}
                             </ul>
                         {% else %}
