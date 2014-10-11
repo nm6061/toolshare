@@ -1,7 +1,6 @@
 from app import models
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-import app.constants
 
 
 class SignUpForm(forms.ModelForm):
@@ -47,7 +46,6 @@ class SignUpForm(forms.ModelForm):
 
 class SignInForm(AuthenticationForm):
     # TODO : Figure out how to get username to be rendered as an input of type=email
-
     AuthenticationForm.error_messages['invalid_login'] = "Invalid login"
 
     class Meta:
@@ -61,15 +59,10 @@ class addToolForm(forms.ModelForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    # state = forms.ChoiceField(choices=app.constants.US_STATES, initial='app.models.User.states')
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'apt_num', 'street', 'county', 'city', 'state', 'zip', 'phone_num',
                   'email', 'pickup_arrangements']
-
-    # def __init__(self, *args, **kwargs):
-    #     super(UserUpdateForm, self).__init__(*args,**kwargs)
-    #     self.fields["state"].queryset = state.objects.filter(active=True)
 
 
 class ApproveReservationForm(forms.ModelForm):
