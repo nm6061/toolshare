@@ -187,3 +187,8 @@ class UserUpdateView(edit.UpdateView):
     def get_success_url(self):
         messages.success(self.request, 'changes to your ToolShare account have been saved.')
         return reverse_lazy('profile')
+
+def tool(request, tool_id):
+    tooldata = models.Tool.objects.filter(id=tool_id)
+
+    return HttpResponse(tooldata)

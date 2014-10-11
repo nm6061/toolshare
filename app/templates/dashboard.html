@@ -37,48 +37,18 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col-md-2">
-                        {% if homeTools %}
-                            <ul>
-                                {% for tool in homeTools %}
-                                    <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.picture }}"
-                                         class="img-circle"
-                                         style="width: 150px; height: 150px;"/>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No tools are available.</p>
-                        {% endif %}
+                    {% if homeTools %}
+                        {% for tool in homeTools %}
+                            <div class="col-md-2">
+                                <figure>
+                                    <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.picture}}"
+                                         class="img-circle" style="width: 150px; height: 150px;"/>
+                                    <figcaption>{{tool.name}}</figcaption>
+                                </figure>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/vine" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/sky" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/industrial" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/lava" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Lent Out" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Lent Out" alt="...">
-                        </a>
-                    </div>
                 </div>
             </div>
 
