@@ -183,7 +183,7 @@ class Reservation(models.Model):
     status = models.CharField(max_length=15)
 
     tool = models.ForeignKey(Tool)
-    reservedBy = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def approve_reservation(self):
         return self.user.username

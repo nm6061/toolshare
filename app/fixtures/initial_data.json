@@ -112,7 +112,7 @@
             "location": "S"
         }
     },
-        {
+    {
         "model": "app.Tool",
         "pk": 3,
         "fields": {
@@ -127,31 +127,31 @@
     },
     {
         "model": "app.Reservation",
-        "pk":1,
+        "pk": 1,
         "fields": {
-            "reservedBy": 1,
+            "user": 1,
             "tool": 1,
-            "from_date":"2014-12-01",
+            "from_date": "2014-12-01",
             "to_date": "2014-12-10"
         }
     },
     {
         "model": "app.Reservation",
-        "pk":2,
+        "pk": 2,
         "fields": {
-            "reservedBy": 2,
+            "user": 2,
             "tool": 2,
-            "from_date":"2014-12-01",
+            "from_date": "2014-12-01",
             "to_date": "2014-12-10"
         }
     },
     {
         "model": "app.Reservation",
-        "pk":3,
+        "pk": 3,
         "fields": {
-            "reservedBy": 3,
+            "user": 3,
             "tool": 3,
-            "from_date":"2014-12-01",
+            "from_date": "2014-12-01",
             "to_date": "2014-12-10"
         }
     }
