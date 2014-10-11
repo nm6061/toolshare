@@ -15,5 +15,6 @@ urlpatterns = patterns('',
     # url(r'^profile/$', 'app.views.profile', name = 'profile'),
     url(r'^profile/$', UserUpdateView.as_view(), name='profile'),
     url(r'^registertool/$', 'app.views.registertool', name = 'registertool'),
-    url(r'^approve_reservation/$', 'app.views.approve_reservation', name = 'approve_reservation'),
+    #url(r'^approve_reservation/$', 'app.views.approve_reservation', name = 'approve_reservation'),
+    url(r'^reservation/$', 'app.views.reservation', name = 'reservation'),
 )

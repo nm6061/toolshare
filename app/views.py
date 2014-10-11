@@ -72,6 +72,9 @@ def dashboard(request):
 def browsetool(request):
     return render_to_response('browsetool.html')
 
+def reservation(request):
+    reservations = models.Reservation.objects.filter(tool__owner=request.user)
+
 
 def Borrow(request, tool_id):
     if request.method == 'POST':

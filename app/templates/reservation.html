@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Request To Borrow notification{% endblock %}
+{% block head %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
+    <script src="{% static "scripts/holder.js" %}"></script>
+{% endblock %}
+{% block brand-link %}/dashboard{% endblock %}
+{% block navbar-right %}
+<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+        <ul class="nav navbar-nav">
+
+            <li><a href="#" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> signout</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="#">My tools</a></li>
+                <li><a href="#">My sheds</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="#">My requests <span class="badge">1</span></a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="/reservation">My requests </a></li>
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% Reservation request %}
+
+<div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+              <li class="user">user</a></li>
+              <li class="tool">tool</li>
+              <li class="from date">from date</li>
+              <li class="todate">todate</li>
+            </ul>
+
+        </div>

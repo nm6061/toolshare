@@ -42,7 +42,8 @@
             {% if user_form.errors or address_from.errors %}
                 <div class="alert alert-danger" role="alert"><strong>Oops!</strong> there were errors in the highlighted
                     fields.
-                </div>{% endif %}
+                </div>
+                {% endif %}
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
@@ -65,6 +66,8 @@
                             {{ form.user }}
                         </div>
                     </div>
+
+
 
 
 
