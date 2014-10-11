@@ -38,6 +38,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
+                        {% if homeTools %}
+                            <ul>
+                                {% for tool in homeTools %}
+                                    <li>{{ tool.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No tools are available.</p>
+                        {% endif %}
+
+
                         <a href="#" class="thumbnail">
                             <img data-src="holder.js/150x100/vine" alt="...">
                         </a>
