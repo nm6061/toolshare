@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
+from django.contrib.messages import views
 from django.views.generic import edit
 
 from app import forms
@@ -159,11 +160,13 @@ class UserUpdateView(edit.UpdateView):
     template_name = 'profile.html'
     permission_required = 'auth.change_user'
     headline = 'Change Profile'
+    # success_message = 'Your profile settings has been saved'
 
     def get_object(self):
         return self.request.user
 
     def get_success_url(self):
-        messages.success(self.request, 'Your profile settings has been saved')
+        messages.success(self.request, 'changes to your ToolShare account have been saved.')
         return reverse_lazy('profile')
+
 

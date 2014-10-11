@@ -7,16 +7,16 @@
     <script src="{% static "scripts/holder.js" %}"></script>
 {% endblock %}
 {% block navbar-right %}
-<div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
+    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a></li>
+            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
+            </li>
             <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
         </ul>
     </div>
 {% endblock %}
-
 {% block content %}
-  <div class="row">
+    <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">My tools</a></li>
@@ -28,21 +28,22 @@
         </div>
 
     </div>
-
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Update your Profile </h1>
-     </div>
-
-
-    <div  class="auth-box">
+        <h1 class="page-header">Update your Profile</h1>
+    </div>
+    <div class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if user_form.errors or address_from.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Please enter correct data!</strong>
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
                 </div>
             {% endif %}
-
-<div class="form-group">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert"><strong>Done, </strong>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
@@ -56,12 +57,10 @@
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-6{% if form.first_name.errors %} has-error{% endif %}">
-                          {{ form.first_name|add_attrs:"{'class':'form-control','placeholder':'First'}" }}
-{#                         <input type="text" class="form-control" name="First Name" placeholder="First Name">#}
+                            {{ form.first_name|add_attrs:"{'class':'form-control','placeholder':'First'}" }}
                         </div>
                         <div class="col-md-6">
                             {{ form.last_name|add_attrs:"{'class':'form-control','placeholder':'Last'}" }}
-{#                         <input type="text" class="form-control" name="Last Name" placeholder="Last Name">#}
                         </div>
                     </div>
                     <div class="spacer-15"></div>
@@ -73,21 +72,17 @@
                     <div class="row no-gutter">
                         <div class="col-sm-3">
                             {{ form.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
-{#                            <input type="text" class="form-control" name="Apt #" placeholder="Apt #">#}
                         </div>
                         <div class="col-md-9{% if form.street.errors %} has-error{% endif %}">
-                        {{ form.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
-{#                            <input type="text" class="form-control" name="Street" placeholder="Street">#}
+                            {{ form.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
                         </div>
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-4">
                             {{ form.county|add_attrs:"{'class':'form-control','placeholder':'County'}" }}
-{#                            <input type="text" class="form-control" name="County Name" placeholder="County Name">#}
                         </div>
                         <div class="col-md-8{% if form.city.errors %} has-error{% endif %}">
                             {{ form.city|add_attrs:"{'class':'form-control','placeholder':'City'}" }}
-{#                        <input type="text" class="form-control" name="City" placeholder="City">#}
                         </div>
                     </div>
                     <div class="row no-gutter">
@@ -96,7 +91,6 @@
                         </div>
                         <div class="col-md-4{% if form.zip.errors %} has-error{% endif %}">
                             {{ form.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
-{#                        <input type="text" class="form-control" name="Zip" placeholder="Zip">#}
                         </div>
                     </div>
                     <div class="spacer-5"></div>
@@ -104,7 +98,6 @@
                         <div class="col-md-12{% if form.phone_num.errors %} has-error{% endif %}">
                             <label>Phone number</label>
                             {{ form.phone_num|add_attrs:"{'class':'form-control','placeholder':'(555) 555-5555'}" }}
-{#                        <input type="text" class="form-control" name="Phone" placeholder="(123) 456-7890">#}
                         </div>
                     </div>
                     <div class="spacer-15"></div>
@@ -112,10 +105,8 @@
                         <div class="col-md-12{% if form.email.errors %} has-error{% endif %}">
                             <label>Email</label>
                             {{ form.email|add_attrs:"{'class':'form-control','placeholder':'Email'}" }}
-{#                        <input type="text" class="form-control" name="Email" placeholder="Email">#}
                         </div>
                     </div>
-
                     <div class="spacer-15"></div>
                     <div class="row">
                         <div class="col-md-6">
@@ -124,13 +115,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            {{ form.pickup_arrangements|add_attrs:"{'class':'form-control','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
-{#                      <input type="text" class="form-control" name="Pickup Arrangement" placeholder="Eg, please visit my place">#}
+                            {{ form.pickup_arrangements|add_attrs:"{'class':'form-control no-resize','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
                         </div>
                     </div>
                 </div>
             </div>
-        <button type="submit" class="btn btn-primary btn-block">Update</button>
+            <button type="submit" class="btn btn-primary btn-block">Update</button>
         </form>
     </div>
 {% endblock %}
