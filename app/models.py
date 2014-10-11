@@ -8,6 +8,7 @@ from imagekit.processors import ResizeToFill
 
 
 
+
 class System(object):
     @staticmethod
     def get_share_zones():
@@ -162,9 +163,12 @@ class UserProfile(models.Model):
     street = models.CharField(max_length=50, default='', blank=False)
     city = models.CharField(max_length=50, default='', blank=False)
     county = models.CharField(max_length=50, default='', blank=True)
-    state = models.CharField(max_length=2, default='', blank=False)
+    state = models.CharField(max_length=2, default='app.models.User.state', blank=False)
     country = models.CharField(max_length=50, default='USA', blank=False)
     zip = models.CharField(max_length=9, default='', blank=False)
+
+    # def __iadd__(self, state):
+    #     state = app.models.User.state
 
     def __unicode__(self):
         return self.user.username

@@ -9,7 +9,7 @@
 {% block navbar-right %}
 <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-
+            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a></li>
             <li><a href="/" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
         </ul>
     </div>
@@ -23,7 +23,7 @@
                 <li><a href="#">My sheds</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="#">My requests <span class="badge">5</span></a></li>
+                <li><a href="/approve_reservation">My requests <span class="badge">5</span></a></li>
             </ul>
         </div>
 
@@ -92,7 +92,7 @@
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-8">
-{#                            {{ form.states|add_attrs:"{'class':'form-control'}" }}#}
+                            {{ form.state|add_attrs:"{'class':'form-control'}" }}
                         </div>
                         <div class="col-md-4{% if form.zip.errors %} has-error{% endif %}">
                             {{ form.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
