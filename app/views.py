@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.messages import views
 from django.views.generic import edit
+from django.views.decorators.http import require_POST
 
 from app import forms
 from app import models
@@ -79,7 +80,25 @@ def browsetool(request):
 
 @login_required(redirect_field_name='o')
 def reservation(request):
-    reservations = models.Reservation.objects.filter(tool__owner=request.user)
+    reservations = models.Reservation.objects.filter(tool__owner=request.user, status='Pending')
+
+    return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
+
+
+@login_required(redirect_field_name='o')
+@require_POST
+def approve(request, reservation_id):
+    reservation = models.Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'Approved'
+    reservation.save()
+
+    return render(request, 'approve_reservation.html', RequestContext(request, {'reservation': reservation}))
+
+
+@login_required(redirect_field_name='o')
+@require_POST
+def reject(request, reservation_id):
+    pass
 
 
 @login_required(redirect_field_name='o')
@@ -168,5 +187,3 @@ class UserUpdateView(edit.UpdateView):
     def get_success_url(self):
         messages.success(self.request, 'changes to your ToolShare account have been saved.')
         return reverse_lazy('profile')
-
-
