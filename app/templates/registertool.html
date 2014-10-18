@@ -2,6 +2,31 @@
 {% load filters %}
 {% block brand-link %}/dashboard{% endblock %}
 {% block title %}Register Tool{% endblock %}
+
+{% block head %}
+    <script>
+        function imagePreview(fileInput) {
+            var files = fileInput.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var imageType = /image.*/;
+                if (!file.type.match(imageType)) {
+                    continue;
+                }
+                var img=document.getElementById("thumbnail");
+                img.file = file;
+                var reader = new FileReader();
+                reader.onload = (function(aImg) {
+                    return function(e) {
+                        aImg.src = e.target.result;
+                    };
+                })(img);
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+{% endblock %}
+
 {% block navbar-right %}
     <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
@@ -39,7 +64,8 @@
                         <div class="col-md-12">
 
                             <label for="id_picture">Upload a picture of the tool</label>
-                            {{ form.picture}}
+                            <input  type="file" accept="image/*" name="picture" onchange="imagePreview(this)" />
+                            <img id="thumbnail" style="width:250px; margin-top:5px; "  src="">
 
                             <div class="spacer-20"></div>
 
