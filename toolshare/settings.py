@@ -24,6 +24,10 @@ AUTH_USER_MODEL = 'app.User'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'y%d%+9=2@icl39cxv^!c1oosi082)kp-88@@v#h2!0nqzm$5xf'
 
+# Email Settings
+SEND_GRID = {'username': 'nm6061', 'password': 'ToolShare!'}
+DEFAULT_FROM_EMAIL = 'administrator@toolshare.com'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
