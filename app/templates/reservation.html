@@ -24,8 +24,7 @@
                 <ul class="nav nav-sidebar">
                     <li><a href="{% url 'dashboard' %}">My tools</a></li>
                     <li><a href="#">My sheds</a></li>
-                    <li class="active"><a href="{% url 'reservation' %}">My requests</a>
-                    </li>
+                    <li class="active"><a href="{% url 'reservation' %}">My requests</a></li>
                 </ul>
             </div>
         </div>
@@ -54,8 +53,14 @@
                             <form action="{% url 'approve' reservation.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">Approve</button>
-                                <button type="submit" class="btn btn-link" disabled="disabled">Reject</button>
+
                             </form>
+                            <form action="{% url 'reject' reservation.pk %}" method="POST">
+                                {% csrf_token %}
+
+                                <button type="submit" class="btn btn-primary">Reject</button>
+                            </form>
+
                         </td>
                     </tr>
                 {% endfor %}
