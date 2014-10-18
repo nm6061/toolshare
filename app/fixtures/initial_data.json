@@ -1,5 +1,13 @@
 [
     {
+        "model": "sites.Site",
+        "pk": 1,
+        "fields": {
+            "domain": "toolshare.com",
+            "name": "ToolShare"
+        }
+    },
+    {
         "model": "app.ShareZone",
         "pk": 1,
         "fields": {

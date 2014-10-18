@@ -15,6 +15,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Application's sign in page
 LOGIN_URL = 'signin'
 
+# Application's site identifier
+SITE_ID = 1
+
 # Custom user
 AUTH_USER_MODEL = 'app.User'
 
@@ -45,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'app', 'imagekit',
 )
 
