@@ -94,11 +94,20 @@ def approve(request, reservation_id):
 
     return render(request, 'approve_reservation.html', RequestContext(request, {'reservation': reservation}))
 
-
 @login_required(redirect_field_name='o')
 @require_POST
 def reject(request, reservation_id):
-    pass
+    reservation = models.Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'Reject'
+    reservation.save()
+
+    return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
+
+
+#@login_required(redirect_field_name='o')
+#@require_POST
+#def reject(request, reservation_id):
+#    pass
 
 
 @login_required(redirect_field_name='o')

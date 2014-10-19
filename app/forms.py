@@ -56,7 +56,21 @@ class addToolForm(forms.ModelForm):
     class Meta:
         model = models.Tool
         fields = ['name', 'description', 'category', 'location', 'picture']
+        widgets = {
+            'location': forms.RadioSelect(),
+        }
 
+    def __init__(self, *args, **kwargs):
+        super(addToolForm, self).__init__(*args, **kwargs)
+
+        self.fields['name'].error_messages = {'required': 'Please enter a name for the tool'}
+        self.fields['description'].error_messages = {'required': 'Please provide a description of your tool'}
+        self.fields['category'].error_messages = {'required': 'Please choose which category your tool falls into'}
+        self.fields['location'].error_messages = {'required': 'Please choose where your tool will be shared from'}
+        self.fields['picture'].error_messages = {'required': 'Please upload a picture of the tool'}
+
+    def clean_name(self):
+        return self.cleaned_data['name'].capitalize()
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
