@@ -69,6 +69,9 @@ class addToolForm(forms.ModelForm):
         self.fields['location'].error_messages = {'required': 'Please choose where your tool will be shared from'}
         self.fields['picture'].error_messages = {'required': 'Please upload a picture of the tool'}
 
+    def clean_name(self):
+        return self.cleaned_data['name'].capitalize()
+
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = models.User
