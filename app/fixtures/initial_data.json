@@ -29,9 +29,50 @@
         }
     },
     {
+        "model": "app.Address",
+        "pk": 1,
+        "fields": {
+            "apt_num": "35B",
+            "street": "256 Metro Center Blvd.",
+            "city": "Worcester",
+            "county": "",
+            "state": "MA",
+            "country": "USA",
+            "zip": "142582458"
+        }
+    },
+    {
+        "model": "app.Address",
+        "pk": 2,
+        "fields": {
+            "apt_num": "",
+            "street": "22 Central Street",
+            "city": "Pasadena",
+            "county": "Kent",
+            "state": "RI",
+            "country": "USA",
+            "zip": "02886"
+        }
+    },
+    {
+        "model": "app.Address",
+        "pk": 3,
+        "fields": {
+            "apt_num": "",
+            "street": "48 Sockanosset Cross Road",
+            "city": "Cranston",
+            "county": "",
+            "state": "RI",
+            "country": "USA",
+            "zip": "029204587"
+        }
+    },
+    {
         "model": "app.User",
         "pk": 1,
         "fields": {
+            "is_active": true,
+            "date_joined": "2014-10-10",
             "email": "john.smith@toolshare.com",
             "password": "pbkdf2_sha256$12000$wkhpGxr1AfEa$RyAcqftcQcz35p+0ILlrLiq4kYWzYLbJ6OL/lJrsbKw=",
             "first_name": "John",
@@ -40,13 +81,7 @@
             "phone_num": "4013268457",
             "pickup_arrangements": "Knock on the door.",
             "reputation": 0,
-            "apt_num": "35B",
-            "street": "256 Metro Center Blvd.",
-            "city": "Worcester",
-            "county": "",
-            "state": "MA",
-            "country": "USA",
-            "zip": "142582458",
+            "address": 1,
             "share_zone": 1
         }
     },
@@ -54,6 +89,8 @@
         "model": "app.User",
         "pk": 2,
         "fields": {
+            "is_active": true,
+            "date_joined": "2014-10-10",
             "email": "cameron@toolshare.com",
             "password": "pbkdf2_sha256$12000$Zo9oeS6rki2D$lsG2fJN4tsxvLSFydHf562XZICTLvRN8L7pjaz0VEPI=",
             "first_name": "Cameron",
@@ -62,13 +99,7 @@
             "phone_num": "8589569212",
             "pickup_arrangements": "Pick-up from the garage.",
             "reputation": 0,
-            "apt_num": "",
-            "street": "22 Central Street",
-            "city": "Pasadena",
-            "county": "Kent",
-            "state": "RI",
-            "country": "USA",
-            "zip": "02886",
+            "address": 2,
             "share_zone": 2
         }
     },
@@ -76,6 +107,8 @@
         "model": "app.User",
         "pk": 3,
         "fields": {
+            "is_active": true,
+            "date_joined": "2014-10-10",
             "email": "rob.chase@toolshare.com",
             "password": "pbkdf2_sha256$12000$NvHcprIKzHYD$UcQQGyhQ853xp/3FO9sq42MdxDKoLKyrBUzyGlveGu8=",
             "first_name": "Robert",
@@ -84,13 +117,7 @@
             "phone_num": "",
             "pickup_arrangements": "",
             "reputation": 0,
-            "apt_num": "",
-            "street": "48 Sockanosset Cross Road",
-            "city": "Cranston",
-            "county": "",
-            "state": "RI",
-            "country": "USA",
-            "zip": "029204587",
+            "address": 3,
             "share_zone": 3
         }
     },
