@@ -136,8 +136,8 @@ class Tool(models.Model):
         format='JPEG',options={'quality': 60})
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
-    category = models.CharField(max_length=2, choices=CATEGORY)
-    location = models.CharField(max_length=1, choices=LOCATION)
+    category = models.CharField(max_length=2, choices=CATEGORY )
+    location = models.CharField(max_length=1, choices=LOCATION, default=0)
     owner = models.ForeignKey(User)
 
     def __str__(self):

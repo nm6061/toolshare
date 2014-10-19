@@ -147,3 +147,12 @@ body {
     border: 0;
     display: block;
 }
+
+.formErrorMessage {
+    color: #a94442;
+}
+
+.locationChoices ul {
+    padding: 0;
+    list-style: none;
+}
