@@ -4,7 +4,7 @@
 {% block navbar-right %}
     <div id="navbar-collapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url "account:signin" %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+            <li><a href="{% url "signin" %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
         </ul>
     </div>
 {% endblock %}
@@ -12,7 +12,14 @@
     <div id="signup-box" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if form.errors or formset.errors %}
+            {% if signup_successful %}
+                <div class="alert alert-success" role="alert">
+                    <p><strong>Congratulations!</strong> You now have your own ToolShare account. </p>
+
+                    <p><a href="{% url "signin" %}">Sign in</a> to begin building a better community.</p>
+                </div>
+            {% endif %}
+            {% if form.errors %}
                 <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
                 </div>
             {% endif %}
@@ -44,26 +51,26 @@
                     </div>
                     <div class="row no-gutter">
                         <div class="col-sm-3">
-                            {{ formset.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
+                            {{ form.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
                         </div>
-                        <div class="col-md-9{% if formset.street.errors %} has-error{% endif %}">
-                            {{ formset.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
+                        <div class="col-md-9{% if form.street.errors %} has-error{% endif %}">
+                            {{ form.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
                         </div>
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-4">
-                            {{ formset.county|add_attrs:"{'class':'form-control','placeholder':'County'}" }}
+                            {{ form.county|add_attrs:"{'class':'form-control','placeholder':'County'}" }}
                         </div>
-                        <div class="col-md-8{% if formset.errors %} has-error{% endif %}">
-                            {{ formset.city|add_attrs:"{'class':'form-control','placeholder':'City'}" }}
+                        <div class="col-md-8{% if form.city.errors %} has-error{% endif %}">
+                            {{ form.city|add_attrs:"{'class':'form-control','placeholder':'City'}" }}
                         </div>
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-8">
-                            {{ formset.state|add_attrs:"{'class':'form-control'}" }}
+                            {{ form.state|add_attrs:"{'class':'form-control'}" }}
                         </div>
-                        <div class="col-md-4{% if formset.zip.errors %} has-error{% endif %}">
-                            {{ formset.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
+                        <div class="col-md-4{% if form.zip.errors %} has-error{% endif %}">
+                            {{ form.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
                         </div>
                     </div>
                     <div class="spacer-5"></div>
@@ -105,15 +112,9 @@
                             {{ form.pickup_arrangements|add_attrs:"{'class':'form-control no-resize','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
                         </div>
                     </div>
-                    <div class="spacer-15"></div>
-                    <div class="row pull-right">
-                        <div class="col-md-12">
-                            <a class="btn btn-link" href="{% url "home" %}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Sign up</button>
-                        </div>
-                    </div>
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign up</button>
         </form>
     </div>
 {% endblock %}
