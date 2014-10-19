@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load filters %}
+{% block title %}Sign in{% endblock %}
+{% block navbar-right %}
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url "account:signup" %}"><span class="glyphicon glyphicon-log-in"></span> Sign up</a></li>
+        </ul>
+    </div>
+{% endblock %}
+{% block content %}
+    <div id="signin-box" class="auth-box">
+        <form role="form" action="." method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert"><strong>Ah snap !</strong>
+
+                    <div class="spacer-5"></div>
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% elif form.errors %}
+                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
+                </div>
+            {% endif %}
+            {% if errors %}
+                <div class="alert alert-danger" role="alert">{{ errors }}</div>
+            {% endif %}
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Sign in to your ToolShare account</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12{% if form.username.errors %} has-error{% endif %}">
+                            {{ form.username|add_attrs:"{'class':'form-control','placeholder':'Email'}" }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12{% if form.password.errors %} has-error{% endif %}">
+                            {{ form.password|add_attrs:"{'class':'form-control','placeholder':'Password'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-link">Forget password?</button>
+                            <button type="submit" class="btn btn-primary">Sign in</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

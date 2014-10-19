@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load filters %}
+{% block title %}Sign up for a ToolShare account{% endblock %}
+{% block navbar-right %}
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url "account:signin" %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+        </ul>
+    </div>
+{% endblock %}
+{% block content %}
+    <div id="signup-box" class="auth-box">
+        <form role="form" action="." method="post">
+            {% csrf_token %}
+            {% if form.errors or formset.errors %}
+                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Sign up for a ToolShare account</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Name</label>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-6{% if form.first_name.errors %} has-error{% endif %}">
+                            {{ form.first_name|add_attrs:"{'class':'form-control','placeholder':'First'}" }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.last_name|add_attrs:"{'class':'form-control','placeholder':'Last'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Address</label>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-3">
+                            {{ formset.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
+                        </div>
+                        <div class="col-md-9{% if formset.street.errors %} has-error{% endif %}">
+                            {{ formset.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-4">
+                            {{ formset.county|add_attrs:"{'class':'form-control','placeholder':'County'}" }}
+                        </div>
+                        <div class="col-md-8{% if formset.errors %} has-error{% endif %}">
+                            {{ formset.city|add_attrs:"{'class':'form-control','placeholder':'City'}" }}
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-8">
+                            {{ formset.state|add_attrs:"{'class':'form-control'}" }}
+                        </div>
+                        <div class="col-md-4{% if formset.zip.errors %} has-error{% endif %}">
+                            {{ formset.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-5"></div>
+                    <div class="row">
+                        <div class="col-md-12{% if form.phone_num.errors %} has-error{% endif %}">
+                            <label>Phone number</label>
+                            {{ form.phone_num|add_attrs:"{'class':'form-control','placeholder':'(555) 555-5555'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-12{% if form.email.errors %} has-error{% endif %}">
+                            <label>Email</label>
+                            {{ form.email|add_attrs:"{'class':'form-control','placeholder':'Email'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-5"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Password</label>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-6{% if form.password1.errors %} has-error{% endif %}">
+                            {{ form.password1|add_attrs:"{'class':'form-control','placeholder':'Password'}" }}
+                        </div>
+                        <div class="col-md-6{% if form.password2.errors %} has-error{% endif %}">
+                            {{ form.password2|add_attrs:"{'class':'form-control','placeholder':'Confirm'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Pickup arrangement</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.pickup_arrangements|add_attrs:"{'class':'form-control no-resize','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <a class="btn btn-link" href="{% url "home" %}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Sign up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
