@@ -135,15 +135,14 @@ def Borrow(request, tool_id):
 
 @login_required(redirect_field_name='o')
 def registertool(request):
+    currentUser = request.user
     if request.method == 'POST':
-        currentUser = request.user
-        tool_form = forms.addToolForm(request.POST, request.FILES, initial = {'pickupArrangement': currentUser.pickup_arrangements})
+        tool_form = forms.addToolForm(request.POST, request.FILES)
 
         if tool_form.is_valid():
             with transaction.atomic():
                 new_tool = tool_form.save(commit=False)
                 new_tool.owner = currentUser
-
                 new_tool.status = 'A'
                 new_tool.save()
                 tool_form.save_m2m()
@@ -154,7 +153,7 @@ def registertool(request):
         else:
             return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
     else:
-        tool_form = forms.addToolForm()
+        tool_form = forms.addToolForm(initial = {'pickupArrangement': currentUser.pickup_arrangements})
         return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
 
 
