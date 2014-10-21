@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 import app.constants
 from imagekit.models import ProcessedImageField
+from imagekit.processors import *
+import os
 
 
 class System(object):
@@ -131,9 +133,12 @@ class Tool(models.Model):
         ('OT', 'Other'),
     )
 
+    def toolPictureName(instance, filename):
+        ext = filename.split('.')[-1]
+        return 'toolpics/{}.{}'.format(instance.name, ext)
+
     name = models.CharField(max_length=20)
-    picture = ProcessedImageField(upload_to='toolpics',
-        format='JPEG',options={'quality': 60})
+    picture = ProcessedImageField(processors=[ResizeToCover(200, 200)], format = 'JPEG', upload_to=toolPictureName)
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY )
@@ -142,6 +147,7 @@ class Tool(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 class BlackoutDate(models.Model):
