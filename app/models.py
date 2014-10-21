@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 import app.constants
 from imagekit.models import ProcessedImageField
-from imagekit.processors import *
+from imagekit.processors import ResizeToCover
 import os
 
 
@@ -137,13 +137,14 @@ class Tool(models.Model):
         ext = filename.split('.')[-1]
         return 'toolpics/{}.{}'.format(instance.name, ext)
 
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=25)
     picture = ProcessedImageField(processors=[ResizeToCover(200, 200)], format = 'JPEG', upload_to=toolPictureName)
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY )
     location = models.CharField(max_length=1, choices=LOCATION, blank=False, default=0)
     owner = models.ForeignKey(User)
+    pickupArrangement = models.TextField(max_length=500)
 
     def __str__(self):
         return self.name
