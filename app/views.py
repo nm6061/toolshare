@@ -75,7 +75,17 @@ def dashboard(request):
 
 @login_required(redirect_field_name='o')
 def browsetool(request):
-    return render_to_response('browsetool.html')
+    """
+       browsetool() is responsible for rendering a web page displaying tools available
+       for borrow.
+       It currently filters tools by:
+            -excluding tools belonging to the logged in user
+            -excluding tools that have a 'deactivated' status
+    """
+    user = request.user
+    toolsList = models.Tool.objects.exclude(owner_id=user).exclude(status='D')
+    context = {'toolsList': toolsList}
+    return render(request,'browsetool.html', context)
 
 
 @login_required(redirect_field_name='o')
