@@ -25,6 +25,13 @@
         <p> Tool Description: {{ tooldata.description }}</p>
         <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>
 
+        {% if isToolOnwer %}
+            <p>the owner!</p>
+        {% else %}
+            <p>not the owner!</p>
+
+        {% endif %}
+
     </div>
 
 
