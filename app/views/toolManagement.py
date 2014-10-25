@@ -15,8 +15,9 @@ from app.forms.toolRegistration import AddToolForm
 from app.models.reservation import Reservation
 from app.models.tool import Tool
 
+
 @login_required(redirect_field_name='o')
-def registertool(request):
+def registerTool(request):
     currentUser = request.user
     if request.method == 'POST':
         tool_form = AddToolForm(request.POST, request.FILES)
