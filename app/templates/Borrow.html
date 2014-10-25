@@ -13,7 +13,7 @@
             <li><a href="{% url "browsetool" %}" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
             </li>
             <li><a href="{% url "profile" %}" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
+            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
                 out</a></li>
         </ul>
     </div>
@@ -44,12 +44,21 @@
                     information
                     you provided.
                 </div>{% endif %}
+
+
+
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="container">
+
+            </div>
                         <div class="col-md-12">
                             <h3>Fill up for borrowing tool</h3>
                         </div>
+                    </div>
+                    <div class="row">
+
                     </div>
                     <div class="row">
                         <div class="col-md-12">

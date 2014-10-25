@@ -18,5 +18,6 @@ urlpatterns = patterns('',
     url(r'^reservation/$', 'app.views.reservation', name = 'reservation'),
     url(r'^reservation/(?P<reservation_id>\d+)/approve/$', 'app.views.approve', name = 'approve'),
     url(r'^reservation/(?P<reservation_id>\d+)/reject/$', 'app.views.reject', name = 'reject'),
+    url(r'^reservation/(?P<reservation_id>\d+)/cancel/$', 'app.views.cancel', name = 'cancel'),
     url(r'^tool/(?P<tool_id>\d+)/$', 'app.views.viewTool', name='viewTool'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
