@@ -19,53 +19,6 @@ def home(request):
 
 
 @login_required(redirect_field_name='o')
-def signout(request):
-    logout(request)
-    return redirect(reverse('home'))
-
-
-def signup(request):
-    if request.method == 'POST':
-        signup_form = forms.SignUpForm(request.POST)
-
-        if signup_form.is_valid():
-            with transaction.atomic():
-                signup_form.save()
-
-            signup_form = forms.SignUpForm()
-            return render(request, 'signup.html',
-                          RequestContext(request, {'form': signup_form, 'signup_successful': True}))
-        else:
-            return render(request, 'signup.html',
-                          RequestContext(request, {'form': signup_form}))
-    else:
-        signup_form = forms.SignUpForm()
-        return render(request, 'signup.html',
-                      RequestContext(request, {'form': signup_form}))
-
-
-def signin(request):
-    if request.method == 'POST':
-        signin_form = forms.SignInForm(request, request.POST)
-
-        if signin_form.is_valid():
-            user = authenticate(email=signin_form.cleaned_data['username'],
-                                password=signin_form.cleaned_data['password'])
-            login(request, user)
-
-            if user == None:
-                return render(request, 'signin.html',
-                              RequestContext(request, {'form': signin_form, 'errors': 'Incorrect email or password'}))
-            else:
-                return redirect(reverse('dashboard'))
-        else:
-            return render(request, 'signin.html', RequestContext(request, {'form': signin_form}))
-    else:
-        signin_form = forms.SignInForm()
-    return render(request, 'signin.html', RequestContext(request, {'form': signin_form}))
-
-
-@login_required(redirect_field_name='o')
 def dashboard(request):
     user = request.user
     homeTools = models.Tool.objects.filter(owner_id=user).filter(location='H')
