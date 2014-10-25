@@ -208,7 +208,9 @@ class UserUpdateView(edit.UpdateView):
         messages.success(self.request, 'changes to your ToolShare account have been saved.')
         return reverse_lazy('profile')
 
-def tool(request, tool_id):
+def viewTool(request, tool_id):
+    currentUser = request.user
     tooldata = models.Tool.objects.get(id=tool_id)
-    context = {'tooldata': tooldata}
+    isToolOwner = tooldata.owner == currentUser
+    context = {'tooldata': tooldata, 'isToolOwner':isToolOwner}
     return render(request, 'tool.html', context)
