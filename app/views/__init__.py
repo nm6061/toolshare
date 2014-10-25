@@ -12,6 +12,9 @@ from django.views.decorators.http import require_POST
 
 from app import forms
 from app import models
+from app.forms.toolRegistration import AddToolForm
+from app.models.reservation import Reservation
+from app.models.tool import Tool
 
 
 def home(request):
@@ -21,7 +24,7 @@ def home(request):
 @login_required(redirect_field_name='o')
 def dashboard(request):
     user = request.user
-    homeTools = models.Tool.objects.filter(owner_id=user).filter(location='H')
+    homeTools = Tool.objects.filter(owner_id=user).filter(location='H')
     context = {'homeTools': homeTools}
     return render(request, 'dashboard.html', context)
 
@@ -36,14 +39,14 @@ def browsetool(request):
             -excluding tools that have a 'deactivated' status
     """
     user = request.user
-    toolsList = models.Tool.objects.exclude(owner_id=user).exclude(status='D')
+    toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
     context = {'toolsList': toolsList}
     return render(request,'browsetool.html', context)
 
 
 @login_required(redirect_field_name='o')
 def reservation(request):
-    reservations = models.Reservation.objects.filter(tool__owner=request.user, status='Pending')
+    reservations = Reservation.objects.filter(tool__owner=request.user, status='Pending')
 
     return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
 
@@ -51,7 +54,7 @@ def reservation(request):
 @login_required(redirect_field_name='o')
 @require_POST
 def approve(request, reservation_id):
-    reservation = models.Reservation.objects.get(pk=reservation_id)
+    reservation = Reservation.objects.get(pk=reservation_id)
     reservation.status = 'Approved'
     reservation.save()
 
@@ -60,7 +63,7 @@ def approve(request, reservation_id):
 @login_required(redirect_field_name='o')
 @require_POST
 def reject(request, reservation_id):
-    reservation = models.Reservation.objects.get(pk=reservation_id)
+    reservation = Reservation.objects.get(pk=reservation_id)
     reservation.status = 'Reject'
     reservation.save()
 
@@ -76,9 +79,9 @@ def reject(request, reservation_id):
 @login_required(redirect_field_name='o')
 def Borrow(request, tool_id):
     if request.method == 'POST':
-        reservation = models.Reservation()
+        reservation = Reservation()
         reservation.user = request.user
-        reservation.tool = models.Tool.objects.get(pk=tool_id)
+        reservation.tool = Tool.objects.get(pk=tool_id)
         reservation.status = 'Pending'
 
         borrow_tool_form = forms.BorrowToolForm(request.POST, instance=reservation)
@@ -95,29 +98,6 @@ def Borrow(request, tool_id):
         borrow_tool_form = forms.BorrowToolForm()
         return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
-
-@login_required(redirect_field_name='o')
-def registertool(request):
-    currentUser = request.user
-    if request.method == 'POST':
-        tool_form = forms.addToolForm(request.POST, request.FILES)
-
-        if tool_form.is_valid():
-            with transaction.atomic():
-                new_tool = tool_form.save(commit=False)
-                new_tool.owner = currentUser
-                new_tool.status = 'A'
-                new_tool.save()
-                tool_form.save_m2m()
-
-            tool_form = forms.addToolForm()
-            return render(request, 'registertool.html',
-                          RequestContext(request, {'form': tool_form, 'tool_added': True}))
-        else:
-            return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
-    else:
-        tool_form = forms.addToolForm(initial = {'pickupArrangement': currentUser.pickup_arrangements})
-        return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
 
 
 @login_required(redirect_field_name='o')
@@ -161,9 +141,4 @@ class UserUpdateView(edit.UpdateView):
         messages.success(self.request, 'changes to your ToolShare account have been saved.')
         return reverse_lazy('profile')
 
-def viewTool(request, tool_id):
-    currentUser = request.user
-    tooldata = models.Tool.objects.get(id=tool_id)
-    isToolOwner = tooldata.owner == currentUser
-    context = {'tooldata': tooldata, 'isToolOwner':isToolOwner}
-    return render(request, 'tool.html', context)
+
