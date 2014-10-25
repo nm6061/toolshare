@@ -6,7 +6,7 @@ from app.models import Tool
 class Reservation(models.Model):
     class Meta:
         app_label = 'app'
-        
+
     from_date = models.DateField()
     to_date = models.DateField()
     status = models.CharField(max_length=15)
