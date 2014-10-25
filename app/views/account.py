@@ -12,6 +12,7 @@ from app.views.edit import FormsetView
 
 class SignUpView(FormsetView):
     template_name = 'account/signup.html'
+    success_template_name = 'account/signup_success.html'
     form_class = SignUpUserForm
     formset_class = SignUpAddressFormSet
     http_method_names = ['get', 'post']
@@ -22,7 +23,7 @@ class SignUpView(FormsetView):
         for k, v in ChainMap(formset.cleaned_data, form.cleaned_data).items():
             cleaned_data[k] = v
         self.sign_up(request, **cleaned_data)
-        return super(SignUpView, self).form_valid(request, form, formset)
+        return render(request, self.success_template_name)
 
 
     def sign_up(self, request, **cleaned_data):
