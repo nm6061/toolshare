@@ -13,13 +13,15 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application's sign in page
-LOGIN_URL = 'signin'
+LOGIN_URL = 'account:signin'
 
 # Application's site identifier
 SITE_ID = 1
 
 # Custom user
 AUTH_USER_MODEL = 'app.User'
+REQUIRE_ACTIVATION = False
+ACCOUNT_ACTIVATION_DAYS = 3
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/

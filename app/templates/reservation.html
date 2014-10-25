@@ -12,7 +12,7 @@
             <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
             </li>
             <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
+            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
                 out</a></li>
         </ul>
     </div>
@@ -24,8 +24,7 @@
                 <ul class="nav nav-sidebar">
                     <li><a href="{% url 'dashboard' %}">My tools</a></li>
                     <li><a href="#">My sheds</a></li>
-                    <li class="active"><a href="{% url 'reservation' %}">My requests</a>
-                    </li>
+                    <li class="active"><a href="{% url 'reservation' %}">My requests</a></li>
                 </ul>
             </div>
         </div>
@@ -54,8 +53,17 @@
                             <form action="{% url 'approve' reservation.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">Approve</button>
-                                <button type="submit" class="btn btn-link" disabled="disabled">Reject</button>
 
+                            </form>
+                            <form action="{% url 'reject' reservation.pk %}" method="POST">
+                                {% csrf_token %}
+
+                                <button type="submit" class="btn btn-primary">Reject</button>
+                            </form>
+                            <form action="{% url 'cancel' reservation.pk %}" method="POST">
+                                {% csrf_token %}
+
+                                <button type="submit" class="btn btn-primary">Cancel</button>
                             </form>
                         </td>
                     </tr>

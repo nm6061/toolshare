@@ -7,22 +7,30 @@
         <ul class="nav navbar-nav">
             <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a></li>
             <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
+            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
         </ul>
     </div>
 {% endblock %}
 {% block content %}
 
     <div class="auth-box">
-        <img class="img-square" src="{{tooldata.picture.url}}" alt="{{tool.picture}}"
+        <img class="img-square" src="{{tooldata.picture.url}}" alt="{{tooldata.name}}"
         class="img-circle" style="width: 100%; height: 350px;"/>
 
         <p> Name of tool: {{ tooldata.name }}</p>
-        <p> Tool Description: {{ tooldata.description }}</p>
-        <p> Tool Status: {{ tooldata.status }}</p>
-        <p> Category: {{ tooldata.category }}</p>
-        <p> Sharing Location: {{ tooldata.location }}</p>
+        <p> Category: {{ tooldata.get_category_display }}</p>
+        <p> Tool Status: {{ tooldata.get_status_display}}</p>
+        <p> Sharing Location: {{ tooldata.get_location_display }}</p>
         <p> Owner: {{ tooldata.owner.get_full_name }}</p>
+        <p> Tool Description: {{ tooldata.description }}</p>
+        <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>
+
+        {% if isToolOnwer %}
+            <p>the owner!</p>
+        {% else %}
+            <p>not the owner!</p>
+
+        {% endif %}
 
     </div>
 

@@ -13,7 +13,7 @@
             <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
             </li>
             <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
+            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
                 out</a></li>
         </ul>
     </div>
@@ -34,15 +34,14 @@
 
             <h2 class="sub-header">Tools Available</h2>
 
-            <h3>Tools Available from home</h3>
 
-            <div class="container">
+             <div class="container">
                 <div class="row">
-                    {% if homeTools %}
-                        {% for tool in homeTools %}
+                    {% if toolsList %}
+                        {% for tool in toolsList %}
                             <div class="col-md-2">
                                 <figure>
-                                    <a href="../tool/{{ tool.id }}"><img class="img-square" src="{{tool.picture.url}}" alt="{{tool.picture}}"
+                                    <a href="../tool/{{ tool.id }}"><img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}"
                                          class="img-circle" style="width: 150px; height: 150px;"/></a>
                                     <figcaption>{{tool.name}}</figcaption>
                                 </figure>
@@ -53,49 +52,6 @@
                 </div>
             </div>
 
-
-            <h4>Tools available from shed</h4>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/vine/text:Hammer" alt="...">
-                        </a>
-                        <a href="/Borrow/1">Borrow</a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/sky/text:Opener" alt="...">
-                        </a>
-                        <a href="/Borrow/1">Borrow</a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/industrial/text:Computer" alt="...">
-                        </a>
-                        <a href="/Borrow/2">Borrow</a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Laptop" alt="...">
-                        </a>
-                        <a href="/Borrow">Borrow</a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Mobile" alt="...">
-                        </a>
-                        <a href="/Borrow">Borrow</a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="thumbnail">
-                            <img data-src="holder.js/150x100/gray/text:Car" alt="...">
-                        </a>
-                        <a href="/Borrow">Borrow</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}

@@ -7,8 +7,8 @@
 {% block navbar-right %}
     <div id="navbar-collapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url "signin" %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
-            <li><a href="{% url "signup" %}"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+            <li><a href="{% url "account:signin" %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+            <li><a href="{% url "account:signup" %}"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
         </ul>
     </div>
 {% endblock %}
@@ -66,7 +66,7 @@
                 <h2>Are you winter ready?</h2>
 
                 <p>Recently moved to a snowy city from California, or Hawaii? Need a shovel for the winter? We've got
-                    you covered. <a href="{% url 'signup' %}">Sign up</a> today, and be winter ready.
+                    you covered. <a href="{% url "account:signup" %}">Sign up</a> today, and be winter ready.
                 </p>
             </div>
             <div class="col-lg-4">
@@ -75,7 +75,7 @@
 
                 <h2>Got tools rusting?</h2>
 
-                <p>Are tools rusting in your garage? <a href="{% url 'signup' %}">Sign up</a> today, there may be
+                <p>Are tools rusting in your garage? <a href="{% url "account:signup" %}">Sign up</a> today, there may be
                     someone in your community looking for a tool that you are not using.</p>
             </div>
             <div class="col-lg-4">

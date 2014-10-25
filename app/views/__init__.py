@@ -19,68 +19,26 @@ def home(request):
 
 
 @login_required(redirect_field_name='o')
-def signout(request):
-    logout(request)
-    return redirect(reverse('home'))
-
-
-def signup(request):
-    if request.method == 'POST':
-        signup_form = forms.SignUpForm(request.POST)
-
-        if signup_form.is_valid():
-            with transaction.atomic():
-                signup_form.save()
-
-            signup_form = forms.SignUpForm()
-            return render(request, 'signup.html',
-                          RequestContext(request, {'form': signup_form, 'signup_successful': True}))
-        else:
-            return render(request, 'signup.html',
-                          RequestContext(request, {'form': signup_form}))
-    else:
-        signup_form = forms.SignUpForm()
-        return render(request, 'signup.html',
-                      RequestContext(request, {'form': signup_form}))
-
-
-def signin(request):
-    if request.method == 'POST':
-        signin_form = forms.SignInForm(request, request.POST)
-
-        if signin_form.is_valid():
-            user = authenticate(email=signin_form.cleaned_data['username'],
-                                password=signin_form.cleaned_data['password'])
-            login(request, user)
-
-            if user == None:
-                return render(request, 'signin.html',
-                              RequestContext(request, {'form': signin_form, 'errors': 'Incorrect email or password'}))
-            else:
-                return redirect(reverse('dashboard'))
-        else:
-            return render(request, 'signin.html', RequestContext(request, {'form': signin_form}))
-    else:
-        signin_form = forms.SignInForm()
-    return render(request, 'signin.html', RequestContext(request, {'form': signin_form}))
-
-
-@login_required(redirect_field_name='o')
 def dashboard(request):
-
     user = request.user
     homeTools = models.Tool.objects.filter(owner_id=user).filter(location='H')
     context = {'homeTools': homeTools}
     return render(request, 'dashboard.html', context)
 
 
+@login_required(redirect_field_name='o')
 def browsetool(request):
-    #owner=tool.owner_id
-
-    #user = request.user
-    #homeTools = models.Tool.objects.filter(tool__owner=user).filter(location='H')
-    #context = {'homeTools': homeTools}
-    return render(request, 'browsetool.html')
+    """
+       browsetool() is responsible for rendering a web page displaying tools available
+       for borrow.
+       It currently filters tools by:
+            -excluding tools belonging to the logged in user
+            -excluding tools that have a 'deactivated' status
+    """
+    user = request.user
+    toolsList = models.Tool.objects.exclude(owner_id=user).exclude(status='D')
+    context = {'toolsList': toolsList}
+    return render(request,'browsetool.html', context)
 
 
 @login_required(redirect_field_name='o')
@@ -99,11 +57,20 @@ def approve(request, reservation_id):
 
     return render(request, 'approve_reservation.html', RequestContext(request, {'reservation': reservation}))
 
-
 @login_required(redirect_field_name='o')
 @require_POST
 def reject(request, reservation_id):
-    pass
+    reservation = models.Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'Reject'
+    reservation.save()
+
+    return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
+
+
+#@login_required(redirect_field_name='o')
+#@require_POST
+#def reject(request, reservation_id):
+#    pass
 
 
 @login_required(redirect_field_name='o')
@@ -131,13 +98,14 @@ def Borrow(request, tool_id):
 
 @login_required(redirect_field_name='o')
 def registertool(request):
+    currentUser = request.user
     if request.method == 'POST':
         tool_form = forms.addToolForm(request.POST, request.FILES)
 
         if tool_form.is_valid():
             with transaction.atomic():
                 new_tool = tool_form.save(commit=False)
-                new_tool.owner = request.user
+                new_tool.owner = currentUser
                 new_tool.status = 'A'
                 new_tool.save()
                 tool_form.save_m2m()
@@ -148,7 +116,7 @@ def registertool(request):
         else:
             return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
     else:
-        tool_form = forms.addToolForm()
+        tool_form = forms.addToolForm(initial = {'pickupArrangement': currentUser.pickup_arrangements})
         return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
 
 
@@ -193,7 +161,9 @@ class UserUpdateView(edit.UpdateView):
         messages.success(self.request, 'changes to your ToolShare account have been saved.')
         return reverse_lazy('profile')
 
-def tool(request, tool_id):
+def viewTool(request, tool_id):
+    currentUser = request.user
     tooldata = models.Tool.objects.get(id=tool_id)
-    context = {'tooldata': tooldata}
+    isToolOwner = tooldata.owner == currentUser
+    context = {'tooldata': tooldata, 'isToolOwner':isToolOwner}
     return render(request, 'tool.html', context)
