@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, include, url
 from app.views import UserUpdateView
-from django.contrib import admin
-admin.autodiscover()
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'app.views.home', name = 'home'),
@@ -18,4 +18,5 @@ urlpatterns = patterns('',
     url(r'^reservation/$', 'app.views.reservation', name = 'reservation'),
     url(r'^reservation/(?P<reservation_id>\d+)/approve/$', 'app.views.approve', name = 'approve'),
     url(r'^reservation/(?P<reservation_id>\d+)/reject/$', 'app.views.reject', name = 'reject'),
+    url(r'^reservation/(?P<reservation_id>\d+)/cancel/$', 'app.views.cancel', name = 'cancel'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
