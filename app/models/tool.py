@@ -6,6 +6,9 @@ from pilkit.processors import ResizeToCover
 
 
 class Tool(models.Model):
+    class Meta:
+        app_label = 'app'
+
     STATUS = (
         ('A', 'Available'),
         ('D', 'Deactivated'),
@@ -70,6 +73,9 @@ class Tool(models.Model):
 
 
 class BlackoutDate(models.Model):
+    class Meta:
+        app_label = 'app'
+
     tool = models.ForeignKey(Tool)
     blackoutStart = models.DateField()
     blackoutEnd = models.DateField()

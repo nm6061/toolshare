@@ -9,7 +9,6 @@ from django.contrib import messages
 from django.contrib.messages import views
 from django.views.generic import edit
 from django.views.decorators.http import require_POST
-
 from app import forms
 from app import models
 from app.forms.toolRegistration import AddToolForm
