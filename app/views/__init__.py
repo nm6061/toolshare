@@ -69,6 +69,14 @@ def reject(request, reservation_id):
 
     return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
 
+@login_required(redirect_field_name='o')
+@require_POST
+def cancel(request, reservation_id):
+    reservation = models.Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'Cancel'
+    reservation.save()
+    return render(request, 'cancel_reservation.html', RequestContext(request, {'reservation': reservation}))
+
 
 #@login_required(redirect_field_name='o')
 #@require_POST
