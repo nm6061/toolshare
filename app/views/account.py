@@ -11,7 +11,7 @@ from app.views.edit import FormsetView
 
 
 class SignUpView(FormsetView):
-    template_name = 'account\signup.html'
+    template_name = 'account/signup.html'
     form_class = SignUpUserForm
     formset_class = SignUpAddressFormSet
     http_method_names = ['get', 'post']
@@ -40,12 +40,12 @@ class SignUpView(FormsetView):
 
 
 class SignUpSuccessView(TemplateView):
-    template_name = 'account\signup_success.html'
+    template_name = 'account/signup_success.html'
     http_method_names = ['get']
 
 
 class SignInView(FormView):
-    template_name = 'account\signin.html'
+    template_name = 'account/signin.html'
     form_class = SignInForm
     http_method_names = ['get', 'post']
     success_url = reverse_lazy('dashboard')
@@ -73,4 +73,4 @@ class SignOutView(FormView):
 
 class SignOutSuccessView(TemplateView):
     http_method_names = ['get']
-    template_name = 'account\signout_success.html'
+    template_name = 'account/signout_success.html'
