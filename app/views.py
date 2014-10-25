@@ -67,15 +67,20 @@ def signin(request):
 
 @login_required(redirect_field_name='o')
 def dashboard(request):
+
     user = request.user
     homeTools = models.Tool.objects.filter(owner_id=user).filter(location='H')
     context = {'homeTools': homeTools}
     return render(request, 'dashboard.html', context)
 
 
-@login_required(redirect_field_name='o')
 def browsetool(request):
-    return render_to_response('browsetool.html')
+    #owner=tool.owner_id
+
+    #user = request.user
+    #homeTools = models.Tool.objects.filter(tool__owner=user).filter(location='H')
+    #context = {'homeTools': homeTools}
+    return render(request, 'browsetool.html')
 
 
 @login_required(redirect_field_name='o')
