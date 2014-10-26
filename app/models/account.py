@@ -1,4 +1,4 @@
-import datetime, hashlib, random
+import datetime, hashlib, random, re
 from django.utils import timezone
 from django.conf import settings
 from django.db import models, transaction
@@ -7,6 +7,8 @@ from django.template.loader import render_to_string
 
 import app.constants
 from app.email import send_email
+
+SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
 class ShareZoneManager(models.Manager):
@@ -114,7 +116,7 @@ class User(AbstractBaseUser):
 
     # Foreign keys
     address = models.ForeignKey(Address, unique=True)
-    share_zone = models.ForeignKey(ShareZone, unique=True)
+    share_zone = models.ForeignKey(ShareZone)
 
     class Meta:
         app_label = 'app'
@@ -148,7 +150,7 @@ class RegistrationManager(models.Manager):
         # Make sure the key we're trying conforms to the pattern of a
         # SHA1 hash; if it doesn't, no point trying to look it up in
         # the database.
-        SHA1_RE = re.compile('^[a-f0-9]{40}$')
+
         if SHA1_RE.search(activation_key):
             try:
                 profile = self.get(activation_key=activation_key)
@@ -207,22 +209,20 @@ class RegistrationProfile(models.Model):
         app_label = 'app'
 
     def activation_key_expired(self):
-        expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
-        return self.activation_key == self.ACTIVATED or \
-               (self.user.date_joined + expiration_date <= datetime_now())
+        if settings.ACCOUNT_ACTIVATION_DAYS != 0:
+            expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+            return self.activation_key == self.ACTIVATED or (self.user.date_joined + expiration_date <= datetime_now())
 
     activation_key_expired.boolean = True
 
     def send_activation_email(self, site):
+        template_name = 'email/account_activation.html'
+
         context = {'activation_key': self.activation_key,
                    'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
-                   'site': site}
-        subject = 'Subject'
-        #subject = render_to_string('', context)
-        # Email subject *must not* contain newlines
-        subject = ''.join(subject.splitlines())
+                   'site': site, 'user': self.user}
 
-        #message = render_to_string('', context)
-        message = 'hello world!!!'
+        subject = 'Your New ToolShare Account'
+        message = render_to_string(template_name, context)
 
         self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
