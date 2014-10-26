@@ -16,7 +16,7 @@ from app.models.reservation import Reservation
 from app.models.tool import Tool
 
 @login_required(redirect_field_name='o')
-def registertool(request):
+def registerTool(request):
     currentUser = request.user
     if request.method == 'POST':
         tool_form = AddToolForm(request.POST, request.FILES)
@@ -29,9 +29,8 @@ def registertool(request):
                 new_tool.save()
                 tool_form.save_m2m()
 
-            tool_form = AddToolForm()
-            return render(request, 'registertool.html',
-                          RequestContext(request, {'form': tool_form, 'tool_added': True}))
+            tool_form = AddToolForm(initial = {'pickupArrangement': currentUser.pickup_arrangements})
+            return render(request, 'registertool.html', RequestContext(request, {'form': tool_form, 'tool_added': True}))
         else:
             return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
     else:
@@ -39,6 +38,7 @@ def registertool(request):
         return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
 
 
+@login_required(redirect_field_name='o')
 def viewTool(request, tool_id):
     currentUser = request.user
     tooldata = Tool.objects.get(id=tool_id)

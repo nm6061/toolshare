@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load filters %}
-{% block title %}Sign out Success{% endblock %}
+{% block title %}Account Activation Success{% endblock %}
 {% block navbar-top %}
     <div id="navbar-collapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -14,7 +14,8 @@
             <span class="glyphicon glyphicon-ok"></span><strong> All set</strong>
 
             <div class="spacer-5"></div>
-            You have signed out of your ToolShare account.
+            Your ToolShare account is now ready to use. Please <a href="{% url "account:signin" %}">sign in</a> to
+            continue.
         </div>
     </div>
 {% endblock %}

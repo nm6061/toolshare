@@ -23,3 +23,18 @@ class BorrowToolForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ['from_date', 'to_date']
+    def __init__(self, *args, **kwargs):
+        super(BorrowToolForm, self).__init__(*args, **kwargs)
+
+        self.fields['from_date'].error_messages = {'required': 'Please enter a date for the tool.'}
+        self.fields['to_date'].error_messages = {'required': 'Please enter a date for the tool.'}
+
+    def clean(self):
+        cleaned_data = super(BorrowToolForm, self).clean()
+
+        if 'from_date' in self.cleaned_data and 'to_date' in self.cleaned_data:
+            if self.cleaned_data['from_date'] >= self.cleaned_data['to_date']:
+                raise forms.ValidationError("From Date should be before To date")
+
+        return self.cleaned_data
+

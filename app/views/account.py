@@ -12,6 +12,7 @@ from app.views.edit import FormsetView
 
 class SignUpView(FormsetView):
     template_name = 'account/signup.html'
+    success_template_name = 'account/signup_success.html'
     form_class = SignUpUserForm
     formset_class = SignUpAddressFormSet
     http_method_names = ['get', 'post']
@@ -22,8 +23,7 @@ class SignUpView(FormsetView):
         for k, v in ChainMap(formset.cleaned_data, form.cleaned_data).items():
             cleaned_data[k] = v
         self.sign_up(request, **cleaned_data)
-        return super(SignUpView, self).form_valid(request, form, formset)
-
+        return render(request, self.success_template_name)
 
     def sign_up(self, request, **cleaned_data):
         cd = cleaned_data
@@ -39,20 +39,11 @@ class SignUpView(FormsetView):
         user = RegistrationProfile.objects.create_inactive_user(get_current_site(request), **cleaned_data)
 
 
-class SignUpSuccessView(TemplateView):
-    template_name = 'account/signup_success.html'
-    http_method_names = ['get']
-
-
 class SignInView(FormView):
     template_name = 'account/signin.html'
     form_class = SignInForm
     http_method_names = ['get', 'post']
     success_url = reverse_lazy('dashboard')
-
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
         login(self.request, form.get_user())
@@ -74,3 +65,13 @@ class SignOutView(FormView):
 class SignOutSuccessView(TemplateView):
     http_method_names = ['get']
     template_name = 'account/signout_success.html'
+
+
+class ActivateAccountView(TemplateView):
+    http_method_names = ['get']
+    success_template_name = 'account/activation_success.html'
+
+    def get(self, request, activation_key):
+        # TODO : Determine what happens if activation fails.
+        if RegistrationProfile.objects.activate_user(activation_key):
+            return render(request, self.success_template_name)
