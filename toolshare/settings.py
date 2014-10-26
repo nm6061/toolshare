@@ -21,7 +21,7 @@ SITE_ID = 1
 # Custom user
 AUTH_USER_MODEL = 'app.User'
 REQUIRE_ACTIVATION = False
-ACCOUNT_ACTIVATION_DAYS = 3
+ACCOUNT_ACTIVATION_DAYS = 0
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
