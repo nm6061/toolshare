@@ -25,7 +25,6 @@ class SignUpView(FormsetView):
         self.sign_up(request, **cleaned_data)
         return render(request, self.success_template_name)
 
-
     def sign_up(self, request, **cleaned_data):
         cd = cleaned_data
 
@@ -45,10 +44,6 @@ class SignInView(FormView):
     form_class = SignInForm
     http_method_names = ['get', 'post']
     success_url = reverse_lazy('dashboard')
-
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
         login(self.request, form.get_user())
@@ -72,7 +67,7 @@ class SignOutSuccessView(TemplateView):
     template_name = 'account/signout_success.html'
 
 
-class ActivateAccountView(FormView):
+class ActivateAccountView(TemplateView):
     http_method_names = ['get']
     success_template_name = 'account/activation_success.html'
 
