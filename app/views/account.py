@@ -40,11 +40,6 @@ class SignUpView(FormsetView):
         user = RegistrationProfile.objects.create_inactive_user(get_current_site(request), **cleaned_data)
 
 
-class SignUpSuccessView(TemplateView):
-    template_name = 'account/signup_success.html'
-    http_method_names = ['get']
-
-
 class SignInView(FormView):
     template_name = 'account/signin.html'
     form_class = SignInForm
@@ -75,3 +70,13 @@ class SignOutView(FormView):
 class SignOutSuccessView(TemplateView):
     http_method_names = ['get']
     template_name = 'account/signout_success.html'
+
+
+class ActivateAccountView(FormView):
+    http_method_names = ['get']
+    success_template_name = 'account/activation_success.html'
+
+    def get(self, request, activation_key):
+        # TODO : Determine what happens if activation fails.
+        if RegistrationProfile.objects.activate_user(activation_key):
+            return render(request, self.success_template_name)
