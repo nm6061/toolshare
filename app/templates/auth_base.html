@@ -2,7 +2,14 @@
 
 {% load staticfiles %}
 
-{% block navbar-right %}
+{% block stylesheets %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "styles/auth_base.css" %}"/>
+{% endblock %}
+
+{% block brand-link %}/dashboard{% endblock %}
+
+{% block navbar-top %}
     <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
             <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
@@ -20,13 +27,13 @@
     </div>
 {% endblock %}
 
-{% block content %}
+{% block navbar-side %}
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">My tools</a></li>
-                <li><a href="#">My sheds</a></li>
-                <li><a href="/reservation">My requests</a></li>
+                <li {% block MyToolsNav %}{% endblock %}><a href="/dashboard">My tools</a></li>
+                <li {% block MyShedsNav %}{% endblock %}><a href="#">My sheds</a></li>
+                <li {% block MyRequestsNav %}{% endblock %}><a href="/reservation">My requests</a></li>
             </ul>
         </div>
     </div>
