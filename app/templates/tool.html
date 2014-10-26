@@ -26,7 +26,7 @@
         <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>
 
         {% if not isToolOwner %}
-            <a href="/Borrow/{{ tooldata.id }}">Borrow</a>
+            <a href="/tool/{{ tooldata.id }}/Borrow">Borrow</a>
         {% endif %}
 
     </div>
