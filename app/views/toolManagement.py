@@ -29,9 +29,8 @@ def registerTool(request):
                 new_tool.save()
                 tool_form.save_m2m()
 
-            tool_form = AddToolForm()
-            return render(request, 'registertool.html',
-                          RequestContext(request, {'form': tool_form, 'tool_added': True}))
+            tool_form = AddToolForm(initial = {'pickupArrangement': currentUser.pickup_arrangements})
+            return render(request, 'registertool.html', RequestContext(request, {'form': tool_form, 'tool_added': True}))
         else:
             return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
     else:
@@ -39,6 +38,7 @@ def registerTool(request):
         return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
 
 
+@login_required(redirect_field_name='o')
 def viewTool(request, tool_id):
     currentUser = request.user
     tooldata = Tool.objects.get(id=tool_id)
