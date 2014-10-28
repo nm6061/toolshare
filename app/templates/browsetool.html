@@ -1,13 +1,13 @@
 {% extends "auth_base.html" %}
 
-{% block title %}Tool Listing{% endblock %}
+{% block title %}Browse Tools{% endblock %}
 
 {% block BrowseNav %} active {% endblock %}
 
 {% block auth-content %}
-    <h1 class="page-header">Tools Listing</h1>
+    <h1 class="page-header">Browse Tools</h1>
 
-    <h2 class="sub-header">Tools Available</h2>
+    <h3 class="sub-header">Available tools in your share zone</h2>
 
 
     <div class="container">
@@ -16,11 +16,14 @@
                 {% for tool in toolsList %}
                     <div class="col-md-2">
                         <figure>
-                            <a href="../tool/{{ tool.id }}">
-                                <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}"style="width: 150px; height: 150px;"/>
-                            </a>
-                            <figcaption>{{tool.name}}</figcaption>
+                            <div id="toolThumbnail" class="thumbnail">
+
+                                <a href="../tool/{{ tool.id }}">
+                                    <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}"style="width: 150px; height: 150px;"/>
+                                </a>
+                            </div>
                         </figure>
+                        <figcaption>{{tool.name}}</figcaption>
                     </div>
                 {% endfor %}
             {% endif %}
