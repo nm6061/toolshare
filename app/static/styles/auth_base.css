@@ -7,6 +7,10 @@ body {
   padding-top: 50px;
 }
 
+/* The style of the main content container of ToolShare */
+.auth-content{
+    margin-left: 90px;
+}
 
 /*
  * Global add-ons

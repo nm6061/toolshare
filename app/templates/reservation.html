@@ -4,54 +4,52 @@
 
 {% block RequestNav %} active {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <h1>My requests</h1>
+{% block auth-content %}
+    <h1>My requests</h1>
 
-        <div class="spacer-50"></div>
-        {% if reservations %}
-            <table class="table table-striped">
-                <thead>
+    <div class="spacer-50"></div>
+    {% if reservations %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Tool Name</th>
+                <th>Requested By</th>
+                <th>From</th>
+                <th>To</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
                 <tr>
-                    <th>Tool Name</th>
-                    <th>Requested By</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th></th>
+                    <td>{{ reservation.tool.name }}</td>
+                    <td>{{ reservation.user.get_full_name }}</td>
+                    <td>{{ reservation.from_date }}</td>
+                    <td>{{ reservation.to_date }}</td>
+                    <td>
+                        <form action="{% url 'approve' reservation.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Approve</button>
+
+                        </form>
+                        <form action="{% url 'reject' reservation.pk %}" method="POST">
+                            {% csrf_token %}
+
+                            <button type="submit" class="btn btn-primary">Reject</button>
+                        </form>
+                        <form action="{% url 'cancel' reservation.pk %}" method="POST">
+                            {% csrf_token %}
+
+                            <button type="submit" class="btn btn-primary">Cancel</button>
+                        </form>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for reservation in reservations %}
-                    <tr>
-                        <td>{{ reservation.tool.name }}</td>
-                        <td>{{ reservation.user.get_full_name }}</td>
-                        <td>{{ reservation.from_date }}</td>
-                        <td>{{ reservation.to_date }}</td>
-                        <td>
-                            <form action="{% url 'approve' reservation.pk %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Approve</button>
-
-                            </form>
-                            <form action="{% url 'reject' reservation.pk %}" method="POST">
-                                {% csrf_token %}
-
-                                <button type="submit" class="btn btn-primary">Reject</button>
-                            </form>
-                            <form action="{% url 'cancel' reservation.pk %}" method="POST">
-                                {% csrf_token %}
-
-                                <button type="submit" class="btn btn-primary">Cancel</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                <strong>Aww,</strong> you have no requests.
-            </div>
-        {% endif %}
-    </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <strong>Aww,</strong> you have no requests.
+        </div>
+    {% endif %}
 {% endblock %}
