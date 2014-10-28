@@ -99,10 +99,10 @@ body {
     display:none;
 }
 
-/* Display the submenu when hovering over main menu icons. "left" is determined by the specified width of the nav earlier  */
+/* Display the submenu when hovering over main menu icons. "left" calculated by: (width of nav - width  of menuborder) */
 #sideNav li:hover ul{
-    left:76px;
-    top:-2px;
+    left:78px;
+    top:-1px;
     display:block;
 }
 
@@ -112,11 +112,11 @@ body {
 }
 
 .mainMenu ul{
-    border: 2px solid gray;
+    border: 1px solid gray;
 }
 
 .mainMenu:hover{
-    border: 2px solid gray;
+    border: 1px solid gray;
 }
 
 /*Change active menu item appearance */
@@ -143,6 +143,12 @@ body {
 }
 .main .page-header {
   margin-top: 0;
+}
+
+figcaption{
+    padding-left: 5px;
+    margin-top: -10px;
+    font-weight: bold;
 }
 
 

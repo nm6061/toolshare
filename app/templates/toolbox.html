@@ -14,22 +14,22 @@
 {% block auth-content %}
     <h1 class="page-header">Toolbox</h1>
 
-    <h3 class="sub-header">My tools</h2>
+    <h3 class="sub-header">My tools</h3>
 
-    <div class="container">
-        {% if homeTools %}
-            {% for tool in homeTools %}
-                <div class="col-md-2">
-                    <figure>
+    {% if homeTools %}
+        {% for tool in homeTools %}
+            <div class="col-md-2">
+                <figure>
+                    <div id="toolThumbnail" class="thumbnail">
                         <a href="../tool/{{ tool.id }}">
                             <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}"style="width: 150px; height: 150px;"/>
                         </a>
-                        <figcaption>{{tool.name}}</figcaption>
-                    </figure>
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
+                    </div>
+                    <figcaption>{{tool.name}}</figcaption>
+                </figure>
+            </div>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}
 
