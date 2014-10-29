@@ -1,33 +1,10 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
+{% extends "auth_base.html" %}
+
 {% block title %}Request To Borrow{% endblock %}
-{% block head %}
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
-    <script src="{% static "scripts/holder.js" %}"></script>
-{% endblock %}
-{% block brand-link %}/Request To Borrow{% endblock %}
-{% block navbar-right %}
-    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
-        <ul class="nav navbar-nav">
-            <li><a href="{% url "browsetool" %}" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
-            </li>
-            <li><a href="{% url "profile" %}" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
-                out</a></li>
-        </ul>
-    </div>
-{% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li><a href="{% url "dashboard" %}">My tools</a></li>
-                <li><a href="#">My sheds</a></li>
-                <li><a href="{% url "reservation" %}">My requests</a></li>
-            </ul>
-        </div>
-    </div>
+
+{% block BrowseNav %} active {% endblock %}
+
+{% block auth-content %}
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Please enter details for Borrowing Tools </h1>
     </div>

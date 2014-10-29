@@ -1,56 +1,32 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
-{% block title %}TOOL LISTING{% endblock %}
-{% block head %}
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
-    <script src="{% static "scripts/holder.js" %}"></script>
-{% endblock %}
-{% block brand-link %}/dashboard{% endblock %}
-{% block navbar-right %}
-    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
-        <ul class="nav navbar-nav">
-            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
-            </li>
-            <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
-                out</a></li>
-        </ul>
-    </div>
-{% endblock %}
+{% extends "auth_base.html" %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li><a href="{% url 'dashboard' %}">My tools</a></li>
-                <li><a href="#">My sheds</a></li>
-                <li><a href="{% url 'reservation' %}">My requests</a></li>
-            </ul>
-        </div>
+{% block title %}Browse Tools{% endblock %}
 
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Tools Listing</h1>
+{% block BrowseNav %} active {% endblock %}
 
-            <h2 class="sub-header">Tools Available</h2>
+{% block auth-content %}
+    <h1 class="page-header">Browse Tools</h1>
+
+    <h3 class="sub-header">Available tools in your share zone</h3>
 
 
-             <div class="container">
-                <div class="row">
-                    {% if toolsList %}
-                        {% for tool in toolsList %}
-                            <div class="col-md-2">
-                                <figure>
-                                    <a href="../tool/{{ tool.id }}"><img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}"
-                                         class="img-circle" style="width: 150px; height: 150px;"/></a>
-                                    <figcaption>{{tool.name}}</figcaption>
-                                </figure>
+    <div class="container">
+        <div class="row">
+            {% if toolsList %}
+                {% for tool in toolsList %}
+                    <div class="col-md-2">
+                        <figure>
+                            <div id="toolThumbnail" class="thumbnail">
+
+                                <a href="../tool/{{ tool.id }}">
+                                    <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}"style="width: 150px; height: 150px;"/>
+                                </a>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-
-                </div>
-            </div>
+                        <figcaption>{{tool.name}}</figcaption>
+                        </figure>
+                    </div>
+                {% endfor %}
+            {% endif %}
 
         </div>
     </div>

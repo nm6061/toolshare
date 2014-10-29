@@ -26,7 +26,7 @@ def dashboard(request):
     user = request.user
     homeTools = Tool.objects.filter(owner_id=user).filter(location='H')
     context = {'homeTools': homeTools}
-    return render(request, 'dashboard.html', context)
+    return render(request, 'toolbox.html', context)
 
 
 @login_required(redirect_field_name='o')

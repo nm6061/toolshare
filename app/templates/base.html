@@ -1,7 +1,7 @@
-{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% load staticfiles %}
         {% block meta_tags %}
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,14 +49,15 @@
                     </button>
                     <a class="navbar-brand" href="{% block brand-link %}/{% endblock %}">ToolShare</a>
                 </div>
-                {% block navbar-right %}
+                {% block navbar-top %}
                 {% endblock %}
             </div>
         </nav>
 
         <div class="container-fluid">
-            {% block content %}
-            {% endblock %}
+            {% block navbar-side %}{% endblock %}
+
+            {% block content %}{% endblock %}
         </div>
 
         <script type="text/javascript">

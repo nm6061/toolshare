@@ -1,38 +1,12 @@
-{% extends "base.html" %}
-{% block title %}Request To Borrow notification{% endblock %}
-{% block head %}
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}"/>
-    <script src="{% static "scripts/holder.js" %}"></script>
-{% endblock %}
-{% block brand-link %}
-    {% url "dashboard" %}
-{% endblock %}
-{% block navbar-right %}
-    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
-        <ul class="nav navbar-nav">
-            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a>
-            </li>
-            <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign
-                out</a></li>
-        </ul>
+{% extends "auth_base.html" %}
+
+{% block title %}Request Approved{% endblock %}
+
+{% block RequestNav %} active {% endblock %}
+
+{% block auth-content %}
+    <div class="alert alert-success" role="alert">
+        <p><strong>Done,</strong> a request to borrow your {{ reservation.tool.name }} was approved.</p>
     </div>
-{% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li><a href="{% url "dashboard" %}">My tools</a></li>
-                <li><a href="#">My sheds</a></li>
-                <li><a href="{% url "reservation" %}">My requests</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="container">
-        <div class="alert alert-success" role="alert">
-            <p><strong>Done,</strong> a request to borrow your {{ reservation.tool.name }} was approved.</p>
-        </div>
-        <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</button>
-    </div>
+    <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</a>
 {% endblock %}

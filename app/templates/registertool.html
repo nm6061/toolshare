@@ -1,9 +1,17 @@
-{% extends "base.html" %}
-{% load filters %}
-{% block brand-link %}/dashboard{% endblock %}
+{% extends "auth_base.html" %}
+
+{% load staticfiles %}
+
 {% block title %}Register Tool{% endblock %}
 
-{% block head %}
+{% block ToolsNav %} active {% endblock %}
+
+{% load filters %}
+
+{% block brand-link %}/dashboard{% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
     <script>
         function imagePreview(fileInput) {
             var files = fileInput.files;
@@ -14,7 +22,7 @@
                     continue;
                 }
                 var img=document.getElementById("thumbnail");
-                var toolPreview=document.getElementById("toolThumbnail")
+                var toolPreview=document.getElementById("toolThumbnail");
                 img.file = file;
                 var reader = new FileReader();
                 reader.onload = (function(aImg) {
@@ -38,20 +46,9 @@
             });
         })
     </script>
-
-
 {% endblock %}
 
-{% block navbar-right %}
-    <div id="navbar-collapse" class="collapse navbar-collapse navbar-right">
-        <ul class="nav navbar-nav">
-            <li><a href="/browsetool" class="navbar-link"><span class="glyphicon glyphicon-search"></span> Browse tools</a></li>
-            <li><a href="/profile" class="navbar-link"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
-            <li><a href="{% url "account:signout" %}" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
-        </ul>
-    </div>
-{% endblock %}
-{% block content %}
+{% block auth-content %}
     <div class="auth-box">
         <form enctype="multipart/form-data" action="." method="post">
             {% csrf_token %}
