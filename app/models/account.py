@@ -1,4 +1,5 @@
 import datetime, hashlib, random, re
+from django.core.validators import *
 from django.utils import timezone
 from django.conf import settings
 from django.db import models, transaction
@@ -7,6 +8,7 @@ from django.template.loader import render_to_string
 
 import app.constants
 from app.email import send_email
+from app.models.validators import *
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
@@ -37,13 +39,15 @@ class ShareZone(models.Model):
 
 
 class Address(models.Model):
-    apt_num = models.CharField(max_length=10, blank=True)
-    street = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    county = models.CharField(max_length=50, default='', blank=True)
-    state = models.CharField(max_length=2, default='', choices=app.constants.US_STATES)
-    country = models.CharField(max_length=50, default='USA')
-    zip = models.CharField(max_length=9)
+    apt_num = models.CharField('apartment number', max_length=10, blank=True)
+    street = models.CharField('street', max_length=50)
+    city = models.CharField('city', max_length=50, validators=[AlphabetOnlyValidator()])
+    county = models.CharField('county', max_length=50, default='', blank=True, validators=[AlphabetOnlyValidator()])
+    state = models.CharField('state', max_length=2, default='', choices=app.constants.US_STATES)
+    country = models.CharField('country', max_length=50, default='USA')
+    zip = models.CharField('zip code', max_length=9, validators=[
+        RegexValidator(regex='^\d{5}(?:[-\s]\d{4})?$', message='should be 5 or 9 digits',
+                       code='invalid_phone')])
 
     class Meta:
         app_label = 'app'
@@ -96,19 +100,16 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    is_active = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(default=timezone.now)
-    first_name = models.CharField(max_length=30)
+    is_active = models.BooleanField('is active', default=False)
+    date_joined = models.DateTimeField('Date joined', default=timezone.now)
+    first_name = models.CharField('first name', max_length=30, validators=[AlphabetOnlyValidator()])
     middle_name = models.CharField(max_length=25, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
-
-    phone_num = models.CharField(max_length=11, blank=True)
-
-    email = models.EmailField(unique=True)
-
-    pickup_arrangements = models.TextField(max_length=100, blank=True)
-
-    reputation = models.PositiveIntegerField(default=0, blank=True)
+    last_name = models.CharField('last name', max_length=30, blank=True, validators=[AlphabetOnlyValidator()])
+    phone_num = models.CharField('phone number', max_length=11, blank=True, validators=[
+        RegexValidator(regex='^\d{9,10}$', message='should be 9 or 10 digits', code='invalid_phone')])
+    email = models.EmailField('email address', unique=True, validators=[EmailValidator()])
+    pickup_arrangements = models.TextField('pickup arrangements', max_length=100, blank=True)
+    reputation = models.PositiveIntegerField('reputation', default=0, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name']
