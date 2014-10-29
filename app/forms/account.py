@@ -6,8 +6,14 @@ from app.models.account import *
 
 
 class SignUpUserForm(forms.ModelForm):
-    password1 = forms.CharField(widget=forms.PasswordInput, required=True)
-    password2 = forms.CharField(widget=forms.PasswordInput, required=True)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
+    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput, required=True)
+
+    def __init__(self, *args, **kwargs):
+        super(SignUpUserForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'Is required', 'invalid': 'is invalid'}
 
     class Meta:
         model = User
@@ -24,9 +30,15 @@ class SignUpUserForm(forms.ModelForm):
 
 
 class SignUpAddressForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SignUpAddressForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
+
     class Meta:
         model = Address
-        fields = ['apt_num', 'street', 'county', 'city', 'state', 'zip']
+        exclude = ['country']
 
 
 SignUpAddressFormSet = formset_factory(SignUpUserForm, SignUpAddressForm)
@@ -37,6 +49,12 @@ class SignInForm(AuthenticationForm):
 
     AuthenticationForm.error_messages['invalid_login'] = 'You may have entered a wrong email address or password.'
     AuthenticationForm.error_messages['inactive'] = 'Your ToolShare account has not been activated yet.'
+
+    def __init__(self, *args, **kwargs):
+        super(SignInForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
 
     class Meta:
         model = User
