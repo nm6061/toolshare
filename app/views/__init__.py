@@ -15,7 +15,7 @@ from app import models
 from app.forms.toolRegistration import AddToolForm
 from app.models.reservation import Reservation
 from app.models.tool import Tool
-
+from django.db.models import Count
 
 def home(request):
     return render_to_response('home.html')
@@ -38,10 +38,20 @@ def browsetool(request):
             -excluding tools belonging to the logged in user
             -excluding tools that have a 'deactivated' status
     """
-    user = request.user
-    toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
-    context = {'toolsList': toolsList}
-    return render(request,'browsetool.html', context)
+    #user = request.user
+    #toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    #context = {'toolsList': toolsList}
+    return render(request,'browsetool.html')
+
+@login_required(redirect_field_name='o')
+def presentstatistics(request):
+    # presentstatistics= Reservation.objects.order_by('tool')
+    temp_list =  Reservation.objects.values('tool').distinct().annotate(total = Count('tool')).order_by('-total')
+    popular_tool_list = list()
+    for iter_tool in temp_list:
+        popular_tool_list.append(Tool.objects.filter(id = iter_tool['tool'] ))
+
+    return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list}))
 
 
 @login_required(redirect_field_name='o')

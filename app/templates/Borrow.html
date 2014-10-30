@@ -1,7 +1,22 @@
 {% extends "auth_base.html" %}
 
 {% block title %}Request To Borrow{% endblock %}
+        <!-- cdn for modernizr, if you haven't included it already -->
 
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
+</head>
 {% block content %}
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Please enter details for Borrowing Tools </h1>
@@ -14,10 +29,11 @@
                     <p><strong>Done,</strong> your request was successfully submitted.</p>
                 </div>
             {% endif %}
+            {% if form.empty %}
+                <div class="alert alert-danger" role="alert"><strong>Oh.. ,</strong> Please enter a date to borrow.
+                </div>{% endif %}
             {% if form.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors in the
-                    information
-                    you provided.
+                <div class="alert alert-danger" role="alert"><strong>Oh.. ,</strong> there were errors.
                 </div>{% endif %}
 
 
@@ -37,12 +53,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="Date" class="form-control" name="from_date" id="from_date"
+                            <label for="from_date">From Date</label>
+                            <input type="text" id="datepicker" class="form-control" name="from_date" id="from_date"
                                    placeholder="From Date">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
+                            <label for="to_date">To Date</label>
                             <input type="date" class="form-control" name="to_date" id="to_date"
                                    placeholder="To Date">
                         </div>
@@ -53,6 +71,7 @@
         </form>
     </div>
 {% endblock %}
+</html>
 
 
 
