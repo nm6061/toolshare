@@ -18,6 +18,15 @@ class ApproveReservationForm(forms.ModelForm):
     def clean(self):
         return self.cleaned_data
 
+class RejectReservationForm(forms.ModelForm):
+    class Meta:
+        model = models.Reservation
+        Fields = ['message']
+
+    def clean(self):
+        return self.cleaned_data        
+
+
 
 class BorrowToolForm(forms.ModelForm):
     class Meta:

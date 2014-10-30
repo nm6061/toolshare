@@ -30,3 +30,4 @@ class UserProfile(models.Model):
         return reverse('profile', kwargs={'username': self.user.username})
 
 
+
