@@ -4,7 +4,7 @@
 
 {% block title %}Register Tool{% endblock %}
 
-{% block MyToolsNav %} class = "active" {% endblock %}
+{% block ToolsNav %} active {% endblock %}
 
 {% load filters %}
 
@@ -22,7 +22,7 @@
                     continue;
                 }
                 var img=document.getElementById("thumbnail");
-                var toolPreview=document.getElementById("toolThumbnail")
+                var toolPreview=document.getElementById("toolThumbnail");
                 img.file = file;
                 var reader = new FileReader();
                 reader.onload = (function(aImg) {
@@ -48,7 +48,7 @@
     </script>
 {% endblock %}
 
-{% block content %}
+{% block auth-content %}
     <div class="auth-box">
         <form enctype="multipart/form-data" action="." method="post">
             {% csrf_token %}

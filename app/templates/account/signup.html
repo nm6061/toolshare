@@ -12,10 +12,8 @@
     <div id="signup-box" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if form.errors or formset.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
-                </div>
-            {% endif %}
+            {% load errors %}
+            {% errors form formset %}
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">

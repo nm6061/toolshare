@@ -2,17 +2,16 @@
 
 {% block title %}Request Rejected{% endblock %}
 
-{% block MyRequestsNav %} class = "active" {% endblock %}
+{% block RequestNav %} active {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <div class="alert alert-fail" role="alert">
-            <p><strong>Done,</strong> please leave a comment for reject</p>
-            <form>
-             Message: <input type="text" name="message">
-             <button type="submit" class="btn btn-primary">submit</button>
-            </form>
-        </div>
-        <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</button>
+{% block auth-content %}
+    <div class="alert alert-fail" role="alert">
+        <p><strong>Done,</strong> please leave a comment for reject</p>
+        <form method="post" action="{% url 'rejectmessage' reservation.pk %}">
+                    {% csrf_token %}
+            Message: <input type="text" name="message">
+            <button type="submit" class="btn btn-primary">submit</button>
+        </form>
     </div>
+    <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</a>
 {% endblock %}

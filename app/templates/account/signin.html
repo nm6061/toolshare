@@ -12,21 +12,8 @@
     <div id="signin-box" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if form.non_field_errors %}
-                <div class="alert alert-danger" role="alert"><strong>Ah snap !</strong>
-
-                    <div class="spacer-5"></div>
-                    {% for error in form.non_field_errors %}
-                        <div>{{ error }}</div>
-                    {% endfor %}
-                </div>
-            {% elif form.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
-                </div>
-            {% endif %}
-            {% if errors %}
-                <div class="alert alert-danger" role="alert">{{ errors }}</div>
-            {% endif %}
+            {% load errors %}
+            {% errors form %}
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">

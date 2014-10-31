@@ -10,7 +10,7 @@ class Reservation(models.Model):
     from_date = models.DateField()
     to_date = models.DateField()
     status = models.CharField(max_length=15)
-
+    message = models.TextField(max_length = 200)
     tool = models.ForeignKey(Tool)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 

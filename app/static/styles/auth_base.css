@@ -7,6 +7,10 @@ body {
   padding-top: 50px;
 }
 
+/* The style of the main content container of ToolShare */
+.auth-content{
+    margin-left: 90px;
+}
 
 /*
  * Global add-ons
@@ -41,31 +45,86 @@ body {
     left: 0;
     z-index: 1000;
     display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
+    background-color: #eeeeee;
+    border-right: 1px solid #e7e7e7;
+
   }
 }
 
 /* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
 
+/* Remove the margin, padding, and list styles from sideNav */
+#sideNav,#sideNav li {
+    margin:0;
+    padding:0;
+    list-style:none;
 }
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
 
+/* Style the icon labels */
+#sideNav h4{
+    padding: 10px 0px 0px 15px;
+}
+
+/* Set the dimensions of a main menu icon */
+#sideNav .mainMenu{
+    width:80px;
+    height: 80px;
+}
+
+/* Set the appearance of a main menu icon */
+#sideNav .mainMenu .menuIcon{
+    padding: 20%;
+    width: 100%;
+}
+
+/* Set the size of the submenu, and add padding */
+#sideNav .subMenu{
+    width:200px;
+    padding: 15px;
+}
+
+
+/* Apply a hover background to nav items */
+#sideNav li:hover{
+    background-color:#ffffff;
+    position:relative;
+}
+
+/* Hide the submenu*/
+#sideNav li ul{
+    padding: 0;
+    margin: 0;
+    background: #ffffff;
+    position:absolute;
+    display:none;
+}
+
+/* Display the submenu when hovering over main menu icons. "left" calculated by: (width of nav - width  of menuborder) */
+#sideNav li:hover ul{
+    left:78px;
+    top:-1px;
+    display:block;
+}
+
+/*Changes the color of the menu icon when user hovers over the menu*/
+#sideNav li:hover > a > .menuIcon {
+    fill: #0f86dd ;
+}
+
+.mainMenu ul{
+    border: 1px solid gray;
+}
+
+.mainMenu:hover{
+    border: 1px solid gray;
+}
+
+/*Change active menu item appearance */
+#sideNav .active,
+#sideNav .active:hover,
+#sideNav .active:focus {
+    background-color: white;
+    border: 1px solid gray;
 }
 
 
@@ -84,6 +143,12 @@ body {
 }
 .main .page-header {
   margin-top: 0;
+}
+
+figcaption{
+    padding-left: 5px;
+    margin-top: -10px;
+    font-weight: bold;
 }
 
 
@@ -109,3 +174,6 @@ body {
 .addToolButton{
     float: right;
 }
+
+
+
