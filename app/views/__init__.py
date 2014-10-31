@@ -49,7 +49,7 @@ def presentstatistics(request):
     temp_list =  Reservation.objects.values('tool').distinct().annotate(total = Count('tool')).order_by('-total')
     popular_tool_list = list()
     for iter_tool in temp_list:
-        popular_tool_list.append(Tool.objects.filter(id = iter_tool['tool'] ))
+        popular_tool_list.append(Tool.objects.filter(id = iter_tool['tool']).get())
 
     return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list}))
 
