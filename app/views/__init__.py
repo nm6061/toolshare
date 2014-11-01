@@ -119,13 +119,13 @@ def Borrow(request, tool_id):
             borrow_tool_form.save()
 
             borrow_tool_form = forms.BorrowToolForm()
-            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
+            return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
         else:
-            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
+            return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
     else:
         borrow_tool_form = forms.BorrowToolForm()
-        return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
+        return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
 
 
