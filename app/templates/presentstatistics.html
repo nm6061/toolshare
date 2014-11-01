@@ -1,3 +1,40 @@
 {% extends "auth_base.html" %}
+
 {% block title %}Present Statistics{% endblock %}
+
+        {% block content %}
+        <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Present Statistics</h1>
+
+            <h2 class="sub-header">Most Popular Tool</h2>
+
+
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th>Tool Name</th>
+
+
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for tool in reservations %}
+                <tr>
+                    <td>{{ tool.name }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+            <h2 class="sub-header">Most Active Borrower</h2>
+            <h2 class="sub-header">Most Active Lender</h2>
+
+    </div>
+    </div>
+{% endblock %}
+
 
