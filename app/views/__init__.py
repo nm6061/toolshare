@@ -24,7 +24,7 @@ def home(request):
 
 
 @login_required(redirect_field_name='o')
-def dashboard(request):
+def toolbox(request):
     user = request.user
     homeTools = Tool.objects.filter(owner_id=user).filter(location='H')
     context = {'homeTools': homeTools}
@@ -40,10 +40,10 @@ def browsetool(request):
             -excluding tools belonging to the logged in user
             -excluding tools that have a 'deactivated' status
     """
-    #user = request.user
-    #toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
-    #context = {'toolsList': toolsList}
-    return render(request,'browsetool.html')
+    user = request.user
+    toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    context = {'toolsList': toolsList}
+    return render(request,'browsetool.html',context)
 
 @login_required(redirect_field_name='o')
 def presentstatistics(request):
