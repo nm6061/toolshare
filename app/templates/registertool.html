@@ -8,8 +8,6 @@
 
 {% load filters %}
 
-{% block brand-link %}/dashboard{% endblock %}
-
 {% block javascript %}
     {{ block.super }}
     <script>
@@ -56,7 +54,7 @@
             {% if tool_added %}
                 <div class="alert alert-success" role="alert">
                     <p><strong>Congratulations!</strong> You have registered a new tool. </p>
-                    <p><a href="{% url "dashboard" %}">Return to your dashboard</a> or add another tool.</p>
+                    <p><a href="{% url "toolManagement:toolbox" %}">Return to your toolbox</a> or add another tool.</p>
                 </div>
             {% endif %}
 
@@ -132,7 +130,7 @@
 
             <div class="container-fluid">
                 <div class="pull-right">
-                    <a href="/dashboard" class="btn btn-default" role="button">Cancel</a>
+                    <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
                     <button type="submit" class="btn btn-primary">Register Tool</button>
                 </div>
             </div>

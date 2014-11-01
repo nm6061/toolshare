@@ -46,8 +46,8 @@ class Address(models.Model):
     state = models.CharField('state', max_length=2, default='', choices=app.constants.US_STATES)
     country = models.CharField('country', max_length=50, default='USA')
     zip = models.CharField('zip code', max_length=9, validators=[
-        RegexValidator(regex='^\d{5}(?:[-\s]\d{4})?$', message='should be 5 or 9 digits',
-                       code='invalid_phone')])
+        RegexValidator(regex='^\d{5,9}?$', message='should be 5 or 9 digits',
+                       code='invalid_zip')])
 
     class Meta:
         app_label = 'app'

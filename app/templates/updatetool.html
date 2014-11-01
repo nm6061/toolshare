@@ -1,0 +1,11 @@
+{% extends "auth_base.html" %}
+{% block title %}Update Tool{% endblock %}
+{% block auth-content %}
+    <h1>Update Tool</h1>
+<div class="auth-box">
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="update" />
+    </form>
+    </div>
+{% endblock %}

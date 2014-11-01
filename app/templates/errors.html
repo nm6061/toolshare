@@ -1,5 +1,6 @@
 {% if has_errors %}
     <div class="alert alert-danger" role="alert"><strong>Aw, snap!</strong>
+
         <div class="spacer-5"></div>
         {% if form_errors %}
             {% for error in form_errors %}
@@ -7,14 +8,16 @@
                     {% for error in error.errors %}{{ error }}{% endfor %}
                 </div>
             {% endfor %}
-            <div class="spacer-5"></div>
         {% endif %}
-        <div>
-            {% for error in field_errors %}
-                <div>
-                    <strong>{{ error.name }}</strong> {% for error in error.errors %}{{ error }}{% endfor %}
-                </div>
-            {% endfor %}
-        </div>
+        {% if field_errors %}
+            <div class="spacer-5"></div>
+            <div>
+                {% for error in field_errors %}
+                    <div>
+                        <strong>{{ error.name }}</strong> {% for error in error.errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endif %}
