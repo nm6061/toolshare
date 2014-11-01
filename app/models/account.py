@@ -83,7 +83,7 @@ class UserManager(BaseUserManager):
         return self._create_user(**extra_fields)
 
     def _get_fields(self, model, **fields):
-        _user_fields = ['date_joined', 'first_name', 'middle_name', 'last_name', 'phone_num', 'email',
+        _user_fields = ['date_joined', 'first_name', 'last_name', 'phone_num', 'email',
                         'pickup_arrangements', 'reputation']
         _address_fields = ['apt_num', 'street', 'city', 'county', 'state', 'country', 'zip']
 
@@ -132,9 +132,6 @@ class User(AbstractBaseUser):
 
     def get_full_name(self):
         full_name = self.first_name
-
-        if self.middle_name:
-            full_name = full_name + ' ' + self.middle_name
 
         if self.last_name:
             full_name = full_name + ' ' + self.last_name
