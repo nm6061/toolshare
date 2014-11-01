@@ -43,7 +43,7 @@ class SignInView(FormView):
     template_name = 'account/signin.html'
     form_class = SignInForm
     http_method_names = ['get', 'post']
-    success_url = reverse_lazy('dashboard')
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         login(self.request, form.get_user())

@@ -18,7 +18,9 @@ from app.models.tool import Tool
 from django.db.models import Count
 
 def home(request):
-    return render_to_response('home.html')
+    if not request.user.is_authenticated():
+        return render_to_response('home.html')
+    return render(request,'auth_home.html')
 
 
 @login_required(redirect_field_name='o')
