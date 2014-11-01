@@ -103,7 +103,6 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField('is active', default=False)
     date_joined = models.DateTimeField('Date joined', default=timezone.now)
     first_name = models.CharField('first name', max_length=30, validators=[AlphabetOnlyValidator()])
-    middle_name = models.CharField(max_length=25, blank=True)
     last_name = models.CharField('last name', max_length=30, blank=True, validators=[AlphabetOnlyValidator()])
     phone_num = models.CharField('phone number', max_length=11, blank=True, validators=[
         RegexValidator(regex='^\d{9,10}$', message='should be 9 or 10 digits', code='invalid_phone')])
