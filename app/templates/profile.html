@@ -4,25 +4,17 @@
 
 {% load filters %}
 
-{% block auth-content %}
-    <h1 class="page-header">Update your Profile</h1>
-    <div class="auth-box">
+{% block content %}
+    <div id="signup-box" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if form.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Uh oh,</strong> there were errors.
-                </div>
-            {% endif %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-success" role="alert"><strong>Done, </strong>{{ message }}</div>
-                {% endfor %}
-            {% endif %}
+            {% load errors %}
+            {% errors form formset %}
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>Update your profile</h3>
+                            <h3>Update your ToolShare account</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -46,26 +38,26 @@
                     </div>
                     <div class="row no-gutter">
                         <div class="col-sm-3">
-                            {{ form.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
+                            {{ formset.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
                         </div>
-                        <div class="col-md-9{% if form.street.errors %} has-error{% endif %}">
-                            {{ form.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
+                        <div class="col-md-9{% if formset.street.errors %} has-error{% endif %}">
+                            {{ formset.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
                         </div>
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-4">
-                            {{ form.county|add_attrs:"{'class':'form-control','placeholder':'County'}" }}
+                            {{ formset.county|add_attrs:"{'class':'form-control','placeholder':'County'}" }}
                         </div>
-                        <div class="col-md-8{% if form.city.errors %} has-error{% endif %}">
-                            {{ form.city|add_attrs:"{'class':'form-control','placeholder':'City'}" }}
+                        <div class="col-md-8{% if formset.errors %} has-error{% endif %}">
+                            {{ formset.city|add_attrs:"{'class':'form-control','placeholder':'City'}" }}
                         </div>
                     </div>
                     <div class="row no-gutter">
                         <div class="col-md-8">
-                            {{ form.state|add_attrs:"{'class':'form-control'}" }}
+                            {{ formset.state|add_attrs:"{'class':'form-control'}" }}
                         </div>
-                        <div class="col-md-4{% if form.zip.errors %} has-error{% endif %}">
-                            {{ form.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
+                        <div class="col-md-4{% if formset.zip.errors %} has-error{% endif %}">
+                            {{ formset.zip|add_attrs:"{'class':'form-control','placeholder':'Zip'}" }}
                         </div>
                     </div>
                     <div class="spacer-5"></div>
@@ -82,6 +74,7 @@
                             {{ form.email|add_attrs:"{'class':'form-control','placeholder':'Email'}" }}
                         </div>
                     </div>
+
                     <div class="spacer-15"></div>
                     <div class="row">
                         <div class="col-md-6">
@@ -93,9 +86,15 @@
                             {{ form.pickup_arrangements|add_attrs:"{'class':'form-control no-resize','rows':'2','placeholder':'Example - Please knock on my door.'}" }}
                         </div>
                     </div>
+                    <div class="spacer-15"></div>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Update</button>
         </form>
     </div>
 {% endblock %}
