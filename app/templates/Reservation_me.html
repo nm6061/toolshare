@@ -1,0 +1,42 @@
+{% extends "auth_base.html" %}
+
+{% block title %}Reservation by me{% endblock %}
+
+{% block RequestNav %} active {% endblock %}
+
+{% block auth-content %}
+    <h1>Requests send by me</h1>
+
+    <div class="spacer-50"></div>
+    {% if reservations %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Tool Name</th>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.tool.name }}</td>
+                    <td>{{ reservation.from_date }}</td>
+                    <td>{{ reservation.to_date }}</td>
+                    <td>
+                        <form action="{% url 'cancel' reservation.pk %}" method="POST">
+                            {% csrf_token %}
+
+                            <button type="submit" class="btn btn-primary">Cancel</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <strong>Aww,</strong> you have no requests <strong>Made!<strong>
+        </div>
+    {% endif %}
+{% endblock %}
