@@ -109,6 +109,7 @@ class User(AbstractBaseUser):
     email = models.EmailField('email address', unique=True, validators=[EmailValidator()])
     pickup_arrangements = models.TextField('pickup arrangements', max_length=100, blank=True)
     reputation = models.PositiveIntegerField('reputation', default=0, blank=True)
+    send_reminders = models.BooleanField('send reminders', default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name']
