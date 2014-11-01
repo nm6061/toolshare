@@ -16,11 +16,10 @@
 
     <h3 class="sub-header">My tools</h3>
 
-
+    {% if homeTools %}
+        {% for tool in homeTools %}
     <div class="container">
         <div class="row">
-            {% if homeTools %}
-                {% for tool in homeTools %}
                     <div class="col-lg-2 col-md-2 col-sm-1" style="position: inherit;">
                         <figure>
                             <div id="toolThumbnail">

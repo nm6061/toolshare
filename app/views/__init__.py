@@ -68,19 +68,27 @@ def approve(request, reservation_id):
 @require_POST
 def reject(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
-    reservation.status = 'Reject'
-    reservation.save()
     return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
 
 @login_required(redirect_field_name='o')
 @require_POST
 def rejectmessage(request, reservation_id):
-    # csrfContext = RequestContext(request)
+    csrfContext = RequestContext(request)
     reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'Reject'
+    reservation.save()
     reservation.message = request.POST['message']
     reservation.save()
 
     return HttpResponse(reservation_id)
+
+@login_required(redirect_field_name='o')
+def requestsend(request):
+    reservation = Reservation.objects.filter(user=request.user)
+
+    return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
+
+
 
 @login_required(redirect_field_name='o')
 @require_POST

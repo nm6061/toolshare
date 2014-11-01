@@ -37,11 +37,6 @@
 
                             <button type="submit" class="btn btn-primary">Reject</button>
                         </form>
-                        <form action="{% url 'cancel' reservation.pk %}" method="POST">
-                            {% csrf_token %}
-
-                            <button type="submit" class="btn btn-primary">Cancel</button>
-                        </form>
                     </td>
                 </tr>
             {% endfor %}
