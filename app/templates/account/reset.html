@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load filters %}
+{% block title %}Reset password of your ToolShare account{% endblock %}
+{% block navbar-top %}
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url "account:signin" %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+            <li><a href="{% url "account:signup" %}"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+        </ul>
+    </div>
+{% endblock %}
+{% block content %}
+    <div id="signin-box" class="auth-box">
+        <form role="form" action="." method="post">
+            {% csrf_token %}
+            {% load errors %}
+            {% errors form %}
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Reset password of your ToolShare account</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Please enter the a new password for your account
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row no-gutter">
+                        <div class="col-md-6{% if form.password1.errors %} has-error{% endif %}">
+                            {{ form.password1|add_attrs:"{'class':'form-control','placeholder':'New password'}" }}
+                        </div>
+                        <div class="col-md-6{% if form.password2.errors %} has-error{% endif %}">
+                            {{ form.password2|add_attrs:"{'class':'form-control','placeholder':'Confirm'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <button type=" submit" class="btn btn-primary">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
