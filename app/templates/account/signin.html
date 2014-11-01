@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load filters %}
-{% block title %}Sign in{% endblock %}
+{% block title %}Sign in to your ToolShare account{% endblock %}
 {% block navbar-top %}
     <div id="navbar-collapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -34,8 +34,8 @@
                     <div class="spacer-15"></div>
                     <div class="row pull-right">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-link">Forget password?</button>
-                            <button type="submit" class="btn btn-primary">Sign in</button>
+                            <a class="btn btn-link" href="{% url "account:recover" %}">Forget password?</a>
+                            <button type=" submit" class="btn btn-primary">Sign in</button>
                         </div>
                     </div>
                 </div>
