@@ -16,6 +16,8 @@
 
         {% if not isToolOwner %}
             <a href="/tool/{{ tooldata.id }}/borrow">Borrow</a>
+        {% else %}
+            <a href="/tool/{{ tooldata.id }}/update_tool">Update</a>
         {% endif %}
     </div>
 
