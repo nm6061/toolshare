@@ -4,11 +4,11 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
+    padding-top: 50px;
 }
 
 /* The style of the main content container of ToolShare */
-.auth-content{
+.auth-content {
     margin-left: 90px;
 }
 
@@ -17,16 +17,8 @@ body {
  */
 
 .sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
-.navbar-fixed-top {
-  border: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
 }
 
 /*
@@ -35,145 +27,122 @@ body {
 
 /* Hide for mobile, show later */
 .sidebar {
-  display: none;
+    display: none;
 }
-@media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    background-color: #eeeeee;
-    border-right: 1px solid #e7e7e7;
 
-  }
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        display: block;
+        background-color: #eeeeee;
+    }
 }
 
 /* Sidebar navigation */
-
-/* Remove the margin, padding, and list styles from sideNav */
-#sideNav,#sideNav li {
-    margin:0;
-    padding:0;
-    list-style:none;
+.main-menu, .main-menu li, .sub-menu ul {
+    padding: 0px;
+    margin: 0px;
 }
 
-/* Style the icon labels */
-#sideNav h4{
-    padding: 10px 0px 0px 15px;
+    .main-menu li {
+        position: relative;
+        list-style: none;
+    }
+
+    .main-menu > li {
+        padding: 1px 0px;
+    }
+
+    .main-menu li a > .icon {
+        width: 70px;
+        height: 70px;
+        padding: 13px;
+        border: 1px solid transparent;
+        fill: #777;
+    }
+
+    .main-menu li.active a > .icon {
+        background-color: #fff;
+        fill: #222;
+    }
+
+    .main-menu li:hover a > .icon {
+        z-index: 60;
+        position: relative;
+        background-color: #fff;
+        fill: #0f86dd;
+    }
+
+.sub-menu {
+    z-index: 50;
+    position: absolute;
+    left: 69px;
+    top: 1px;
+    display: none;
+    width: 225px;
+    padding: 5px 0px 5px 25px;
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgba(42, 40, 40, 0.25);
 }
 
-/* Set the dimensions of a main menu icon */
-#sideNav .mainMenu{
-    width:80px;
-    height: 80px;
+    .sub-menu > ul > li {
+        padding: 5px 0px 5px 0px;
+    }
+
+.main-menu li:hover .sub-menu {
+    display: block;
 }
-
-/* Set the appearance of a main menu icon */
-#sideNav .mainMenu .menuIcon{
-    padding: 20%;
-    width: 100%;
-}
-
-/* Set the size of the submenu, and add padding */
-#sideNav .subMenu{
-    width:200px;
-    padding: 15px;
-}
-
-
-/* Apply a hover background to nav items */
-#sideNav li:hover{
-    background-color:#ffffff;
-    position:relative;
-}
-
-/* Hide the submenu*/
-#sideNav li ul{
-    padding: 0;
-    margin: 0;
-    background: #ffffff;
-    position:absolute;
-    display:none;
-}
-
-/* Display the submenu when hovering over main menu icons. "left" calculated by: (width of nav - width  of menuborder) */
-#sideNav li:hover ul{
-    left:78px;
-    top:-1px;
-    display:block;
-}
-
-/*Changes the color of the menu icon when user hovers over the menu*/
-#sideNav li:hover > a > .menuIcon {
-    fill: #0f86dd ;
-}
-
-.mainMenu ul{
-    border: 1px solid gray;
-}
-
-.mainMenu:hover{
-    border: 1px solid gray;
-}
-
-/*Change active menu item appearance */
-#sideNav .active,
-#sideNav .active:hover,
-#sideNav .active:focus {
-    background-color: white;
-    border: 1px solid gray;
-}
-
 
 /*
  * Main content
  */
 
 .main {
-  padding: 20px;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-.main .page-header {
-  margin-top: 0;
+    padding: 20px;
 }
 
-figcaption{
+@media (min-width: 768px) {
+    .main {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+}
+
+.main .page-header {
+    margin-top: 0;
+}
+
+figcaption {
     padding-left: 5px;
     margin-top: -10px;
     font-weight: bold;
 }
-
 
 /*
  * Placeholder dashboard ideas
  */
 
 .placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-.placeholders h4 {
-  margin-bottom: 0;
-}
-.placeholder {
-  margin-bottom: 20px;
-}
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-.addToolButton{
+.placeholders h4 {
+    margin-bottom: 0;
+}
+
+.placeholder {
+    margin-bottom: 20px;
+}
+
+.placeholder img {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.addToolButton {
     float: right;
 }
-
-
-

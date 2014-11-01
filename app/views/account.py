@@ -1,9 +1,12 @@
 from collections import ChainMap
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth import login, logout
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
 
 from app.models.account import *
 from app.forms.account import *
@@ -16,7 +19,6 @@ class SignUpView(FormsetView):
     form_class = SignUpUserForm
     formset_class = SignUpAddressFormSet
     http_method_names = ['get', 'post']
-    success_url = reverse_lazy('account:signup_success')
 
     def form_valid(self, request, form, formset):
         cleaned_data = dict()
@@ -55,16 +57,11 @@ class SignInView(FormView):
 
 class SignOutView(FormView):
     http_method_names = ['post']
-    success_url = reverse_lazy('account:signout_success')
+    success_template_name = 'account/signout_success.html'
 
     def post(self, request):
         logout(request)
-        return redirect(self.get_success_url())
-
-
-class SignOutSuccessView(TemplateView):
-    http_method_names = ['get']
-    template_name = 'account/signout_success.html'
+        return render(request, self.success_template_name)
 
 
 class ActivateAccountView(TemplateView):
@@ -75,3 +72,48 @@ class ActivateAccountView(TemplateView):
         # TODO : Determine what happens if activation fails.
         if RegistrationProfile.objects.activate_user(activation_key):
             return render(request, self.success_template_name)
+
+
+class RecoverAccountView(FormView):
+    template_name = 'account/recover.html'
+    success_template_name = 'account/recovery_success.html'
+    form_class = RecoverAccountForm
+    http_method_names = ['get', 'post']
+
+    def form_valid(self, form):
+        user = User.objects.get(email=form.cleaned_data['email'])
+        uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        form.save(get_current_site(self.request), user, uidb64, token)
+
+        return render(self.request, self.success_template_name)
+
+
+class ResetAccountView(FormView):
+    template_name = 'account/reset.html'
+    success_template_name = 'account/reset_success.html'
+    invalid_link_template_name = 'account/reset_invalid.html'
+    form_class = ResetAccountForm
+    http_method_names = ['get', 'post']
+
+    def get(self, request, uidb64, token):
+        uid = urlsafe_base64_decode(uidb64)
+        user = User.objects.get(pk=uid)
+
+        if not default_token_generator.check_token(user, token):
+            return render(self.request, self.invalid_link_template_name)
+        return super(ResetAccountView, self).get(request)
+
+    def post(self, request, uidb64, token):
+        uid = urlsafe_base64_decode(uidb64)
+        user = User.objects.get(pk=uid)
+
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+
+        if form.is_valid():
+            form.save(user)
+            return render(self.request, self.success_template_name)
+
+        return super(ResetAccountView, self).form_invalid(form)
