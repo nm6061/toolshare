@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
-from app.views import UserUpdateView
 from django.conf import settings
 from django.conf.urls.static import static
+from app.views.profile import UserUpdateView
 
 from django.contrib import admin
 admin.autodiscover()
