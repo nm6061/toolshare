@@ -40,6 +40,13 @@
 
                 </tr>
                 </thead>
+                 <tbody>
+                {% for u1 in borrower_list %}
+                <tr>
+                    <td>{{ u1.first_name }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
 
                 
             </table>

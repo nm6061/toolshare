@@ -16,6 +16,7 @@ from app.forms.toolRegistration import AddToolForm
 from app.models.reservation import Reservation
 from app.models.tool import Tool
 from django.db.models import Count
+from app.models import User
 
 def home(request):
     if not request.user.is_authenticated():
@@ -45,7 +46,12 @@ def presentstatistics(request):
     for iter_tool in temp_list:
         popular_tool_list.append(Tool.objects.filter(id = iter_tool['tool']).get())
 
-    return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list}))
+    temp2_list =  Reservation.objects.values('user').distinct().annotate(total = Count('user')).order_by('-total')
+    popular_borrower_list = list()
+    for iter_tool in temp2_list:
+        popular_borrower_list.append(User.objects.filter(id = iter_tool['user']).get())
+
+    return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,'borrower_list':popular_borrower_list}))
 
 
 @login_required(redirect_field_name='o')
