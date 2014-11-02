@@ -51,7 +51,12 @@ def presentstatistics(request):
     for iter_tool in temp2_list:
         popular_borrower_list.append(User.objects.filter(id = iter_tool['user']).get())
 
-    return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,'borrower_list':popular_borrower_list}))
+    temp3_list =  Tool.objects.values('owner').distinct().annotate(total = Count('owner')).order_by('-total')
+    popular_lender_list = list()
+    for iter_tool in temp3_list:
+        popular_lender_list.append(User.objects.filter(id = iter_tool['owner']).get())
+
+    return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,'borrower_list':popular_borrower_list,'lender_list':popular_lender_list}))
 
 
 @login_required(redirect_field_name='o')
