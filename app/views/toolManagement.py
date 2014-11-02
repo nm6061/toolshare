@@ -48,12 +48,19 @@ def viewTool(request, tool_id):
 
 @login_required(redirect_field_name='o')
 def updateTool(request, tool_id):
-    tool = Tool.objects.get(id=tool_id)
-    tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tool)
+    tooldata = Tool.objects.get(id=tool_id)
     if request.method == 'POST':
+        tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
         if tool_form.is_valid():
-           tool_form.save()
-    return render(request, 'toolbox.html')
+            tool_form.save()
+            success_url = reverse_lazy("toolManagement:viewTool", kwargs={'tool_id':tool_id})
+            return redirect(success_url)
+        else:
+            return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
+    else:
+        tool_form = AddToolForm(instance=tooldata)
+        return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
+
 
 @login_required(redirect_field_name='o')
 def toolbox(request):

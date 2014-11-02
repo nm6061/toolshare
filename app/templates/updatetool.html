@@ -1,11 +1,128 @@
 {% extends "auth_base.html" %}
 {% block title %}Update Tool{% endblock %}
+{% load filters %}
+{% load staticfiles %}
+{% block ToolsNav %} active {% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script>
+        function imagePreview(fileInput) {
+            var files = fileInput.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var imageType = /image.*/;
+                if (!file.type.match(imageType)) {
+                    continue;
+                }
+                var img=document.getElementById("thumbnail");
+                var toolPreview=document.getElementById("toolThumbnail");
+                img.file = file;
+                var reader = new FileReader();
+                reader.onload = (function(aImg) {
+                    return function(e) {
+                        toolPreview.style.display = "block";
+                        aImg.src = e.target.result;
+                    };
+                })(img);
+                reader.readAsDataURL(file);
+            }
+        }
+
+        $(document).ready(function(){
+            $("#shedSelect").css("display","none");
+            $("form input[name='location']").click(function () {
+                if ($('input[name=location]:checked').val() == "S" ) {
+                    $("#shedSelect").slideDown("fast"); //Slide Down Effect
+                } else {
+                    $("#shedSelect").slideUp("fast");  //Slide Up Effect
+                }
+            });
+        })
+    </script>
+{% endblock %}
+
 {% block auth-content %}
-    <h1>Update Tool</h1>
-<div class="auth-box">
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="update" />
-    </form>
+    <div class="auth-box">
+        <form enctype="multipart/form-data" action="." method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-12"><h3>Update Tool</h3></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" >
+                            <label for="id_picture">Keep the existing picture or upload a new picture.</label>
+                            <input  type="file" accept="image/*" name="picture" onchange="imagePreview(this)" />
+                            <div id="toolThumbnail" class="thumbnail" style=" display: none ">
+                            <img id="thumbnail" src="">
+                            </div>
+{#                            <p class="formErrorMessage">{{ form.picture.errors|striptags }}</p>#}
+                            {{ form.picture.errors }}
+                            <div class="spacer-20"></div>
+
+
+                            <label for="id_name">Name of the tool</label>
+                                <div class="{% if form.name.errors %} has-error{% endif %}">
+                                    {{ form.name|add_attrs:"{'class':'form-control'}" }}
+                                </div>
+                            <p class="formErrorMessage">{{ form.name.errors|striptags }}</p>
+                            <div class="spacer-20"></div>
+
+
+                            <label for="id_category">Tool category</label><br>
+                                {{ form.category }}
+                            <p class="formErrorMessage">{{ form.category.errors|striptags }}</p>
+                            <div class="spacer-20"></div>
+
+
+                            <div class="locationChoices">
+                                <label for="id_location">Share the tool from:</label>
+                                    {{ form.location }}
+                                <fieldset>
+                                    <div id="shedSelect" class="formset">
+                                        <label> Which shed?</label>
+                                        </br>
+                                        <select>
+                                          <option>Shed 1 at 123 Lane</option>
+                                          <option>Shed 2 at 610 Blvd</option>
+                                          <option>Shed 3 at 1600 Pennsylvania Ave NW</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <p class="formErrorMessage">{{ form.location.errors|striptags }}</p>
+                            <div class="spacer-20"></div>
+
+
+                            <label>Tool pickup arrangement</label>
+                                <div class="{% if form.pickupArrangement.errors %} has-error{% endif %}">
+                                    {{ form.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
+                                </div>
+                            <p class="formErrorMessage">{{ form.pickupArrangement.errors|striptags }}</p>
+                            <div class="spacer-20"></div>
+
+                            <label>Tool description</label>
+                                <div class="{% if form.description.errors %} has-error{% endif %}">
+                                    {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'10'}" }}
+                                </div>
+                            <p class="formErrorMessage">{{ form.description.errors|striptags }}</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="pull-right">
+                    <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Tool</button>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}
