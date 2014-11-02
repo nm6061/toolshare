@@ -1,12 +1,8 @@
 {% extends "auth_base.html" %}
-
-{% load staticfiles %}
-
-{% block title %}Register Tool{% endblock %}
-
-{% block ToolsNav %} active {% endblock %}
-
+{% block title %}Update Tool{% endblock %}
 {% load filters %}
+{% load staticfiles %}
+{% block ToolsNav %} active {% endblock %}
 
 {% block javascript %}
     {{ block.super }}
@@ -51,48 +47,41 @@
         <form enctype="multipart/form-data" action="." method="post">
             {% csrf_token %}
 
-            {% if tool_added %}
-                <div class="alert alert-success" role="alert">
-                    <p><strong>Congratulations!</strong> You have registered a new tool. </p>
-                    <p><a href="{% url "toolManagement:toolbox" %}">Return to your toolbox</a> or add another tool.</p>
-                </div>
-            {% endif %}
-
-
             <div class="form-group">
                 <div class="container-fluid">
 
                     <div class="row">
-                        <div class="col-md-12"><h3>Register a Tool</h3></div>
+                        <div class="col-md-12"><h3>Update Tool</h3></div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12" >
-                            <label for="id_picture">Upload a picture of the tool</label>
+                            <label for="id_picture">Keep the existing picture or upload a new picture.</label>
                             <input  type="file" accept="image/*" name="picture" onchange="imagePreview(this)" />
                             <div id="toolThumbnail" class="thumbnail" style=" display: none ">
                             <img id="thumbnail" src="">
                             </div>
-                            <p class="formErrorMessage">{{ form.picture.errors|striptags }}</p>
+{#                            <p class="formErrorMessage">{{ form.picture.errors|striptags }}</p>#}
+                            {{ form.picture.errors }}
                             <div class="spacer-20"></div>
 
 
-                            <label for="id_name">Enter the name of your tool</label>
+                            <label for="id_name">Name of the tool</label>
                                 <div class="{% if form.name.errors %} has-error{% endif %}">
-                                    {{ form.name|add_attrs:"{'class':'form-control','placeholder':'Example: Scissor'}" }}
+                                    {{ form.name|add_attrs:"{'class':'form-control'}" }}
                                 </div>
                             <p class="formErrorMessage">{{ form.name.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
 
-                            <label for="id_category">Please select the appropriate category for your tool</label>
+                            <label for="id_category">Tool category</label><br>
                                 {{ form.category }}
                             <p class="formErrorMessage">{{ form.category.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
 
                             <div class="locationChoices">
-                                <label for="id_location">Where would you like the tool to be shared from?</label>
+                                <label for="id_location">Share the tool from:</label>
                                     {{ form.location }}
                                 <fieldset>
                                     <div id="shedSelect" class="formset">
@@ -110,16 +99,16 @@
                             <div class="spacer-20"></div>
 
 
-                            <label>Please accept the default pickup arrangements or specify a new one for this tool</label>
+                            <label>Tool pickup arrangement</label>
                                 <div class="{% if form.pickupArrangement.errors %} has-error{% endif %}">
                                     {{ form.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
                                 </div>
                             <p class="formErrorMessage">{{ form.pickupArrangement.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
-                            <label>Please add a detailed description of the tool</label>
+                            <label>Tool description</label>
                                 <div class="{% if form.description.errors %} has-error{% endif %}">
-                                    {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'10','placeholder':'Example: Fiskars brand 8 inch scissors with red plastic handles. Minor scuff marks on thumb hole.'}" }}
+                                    {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'10'}" }}
                                 </div>
                             <p class="formErrorMessage">{{ form.description.errors|striptags }}</p>
 
@@ -131,7 +120,7 @@
             <div class="container-fluid">
                 <div class="pull-right">
                     <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Register Tool</button>
+                    <button type="submit" class="btn btn-primary">Update Tool</button>
                 </div>
             </div>
         </form>

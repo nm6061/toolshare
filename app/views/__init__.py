@@ -18,15 +18,9 @@ from app.models.tool import Tool
 from django.db.models import Count
 
 def home(request):
-    return render_to_response('home.html')
-
-
-@login_required(redirect_field_name='o')
-def dashboard(request):
-    user = request.user
-    homeTools = Tool.objects.filter(owner_id=user).filter(location='H')
-    context = {'homeTools': homeTools}
-    return render(request, 'toolbox.html', context)
+    if not request.user.is_authenticated():
+        return render_to_response('home.html')
+    return render(request,'auth_home.html')
 
 
 @login_required(redirect_field_name='o')
@@ -38,10 +32,10 @@ def browsetool(request):
             -excluding tools belonging to the logged in user
             -excluding tools that have a 'deactivated' status
     """
-    #user = request.user
-    #toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
-    #context = {'toolsList': toolsList}
-    return render(request,'browsetool.html')
+    user = request.user
+    toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    context = {'toolsList': toolsList}
+    return render(request,'browsetool.html',context)
 
 @login_required(redirect_field_name='o')
 def presentstatistics(request):
@@ -74,19 +68,27 @@ def approve(request, reservation_id):
 @require_POST
 def reject(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
-    reservation.status = 'Reject'
-    reservation.save()
     return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
 
 @login_required(redirect_field_name='o')
 @require_POST
 def rejectmessage(request, reservation_id):
-    # csrfContext = RequestContext(request)
+    csrfContext = RequestContext(request)
     reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'Reject'
+    reservation.save()
     reservation.message = request.POST['message']
     reservation.save()
 
     return HttpResponse(reservation_id)
+
+@login_required(redirect_field_name='o')
+def requestsend(request):
+    reservation = Reservation.objects.filter(user=request.user)
+
+    return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
+
+
 
 @login_required(redirect_field_name='o')
 @require_POST
@@ -117,13 +119,13 @@ def Borrow(request, tool_id):
             borrow_tool_form.save()
 
             borrow_tool_form = forms.BorrowToolForm()
-            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
+            return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
         else:
-            return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
+            return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
     else:
         borrow_tool_form = forms.BorrowToolForm()
-        return render(request, 'Borrow.html', RequestContext(request, {'form': borrow_tool_form}))
+        return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
 
 

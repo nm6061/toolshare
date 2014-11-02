@@ -45,3 +45,26 @@ def viewTool(request, tool_id):
     isToolOwner = tooldata.owner == currentUser
     context = {'tooldata': tooldata, 'isToolOwner':isToolOwner}
     return render(request, 'tool.html', context)
+
+@login_required(redirect_field_name='o')
+def updateTool(request, tool_id):
+    tooldata = Tool.objects.get(id=tool_id)
+    if request.method == 'POST':
+        tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
+        if tool_form.is_valid():
+            tool_form.save()
+            success_url = reverse_lazy("toolManagement:viewTool", kwargs={'tool_id':tool_id})
+            return redirect(success_url)
+        else:
+            return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
+    else:
+        tool_form = AddToolForm(instance=tooldata)
+        return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
+
+
+@login_required(redirect_field_name='o')
+def toolbox(request):
+    user = request.user
+    homeTools = Tool.objects.filter(owner_id=user).filter(location='H')
+    context = {'homeTools': homeTools}
+    return render(request, 'toolbox.html', context)
