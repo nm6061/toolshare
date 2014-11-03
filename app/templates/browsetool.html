@@ -14,20 +14,18 @@
         <div class="row">
             {% if toolsList %}
                 {% for tool in toolsList %}
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-md-2 col-sm-1" style="position: inherit;">
                         <figure>
-                            <div id="toolThumbnail" class="thumbnail">
-
-                                <a href="../tool/{{ tool.id }}">
+                            <div id="toolThumbnail">
+                                <a href="../tool/{{ tool.id }}" class="thumbnail">
                                     <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}"style="width: 150px; height: 150px;"/>
                                 </a>
                             </div>
-                        <figcaption>{{tool.name}}</figcaption>
+                            <figcaption>{{tool.name}}</figcaption>
                         </figure>
                     </div>
                 {% endfor %}
             {% endif %}
-
         </div>
     </div>
 {% endblock %}

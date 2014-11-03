@@ -1,68 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% load staticfiles %}
-        {% block meta_tags %}
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% endblock %}
+<head>
+    {% load staticfiles %}
+    {% block meta_tags %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
 
-        <title>{% block title %}Welcome to ToolShare{% endblock %}</title>
+    <title>{% block title %}Welcome to ToolShare{% endblock %}</title>
 
-        {% block stylesheets %}
-            <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
-            <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet"/>
-            <link href="{% static "styles/global.css" %}" rel="stylesheet"/>
-            <link href="{% static "styles/bootstrap-overrides.css" %}" rel="stylesheet"/>
-        {% endblock %}
-
-
-        {% block javascript %}
-            <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
-            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        {% endblock %}
+    {% block stylesheets %}
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link href="{% static "styles/global.css" %}" rel="stylesheet"/>
+        <link href="{% static "styles/bootstrap-overrides.css" %}" rel="stylesheet"/>
+    {% endblock %}
 
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
+    {% block javascript %}
+        <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {% endblock %}
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
         <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
 
-        {% block head %}{% endblock %}
-    </head>
+    {% block head %}{% endblock %}
+</head>
 
-    <body>
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{% block brand-link %}/{% endblock %}">ToolShare</a>
-                </div>
-                {% block navbar-top %}
-                {% endblock %}
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% block brand-link %}/{% endblock %}">ToolShare</a>
+        </div>
+        {% block navbar-top %}
+        {% endblock %}
+    </div>
+</nav>
+
+<div class="container-fluid">
+    {% block navbar-side %}{% endblock %}
+
+    {% if messages %}
+        <div id="signup-box" class="auth-box">
+            <div
+                {% for message in messages %}
+                    {%if 'error' in message.tags%}
+                        class="alert alert-danger"
+                    {%elif 'warning' in message.tags%}
+                        class="alert alert-warning"
+                    {%elif 'info' in message.tags%}
+                        class="alert alert-info"
+                    {% else %}
+                        class="alert alert-success"
+                    {% endif %}
+                {% endfor %}
+            role="alert">
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>
+                            {% if 'safe' in message.tags %}
+                                {{ message|safe }}
+                            {% else %}
+                                {{ message }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-        </nav>
-
-        <div class="container-fluid">
-            {% block navbar-side %}{% endblock %}
-
-            {% block content %}{% endblock %}
         </div>
 
-        <script type="text/javascript">
-            {% block tail-scripts %}
-            {% endblock %}
-        </script>
-    </body>
+    {% else %}
+        {% block content %}{% endblock %}
+    {% endif %}
+
+
+</div>
+
+<script type="text/javascript">
+    {% block tail-scripts %}
+    {% endblock %}
+</script>
+</body>
 </html>

@@ -31,7 +31,47 @@
 
 
             <h2 class="sub-header">Most Active Borrower</h2>
+            <table class="table table-striped">
+               <thead>
+
+                <tr>
+                    <th>Borrower Name</th>
+
+
+                </tr>
+                </thead>
+                 <tbody>
+                {% for u1 in borrower_list %}
+                <tr>
+                    <td>{{ u1.first_name }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+                
+            </table>
+
+
             <h2 class="sub-header">Most Active Lender</h2>
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th>Lender Name</th>
+
+
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for u1 in lender_list %}
+                <tr>
+                    <td>{{ u1.first_name }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
 
     </div>
     </div>

@@ -18,8 +18,8 @@
 
     {% if homeTools %}
         {% for tool in homeTools %}
-            <div class="container">
-                <div class="row">
+    <div class="container">
+        <div class="row">
                     <div class="col-lg-2 col-md-2 col-sm-1" style="position: inherit;">
                         <figure>
                             <div id="toolThumbnail">
@@ -31,10 +31,10 @@
                             <figcaption>{{ tool.name }}</figcaption>
                         </figure>
                     </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}
 
