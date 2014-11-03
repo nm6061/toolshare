@@ -31,9 +31,16 @@ def registerTool(request):
                 new_tool.save()
                 tool_form.save_m2m()
 
-            tool_form = AddToolForm(initial = {'pickupArrangement': currentUser.pickup_arrangements})
-            messages.success(request, 'yay new tool added!')
-            return render(request, 'registertool.html', RequestContext(request, {'form': tool_form, 'tool_added': True, 'messages':messages}))
+            register_url = reverse_lazy("toolManagement:registerTool")
+
+            #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
+            #It SHOULD NOT be used unless you need to add a hyperlink to your message!
+            messages.success(request,'You have successfully registered a new tool! <br> <br> '
+                                     '<a href="/tool/register_tool">Click here register another tool</a><br> OR <br> '
+                                     '<a href=".">click here to return to your toolbox.</a>', extra_tags='safe')
+
+            success_url = reverse_lazy("toolManagement:toolbox")
+            return redirect(success_url)
         else:
             return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
     else:
@@ -61,12 +68,12 @@ def updateTool(request, tool_id):
         tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
         if tool_form.is_valid():
             tool_form.save()
-            success_url = reverse_lazy("toolManagement:viewTool", kwargs={'tool_id':tool_id})
 
             #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
             #It SHOULD NOT be used unless you need to add a hyperlink to your message!
             messages.success(request,'Your tool has been successfully updated! <br> <br> <a href=".">Click here to go back to your tool.</a>', extra_tags='safe')
 
+            success_url = reverse_lazy("toolManagement:viewTool", kwargs={'tool_id':tool_id})
             return redirect(success_url)
         else:
             return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
