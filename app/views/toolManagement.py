@@ -54,7 +54,9 @@ def viewTool(request, tool_id):
 def updateTool(request, tool_id):
     tooldata = get_object_or_404(Tool, pk=tool_id)
     if not tooldata.owner == request.user:
-        return HttpResponse("You don't have permission to edit this tool!")
+        error_url = reverse_lazy("toolManagement:toolbox")
+        messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to the toolbox.</a>', extra_tags='safe')
+        return redirect(error_url)
     if request.method == 'POST':
         tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
         if tool_form.is_valid():

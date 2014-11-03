@@ -59,10 +59,22 @@
 
     {% if messages %}
         <div id="signup-box" class="auth-box">
-            <div class="alert alert-success" role="alert">
+            <div
+                {% for message in messages %}
+                    {%if 'error' in message.tags%}
+                        class="alert alert-danger"
+                    {%elif 'warning' in message.tags%}
+                        class="alert alert-warning"
+                    {%elif 'info' in message.tags%}
+                        class="alert alert-info"
+                    {% else %}
+                        class="alert alert-success"
+                    {% endif %}
+                {% endfor %}
+            role="alert">
                 <ul class="messages">
                     {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                        <li>
                             {% if 'safe' in message.tags %}
                                 {{ message|safe }}
                             {% else %}
