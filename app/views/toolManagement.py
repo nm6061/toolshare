@@ -59,12 +59,11 @@ def updateTool(request, tool_id):
         tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
         if tool_form.is_valid():
             tool_form.save()
-            name = tooldata.name
             success_url = reverse_lazy("toolManagement:viewTool", kwargs={'tool_id':tool_id})
 
             #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
             #It SHOULD NOT be used unless you need to add a hyperlink to your message!
-            messages.success(request,'You have successfully updated your %s. <br> <br> <a href=".">Click here to go back to your tool.</a>' %name, extra_tags='safe')
+            messages.success(request,'Your tool has been successfully updated! <br> <br> <a href=".">Click here to go back to your tool.</a>', extra_tags='safe')
 
             return redirect(success_url)
         else:
