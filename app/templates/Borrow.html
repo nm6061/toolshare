@@ -9,6 +9,7 @@
 {% block javascript %}
 {{ block.super }}
  <script src="{% static "scripts/bootstrap-datepicker.js" %}" ></script>
+
    <script>
   $( document ).ready(function() {
     $('#fromDate').datepicker();
@@ -17,7 +18,10 @@
 })
   </script>
  {% endblock %}
-
+ {% block stylesheets %}
+ {{ block.super }}
+ <link href="{% static "styles/datepicker3.css" %}" rel="stylesheet"/>
+ {% endblock %}
 {% block auth-content %}
     <h1 class="page-header">Please enter details for Borrowing Tools </h1>
 
