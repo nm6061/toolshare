@@ -95,7 +95,7 @@ def rejectmessage(request, reservation_id):
 
 @login_required(redirect_field_name='o')
 def requestsend(request):
-    reservation = Reservation.objects.filter(user=request.user)
+    reservation = Reservation.objects.filter(user=request.user, status='Pending')
 
     return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
 

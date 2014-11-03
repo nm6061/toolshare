@@ -19,6 +19,6 @@ urlpatterns = patterns('',
     url(r'^Reservation_me/$', 'app.views.requestsend', name = 'Reservation_me'),
     url(r'^reservation/(?P<reservation_id>\d+)/approve/$', 'app.views.approve', name = 'approve'),
     url(r'^reservation/(?P<reservation_id>\d+)/reject/$', 'app.views.reject', name = 'reject'),
-    url(r'^reservation/(?P<reservation_id>\d+)/cancel/$', 'app.views.requestsend', name = 'Reservation_me'),
+    url(r'^reservation/(?P<reservation_id>\d+)/cancel/$', 'app.views.cancel', name = 'cancel'),
     url(r'^reservation/(?P<reservation_id>\d+)/cancel/message/$', 'app.views.rejectmessage', name = 'rejectmessage')
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
