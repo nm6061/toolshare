@@ -51,14 +51,6 @@
         <form enctype="multipart/form-data" action="." method="post">
             {% csrf_token %}
 
-            {% if tool_added %}
-                <div class="alert alert-success" role="alert">
-                    <p><strong>Congratulations!</strong> You have registered a new tool. </p>
-                    <p><a href="{% url "toolManagement:toolbox" %}">Return to your toolbox</a> or add another tool.</p>
-                </div>
-            {% endif %}
-
-
             <div class="form-group">
                 <div class="container-fluid">
 

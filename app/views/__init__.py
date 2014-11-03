@@ -95,7 +95,7 @@ def rejectmessage(request, reservation_id):
 
 @login_required(redirect_field_name='o')
 def requestsend(request):
-    reservation = Reservation.objects.filter(user=request.user)
+    reservation = Reservation.objects.filter(user=request.user, status='Pending')
 
     return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
 
@@ -164,21 +164,5 @@ def approve_reservation(request):
     else:
         toolForm = forms.ApproveReservationForm()
         return render(request, 'approve_reservation.html', RequestContext(request, {'form': toolForm}))
-
-
-class UserUpdateView(edit.UpdateView):
-    form_class = forms.UserUpdateForm
-    model = models.UserProfile
-    template_name = 'profile.html'
-    permission_required = 'auth.change_user'
-    headline = 'Change Profile'
-    # success_message = 'Your profile settings has been saved'
-
-    def get_object(self):
-        return self.request.user
-
-    def get_success_url(self):
-        messages.success(self.request, 'changes to your ToolShare account have been saved.')
-        return reverse_lazy('profile')
 
 

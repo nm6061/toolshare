@@ -83,7 +83,7 @@ class UserManager(BaseUserManager):
         return self._create_user(**extra_fields)
 
     def _get_fields(self, model, **fields):
-        _user_fields = ['date_joined', 'first_name', 'middle_name', 'last_name', 'phone_num', 'email',
+        _user_fields = ['date_joined', 'first_name', 'last_name', 'phone_num', 'email',
                         'pickup_arrangements', 'reputation']
         _address_fields = ['apt_num', 'street', 'city', 'county', 'state', 'country', 'zip']
 
@@ -103,13 +103,13 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField('is active', default=False)
     date_joined = models.DateTimeField('Date joined', default=timezone.now)
     first_name = models.CharField('first name', max_length=30, validators=[AlphabetOnlyValidator()])
-    middle_name = models.CharField(max_length=25, blank=True)
     last_name = models.CharField('last name', max_length=30, blank=True, validators=[AlphabetOnlyValidator()])
     phone_num = models.CharField('phone number', max_length=11, blank=True, validators=[
         RegexValidator(regex='^\d{9,10}$', message='should be 9 or 10 digits', code='invalid_phone')])
     email = models.EmailField('email address', unique=True, validators=[EmailValidator()])
     pickup_arrangements = models.TextField('pickup arrangements', max_length=100, blank=True)
     reputation = models.PositiveIntegerField('reputation', default=0, blank=True)
+    send_reminders = models.BooleanField('send reminders', default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name']
@@ -133,9 +133,6 @@ class User(AbstractBaseUser):
 
     def get_full_name(self):
         full_name = self.first_name
-
-        if self.middle_name:
-            full_name = full_name + ' ' + self.middle_name
 
         if self.last_name:
             full_name = full_name + ' ' + self.last_name

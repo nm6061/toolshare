@@ -4,11 +4,6 @@ from app import models
 from app.models.reservation import Reservation
 import pdb;
 
-class UserUpdateForm(forms.ModelForm):
-    class Meta:
-        model = models.User
-        fields = ['first_name', 'last_name', 'phone_num', 'email', 'pickup_arrangements']
-
 
 class ApproveReservationForm(forms.ModelForm):
     class Meta:
