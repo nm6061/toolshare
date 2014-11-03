@@ -83,6 +83,7 @@ body {
     top: 1px;
     display: none;
     width: 225px;
+    min-height: 70px;
     padding: 5px 0px 5px 25px;
     background-color: #fff;
     box-shadow: 0 0 5px 0 rgba(42, 40, 40, 0.25);
