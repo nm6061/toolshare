@@ -46,24 +46,28 @@ class BorrowToolForm(forms.ModelForm):
         today = datetime.date.today()
         #pdb.set_trace()
         cleaned_data = super(BorrowToolForm, self).clean()
-        blackoutStart='11/11/1991'
-        blackoutEnd='12/12/1991'
 
+        blackoutStart = datetime.date(2014,11,11)
+        blackoutEnd = datetime.date(2014,12,12)
+
+
+        #fromdate and todate can't book past dates
         if 'from_date' in self.cleaned_data and 'to_date' in self.cleaned_data:
             if self.cleaned_data['from_date'] <=today and self.cleaned_data['to_date']<=today   :
                 raise forms.ValidationError("can't book past dates")
 
+        #From Date should be before To date
         if 'from_date' in self.cleaned_data and 'to_date' in self.cleaned_data:
             if self.cleaned_data['from_date'] >= self.cleaned_data['to_date'] :
                 raise forms.ValidationError("From Date should be before To date")
 
-        #if 'from_date' in self.cleaned_data :
-         #   if self.cleaned_data['from_date'] >=BlackoutDate.objects.get(blackoutStart=blackoutStart)  and self.cleaned_data['from_date'] <= BlackoutDate.objects.get(blackoutEnd=blackoutEnd) :
-          #      raise forms.ValidationError("From Date must avoid blackout dates")
+        if 'from_date' in self.cleaned_data :
+            if self.cleaned_data['from_date'] >=blackoutStart  and self.cleaned_data['from_date'] <= blackoutEnd :
+                raise forms.ValidationError("From Date must avoid blackout dates")
 
-        #if 'to_date' in self.cleaned_data  :
-         #  if self.cleaned_data['to_date'] >= BlackoutDate.objects.get(blackoutStart=blackoutStart) and self.cleaned_data['to_date'] <= BlackoutDate.objects.get(blackoutEnd=blackoutEnd):
-          #   raise forms.ValidationError("To Date must avoid blackout dates")
+        if 'to_date' in self.cleaned_data  :
+           if self.cleaned_data['to_date'] >= blackoutStart and self.cleaned_data['to_date'] <= blackoutEnd:
+             raise forms.ValidationError("To Date must avoid blackout dates")
 
         return self.cleaned_data
 
