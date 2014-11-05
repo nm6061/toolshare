@@ -7,6 +7,18 @@
 {% block auth-content %}
     <h1>Requests From Other Users</h1>
 
+    <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary active">
+            <input type="checkbox" autocomplete="off" checked> new
+        </label>
+        <label class="btn btn-primary">
+            <input type="checkbox" autocomplete="off"> old
+        </label>
+        <label class="btn btn-primary">
+            <input type="checkbox" autocomplete="off"> Status
+        </label>
+    </div>
+
     <div class="spacer-50"></div>
     {% if reservations %}
         <table class="table table-striped">

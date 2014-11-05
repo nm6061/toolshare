@@ -62,7 +62,6 @@ def presentstatistics(request):
 @login_required(redirect_field_name='o')
 def reservation(request):
     reservations = Reservation.objects.filter(tool__owner=request.user, status='Pending')
-
     return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
 
 
