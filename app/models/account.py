@@ -46,7 +46,7 @@ class Address(models.Model):
     state = models.CharField('state', max_length=2, default='', choices=app.constants.US_STATES)
     country = models.CharField('country', max_length=50, default='USA')
     zip = models.CharField('zip code', max_length=9, validators=[
-        RegexValidator(regex='^\d{5,9}?$', message='should be 5 or 9 digits',
+        RegexValidator(regex='^\d{5}(\d{4})?$', message='should be 5 or 9 digits',
                        code='invalid_zip')])
 
     class Meta:
@@ -105,7 +105,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField('first name', max_length=30, validators=[AlphabetOnlyValidator()])
     last_name = models.CharField('last name', max_length=30, blank=True, validators=[AlphabetOnlyValidator()])
     phone_num = models.CharField('phone number', max_length=11, blank=True, validators=[
-        RegexValidator(regex='^\d{9,10}$', message='should be 9 or 10 digits', code='invalid_phone')])
+        RegexValidator(regex='^\d{10}(\d{1})?$', message='should be 10 or 11 digits', code='invalid_phone')])
     email = models.EmailField('email address', unique=True, validators=[EmailValidator()])
     pickup_arrangements = models.TextField('pickup arrangements', max_length=100, blank=True)
     reputation = models.PositiveIntegerField('reputation', default=0, blank=True)
