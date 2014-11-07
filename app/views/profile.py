@@ -4,6 +4,7 @@ from django.views.generic import *
 from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from app.forms.profile import UserProfileForm, UserProfileFormSet
 from app import models
 from collections import ChainMap
@@ -13,13 +14,9 @@ from app.forms.profile import ChangePasswordForm
 
 class UserUpdateView(FormsetView):
     template_name = 'profile.html'
-    model = models.User
     form_class = UserProfileForm
     formset_class = UserProfileFormSet
-    permission_required = 'auth.change_user'
-    headline = 'Change Profile'
-    success_url = 'profile/'
-    # success_message = 'Your profile settings has been saved'
+    success_url = reverse_lazy('account:update')
 
     def get(self, request, *args, **kwargs):
         self.object = None
@@ -29,31 +26,22 @@ class UserUpdateView(FormsetView):
         formset = formset_class(instance=request.user.address)
         return render(request, self.template_name, {'form': form, 'formset': formset})
 
-    def form_valid(self, request, form, formset):
-        # form_class = self.get_form_class()
-        # form = self.get_form(form_class)
-        # formset_class = self.get_formset_class()
-        # formset = self.get_formset(formset_class)
-        # if form.is_valid() and formset.is_valid():
-        # self.object = form.save()
-        #     form.instance = self.object
-        form.save()
-        # formset.instance = self.object
-        formset.save()
-        return HttpResponseRedirect('profile/')
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = form_class(request.POST, instance=request.user)
+        formset_class = self.get_formset_class()
+        formset = formset_class(request.POST, instance=request.user.address)
 
-        # return self.render_to_response(self.get_context_data(form=form))
-
-    # def form_invalid(self, request, form, formset):
-    #     return self.render_to_response(self.get_context_data(form=form))
-
-    def get_context_data(self, **kwargs):
-        context = super(UserUpdateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['userprofile_form'] = UserProfileFormSet(self.request.POST)
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(request, form, formset)
         else:
-            context['userprofile_form'] = UserProfileFormSet()
-        return context
+            return self.form_invalid(request, form, formset)
+
+    def form_valid(self, request, form, formset):
+        form.save()
+        formset.save()
+        messages.success(request, message='Changes to your ToolShare account were saved successfully.')
+        return redirect(self.success_url)
 
 
 def password(request):
@@ -67,4 +55,4 @@ def password(request):
             messages.add_message(request, messages.SUCCESS, 'Your password were successfully changed.')
     else:
         form = ChangePasswordForm(instance=user)
-    return render(request, 'password.html', {'form':form})
+    return render(request, 'password.html', {'form': form})
