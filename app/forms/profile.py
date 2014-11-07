@@ -1,14 +1,13 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
-from django.forms.models import inlineformset_factory, formset_factory
-from django.forms import ModelForm
+from django.forms.models import formset_factory
+
 from app.models.account import *
 
 
-class UserProfileForm(ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements']
+        fields = ['first_name', 'last_name', 'phone_num', 'pickup_arrangements', 'send_reminders']
 
 
 class UserAddressForm(forms.ModelForm):
@@ -16,37 +15,8 @@ class UserAddressForm(forms.ModelForm):
         model = Address
         exclude = ['country']
 
-UserProfileFormSet = formset_factory(UserProfileForm, UserAddressForm)
 
-# class UserProfileForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = User
-#         fields = ['first_name', 'last_name', 'email', 'phone_num', 'pickup_arrangements']
-#
-#     def __init__(self, id, *args, **kwargs):
-#         super(UserProfileForm, self).__init__(*args, **kwargs)
-#
-#         self.id = id
-#
-#     # def clean(self):
-#     #     cleaned_data = super(UserProfileForm, self).clean()
-#     #
-#     #     return self.cleaned_data
-#
-#
-# class ProfileAddressForm(forms.ModelForm):
-#     def __init__(self, *args, **kwargs):
-#         super(ProfileAddressForm, self).__init__(*args, **kwargs)
-#
-#         for field in self.fields.values():
-#             field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
-#
-#     class Meta:
-#         model = Address
-#         exclude = ['country']
-#
-# ProfileAddressFormSet = formset_factory(UserProfileForm, ProfileAddressForm)
+UserProfileFormSet = formset_factory(UserProfileForm, UserAddressForm)
 
 
 class ChangePasswordForm(forms.ModelForm):
