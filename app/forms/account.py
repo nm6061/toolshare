@@ -44,6 +44,33 @@ class SignUpAddressForm(forms.ModelForm):
 SignUpAddressFormSet = formset_factory(SignUpUserForm, SignUpAddressForm)
 
 
+class UpdateUserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'phone_num', 'pickup_arrangements', 'send_reminders']
+
+
+class UpdateAddressForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UpdateAddressForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'Is required', 'invalid': 'is invalid'}
+
+    class Meta:
+        model = Address
+        exclude = ['country']
+
+
+UpdateAddressFormSet = formset_factory(UpdateUserForm, UpdateAddressForm)
+
+
 class SignInForm(AuthenticationForm):
     username = forms.EmailField()
 
