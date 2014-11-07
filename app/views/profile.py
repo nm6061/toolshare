@@ -13,7 +13,7 @@ from app.forms.profile import ChangePasswordForm
 
 
 class UserUpdateView(FormsetView):
-    template_name = 'profile.html'
+    template_name = 'account/update.html'
     form_class = UserProfileForm
     formset_class = UserProfileFormSet
     success_url = reverse_lazy('account:update')
@@ -40,7 +40,7 @@ class UserUpdateView(FormsetView):
     def form_valid(self, request, form, formset):
         form.save()
         formset.save()
-        messages.success(request, message='Changes to your ToolShare account were saved successfully.')
+        messages.success(request, message='Changes to your account were saved successfully.')
         return redirect(self.success_url)
 
 
