@@ -5,6 +5,7 @@ from django.forms.models import formset_factory
 from app.models.account import *
 
 
+
 class SignUpUserForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput, required=True)
