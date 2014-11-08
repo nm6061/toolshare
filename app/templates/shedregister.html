@@ -1,0 +1,21 @@
+{% extends "auth_base.html" %}
+
+{% block head %}
+		<title>Shed Creation</title>
+{%  endblock %}
+
+{% block content %}
+		
+		<h1>
+          Create a Shed
+		</h1>
+
+  		<form action="" method="post">
+			{% csrf_token %}
+			<table>
+				{{ f }}
+			</table>
+			<hr>
+      		<input type="submit" class="btn btn-primary" value="Create the Shed">
+  		</form>
+{% endblock %}
