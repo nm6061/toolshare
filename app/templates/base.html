@@ -31,7 +31,7 @@
         <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}"/>
 
     {% block head %}{% endblock %}
 </head>
@@ -60,18 +60,18 @@
     {% if messages %}
         <div id="signup-box" class="auth-box">
             <div
-                {% for message in messages %}
-                    {%if 'error' in message.tags%}
-                        class="alert alert-danger"
-                    {%elif 'warning' in message.tags%}
-                        class="alert alert-warning"
-                    {%elif 'info' in message.tags%}
-                        class="alert alert-info"
-                    {% else %}
-                        class="alert alert-success"
-                    {% endif %}
-                {% endfor %}
-            role="alert">
+                    {% for message in messages %}
+                        {% if 'error' in message.tags %}
+                            class="alert alert-danger"
+                        {% elif 'warning' in message.tags %}
+                            class="alert alert-warning"
+                        {% elif 'info' in message.tags %}
+                            class="alert alert-info"
+                        {% else %}
+                            class="alert alert-success"
+                        {% endif %}
+                    {% endfor %}
+                            role="alert">
                 <ul class="messages">
                     {% for message in messages %}
                         <li>
@@ -93,9 +93,7 @@
 
 </div>
 
-<script type="text/javascript">
-    {% block tail-scripts %}
-    {% endblock %}
-</script>
+{% block tail-scripts %}
+{% endblock %}
 </body>
 </html>
