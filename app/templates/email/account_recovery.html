@@ -1,9 +1,9 @@
-{% url "account:activation_mailer" activation_key as uri %}
+{% url "account:recovery_mailer" uidb64 token as uri %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>ToolShare | Activate your ToolShare account</title>
+    <title>ToolShare | Reset Password</title>
     <style type="text/css">
         body {
             font-family: 'Open Sans', sans-serif;
@@ -22,8 +22,8 @@
     </p>
 
     <p>
-        Thank you for signing up for a {{ site.name }} account. Please activate your account by clicking the link shown
-        below:
+        You are receiving this email because you requested to reset the password on your {{ site.name }} account.
+        If you wish to proceed, please click the link shown below:
     </p>
 
     <p class="safe-link">
@@ -31,18 +31,14 @@
     </p>
 
     <p>
-        Alternatively, you could copy the link and paste it into the address bar of your favorite web browser.
+        Alternatively, you could copy the link and paste it into the address bar of your favorite web
+        browser.
     </p>
 
     <p>
         Cheers,<br/>
         The ToolShare Team
     </p>
-    {% if expiration_days != 0 %}
-        <p>
-            <strong>Note</strong>: The activation link expires in {{ expiration_days }} days.
-        </p>
-    {% endif %}
 </div>
 </body>
 </html>

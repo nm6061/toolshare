@@ -44,6 +44,33 @@ class SignUpAddressForm(forms.ModelForm):
 SignUpAddressFormSet = formset_factory(SignUpUserForm, SignUpAddressForm)
 
 
+class UpdateUserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'phone_num', 'pickup_arrangements', 'send_reminders']
+
+
+class UpdateAddressForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UpdateAddressForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'Is required', 'invalid': 'is invalid'}
+
+    class Meta:
+        model = Address
+        exclude = ['country']
+
+
+UpdateAddressFormSet = formset_factory(UpdateUserForm, UpdateAddressForm)
+
+
 class SignInForm(AuthenticationForm):
     username = forms.EmailField()
 
@@ -88,7 +115,7 @@ class RecoverAccountForm(forms.ModelForm):
         return self.cleaned_data
 
     def save(self, site, user, uidb64, token):
-        template_name = 'email/account_reset.html'
+        template_name = 'email/account_recovery.html'
         email = self.cleaned_data['email']
 
         user = User.objects.get(email=email)
@@ -99,7 +126,7 @@ class RecoverAccountForm(forms.ModelForm):
             'uidb64': uidb64,
             'token': token
         }
-        subject = 'ToolShare Account Password Reset'
+        subject = '[ToolShare] Password reset'
         message = render_to_string(template_name, context)
 
         user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
@@ -128,3 +155,41 @@ class ResetAccountForm(forms.Form):
         raw_password = self.cleaned_data['password1']
         user.set_password(raw_password)
         user.save()
+
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(label='Old password', widget=forms.PasswordInput, required=True)
+    new_password = forms.CharField(label='New password', widget=forms.PasswordInput, required=True)
+    confirm_new_password = forms.CharField(label='Confirm new password', widget=forms.PasswordInput, required=True)
+
+    def __init__(self, user, *args, **kwargs):
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+        self.user = user
+        for field in self.fields.values():
+            field.error_messages = {'required': 'Is required', 'invalid': 'is invalid'}
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data['old_password']
+
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError('is incorrect.', code='incorrect_password')
+
+        return old_password
+
+    def clean(self):
+        super(ChangePasswordForm, self).clean()
+
+        if 'new_password' in self.cleaned_data and 'confirm_new_password' in self.cleaned_data:
+            if self.cleaned_data['new_password'] != self.cleaned_data['confirm_new_password']:
+                raise forms.ValidationError('New passwords do not match.', code='distinct_pass')
+            else:
+                if 'old_password' in self.cleaned_data:
+                    if self.cleaned_data['old_password'] == self.cleaned_data['new_password']:
+                        raise forms.ValidationError('New password cannot be the same as the old password.',
+                                                    code='no_change')
+
+        return self.cleaned_data
+
+    def save(self):
+        self.user.set_password(self.cleaned_data['new_password'])
+        self.user.save()

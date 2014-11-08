@@ -1,0 +1,12 @@
+{% extends "auth_base.html" %}
+
+{% block title %}Request cancel{% endblock %}
+
+{% block RequestNav %} active {% endblock %}
+
+{% block auth-content %}
+<div class="alert alert-success" role="alert">
+    <p><strong>Done,</strong> You have successfully cancel the request for {{ reservation.tool.name }} .</p>
+</div>
+<a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</a>
+{% endblock %}

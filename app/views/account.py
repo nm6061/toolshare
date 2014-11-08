@@ -1,6 +1,7 @@
 from collections import ChainMap
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
 from django.views.generic import FormView, TemplateView
@@ -117,3 +118,49 @@ class ResetAccountView(FormView):
             return render(self.request, self.success_template_name)
 
         return super(ResetAccountView, self).form_invalid(form)
+
+
+class UpdateAccountView(FormsetView):
+    template_name = 'account/update.html'
+    form_class = UpdateUserForm
+    formset_class = UpdateAddressFormSet
+    success_url = reverse_lazy('account:update')
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = form_class(instance=request.user)
+        formset_class = self.get_formset_class()
+        formset = formset_class(instance=request.user.address)
+        return render(request, self.template_name, {'form': form, 'formset': formset})
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = form_class(request.POST, instance=request.user)
+        formset_class = self.get_formset_class()
+        formset = formset_class(request.POST, instance=request.user.address)
+
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(request, form, formset)
+        else:
+            return self.form_invalid(request, form, formset)
+
+    def form_valid(self, request, form, formset):
+        form.save()
+        formset.save()
+        messages.success(request, message='Changes to your account were saved successfully.')
+        return redirect(self.success_url)
+
+
+class ChangePasswordView(FormView):
+    template_name = 'account/change_password.html'
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy('account:password_change')
+
+    def get_form(self, form_class):
+        return form_class(user=self.request.user, **self.get_form_kwargs())
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, message='Password updated successfully')
+        return super(ChangePasswordView, self).form_valid(form)
