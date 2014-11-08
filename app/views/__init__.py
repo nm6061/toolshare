@@ -118,24 +118,21 @@ def cancel(request, reservation_id):
 
 @login_required(redirect_field_name='o')
 def Borrow(request, tool_id):
-    if request.method == 'POST':
-        reservation = Reservation()
-        reservation.user = request.user
-        reservation.tool = Tool.objects.get(pk=tool_id)
-        reservation.status = 'Pending'
+    tool = Tool.objects.get(pk=tool_id)
 
-        borrow_tool_form = forms.BorrowToolForm(request.POST, instance=reservation)
+    if request.method == 'POST':
+        borrow_tool_form = forms.BorrowToolForm(tool, request.POST)
 
         if borrow_tool_form.is_valid():
             borrow_tool_form.save()
 
-            borrow_tool_form = forms.BorrowToolForm()
+            messages.success(request, 'Reservation created successfully.')
             return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
         else:
             return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
     else:
-        borrow_tool_form = forms.BorrowToolForm()
+        borrow_tool_form = forms.BorrowToolForm(tool)
         return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
 
 
