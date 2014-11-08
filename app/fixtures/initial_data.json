@@ -191,4 +191,34 @@
         }
     }
 
+    {
+        "model": "app.BlackoutDate",
+        "pk": 1,
+        "fields": {
+            "tool_id": 1,
+            "blackoutStart": "1991/11/11",
+            "blackoutEnd": "1991/12/12",
+        }
+    }
+    {
+        "model": "app.BlackoutDate",
+        "pk": 2,
+        "fields": {
+            "tool_id": 1,
+            "blackoutStart": "2015/11/11",
+            "blackoutEnd": "2015/12/12",
+        }
+    }
+    {
+        "model": "app.BlackoutDate",
+        "pk": 3,
+        "fields": {
+            "tool_id": 2,
+            "blackoutStart": "2014/11/11",
+            "blackoutEnd": "2014/12/12",
+        }
+    }
+
+
+
 ]
