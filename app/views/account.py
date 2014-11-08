@@ -150,3 +150,17 @@ class UpdateAccountView(FormsetView):
         formset.save()
         messages.success(request, message='Changes to your account were saved successfully.')
         return redirect(self.success_url)
+
+
+class ChangePasswordView(FormView):
+    template_name = 'account/change_password.html'
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy('account:password_change')
+
+    def get_form(self, form_class):
+        return form_class(user=self.request.user, **self.get_form_kwargs())
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, message='Password updated successfully')
+        return super(ChangePasswordView, self).form_valid(form)
