@@ -220,7 +220,7 @@ class RegistrationProfile(models.Model):
                    'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
                    'site': site, 'user': self.user}
 
-        subject = 'Your New ToolShare Account'
+        subject = '[ToolShare] Activate your account'
         message = render_to_string(template_name, context)
 
         self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
