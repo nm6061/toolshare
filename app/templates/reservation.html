@@ -19,6 +19,31 @@
         </label>
     </div>
 
+{% for reservation in reservations %}
+{# Each "reservation" is a reservation model object. #}
+{{ reservation.full_name|upper }}<br />
+...
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if reservations.has_previous %}
+            <a href="?page={{ reservations.previous_page_number }}" >previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ reservations.number }} of {{ reservations.paginator.num_pages }}.
+        </span>
+
+        {% if reservations.has_next %}
+            <a href="?page={{ reservations.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+        
+        
+        
+
     <div class="spacer-50"></div>
     {% if reservations %}
         <table class="table table-striped">

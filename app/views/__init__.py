@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.contrib.messages import views
 from django.views.generic import edit
 from django.views.decorators.http import require_POST
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from app import forms
 from app import models
@@ -62,7 +64,28 @@ def presentstatistics(request):
 @login_required(redirect_field_name='o')
 def reservation(request):
     reservations = Reservation.objects.filter(tool__owner=request.user, status='Pending')
+
+    paginator = Paginator(reservations, 1) # Show 25 reservations per page
+
+    page = request.GET.get('page')
+    try:
+        reservations = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        reservations = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        reservations = paginator.page(paginator.num_pages)
+
     return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
+
+
+@login_required(redirect_field_name='o')
+def ReservationHistory(request):
+    reservations = Reservation.objects.filter(Q(status = "Reject") | Q(status = "Approved") |Q(status = "Cancel"), tool__owner=request.user)
+    return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations': reservations}))
+
+
 
 
 @login_required(redirect_field_name='o')

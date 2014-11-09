@@ -1,0 +1,41 @@
+{% extends "auth_base.html" %}
+
+{% block title %}Reservations{% endblock %}
+
+{% block RequestNav %} active {% endblock %}
+
+{% block auth-content %}
+<h1>Reservation History</h1>
+
+
+<div class="spacer-50"></div>
+{% if reservations %}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Tool Name</th>
+        <th>Requested By</th>
+        <th>From</th>
+        <th>To</th>
+        <th>status</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reservation in reservations %}
+    <tr>
+        <td>{{ reservation.tool.name }}</td>
+        <td>{{ reservation.user.get_full_name }}</td>
+        <td>{{ reservation.from_date }}</td>
+        <td>{{ reservation.to_date }}</td>
+        <td>{{ reservation.status }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info" role="alert">
+    <strong>Aww,</strong> you have no <strong>History</strong> for Reservation.
+</div>
+{% endif %}
+{% endblock %}
