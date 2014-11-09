@@ -6,7 +6,20 @@
 
 {% block javascript %}
     {{ block.super }}
-    <script src="{% static "scripts/holder.js" %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('input[type="checkbox"]').click(function() {
+                if ($('input[type="checkbox"]:checked').length > 0) {
+                    $('.toolList > div').hide();
+                    $('input[type="checkbox"]:checked').each(function() {
+                        $('.toolList > div[class = ' + this.id + ']').show();
+                    });
+                } else {
+                    $('.toolList > div').show();
+                }
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block ToolsNav %} active {% endblock %}
@@ -16,20 +29,34 @@
 
     <h3 class="sub-header">My tools</h3>
 
-    {% if myTools %}
-        {% for tool in myTools %}
+
     <div class="container">
         <div class="row">
-                    <div class="col-lg-2 col-md-2 col-sm-1" style="position: inherit;">
-                        <figure>
-                            <div id="toolThumbnail">
-                                <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
-                                    <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"
-                                         style="width: 150px; height: 150px;"/>
-                                </a>
+            <div class="toolFilters">
+                <input type="checkbox" id="homeTools" /> Show Home Tools </br>
+                <input type="checkbox" id="shedTools" /> Show Shed Tools
+            </div>
+        
+            {% if myTools %}
+                {% for tool in myTools %}
+                    <div class="toolList">
+                        {% if tool.location == 'H' %}
+                            <div class="homeTools">
+                        {% else %}
+                            <div class="shedTools">
+                        {% endif %}
+                            <div class="col-lg-2 col-md-2 col-sm-1" style="position: inherit;">
+                                <figure>
+                                    <div id="toolThumbnail">
+                                        <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                            <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"
+                                                 style="width: 150px; height: 150px;"/>
+                                        </a>
+                                    </div>
+                                    <figcaption>{{ tool.name }}</figcaption>
+                                </figure>
                             </div>
-                            <figcaption>{{ tool.name }}</figcaption>
-                        </figure>
+                        </div>
                     </div>
                 {% endfor %}
             {% endif %}
