@@ -1,78 +1,103 @@
 {% extends "auth_base.html" %}
+{% load filters %}
 
 {% block title %}Request To Borrow{% endblock %}
-        <!-- cdn for modernizr, if you haven't included it already -->
-
 
 {% block BrowseNav %} active {% endblock %}
 {% load staticfiles %}
 {% block javascript %}
-{{ block.super }}
- <script src="{% static "scripts/bootstrap-datepicker.js" %}" ></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "scripts/bootstrap-datepicker.js" %}"></script>
+    <script type="text/javascript">
+        var unavailable_dates = {{ form.unavailable_dates|safe }};
 
-   <script>
-  $( document ).ready(function() {
-    $('#fromDate').datepicker();
-    $('#toDate').datepicker();
+        $(document).ready(function () {
+            $('.datepicker').datepicker({autoclose: true, beforeShowDay: onBeforeShowDay});
 
-})
-  </script>
- {% endblock %}
- {% block stylesheets %}
- {{ block.super }}
- <link href="{% static "styles/datepicker3.css" %}" rel="stylesheet"/>
- {% endblock %}
+            $('#{{ form.from_date.auto_id }}').datepicker()
+                    .on('changeDate', function (e) {
+                        $('#{{ form.to_date.auto_id }}')
+                                .datepicker('setStartDate', $('#{{ form.from_date.auto_id }}').val());
+                    });
+        });
+
+        function onBeforeShowDay(date) {
+            for (var index = 0; index < unavailable_dates.length; index++) {
+                sd = new Date(unavailable_dates[index].start);
+                ed = new Date(unavailable_dates[index].end);
+                if (date >= sd && date <= ed) {
+                    return {'enabled': false, 'classes': 'unavailable', 'tooltip': 'Tool unavailable on this day.'};
+                }
+            }
+        }
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="{% static "styles/datepicker3.css" %}" rel="stylesheet"/>
+{% endblock %}
+{% block head %}
+    <style type="text/css">
+        .unavailable {
+            color: #a94442 !important;
+            opacity: 0.5;
+        }
+    </style>
+{% endblock %}
 {% block auth-content %}
-    <h1 class="page-header">Please enter details for Borrowing Tools </h1>
-
-    <div id="Fill in-box" class="auth-box">
+    <h1 class="page-header">Borrow Tool</h1>
+    <div id="borrow-tool" class="auth-box">
         <form role="form" action="." method="post">
             {% csrf_token %}
-            {% if success %}
-                <div class="alert alert-success" role="alert">
-                    <p><strong>Done,</strong> your request was successfully submitted.</p>
-                </div>
-            {% endif %}
-            {% if form.empty %}
-                <div class="alert alert-danger" role="alert"><strong>Oh.. ,</strong> Please enter a date to borrow.
-                </div>{% endif %}
-            {% if form.errors %}
-                <div class="alert alert-danger" role="alert"><strong>Oh.. ,</strong> there were errors.
-                </div>{% endif %}
-
-
-
+            {% load errors %}
+            {% errors form %}
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="container">
-
-            </div>
                         <div class="col-md-12">
-                            <h3>Fill up for borrowing tool</h3>
+                            <h3>Borrowing {{ form.tool.name }}</h3>
                         </div>
                     </div>
+                    <div class="spacer-25"></div>
                     <div class="row">
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="from_date">From Date</label>
-                            <input type="text" id="fromDate" class="form-control" name="from_date"
-                                   placeholder="From Date">
+                        <div class="col-md-6">
+                            <label>From</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="to_date">To Date</label>
-                            <input type="text" id="toDate" class="form-control" name="to_date"
-                                   placeholder="To Date">
+                            <div class="input-group">
+                                {{ form.from_date|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>To</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                            {{ form.to_date|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <a class="btn btn-link" href="{% url "toolManagement:viewTool" form.tool.id %}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Borrow</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Borrow</button>
         </form>
     </div>
 {% endblock %}

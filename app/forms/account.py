@@ -167,7 +167,7 @@ class ChangePasswordForm(forms.Form):
         super(ChangePasswordForm, self).__init__(*args, **kwargs)
         self.user = user
         for field in self.fields.values():
-            field.error_messages = {'required': 'Is required', 'invalid': 'is invalid'}
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
 
     def clean_old_password(self):
         old_password = self.cleaned_data['old_password']
