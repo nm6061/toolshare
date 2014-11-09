@@ -217,5 +217,173 @@
             "blackoutStart": "2014-11-11",
             "blackoutEnd": "2014-12-12"
         }
+    },
+
+    {
+        "model": "app.Reservation",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "tool": 2,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "tool": 3,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 4,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-11",
+            "to_date": "2015-11-11",
+            "status": "Approved"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 5,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-12",
+            "to_date": "2015-10-10",
+            "status": "Reject"
+        }
+    },
+
+    {
+        "model": "app.Tool",
+        "pk": 1,
+        "fields": {
+            "name": "Scissor",
+            "picture": "toolpics/scissor.jpg",
+            "description": "A scissor",
+            "status": "A",
+            "category": "SC",
+            "owner": 1,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 2,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "L",
+            "category": "HA",
+            "owner": 1,
+            "location": "S"
+        }
+    },
+
+    {
+        "model": "app.Tool",
+        "pk": 3,
+        "fields": {
+            "name": "Wrench",
+            "picture": "toolpics/wrench.jpg",
+            "description": "This is a wrench",
+            "status": "D",
+            "category": "WR",
+            "owner": 2,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 4,
+        "fields": {
+            "name": "Wrench",
+            "picture": "toolpics/wrench.jpg",
+            "description": "This is a wrench",
+            "status": "A",
+            "category": "SC",
+            "owner": 1,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "tool": 2,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "tool": 3,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 4,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-11",
+            "to_date": "2015-11-11",
+            "status": "Approved"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 5,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-12",
+            "to_date": "2015-10-10",
+            "status": "Reject"
+        }
     }
+
+
+
 ]
