@@ -7,16 +7,17 @@ from django.http import HttpResponseRedirect
 
 # @login_required(redirect_field_name='o')
 def listshed(request):
-    user,sharezone=basic(request)
-    places = sharezone.place_set.all()
+    user, sharezone = basic(request)
+    # places = sharezone.place_set.all()
+    # places = sharezone.place_set.all()
 
-    if 'place' in request.GET:
-        if 'edit' in request.GET:
-            return editShed(request)
-
-        p = User.share_zone.place_set.get(pk=request.GET['place'])
-        user_from_sharezone=User.objects.get(place__id__exact=p.id)
-        return render_to_response('sheddetail.html', locals(), context_instance=RequestContext(request))
+    # if 'place' in request.GET:
+    #     if 'edit' in request.GET:
+    #         return editShed(request)
+    #
+    #     p = User.share_zone.place_set.get(pk=request.GET['place'])
+    #     user_from_sharezone=User.objects.get(place__id__exact=p.id)
+    #     return render_to_response('sheddetail.html', locals(), context_instance=RequestContext(request))
     return render_to_response('shedlist.html', locals(), context_instance=RequestContext(request))
 
 # @login_required(redirect_field_name='o')
@@ -33,7 +34,7 @@ def registershed(request):
             new_place.sharezone= m.share_zone
             new_place.save()
             f.save()
-            return HttpResponseRedirect('shedlist/')
+            return HttpResponseRedirect('/shedlist/')
         else:
             f = placeForm()
 
@@ -70,7 +71,7 @@ def editShed(request):
                 f = placeForm (instance=p)
                 return render_to_response('sheddetail.html', locals(), context_instance = RequestContext(request))
 
-def basic(req):
-    user = User.objects.get(pk=req.user.pk)
+def basic(request):
+    user = User.objects.get(pk=request.user.pk)
     sharezone = User.share_zone
     return user,sharezone
