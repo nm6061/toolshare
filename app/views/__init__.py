@@ -18,10 +18,11 @@ from app.models.tool import Tool
 from django.db.models import Count
 from app.models import User
 
+
 def home(request):
     if not request.user.is_authenticated():
         return render_to_response('home.html')
-    return render(request,'auth_home.html')
+    return render(request, 'auth_home.html')
 
 
 @login_required(redirect_field_name='o')
@@ -36,27 +37,30 @@ def browsetool(request):
     user = request.user
     toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
     context = {'toolsList': toolsList}
-    return render(request,'browsetool.html',context)
+    return render(request, 'browsetool.html', context)
+
 
 @login_required(redirect_field_name='o')
 def presentstatistics(request):
     # presentstatistics= Reservation.objects.order_by('tool')
-    temp_list =  Reservation.objects.values('tool').distinct().annotate(total = Count('tool')).order_by('-total')
+    temp_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
     popular_tool_list = list()
     for iter_tool in temp_list:
-        popular_tool_list.append(Tool.objects.filter(id = iter_tool['tool']).get())
+        popular_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).get())
 
-    temp2_list =  Reservation.objects.values('user').distinct().annotate(total = Count('user')).order_by('-total')
+    temp2_list = Reservation.objects.values('user').distinct().annotate(total=Count('user')).order_by('-total')
     popular_borrower_list = list()
     for iter_tool in temp2_list:
-        popular_borrower_list.append(User.objects.filter(id = iter_tool['user']).get())
+        popular_borrower_list.append(User.objects.filter(id=iter_tool['user']).get())
 
-    temp3_list =  Tool.objects.values('owner').distinct().annotate(total = Count('owner')).order_by('-total')
+    temp3_list = Tool.objects.values('owner').distinct().annotate(total=Count('owner')).order_by('-total')
     popular_lender_list = list()
     for iter_tool in temp3_list:
-        popular_lender_list.append(User.objects.filter(id = iter_tool['owner']).get())
+        popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
 
-    return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,'borrower_list':popular_borrower_list,'lender_list':popular_lender_list}))
+    return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,
+                                                                              'borrower_list': popular_borrower_list,
+                                                                              'lender_list': popular_lender_list}))
 
 
 @login_required(redirect_field_name='o')
@@ -74,11 +78,13 @@ def approve(request, reservation_id):
 
     return render(request, 'approve_reservation.html', RequestContext(request, {'reservation': reservation}))
 
+
 @login_required(redirect_field_name='o')
 @require_POST
 def reject(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
     return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
+
 
 @login_required(redirect_field_name='o')
 @require_POST
@@ -92,12 +98,12 @@ def rejectmessage(request, reservation_id):
 
     return render(request, 'reject_accept.html', RequestContext(request, {'reservation': reservation}))
 
+
 @login_required(redirect_field_name='o')
 def requestsend(request):
     reservation = Reservation.objects.filter(user=request.user, status='Pending')
 
     return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
-
 
 
 @login_required(redirect_field_name='o')
@@ -109,10 +115,10 @@ def cancel(request, reservation_id):
     return render(request, 'cancel_reservation.html', RequestContext(request, {'reservation': reservation}))
 
 
-#@login_required(redirect_field_name='o')
-#@require_POST
-#def reject(request, reservation_id):
-#    pass
+# @login_required(redirect_field_name='o')
+# @require_POST
+# def reject(request, reservation_id):
+# pass
 
 
 @login_required(redirect_field_name='o')
@@ -120,20 +126,17 @@ def Borrow(request, tool_id):
     tool = Tool.objects.get(pk=tool_id)
 
     if request.method == 'POST':
-        borrow_tool_form = forms.BorrowToolForm(tool, request.POST)
-
-        if borrow_tool_form.is_valid():
-            borrow_tool_form.save()
-
+        form = forms.BorrowToolForm(tool, request.user, request.POST)
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Reservation created successfully.')
-            return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form, 'success': True}))
+            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
+            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
         else:
-            return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
-
+            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
     else:
-        borrow_tool_form = forms.BorrowToolForm(tool)
-        return render(request, 'borrow.html', RequestContext(request, {'form': borrow_tool_form}))
-
+        form = forms.BorrowToolForm(tool, request.user)
+        return render(request, 'borrow.html', RequestContext(request, {'form': form}))
 
 
 @login_required(redirect_field_name='o')
