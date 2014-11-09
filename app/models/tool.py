@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from imagekit.models import ProcessedImageField
-from pilkit.processors import ResizeToCover
+from pilkit.processors import Resize
 
 
 
@@ -60,7 +60,7 @@ class Tool(models.Model):
         return 'toolpics/{}.{}'.format(instance.name, ext)
 
     name = models.CharField(max_length=25)
-    picture = ProcessedImageField(processors=[ResizeToCover(200, 200)], format='JPEG', upload_to=toolPictureName)
+    picture = ProcessedImageField(processors=[Resize(500, 500)], format='JPEG', upload_to=toolPictureName)
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
