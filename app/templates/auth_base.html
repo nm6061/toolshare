@@ -61,8 +61,8 @@
                         <div class="sub-menu">
                             <h4>Toolbox</h4>
                             <ul>
-                                <li><a href="#">Tools Shared From Home</a></li>
-                                <li><a href="#">Tools Shared From Shed</a></li>
+                                <li><a href="#">My Tools</a></li>
+                                <li><a href="#">Borrowed Tools</a></li>
                                 <li>
                                     <a href="{% url "toolManagement:registerTool" %}">Register a New Tool</a>
                                 </li>
@@ -97,6 +97,7 @@
                             <ul>
                                 <li><a href="{% url "reservation" %}">Requests To Me</a></li>
                                 <li><a href="{% url "Reservation_me" %}">Requests By Me</a></li>
+                                <li><a href="{% url "ReservationHistory" %}">Reservation Histroy</a></li>
                             </ul>
                         </div>
                     </li>
