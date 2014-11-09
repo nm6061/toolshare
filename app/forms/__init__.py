@@ -1,10 +1,8 @@
+import datetime, json
 from django import forms
 
-from app import models
 from app.models.reservation import Reservation
-import datetime
 from app.models import BlackoutDate
-import pdb;
 
 
 class ApproveReservationForm(forms.ModelForm):
@@ -15,14 +13,14 @@ class ApproveReservationForm(forms.ModelForm):
     def clean(self):
         return self.cleaned_data
 
+
 class RejectReservationForm(forms.ModelForm):
     class Meta:
-        model = models.Reservation
+        model = Reservation
         Fields = ['message']
 
     def clean(self):
-        return self.cleaned_data        
-
+        return self.cleaned_data
 
 
 class BorrowToolForm(forms.ModelForm):
@@ -31,65 +29,90 @@ class BorrowToolForm(forms.ModelForm):
         fields = ['from_date', 'to_date']
 
 
-    def __init__(self, tool, *args, **kwargs):
-
-        #super(BorrowToolForm, self).__init__(*args, **kwargs)
-        super(BorrowToolForm,self).__init__(*args, **kwargs)
-        #for field in self.fields.values():
-         #   field.error_messages = {'required': 'Is required', 'invalid': 'is invalid'}
+    def __init__(self, tool, user, *args, **kwargs):
+        super(BorrowToolForm, self).__init__(*args, **kwargs)
         self.tool = tool
+        self.user = user
 
-        self.fields['from_date'].error_messages = {'required': 'Please enter a date for the tool.'}
-        self.fields['to_date'].error_messages = {'required': 'Please enter a date for the tool.'}
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required'}
 
+    def clean_from_date(self):
+        from_date = self.cleaned_data['from_date']
 
-    def clean(self):
-        today = datetime.date.today()
-        #pdb.set_trace()
-        cleaned_data = super(BorrowToolForm, self).clean()
-
-        #blackoutStart = datetime.date(2014,11,11)
-        #blackoutEnd = datetime.date(2014,12,12)
-        print(self.tool.pk)
-        blackout_date = BlackoutDate.objects.filter(tool=self.tool)
-        for bd in blackout_date:
-            print(bd.blackoutStart)
-        print(blackout_date)
-
-        print(blackout_date.blackoutStart)
-        print(blackout_date.blackoutEnd)
-
-        #fromdate and todate can't book past dates
-        if 'from_date' in self.cleaned_data and 'to_date' in self.cleaned_data:
-            if self.cleaned_data['from_date'] <=today and self.cleaned_data['to_date']<=today   :
-                raise forms.ValidationError("can't book past dates")
-
-        #From Date should be before To date
-        if 'from_date' in self.cleaned_data and 'to_date' in self.cleaned_data:
-            if self.cleaned_data['from_date'] >= self.cleaned_data['to_date'] :
-                raise forms.ValidationError("From Date should be before To date")
-
-        if 'from_date' in self.cleaned_data:
-            if self.cleaned_data['from_date'] >= blackout_date.blackoutStart and \
-                            self.cleaned_data['from_date'] <= blackout_date.blackoutEnd :
-                raise forms.ValidationError("From Date must avoid blackout dates")
+        if from_date < datetime.date.today():
+            raise forms.ValidationError('cannot be earlier than today.')
 
         if 'to_date' in self.cleaned_data:
-           if self.cleaned_data['to_date'] >= blackout_date.blackoutStart and \
-                           self.cleaned_data['to_date'] <= blackout_date.blackoutEnd:
-             raise forms.ValidationError("To Date must avoid blackout dates")
+            to_date = self.cleaned_data['to_date']
+            if from_date > to_date:
+                raise forms.ValidationError('cannot be earlier than ' + self.fields['to_date'].auto_id)
+
+        return from_date
+
+    def clean_to_date(self):
+        to_date = self.cleaned_data['to_date']
+
+        if to_date < datetime.date.today():
+            raise forms.ValidationError('cannot be earlier than today.')
+
+        return to_date
+
+    def clean(self):
+        super(BorrowToolForm, self).clean()
+
+        if 'from_date' in self.cleaned_data and 'to_date' in self.cleaned_data:
+            fd = self.cleaned_data['from_date']
+            td = self.cleaned_data['to_date']
+
+            if fd > td:
+                self._errors['to_date'] = self.error_class(' cannot be earlier than from date')
+
+            for ud in self.get_unavailable_dates():
+                print(ud['start'])
+                print(ud['end'])
+                if not (fd > ud['end'] or td < ud['start']):
+                    raise forms.ValidationError('The tool is not available on the dates selected.')
 
         return self.cleaned_data
 
 
     def save(self, commit=True):
         data = {
-            'from_date':self.cleaned_data['from_date'],
-            'to_date':self.cleaned_data['to_date'],
-            'status':'Pending',
-            'tool':self.tool,
-            'user':self.request.user
+            'from_date': self.cleaned_data['from_date'],
+            'to_date': self.cleaned_data['to_date'],
+            'status': 'Pending',
+            'tool': self.tool,
+            'user': self.user
         }
 
         reservation = Reservation.objects.create(**data)
         reservation.save()
+
+    def get_unavailable_dates(self):
+        unavailable_dates = []
+
+        # Tool is unavailable when during its blackout dates
+        unavailable_dates = unavailable_dates + [{'start': bd.blackoutStart, 'end': bd.blackoutEnd} for bd in
+                                                 self.tool.blackoutdate_set.all()]
+
+        # Tool is considered unavailable for dates that it has an approved reservation
+        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
+                                                 self.tool.reservation_set.filter(status='Approved')]
+
+        # Tool is considered unavailable for dates that the user has requested to borrow the tool irrespective of the
+        # status of the reservation
+        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
+                                                 self.tool.reservation_set.filter(user=self.user)]
+
+        return unavailable_dates
+
+    @property
+    def unavailable_dates(self):
+        return json.dumps(self.get_unavailable_dates(), cls=JSONDateEncoder)
+
+
+class JSONDateEncoder(json.JSONEncoder):
+    def default(self, o):
+        if hasattr(o, 'isoformat'):
+            return o.isoformat()

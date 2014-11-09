@@ -17,6 +17,7 @@
                             <h3>Update your ToolShare account</h3>
                         </div>
                     </div>
+                    <div class="spacer-25"></div>
                     <div class="row">
                         <div class="col-md-6">
                             <label>Name</label>
@@ -90,8 +91,20 @@
                         </div>
                     </div>
                     <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Security</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="btn btn-link" href="{% url "account:password_change" %}">Change Password</a>
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
                     <div class="row pull-right">
                         <div class="col-md-12">
+                            <a class="btn btn-link" href="{% url "home" %}">Cancel</a>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>

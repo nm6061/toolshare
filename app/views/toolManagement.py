@@ -85,6 +85,6 @@ def updateTool(request, tool_id):
 @login_required(redirect_field_name='o')
 def toolbox(request):
     user = request.user
-    homeTools = Tool.objects.filter(owner_id=user).filter(location='H')
-    context = {'homeTools': homeTools}
+    myTools = Tool.objects.filter(owner_id=user)
+    context = {'myTools': myTools}
     return render(request, 'toolbox.html', context)

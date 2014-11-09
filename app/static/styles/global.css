@@ -13,6 +13,38 @@ body {
     border-radius: 4px;
 }
 
+.message-icon {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    opacity: 0.3;
+    z-index: -10;
+    width: 50px;
+}
+
+.message-alert {
+    position: relative;
+    z-index: 10;
+}
+
+.danger {
+    fill: #a94442;
+}
+
+.warning {
+    fill: #8a6d3b;
+}
+
+.info {
+    fill: #31708f;
+    width: 27px;
+    right: 0px;
+}
+
+.success {
+    fill: #3c763d;
+}
+
 .row.no-gutter {
     margin-left: 0;
     margin-right: 0;
