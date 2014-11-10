@@ -68,6 +68,19 @@
         }
     },
     {
+        "model": "app.Address",
+        "pk": 4,
+        "fields": {
+            "apt_num": "610",
+            "street": "Swen",
+            "city": "Rochester",
+            "county": "Monroe",
+            "state": "NY",
+            "country": "USA",
+            "zip": "142582458"
+        }
+    },
+    {
         "model": "app.User",
         "pk": 1,
         "fields": {
@@ -116,6 +129,23 @@
             "reputation": 0,
             "address": 3,
             "share_zone": 3
+        }
+    },
+    {
+        "model": "app.User",
+        "pk": 4,
+        "fields": {
+            "is_active": true,
+            "date_joined": "2014-11-11",
+            "email": "zc3896@rit.edu",
+            "password": "pbkdf2_sha256$12000$wkhpGxr1AfEa$RyAcqftcQcz35p+0ILlrLiq4kYWzYLbJ6OL/lJrsbKw=",
+            "first_name": "Mike",
+            "last_name": "C",
+            "phone_num": "",
+            "pickup_arrangements": "Call me beep me if you wanna reach me",
+            "reputation": 9001,
+            "address": 4,
+            "share_zone": 1
         }
     },
     {
@@ -216,6 +246,176 @@
             "tool": 2,
             "blackoutStart": "2014-11-11",
             "blackoutEnd": "2014-12-12"
+        }
+    },
+
+    {
+        "model": "app.Tool",
+        "pk": 4,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 5,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "S"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 6,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 7,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "S"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 8,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 9,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "S"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 10,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 11,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "S"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 12,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 13,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "S"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 14,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "H"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 15,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "S"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 16,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Hammer time!",
+            "status": "A",
+            "category": "HA",
+            "owner": 2,
+            "location": "H"
         }
     }
 ]

@@ -15,6 +15,7 @@ from app.forms.toolRegistration import AddToolForm
 from app.models.reservation import Reservation
 from app.models.tool import Tool
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required(redirect_field_name='o')
@@ -85,6 +86,18 @@ def updateTool(request, tool_id):
 @login_required(redirect_field_name='o')
 def toolbox(request):
     user = request.user
-    myTools = Tool.objects.filter(owner_id=user)
+    toolList = Tool.objects.filter(owner_id=user)
+    paginator = Paginator(toolList, 12, 1)
+    page = request.GET.get('page')
+
+    try:
+        myTools = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        myTools = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        myTools = paginator.page(paginator.num_pages)
+
     context = {'myTools': myTools}
     return render(request, 'toolbox.html', context)
