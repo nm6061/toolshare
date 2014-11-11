@@ -25,3 +25,10 @@
     }
 }
 
+.pagination > li > .pageTracker:hover,
+.pagination > li > .pageTracker:focus
+{
+    color: #428bca;
+    background-color: white;
+    cursor: default;
+}
