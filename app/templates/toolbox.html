@@ -62,44 +62,46 @@
             {% endif %}
         </div>
 
-        <div class="row text-center toolPaginator">
-            <div class="col-sm-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="?page=1"> &laquo; First Page </a>
-                    </li>
-                    {% if myTools.has_previous %}
-                        <li>
-                            <a href="?page={{ myTools.previous_page_number }}"> &lsaquo; Previous </a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href=""> &lsaquo; Previous </a>
-                        </li>
-                    {% endif %}
 
-                    <li class="">
-                        <a href=""> Page {{ myTools.number }} of {{ myTools.paginator.num_pages }} </a>
-                    </li>
+        {% if myTools.paginator.num_pages >  1 %}
+            <div class="row text-center toolPaginator">
+                <div class="col-sm-12">
+                    <ul class="pagination">
+                        <li>
+                            <a href="?page=1"> &laquo; First Page </a>
+                        </li>
+                        {% if myTools.has_previous %}
+                            <li>
+                                <a href="?page={{ myTools.previous_page_number }}"> &lsaquo; Previous </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href=""> &lsaquo; Previous </a>
+                            </li>
+                        {% endif %}
 
-                    {% if myTools.has_next %}
                         <li>
-                            <a href="?page={{ myTools.next_page_number }}"> Next &rsaquo; </a>
+                            <a class = "pageTracker"> Page {{ myTools.number }} of {{ myTools.paginator.num_pages }} </a>
                         </li>
-                    {% else %}
+
+                        {% if myTools.has_next %}
+                            <li>
+                                <a href="?page={{ myTools.next_page_number }}"> Next &rsaquo; </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href=""> Next &rsaquo; </a>
+                            </li>
+                        {% endif %}
                         <li>
-                            <a href=""> Next &rsaquo; </a>
+                            <a href="?page={{ myTools.paginator.num_pages }}"> Last Page &raquo; </a>
                         </li>
-                    {% endif %}
-                    <li>
-                        <a href="?page={{ myTools.paginator.num_pages }}"> Last Page &raquo; </a>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-    </div>
-
+            </div>
+        {% endif %}
 
 
 {% endblock %}
