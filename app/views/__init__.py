@@ -37,9 +37,21 @@ def browsetool(request):
             -excluding tools that have a 'deactivated' status
     """
     user = request.user
-    toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    tools = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    maxToolsPerPage = 12
+    minToolsPerPage = 1
+    paginator = Paginator(tools, maxToolsPerPage, minToolsPerPage)
+    page = request.GET.get('page')
+    try:
+        toolsList = paginator.page(page)
+    except PageNotAnInteger:
+        toolsList = paginator.page(1)
+    except EmptyPage:
+        toolsList = paginator.page(paginator.num_pages)
+
     context = {'toolsList': toolsList}
     return render(request, 'browsetool.html', context)
+
 
 def about(request):
     return render(request, 'about.html')
