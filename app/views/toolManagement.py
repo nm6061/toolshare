@@ -87,7 +87,9 @@ def updateTool(request, tool_id):
 def toolbox(request):
     user = request.user
     toolList = Tool.objects.filter(owner_id=user)
-    paginator = Paginator(toolList, 12, 1)
+    maxToolsPerPage = 12
+    minToolsPerPage = 1
+    paginator = Paginator(toolList, maxToolsPerPage, minToolsPerPage)
     page = request.GET.get('page')
 
     try:
