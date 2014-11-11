@@ -41,6 +41,8 @@ def browsetool(request):
     context = {'toolsList': toolsList}
     return render(request, 'browsetool.html', context)
 
+def about(request):
+    return render(request, 'about.html')
 
 @login_required(redirect_field_name='o')
 def presentstatistics(request):

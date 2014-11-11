@@ -8,6 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'app.views.home', name = 'home'),
+    url(r'^about/$', 'app.views.about', name = 'about'),
     url(r'^account/', include('app.urls.account', namespace='account')),
     url(r'^tool/', include('app.urls.toolManagement', namespace='toolManagement')),
     url(r'^browsetool/$', 'app.views.browsetool', name = 'browsetool'),

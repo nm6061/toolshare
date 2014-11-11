@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
 
 {% block head %}
@@ -59,8 +60,22 @@
         <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span
                 class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
-    <div class="container marketing">
-        <div class="row">
+ <div class="row">
+            <div class="col-lg-8">
+
+
+                <h2>ABOUT</h2>
+
+                <p>ToolShare, a service from Django Untrained,  is a full-featured system for sharing, lending, borrowing, managing tools
+                    either from community shed or from member's home.
+                    Our web-based service allows you to easily share, lend, borrow and manage tools, administer your membership
+                    from anywhere
+                </p>
+
+                <img class="img-rectangle" src="{% static "images/toolshare.jpg" %}" alt="Shovel" class="img-circle"
+                     style="width: 800px; height: 800px;"/>
+            </div>
+
             <div class="col-lg-4">
                 <img class="img-circle" src="{% static "images/shovel.png" %}" alt="Shovel" class="img-circle"
                      style="width: 150px; height: 150px;"/>
@@ -71,6 +86,7 @@
                     you covered. <a href="{% url "account:signup" %}">Sign up</a> today, and be winter ready.
                 </p>
             </div>
+
             <div class="col-lg-4">
                 <img class="img-circle" src="{% static "images/spanner.png" %}" alt="Spanner" class="img-circle"
                      style="width: 150px; height: 150px;"/>
@@ -80,6 +96,7 @@
                 <p>Are tools rusting in your garage? <a href="{% url "account:signup" %}">Sign up</a> today, there may be
                     someone in your community looking for a tool that you are not using.</p>
             </div>
+
             <div class="col-lg-4">
                 <img class="img-circle" src="{% static "images/connections.png" %}" alt="Connections" class="img-circle"
                      style="width: 150px; height: 150px;"/>
@@ -89,6 +106,10 @@
                 <p>Sharing helps a community grow organically. As an incentive you get to meet new people, build
                     connections, and much much more...</p>
             </div>
-        </div>
-    </div>
+
+
+ </div>
+
 {% endblock %}
+
+

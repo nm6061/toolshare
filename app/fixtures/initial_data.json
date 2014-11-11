@@ -188,68 +188,6 @@
         }
     },
     {
-        "model": "app.Reservation",
-        "pk": 1,
-        "fields": {
-            "user": 1,
-            "tool": 1,
-            "from_date": "2014-12-01",
-            "to_date": "2014-12-10",
-            "status": "Pending"
-        }
-    },
-    {
-        "model": "app.Reservation",
-        "pk": 2,
-        "fields": {
-            "user": 2,
-            "tool": 2,
-            "from_date": "2014-12-01",
-            "to_date": "2014-12-10",
-            "status": "Pending"
-        }
-    },
-    {
-        "model": "app.Reservation",
-        "pk": 3,
-        "fields": {
-            "user": 3,
-            "tool": 3,
-            "from_date": "2014-12-01",
-            "to_date": "2014-12-10",
-            "status": "Pending"
-        }
-    },
-
-    {
-        "model": "app.BlackoutDate",
-        "pk": 1,
-        "fields": {
-            "tool": 1,
-            "blackoutStart": "1991-11-11",
-            "blackoutEnd": "1991-12-12"
-        }
-    },
-    {
-        "model": "app.BlackoutDate",
-        "pk": 2,
-        "fields": {
-            "tool": 1,
-            "blackoutStart": "2015-11-11",
-            "blackoutEnd": "2015-12-12"
-        }
-    },
-    {
-        "model": "app.BlackoutDate",
-        "pk": 3,
-        "fields": {
-            "tool": 2,
-            "blackoutStart": "2014-11-11",
-            "blackoutEnd": "2014-12-12"
-        }
-    },
-
-    {
         "model": "app.Tool",
         "pk": 4,
         "fields": {
@@ -416,6 +354,67 @@
             "category": "HA",
             "owner": 2,
             "location": "H"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "tool": 2,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "tool": 3,
+            "from_date": "2014-12-01",
+            "to_date": "2014-12-10",
+            "status": "Pending"
+        }
+    },
+
+    {
+        "model": "app.BlackoutDate",
+        "pk": 1,
+        "fields": {
+            "tool": 1,
+            "blackoutStart": "1991-11-11",
+            "blackoutEnd": "1991-12-12"
+        }
+    },
+    {
+        "model": "app.BlackoutDate",
+        "pk": 2,
+        "fields": {
+            "tool": 1,
+            "blackoutStart": "2015-11-11",
+            "blackoutEnd": "2015-12-12"
+        }
+    },
+    {
+        "model": "app.BlackoutDate",
+        "pk": 3,
+        "fields": {
+            "tool": 2,
+            "blackoutStart": "2014-11-11",
+            "blackoutEnd": "2014-12-12"
         }
     }
 ]
