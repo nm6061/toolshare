@@ -37,12 +37,20 @@
     </script>
 {% endblock %}
 
+<!-- Pagination -->
+
 {% for reservation in reservations %}
 {# Each "reservation" is a reservation model object. #}
 {{ reservation.full_name|upper }}<br />
 ...
 {% endfor %}
-
+<style>
+    .pagination {
+    position: absolute;
+    top:500px;
+    left:600px;
+    }
+</style>
 <div class="pagination">
     <span class="step-links">
         {% if reservations.has_previous %}
@@ -58,11 +66,16 @@
         {% endif %}
     </span>
 </div>
-        
-        
-        
+<!-- Pagination -->
+
+<div class="toolFilters">
+    <label><input type="checkbox" id="from_date" /> new </label>
+    <label><input type="checkbox" id="to_date" /> Old </label>
+</div>
 
     <div class="spacer-50"></div>
+
+
     {% if reservations %}
         <table class="table table-striped">
             <thead>
