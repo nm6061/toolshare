@@ -7,7 +7,7 @@
 {% block auth-content %}
     <h1>Requests From Other Users</h1>
 
-    <div class="btn-group" data-toggle="buttons">
+<!--    <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-primary active">
             <input type="checkbox" autocomplete="off" checked> new
         </label>
@@ -17,7 +17,25 @@
         <label class="btn btn-primary">
             <input type="checkbox" autocomplete="off"> Status
         </label>
-    </div>
+    </div>-->
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('input[type="checkbox"]').click(function() {
+                if ($('input[type="checkbox"]:checked').length > 0) {
+                    $('.reservation > div').hide();
+                    $('input[type="checkbox"]:checked').each(function() {
+                        $('.reservations > div[class = ' + this.id + ']').show();
+                    });
+                } else {
+                    $('.reservations > div').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}
 
 {% for reservation in reservations %}
 {# Each "reservation" is a reservation model object. #}
