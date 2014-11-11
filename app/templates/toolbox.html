@@ -37,11 +37,16 @@
 {#                <label><input type="checkbox" id="shedTools" /> Show Shed Tools </label>#}
 {#            </div>#}
 
+            <div class="toolFilters">
+                <label><input type="checkbox" id="homeTools" /> Show Home Tools </label>
+                <label><input type="checkbox" id="shedTools" /> Show Shed Tools </label>
+            </div>
+
             {% if myTools %}
                 {% for tool in myTools %}
                     <div class="toolList">
                         <div {% if tool.location == 'H' %} class="homeTools" {% else %}class="shedTools"{% endif %}>
-                            <div class="col-sm-2" style="position: inherit; padding: 15px">
+                            <div class="col-sm-2">
                                 <figure>
                                     <div id="toolThumbnail" >
                                         <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">

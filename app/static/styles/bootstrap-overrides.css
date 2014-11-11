@@ -1,3 +1,27 @@
 .navbar{
     margin-bottom: 0px;
 }
+
+.toolList .col-sm-2 {
+    position: inherit;
+    padding: 15px;
+  }
+
+@media (min-width: 768px){
+    .auth-content > .container {
+        width: 668px;
+    }
+}
+
+@media (min-width: 992px){
+    .auth-content > .container  {
+        width: 892px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .auth-content > .container {
+        width: 1100px;
+    }
+}
+

@@ -9,7 +9,8 @@ body {
 
 /* The style of the main content container of ToolShare */
 .auth-content {
-    margin-left: 90px;
+    margin-left: 55px;
+    padding-left: 30px;
 }
 
 /*
@@ -21,25 +22,16 @@ body {
     border-bottom: 1px solid #eee;
 }
 
-/*
- * Sidebar
- */
 
-/* Hide for mobile, show later */
 .sidebar {
-    display: none;
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    display: block;
+    background-color: #eeeeee;
 }
 
-@media (min-width: 768px) {
-    .sidebar {
-        position: fixed;
-        top: 51px;
-        bottom: 0;
-        left: 0;
-        display: block;
-        background-color: #eeeeee;
-    }
-}
 
 /* Sidebar navigation */
 .main-menu, .main-menu li, .sub-menu ul {
