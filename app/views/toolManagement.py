@@ -84,12 +84,15 @@ def updateTool(request, tool_id):
 
 
 @login_required(redirect_field_name='o')
-def toolbox(request):
+def toolbox(request, tool_filter):
     user = request.user
-    toolList = Tool.objects.filter(owner_id=user)
-    maxToolsPerPage = 12
-    minToolsPerPage = 1
-    paginator = Paginator(toolList, maxToolsPerPage, minToolsPerPage)
+    if tool_filter == 'hometools':
+        toolList = Tool.objects.filter(owner_id=user).filter(location='H')
+    elif tool_filter == 'shedtools':
+        toolList = Tool.objects.filter(owner_id=user).filter(location='S')
+    else:
+        toolList = Tool.objects.filter(owner_id=user)
+    paginator = Paginator(toolList, 12, 1)
     page = request.GET.get('page')
 
     try:
@@ -101,5 +104,5 @@ def toolbox(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         myTools = paginator.page(paginator.num_pages)
 
-    context = {'myTools': myTools}
+    context = {'myTools': myTools, 'filter': tool_filter}
     return render(request, 'toolbox.html', context)
