@@ -176,29 +176,6 @@ def Borrow(request, tool_id):
         return render(request, 'borrow.html', RequestContext(request, {'form': form}))
 
 
-@login_required(redirect_field_name='o')
-def approve_reservation(request):
-    # TODO GET CONTEXT
-    def get_context_data(self, **kwargs):
-        context = super(app.views.approve_reservation, self).get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context
 
-    # TODO CHANGE STATUS TO RESERVED ON ACCEPT REQUEST
-    if request.method == 'POST':
-        toolForm = forms.ApproveReservationForm(request.POST)
-
-        if toolForm.is_valid():
-            with transaction.atomic():
-                toolForm.save()
-
-            toolForm = forms.ApproveReservationForm()
-            return render(request, 'approve_reservation.html',
-                          RequestContext(request, {'form': toolForm, 'tool_added': True}))
-        else:
-            return render(request, 'approve_reservation.html', RequestContext(request, {'form': toolForm}))
-    else:
-        toolForm = forms.ApproveReservationForm()
-        return render(request, 'approve_reservation.html', RequestContext(request, {'form': toolForm}))
 
 
