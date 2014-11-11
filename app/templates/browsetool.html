@@ -14,15 +14,17 @@
         <div class="row">
             {% if toolsList %}
                 {% for tool in toolsList %}
-                    <div class="col-sm-2">
-                        <figure>
-                            <div id="toolThumbnail">
-                                <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
-                                    <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}">
-                                </a>
-                            </div>
-                            <figcaption>{{tool.name}}</figcaption>
-                        </figure>
+                    <div class="toolList">
+                        <div class="col-sm-2">
+                            <figure>
+                                <div id="toolThumbnail">
+                                    <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                        <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}">
+                                    </a>
+                                </div>
+                                <figcaption>{{tool.name}}</figcaption>
+                            </figure>
+                        </div>
                     </div>
                 {% endfor %}
             {% endif %}
