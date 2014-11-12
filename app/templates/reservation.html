@@ -7,7 +7,7 @@
 {% block auth-content %}
     <h1>Requests From Other Users</h1>
 
-    <div class="btn-group" data-toggle="buttons">
+<!--    <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-primary active">
             <input type="checkbox" autocomplete="off" checked> new
         </label>
@@ -17,14 +17,40 @@
         <label class="btn btn-primary">
             <input type="checkbox" autocomplete="off"> Status
         </label>
-    </div>
+    </div>-->
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('input[type="checkbox"]').click(function() {
+                if ($('input[type="checkbox"]:checked').length > 0) {
+                    $('.reservation > div').hide();
+                    $('input[type="checkbox"]:checked').each(function() {
+                        $('.reservations > div[class = ' + this.id + ']').show();
+                    });
+                } else {
+                    $('.reservations > div').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+<!-- Pagination -->
 
 {% for reservation in reservations %}
 {# Each "reservation" is a reservation model object. #}
 {{ reservation.full_name|upper }}<br />
 ...
 {% endfor %}
-
+<style>
+    .pagination {
+    position: absolute;
+    top:500px;
+    left:600px;
+    }
+</style>
 <div class="pagination">
     <span class="step-links">
         {% if reservations.has_previous %}
@@ -40,11 +66,16 @@
         {% endif %}
     </span>
 </div>
-        
-        
-        
+<!-- Pagination -->
+
+<div class="toolFilters">
+    <label><input type="checkbox" id="from_date" /> new </label>
+    <label><input type="checkbox" id="to_date" /> Old </label>
+</div>
 
     <div class="spacer-50"></div>
+
+
     {% if reservations %}
         <table class="table table-striped">
             <thead>

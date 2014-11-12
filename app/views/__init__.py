@@ -37,9 +37,21 @@ def browsetool(request):
             -excluding tools that have a 'deactivated' status
     """
     user = request.user
-    toolsList = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    tools = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    maxToolsPerPage = 12
+    minToolsPerPage = 1
+    paginator = Paginator(tools, maxToolsPerPage, minToolsPerPage)
+    page = request.GET.get('page')
+    try:
+        toolsList = paginator.page(page)
+    except PageNotAnInteger:
+        toolsList = paginator.page(1)
+    except EmptyPage:
+        toolsList = paginator.page(paginator.num_pages)
+
     context = {'toolsList': toolsList}
     return render(request, 'browsetool.html', context)
+
 
 def about(request):
     return render(request, 'about.html')
@@ -164,29 +176,6 @@ def Borrow(request, tool_id):
         return render(request, 'borrow.html', RequestContext(request, {'form': form}))
 
 
-@login_required(redirect_field_name='o')
-def approve_reservation(request):
-    # TODO GET CONTEXT
-    def get_context_data(self, **kwargs):
-        context = super(app.views.approve_reservation, self).get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context
 
-    # TODO CHANGE STATUS TO RESERVED ON ACCEPT REQUEST
-    if request.method == 'POST':
-        toolForm = forms.ApproveReservationForm(request.POST)
-
-        if toolForm.is_valid():
-            with transaction.atomic():
-                toolForm.save()
-
-            toolForm = forms.ApproveReservationForm()
-            return render(request, 'approve_reservation.html',
-                          RequestContext(request, {'form': toolForm, 'tool_added': True}))
-        else:
-            return render(request, 'approve_reservation.html', RequestContext(request, {'form': toolForm}))
-    else:
-        toolForm = forms.ApproveReservationForm()
-        return render(request, 'approve_reservation.html', RequestContext(request, {'form': toolForm}))
 
 

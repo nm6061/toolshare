@@ -4,44 +4,35 @@
 
 {% block title %}Toolbox{% endblock %}
 
-{% block javascript %}
-    {{ block.super }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('input[type="checkbox"]').click(function() {
-                if ($('input[type="checkbox"]:checked').length > 0) {
-                    $('.toolList > div').hide();
-                    $('input[type="checkbox"]:checked').each(function() {
-                        $('.toolList > div[class = ' + this.id + ']').show();
-                    });
-                } else {
-                    $('.toolList > div').show();
-                }
-            });
-        });
-    </script>
-{% endblock %}
-
 {% block ToolsNav %} active {% endblock %}
 
 {% block auth-content %}
-    <h1 class="page-header">Toolbox</h1>
+    <h1 class="page-header">Toolbox: My Tools</h1>
 
-    <h3 class="sub-header">My tools</h3>
+    <h3 class="sub-header">
+        {% if filter == 'hometools' %}
+            Showing only tools shared from home
+        {% elif filter == 'shedtools' %}
+            Showing only tools shared from a shed
+        {% else %}
+            Showing all your tools
+        {% endif %}
+    </h3>
 
 
     <div class="container">
         <div class="row">
-{#            <div class="toolFilters">#}
-{#                <label><input type="checkbox" id="homeTools" /> Show Home Tools </label>#}
-{#                <label><input type="checkbox" id="shedTools" /> Show Shed Tools </label>#}
-{#            </div>#}
+            <div class="toolFilters">
+                <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
+                <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
+                <a href="{% url "toolManagement:shedtools" %}"> Show Shed Tools </a></a>
+            </div>
 
             {% if myTools %}
                 {% for tool in myTools %}
                     <div class="toolList">
                         <div {% if tool.location == 'H' %} class="homeTools" {% else %}class="shedTools"{% endif %}>
-                            <div class="col-sm-2" style="position: inherit; padding: 15px">
+                            <div class="col-sm-2">
                                 <figure>
                                     <div id="toolThumbnail" >
                                         <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
@@ -57,44 +48,46 @@
             {% endif %}
         </div>
 
-        <div class="row text-center toolPaginator">
-            <div class="col-sm-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="?page=1"> &laquo; First Page </a>
-                    </li>
-                    {% if myTools.has_previous %}
-                        <li>
-                            <a href="?page={{ myTools.previous_page_number }}"> &lsaquo; Previous </a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href=""> &lsaquo; Previous </a>
-                        </li>
-                    {% endif %}
 
-                    <li class="">
-                        <a href=""> Page {{ myTools.number }} of {{ myTools.paginator.num_pages }} </a>
-                    </li>
+        {% if myTools.paginator.num_pages >  1 %}
+            <div class="row text-center toolPaginator">
+                <div class="col-sm-12">
+                    <ul class="pagination">
+                        <li>
+                            <a href="?page=1"> &laquo; First Page </a>
+                        </li>
+                        {% if myTools.has_previous %}
+                            <li>
+                                <a href="?page={{ myTools.previous_page_number }}"> &lsaquo; Previous </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href=""> &lsaquo; Previous </a>
+                            </li>
+                        {% endif %}
 
-                    {% if myTools.has_next %}
                         <li>
-                            <a href="?page={{ myTools.next_page_number }}"> Next &rsaquo; </a>
+                            <a class = "pageTracker"> Page {{ myTools.number }} of {{ myTools.paginator.num_pages }} </a>
                         </li>
-                    {% else %}
+
+                        {% if myTools.has_next %}
+                            <li>
+                                <a href="?page={{ myTools.next_page_number }}"> Next &rsaquo; </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href=""> Next &rsaquo; </a>
+                            </li>
+                        {% endif %}
                         <li>
-                            <a href=""> Next &rsaquo; </a>
+                            <a href="?page={{ myTools.paginator.num_pages }}"> Last Page &raquo; </a>
                         </li>
-                    {% endif %}
-                    <li>
-                        <a href="?page={{ myTools.paginator.num_pages }}"> Last Page &raquo; </a>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-    </div>
-
+            </div>
+        {% endif %}
 
 
 {% endblock %}

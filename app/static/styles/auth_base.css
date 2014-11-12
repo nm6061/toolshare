@@ -9,7 +9,8 @@ body {
 
 /* The style of the main content container of ToolShare */
 .auth-content {
-    margin-left: 90px;
+    margin-left: 55px;
+    padding-left: 30px;
 }
 
 /*
@@ -21,25 +22,16 @@ body {
     border-bottom: 1px solid #eee;
 }
 
-/*
- * Sidebar
- */
 
-/* Hide for mobile, show later */
 .sidebar {
-    display: none;
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    display: block;
+    background-color: #eeeeee;
 }
 
-@media (min-width: 768px) {
-    .sidebar {
-        position: fixed;
-        top: 51px;
-        bottom: 0;
-        left: 0;
-        display: block;
-        background-color: #eeeeee;
-    }
-}
 
 /* Sidebar navigation */
 .main-menu, .main-menu li, .sub-menu ul {
@@ -47,34 +39,35 @@ body {
     margin: 0px;
 }
 
-    .main-menu li {
-        position: relative;
-        list-style: none;
-    }
+.main-menu li {
+    position: relative;
+    list-style: none;
+}
 
-    .main-menu > li {
-        padding: 1px 0px;
-    }
+.main-menu > li {
+    padding: 1px 0px;
+}
 
-    .main-menu li a > .icon {
-        width: 70px;
-        height: 70px;
-        padding: 13px;
-        border: 1px solid transparent;
-        fill: #777;
-    }
+.main-menu li a > .icon {
+    width: 70px;
+    height: 70px;
+    padding: 13px;
+    border: 1px solid transparent;
+    fill: #777;
+}
 
-    .main-menu li.active a > .icon {
-        background-color: #fff;
-        fill: #222;
-    }
+.main-menu li.active a > .icon {
+    background-color: #fff;
+    fill: #222;
+}
 
-    .main-menu li:hover a > .icon {
-        z-index: 60;
-        position: relative;
-        background-color: #fff;
-        fill: #0f86dd;
-    }
+.main-menu li:hover a > .icon {
+    z-index: 60;
+    position: relative;
+    background-color: #fff;
+    fill: #0f86dd;
+    box-shadow: -3px 0 5px 0 rgba(42, 40, 40, 0.25);
+}
 
 .sub-menu {
     z-index: 50;
@@ -86,12 +79,23 @@ body {
     min-height: 70px;
     padding: 5px 0px 5px 25px;
     background-color: #fff;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
     box-shadow: 0 0 5px 0 rgba(42, 40, 40, 0.25);
 }
 
-    .sub-menu > ul > li {
-        padding: 5px 0px 5px 0px;
-    }
+.sub-menu > ul {
+    padding: 5px 0px 15px 0px;
+}
+
+.sub-menu > ul > li {
+    padding: 10px 0px 10px 0px;
+}
+
+.sub-menu > h4 {
+    padding-top:10px;
+}
 
 .main-menu li:hover .sub-menu {
     display: block;
@@ -120,19 +124,22 @@ figcaption {
     padding-left: 5px;
     margin-top: -10px;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .toolPaginator{
     padding-top: 50px;
 }
-/*.toolFilters {*/
-    /*margin-left: auto;*/
-    /*margin-right: 0px;*/
-    /*width: 310px;*/
-    /*margin-bottom: 20px;*/
-/*}*/
 
-/*.toolFilters > label {*/
-    /*padding-left: 20px;*/
-    /*display: inline-block;*/
-/*}*/
+
+.toolFilters {
+    margin-left: auto;
+    margin-right: 0px;
+    width: 400px;
+    margin-bottom: 20px;
+}
+
+.toolFilters > a {
+    padding-left: 20px;
+}
