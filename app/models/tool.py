@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from imagekit.models import ProcessedImageField
 from pilkit.processors import Resize
+from app.models.shed import Shed
 
 
 
@@ -65,6 +66,8 @@ class Tool(models.Model):
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
     location = models.CharField(max_length=1, choices=LOCATION, blank=False, default=0)
+    models.CharField()
+    shed = models.ForeignKey(Shed, blank=True, null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     pickupArrangement = models.TextField(max_length=500)
 

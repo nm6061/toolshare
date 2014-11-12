@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, RequestContext, render
 from app.models.account import *
-from app.forms.shed import placeForm
+from app.forms.shed import shedForm
 from django.http import HttpResponseRedirect
 
 
@@ -26,7 +26,7 @@ def registershed(request):
     sharezone = User.share_zone
 
     if request.method =='POST':
-        f = placeForm(request.POST)
+        f = shedForm(request.POST)
         if (f.is_valid()):
             new_place = f.save(commit=False)
             m = User.objects.get(username=request.user.username)
@@ -36,7 +36,7 @@ def registershed(request):
             f.save()
             return HttpResponseRedirect('/shedlist/')
         else:
-            f = placeForm()
+            f = shedForm()
 
             return render_to_response('shedregister.html', locals(), context_instance=RequestContext(request))
 
@@ -47,7 +47,7 @@ def editShed(request):
         p = User.share_zone.place_set.get(pk=request.GET['place'])
         tools = p.tool_set.all()
 
-        f = placeForm(request.POST, instance=p)
+        f = shedForm(request.POST, instance=p)
         if f.is_valid():
             f.save()
 
@@ -68,7 +68,7 @@ def editShed(request):
                     del request.GET['delete']
                     return render(request, 'shedlist.html')
 
-                f = placeForm (instance=p)
+                f = shedForm (instance=p)
                 return render_to_response('sheddetail.html', locals(), context_instance = RequestContext(request))
 
 def basic(request):

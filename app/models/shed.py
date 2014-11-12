@@ -1,7 +1,10 @@
 from django.db import models
 from app.models.account import *
 
-class Place(models.Model):
+class Shed(models.Model):
+    class Meta:
+        app_label = 'app'
+
     name = models.CharField(max_length=100)
     sharezone = models.ForeignKey(ShareZone)
     owner = models.ForeignKey(User)
