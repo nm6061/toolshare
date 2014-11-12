@@ -389,6 +389,83 @@
             "status": "Pending"
         }
     },
+    {
+        "model": "app.Reservation",
+        "pk": 4,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-11",
+            "to_date": "2015-11-11",
+            "status": "Approved"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 5,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2014-12-12",
+            "to_date": "2015-10-10",
+            "status": "Reject"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 6,
+        "fields": {
+            "user": 1,
+            "tool": 11,
+            "from_date": "2014-11-22",
+            "to_date": "2014-11-30",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 7,
+        "fields": {
+            "user": 2,
+            "tool": 2,
+            "from_date": "2015-01-01",
+            "to_date": "2015-01-10",
+            "status": "Approved"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 8,
+        "fields": {
+            "user": 2,
+            "tool": 2,
+            "from_date": "2015-02-02",
+            "to_date": "2015-02-10",
+            "status": "Approved"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 9,
+        "fields": {
+            "user": 1,
+            "tool": 1,
+            "from_date": "2015-11-12",
+            "to_date": "2015-11-22",
+            "status": "Pending"
+        }
+    },
+    {
+        "model": "app.Reservation",
+        "pk": 10,
+        "fields": {
+            "user": 3,
+            "tool": 3,
+            "from_date": "2015-01-01",
+            "to_date": "2015-02-02",
+            "status": "Approved"
+        }
+    },
 
     {
         "model": "app.BlackoutDate",
