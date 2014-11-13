@@ -152,10 +152,12 @@
         "model": "app.Shed",
         "pk": 1,
         "fields": {
+            "owner": "1",
             "name": "Shed1",
-            "sharezone": 1,
-            "owner": 1,
-            "address": "123 lane"
+            "isActive": "1",
+            "isPrivate": "1",
+            "dateCreated": "2014-04-24 16:38:29.246000",
+            "toolModeration": "1"
         }
     },
     {
