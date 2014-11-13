@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from app.views.profile import UserUpdateView
+from app.views.shed import MyShedsView
 
 from django.contrib import admin
 admin.autodiscover()
@@ -25,6 +26,6 @@ urlpatterns = patterns('',
     url(r'^reservation/(?P<reservation_id>\d+)/cancel/$', 'app.views.cancel', name = 'cancel'),
     url(r'^reservation/(?P<reservation_id>\d+)/cancel/message/$', 'app.views.rejectmessage', name = 'rejectmessage'),
     #shed
-    url(r'^shedlist/$', 'app.views.shed.listshed', name='shedlist'),
-    url(r'^shedregister/$', 'app.views.shed.registershed', name='shedregister')
+    url(r'^sheds/$', MyShedsView.as_view(), name='mySheds'),
+    url(r'^sheds/create$', 'app.views.shed.shed_create_view', name='makeShed')
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
