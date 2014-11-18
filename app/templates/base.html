@@ -123,6 +123,51 @@
     {% endif %}
     </div>
     {% block tail-scripts %}
+
+   <div class="row">
+            <div class="col-lg-8">
+
+
+                <h2>ABOUT</h2>
+
+                <p>ToolShare, a service from Django Untrained,  is a full-featured system for sharing, lending, borrowing, managing tools
+                    either from community shed or from member's home.
+                    Our web-based service allows you to easily share, lend, borrow and manage tools, administer your membership
+                    from anywhere
+                </p>
+
+                <img class="img-rectangle" src="{% static "images/toolshare.jpg" %}" alt="Shovel" class="img-circle"
+                     style="width: 800px; height: 800px;"/>
+            </div>
+
+            <div class="col-lg-4">
+
+
+                <h2>Toolshare Server Time</h2>
+                {% now "H:i" %}
+
+            </div>
+
+            <div class="col-lg-4">
+
+
+                <h2>Calendar</h2>
+
+                {% now "jS F Y" %}
+            </div>
+
+            <div class="col-lg-4">
+
+
+                <h2>Early Alert</h2>
+
+                <p>Members can access to Toolshare Early Alert.</p>
+            </div>
+
+
+ </div>
+
+
     {% endblock %}
 </body>
 </html>

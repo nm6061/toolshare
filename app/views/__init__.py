@@ -19,12 +19,20 @@ from app.models.reservation import Reservation
 from app.models.tool import Tool
 from django.db.models import Count
 from app.models import User
-
+import datetime
+from django.utils.timezone import utc
+from django.http import HttpResponse
 
 def home(request):
     if not request.user.is_authenticated():
+        now = datetime.datetime.now()
+        html = "<html><body>It is now %s.</body></html>" % now
+        return HttpResponse(html)
+
         return render_to_response('home.html')
     return render(request, 'auth_home.html')
+
+
 
 
 @login_required(redirect_field_name='o')
