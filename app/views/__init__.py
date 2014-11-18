@@ -28,9 +28,9 @@ def home(request):
         now = datetime.datetime.now()
         html = "<html><body>It is now %s.</body></html>" % now
         return HttpResponse(html)
-
         return render_to_response('home.html')
-    return render(request, 'auth_home.html')
+        return render(request, 'home.html')
+    #return render(request, 'home.html', RequestContext(request, {'newtool': entry_list}))
 
 
 
