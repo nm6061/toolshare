@@ -125,19 +125,69 @@
     {% block tail-scripts %}
 
    <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-6">
 
 
-                <h2>ABOUT</h2>
+            <h2 class="sub-header">Newly Added Tool</h2>
 
-                <p>ToolShare, a service from Django Untrained,  is a full-featured system for sharing, lending, borrowing, managing tools
-                    either from community shed or from member's home.
-                    Our web-based service allows you to easily share, lend, borrow and manage tools, administer your membership
-                    from anywhere
-                </p>
+
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th>Tool Name</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for u1 in new_tool %}
+
+                {% if forloop.last %}
+                <tr>
+                    <td>{{ tool.name }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+
 
                 <img class="img-rectangle" src="{% static "images/toolshare.jpg" %}" alt="Shovel" class="img-circle"
-                     style="width: 800px; height: 800px;"/>
+                     style="width: 400px; height: 400px;"/>
+            </div>
+
+
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-6">
+
+
+            <h2 class="sub-header">Newly Added Shed</h2>
+
+
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th>Shed Name</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for u1 in new_shed %}
+
+                {% if forloop.last %}
+                <tr>
+                    <td>{{ shed.name }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+                <img class="img-rectangle" src="{% static "images/toolshare.jpg" %}" alt="Shovel" class="img-circle"
+                     style="width: 400px; height: 400px;"/>
             </div>
 
             <div class="col-lg-4">
@@ -156,13 +206,7 @@
                 {% now "jS F Y" %}
             </div>
 
-            <div class="col-lg-4">
 
-
-                <h2>Early Alert</h2>
-
-                <p>Members can access to Toolshare Early Alert.</p>
-            </div>
 
 
  </div>

@@ -19,18 +19,31 @@ from app.models.reservation import Reservation
 from app.models.tool import Tool
 from django.db.models import Count
 from app.models import User
+from app.models import Shed
 import datetime
 from django.utils.timezone import utc
 from django.http import HttpResponse
 
 def home(request):
     if not request.user.is_authenticated():
-        now = datetime.datetime.now()
-        html = "<html><body>It is now %s.</body></html>" % now
-        return HttpResponse(html)
+        #temp_list = Tool.objects.values('tool')
+        #new_list = list()
+        #for iter_tool in temp_list:
+         #   new_list.append(Tool.objects.filter(id=iter_tool['tool']).get())
+        #temp_list = Tool.objects.values('tool')
+        #new_tool_list = list()
+        #for iter_tool in temp_list:
+         #   new_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).get())
+
+        #temp2_list = Shed.objects.values('shed')
+        #new_tool_list = list()
+        #for iter_tool in temp_list:
+         #   new_tool_list.append(Shed.objects.filter(id=iter_tool['shed']).get())
+
         return render_to_response('home.html')
-        return render(request, 'home.html')
-    #return render(request, 'home.html', RequestContext(request, {'newtool': entry_list}))
+    return render(request, 'auth_home.html')
+    #return render(request, 'auth_home.html', RequestContext(request, {'new_tool': new_tool_list,
+    #                                                                 'new_shed': new_shed_list}))
 
 
 
@@ -77,15 +90,15 @@ def presentstatistics(request):
     for iter_tool in temp2_list:
         popular_borrower_list.append(User.objects.filter(id=iter_tool['user']).get())
 
-    #temp3_list = Tool.objects.values('owner').distinct().annotate(total=Count('owner')).order_by('-total')
-    #popular_lender_list = list()
-    #for iter_tool in temp3_list:
-     #   popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
-
-    temp3_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
+    temp3_list = Tool.objects.values('owner').distinct().annotate(total=Count('owner')).order_by('-total')
     popular_lender_list = list()
     for iter_tool in temp3_list:
         popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
+
+    #temp3_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
+    #popular_lender_list = list()
+    #for iter_tool in temp3_list:
+      #  popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
 
 
     return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,
