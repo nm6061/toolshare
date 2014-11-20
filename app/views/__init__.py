@@ -23,27 +23,23 @@ from app.models import Shed
 import datetime
 from django.utils.timezone import utc
 from django.http import HttpResponse
+import pdb
 
 def home(request):
-    if not request.user.is_authenticated():
-        #temp_list = Tool.objects.values('tool')
-        #new_list = list()
-        #for iter_tool in temp_list:
-         #   new_list.append(Tool.objects.filter(id=iter_tool['tool']).get())
-        #temp_list = Tool.objects.values('tool')
-        #new_tool_list = list()
-        #for iter_tool in temp_list:
-         #   new_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).get())
+    #pdb.set_trace()
+    if request.user.is_authenticated():
 
-        #temp2_list = Shed.objects.values('shed')
-        #new_tool_list = list()
-        #for iter_tool in temp_list:
-         #   new_tool_list.append(Shed.objects.filter(id=iter_tool['shed']).get())
-
-        return render_to_response('home.html')
+        temp_list = list()
+        temp_list = Tool.objects.all()
+        temp2_list = list()
+        temp2_list = Shed.objects.all()
+        #pdb.set_trace()
+        #today = datetime.date.today()
+        #to_date=reservation.objects.get('to_date')
+        #difference = to_date - today
+        #print(difference)
+        return render_to_response('auth_home.html',{'tools':temp_list,'shed':temp2_list})
     return render(request, 'auth_home.html')
-    #return render(request, 'auth_home.html', RequestContext(request, {'new_tool': new_tool_list,
-    #                                                                 'new_shed': new_shed_list}))
 
 
 

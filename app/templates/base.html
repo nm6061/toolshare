@@ -130,7 +130,7 @@
             <div class="col-lg-6">
 
 
-            <h2 class="sub-header">Newly Added Tool</h2>
+            <h2 class="sub-header">Latest Registered Tool</h2>
 
 
             <table class="table table-striped">
@@ -138,56 +138,30 @@
 
                 <tr>
                     <th>Tool Name</th>
+                    <th>Tool Description</th>
+                    <th>Category</th>
+                    <th>Location</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {% for u1 in new_tool %}
+                {% for u1 in tools %}
 
                 {% if forloop.last %}
                 <tr>
-                    <td>{{ tool.name }}</td>
+                    <td>{{ u1.name }}</td>
+                    <td>{{ u1.description }}</td>
+                    <td>{{ u1.category }}</td>
+                    <td>{{ u1.location }}</td>
+                </tr>
+                <tr><a href="{% url "toolManagement:viewTool" u1.id %}" class="thumbnail">
+                                        <img class="img-square" src="{{u1.picture.url}}" alt="{{u1.name}}">
+                                    </a>
                 </tr>
                 {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
-
-
-                <img class="img-rectangle" src="{% static "images/toolshare.jpg" %}" alt="Shovel" class="img-circle"
-                     style="width: 400px; height: 400px;"/>
-            </div>
-
-
-            <div class="col-lg-2">
-            </div>
-            <div class="col-lg-6">
-
-
-            <h2 class="sub-header">Newly Added Shed</h2>
-
-
-            <table class="table table-striped">
-                <thead>
-
-                <tr>
-                    <th>Shed Name</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                {% for u1 in new_shed %}
-
-                {% if forloop.last %}
-                <tr>
-                    <td>{{ shed.name }}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                </tbody>
-            </table>
-                <img class="img-rectangle" src="{% static "images/toolshare.jpg" %}" alt="Shovel" class="img-circle"
-                     style="width: 400px; height: 400px;"/>
             </div>
 
             <div class="col-lg-4">
@@ -205,7 +179,16 @@
 
                 {% now "jS F Y" %}
             </div>
+            </div>
 
+            <div class="row">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-6">
+
+
+
+            </div>
 
 
 
