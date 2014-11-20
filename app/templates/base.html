@@ -187,7 +187,32 @@
             <div class="col-lg-6">
 
 
+            <h2 class="sub-header">Latest Registered Shed</h2>
 
+
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th>Shed Name</th>
+                    <th>Date Created</th>
+                </tr>
+                </thead>
+            <tbody>
+                {% for u1 in shed %}
+
+                {% if forloop.last %}
+                <tr>
+                    <td>{{ u1.name }}</td>
+                     <td>{{ u1.dateCreated }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+
+
+            </table>
+            </div>
             </div>
 
 
