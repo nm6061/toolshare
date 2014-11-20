@@ -39,7 +39,7 @@ def home(request):
         #difference = to_date - today
         #print(difference)
         return render_to_response('auth_home.html',{'tools':temp_list,'shed':temp2_list})
-    return render(request, 'auth_home.html')
+    return render(request, 'home.html')
 
 
 
