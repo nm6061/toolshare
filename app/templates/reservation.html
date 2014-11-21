@@ -7,17 +7,7 @@
 {% block auth-content %}
     <h1>Requests From Other Users</h1>
 
-<!--    <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary active">
-            <input type="checkbox" autocomplete="off" checked> new
-        </label>
-        <label class="btn btn-primary">
-            <input type="checkbox" autocomplete="off"> old
-        </label>
-        <label class="btn btn-primary">
-            <input type="checkbox" autocomplete="off"> Status
-        </label>
-    </div>-->
+
 
 
 
@@ -51,10 +41,6 @@
 </div>
 <!-- Pagination -->
 
-<div class="toolFilters">
-    <label><input type="checkbox" id="from_date" /> new </label>
-    <label><input type="checkbox" id="to_date" /> Old </label>
-</div>
 
     <div class="spacer-50"></div>
 
@@ -78,24 +64,28 @@
                     <td>{{ reservation.from_date }}</td>
                     <td>{{ reservation.to_date }}</td>
                     <td>
+                        <td>
                         <form action="{% url 'approve' reservation.pk %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary">Approve</button>
 
                         </form>
+                        </td>
+                        <td>
                         <form action="{% url 'reject' reservation.pk %}" method="POST">
                             {% csrf_token %}
 
                             <button type="submit" class="btn btn-primary">Reject</button>
                         </form>
-                    </td>
+                        </td>
+                        </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
         <div class="alert alert-info" role="alert">
-            <strong>Aww,</strong> you have no requests.
+            You Don't have any requests.
         </div>
     {% endif %}
 {% endblock %}
