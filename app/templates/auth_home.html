@@ -1,12 +1,10 @@
 {% extends "auth_base.html" %}
 {% block title %}Home{% endblock %}
+{% block BrowseNav %} active {% endblock %}
 {% block auth-content %}
     <!--<h1>Welcome To Toolshare!!</h1>-->
         <div class="container">
-        <div class="row">
-
-
-
+            <div class="row">
             <h2 class="sub-header">Recently Added Tools</h2>
 
 
@@ -50,7 +48,7 @@
                 </tbody>
             </table>
         </div>
-        </div>
+
 
             <!--
             <div class="col-lg-4">
@@ -77,20 +75,22 @@
 
 
             <table class="table table-striped">
+
                 <thead>
 
                 <tr>
                     <th>Shed Name</th>
-                    <th>Date Created</th>
+                    <!--<th>Date Created</th>-->
                 </tr>
                 </thead>
+
             <tbody>
                 {% for u1 in shed reversed %}
 
                 {% if forloop.counter %}
                 <tr>
                     <td>{{ u1.name }}</td>
-                     <td>{{ u1.dateCreated }}</td>
+                    <!-- <td>{{ u1.dateCreated }}</td>-->
                 </tr>
                 {% endif %}
                 {% endfor %}
@@ -142,11 +142,4 @@
 -->
 
  </div>
-
-
-
-
-
-
-
 {% endblock %}
