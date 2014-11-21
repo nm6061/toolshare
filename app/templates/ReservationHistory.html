@@ -7,6 +7,16 @@
 {% block auth-content %}
 <h1>Reservation History</h1>
 
+<h2 class="sub-header">
+    {% if filter == 'hometools' %}
+    Showing only tools shared from home
+    {% elif filter == 'shedtools' %}
+    Showing only tools shared from a shed
+    {% else %}
+    Showing all your tools
+    {% endif %}
+</h2>
+
 
 <div class="spacer-50"></div>
 {% if reservations %}
