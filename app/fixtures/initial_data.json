@@ -184,8 +184,8 @@
             "status": "L",
             "category": "HA",
             "owner": 1,
-            "location": "S",
-            "shed": 1
+            "location": "H",
+            "shed": null
         }
     },
     {
@@ -197,7 +197,7 @@
             "description": "This is a wrench",
             "status": "D",
             "category": "WR",
-            "owner": 2,
+            "owner": 1,
             "location": "H",
             "shed": null
         }
@@ -208,11 +208,11 @@
         "fields": {
             "name": "Hammer",
             "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
+            "description": "My trusty hammer",
             "status": "A",
             "category": "HA",
-            "owner": 2,
-            "location": "H",
+            "owner": 1,
+            "location": "S",
             "shed": null
         }
     },
@@ -220,12 +220,12 @@
         "model": "app.Tool",
         "pk": 5,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
-            "category": "HA",
-            "owner": 2,
+            "name": "Shovel",
+            "picture": "toolpics/shovel.jpg",
+            "description": "It digs holes",
+            "status": "L",
+            "category": "SH",
+            "owner": 1,
             "location": "S",
             "shed": 1
         }
@@ -236,7 +236,7 @@
         "fields": {
             "name": "Hammer",
             "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
+            "description": "Very useful hammer...as long as you are worthy.",
             "status": "A",
             "category": "HA",
             "owner": 2,
@@ -248,11 +248,11 @@
         "model": "app.Tool",
         "pk": 7,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
+            "name": "Lawn Mower",
+            "picture": "toolpics/lawn mower.jpg",
+            "description": "I wish my lawn was emo so it would cut itself. At least I have this lawn mower.",
             "status": "A",
-            "category": "HA",
+            "category": "LM",
             "owner": 2,
             "location": "S",
             "shed": 1
@@ -262,11 +262,11 @@
         "model": "app.Tool",
         "pk": 8,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
-            "category": "HA",
+            "name": "Scizzurp",
+            "picture": "toolpics/scissor.jpg",
+            "description": "siiizzzzuuurrrrppp",
+            "status": "L",
+            "category": "SC",
             "owner": 2,
             "location": "H",
             "shed": null
@@ -276,11 +276,11 @@
         "model": "app.Tool",
         "pk": 9,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
-            "category": "HA",
+            "name": "Shovel",
+            "picture": "toolpics/shovel.jpg",
+            "description": "Now I ain't saying she a gold digger. But she ain't messing with no trowel.",
+            "status": "L",
+            "category": "SH",
             "owner": 2,
             "location": "S",
             "shed": 1
@@ -290,11 +290,11 @@
         "model": "app.Tool",
         "pk": 10,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
-            "category": "HA",
+            "name": "Wrench",
+            "picture": "toolpics/wrench.jpg",
+            "description": "If you can dodge this wrench, you can dodge dodgeballs.",
+            "status": "D",
+            "category": "WR",
             "owner": 2,
             "location": "H",
             "shed": null
@@ -306,7 +306,7 @@
         "fields": {
             "name": "Hammer",
             "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
+            "description": "Warning: sometimes shoots out bolts of electricity.",
             "status": "A",
             "category": "HA",
             "owner": 2,
@@ -318,11 +318,11 @@
         "model": "app.Tool",
         "pk": 12,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
-            "category": "HA",
+            "name": "Lawn Mower",
+            "picture": "toolpics/lawn mower.jpg",
+            "description": "It cuts grass.",
+            "status": "L",
+            "category": "LM",
             "owner": 2,
             "location": "H",
             "shed": null
@@ -332,11 +332,11 @@
         "model": "app.Tool",
         "pk": 13,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
-            "category": "HA",
+            "name": "Sissor",
+            "picture": "toolpics/scissor.jpg",
+            "description": "Great for arts and crafts!",
+            "status": "L",
+            "category": "SC",
             "owner": 2,
             "location": "S",
             "shed": 1
@@ -346,11 +346,11 @@
         "model": "app.Tool",
         "pk": 14,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
-            "category": "HA",
+            "name": "Shovel",
+            "picture": "toolpics/shovel.jpg",
+            "description": "Good for digging yourself out of trouble.",
+            "status": "D",
+            "category": "SH",
             "owner": 2,
             "location": "H",
             "shed": null
@@ -360,14 +360,14 @@
         "model": "app.Tool",
         "pk": 15,
         "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
+            "name": "Wrench",
+            "picture": "toolpics/wrench.jpg",
+            "description": "The best wrench ever made",
             "status": "A",
-            "category": "HA",
+            "category": "WR",
             "owner": 2,
-            "location": "S",
-            "shed": 1
+            "location": "H",
+            "shed": null
         }
     },
     {
@@ -376,12 +376,180 @@
         "fields": {
             "name": "Hammer",
             "picture": "toolpics/hammer.jpg",
-            "description": "Hammer time!",
-            "status": "A",
+            "description": "It's more a mace than a hammer really.",
+            "status": "L",
             "category": "HA",
             "owner": 2,
             "location": "H",
             "shed": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 17,
+        "fields": {
+            "name": "Lawn Mower",
+            "picture": "toolpics/lawn mower.jpg",
+            "description": "It eats up the green faster than I do.",
+            "status": "L",
+            "category": "LM",
+            "owner": 2,
+            "location": "S",
+            "shed": 1
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 18,
+        "fields": {
+            "name": "Sissor",
+            "picture": "toolpics/scissor.jpg",
+            "description": "Cuts through butter like butter",
+            "status": "D",
+            "category": "SC",
+            "owner": 2,
+            "location": "H",
+            "shed": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 19,
+        "fields": {
+            "name": "Shovel",
+            "picture": "toolpics/shovel.jpg",
+            "description": "Retired shovel from my prospecting days.",
+            "status": "A",
+            "category": "SH",
+            "owner": 2,
+            "location": "H",
+            "shed": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 20,
+        "fields": {
+            "name": "Wrench",
+            "picture": "toolpics/wrench.jpg",
+            "description": "This wrench was given to me by Tony Stark.",
+            "status": "A",
+            "category": "WR",
+            "owner": 2,
+            "location": "S",
+            "shed": 1
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 21,
+        "fields": {
+            "name": "Hammer",
+            "picture": "toolpics/hammer.jpg",
+            "description": "I found this in a crater.",
+            "status": "L",
+            "category": "HA",
+            "owner": 2,
+            "location": "S",
+            "shed": 1
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 22,
+        "fields": {
+            "name": "Lawn Mower",
+            "picture": "toolpics/lawn mower.jpg",
+            "description": "Cuts grass in no time",
+            "status": "A",
+            "category": "LM",
+            "owner": 2,
+            "location": "H",
+            "shed": 1
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 23,
+        "fields": {
+            "name": "Sissor",
+            "picture": "toolpics/scissor.jpg",
+            "description": "Child friendly scissor",
+            "status": "A",
+            "category": "SC",
+            "owner": 2,
+            "location": "S",
+            "shed": 1
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 24,
+        "fields": {
+            "name": "Shovel",
+            "picture": "toolpics/shovel.jpg",
+            "description": "Everyday I'm shovelling",
+            "status": "L",
+            "category": "SH",
+            "owner": 2,
+            "location": "H",
+            "shed": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 25,
+        "fields": {
+            "name": "Scissor",
+            "picture": "toolpics/scissor.jpg",
+            "description": "Just a scissor. Works pretty well",
+            "status": "A",
+            "category": "SC",
+            "owner": 3,
+            "location": "H",
+            "shed": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 26,
+        "fields": {
+            "name": "Shovel",
+            "picture": "toolpics/shovel.jpg",
+            "description": "Good for digging holes (based on personal experience)",
+            "status": "L",
+            "category": "HA",
+            "owner": 3,
+            "location": "H",
+            "shed": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 27,
+        "fields": {
+            "name": "Wrench",
+            "picture": "toolpics/wrench.jpg",
+            "description": "Wrench with red rubberized grip",
+            "status": "A",
+            "category": "WR",
+            "owner": 3,
+            "location": "S",
+            "shed": null
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 28,
+        "fields": {
+            "name": "Lawn Mower",
+            "picture": "toolpics/lawn mower.jpg",
+            "description": "A Snapper brand lawn mower. Serial number: S6W1E0N",
+            "status": "L",
+            "category": "SH",
+            "owner": 3,
+            "location": "S",
+            "shed": 1
         }
     },
     {
