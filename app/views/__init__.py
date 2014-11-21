@@ -33,14 +33,14 @@ def home(request):
         temp_list = Tool.objects.all()
         temp2_list = list()
         temp2_list = Shed.objects.all()
-        temp3_list = list()
-        temp3_list = User.objects.all()
+        #temp3_list = list()
+        #temp3_list = User.objects.all()
         #pdb.set_trace()
         #today = datetime.date.today()
         #to_date=reservation.objects.get('to_date')
         #difference = to_date - today
         #print(difference)
-        return render_to_response('auth_home.html',{'tools':temp_list,'shed':temp2_list,'users':temp3_list})
+        return render_to_response('auth_home.html',{'tools':temp_list,'shed':temp2_list})
     return render(request, 'home.html')
 
 
@@ -96,7 +96,7 @@ def presentstatistics(request):
     #temp3_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
     #popular_lender_list = list()
     #for iter_tool in temp3_list:
-      #  popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
+     #   popular_lender_list.append(Tool.objects.filter(id=iter_tool['owner_id']).get())
 
 
     return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,
