@@ -124,8 +124,11 @@ def reservation(request):
 
 @login_required(redirect_field_name='o')
 def ReservationHistory(request):
-    reservations = Reservation.objects.filter(Q(status = "Reject") | Q(status = "Approved") |Q(status = "Cancel"), tool__owner=request.user)
-    return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations': reservations}))
+    reservations1 = Reservation.objects.filter(Q(status = "Reject") , tool__owner=request.user)
+    reservations2 = Reservation.objects.filter(Q(status = "Approved") , tool__owner=request.user)
+    reservations3 = Reservation.objects.filter(Q(status = "Cancel"), tool__owner=request.user )
+
+    return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations1': reservations1,'reservations2':reservations2,'reservations3':reservations3}))
 
 
 

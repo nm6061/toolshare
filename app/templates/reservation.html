@@ -72,10 +72,12 @@
                         </form>
                         </td>
                         <td>
-                        <form action="{% url 'reject' reservation.pk %}" method="POST">
+                        <form action="{% url 'reject' reservation.pk %}" method="POST" style="margin-left: -120px; color: red">
                             {% csrf_token %}
 
                             <button type="submit" class="btn btn-primary">Reject</button>
+
+                            <a href="#"></a>
                         </form>
                         </td>
                         </td>
