@@ -1,5 +1,145 @@
 {% extends "auth_base.html" %}
 {% block title %}Home{% endblock %}
+{% block BrowseNav %} active {% endblock %}
 {% block auth-content %}
-    <h1>Welcome To Toolshare!!</h1>
+    <!--<h1>Welcome To Toolshare!!</h1>-->
+        <div class="container">
+            <div class="row">
+            <h2 class="sub-header">Recently Added Tools</h2>
+
+
+            <table class="table table-striped">
+               <!--<thead>
+
+                <tr>
+                    <th>Tool Name</th>
+                    <th>Location</th>
+                </tr>
+                </thead>
+                -->
+                <tbody>
+
+
+                {% for u1 in tools reversed %}
+
+                {% if forloop.counter %}
+                <!--<tr>
+                    <td>{{ u1.name }}</td>
+                    <td>{{ u1.location }}</td>
+                </tr>-->
+                <div class="col-sm-2">
+                <figure>
+                    <div id="toolThumbnail">
+
+                            <a href="{% url "toolManagement:viewTool" u1.id %}" class="thumbnail">
+                                        <img class="img-square" src="{{u1.picture.url}}" alt="{{u1.name}}">
+                            </a>
+
+                    </div>
+                            <figcaption>{{u1.name}}</figcaption>
+
+
+
+                </figure>
+                      </div>
+                {% endif %}
+
+              {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+            <!--
+            <div class="col-lg-4">
+
+
+                <h2>Toolshare Server Time</h2>
+                {% now "H:i" %}
+
+            </div>
+
+            <div class="col-lg-4">
+
+
+                <h2>Calendar</h2>
+
+                {% now "jS F Y" %}
+            </div>
+            </div>
+            -->
+            <div class="container">
+            <div class="row">
+
+            <h2 class="sub-header">Recently Added Sheds</h2>
+
+
+            <table class="table table-striped">
+
+                <thead>
+
+                <tr>
+                    <th>Shed Name</th>
+                    <!--<th>Date Created</th>-->
+                </tr>
+                </thead>
+
+            <tbody>
+                {% for u1 in shed reversed %}
+
+                {% if forloop.counter %}
+                <tr>
+                    <td>{{ u1.name }}</td>
+                    <!-- <td>{{ u1.dateCreated }}</td>-->
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+
+
+            </table>
+            </div>
+            </div>
+
+<!--
+            <div class="row">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-6">
+
+
+            <h2 class="sub-header">Newly Registered User</h2>
+
+
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Reputation</th>
+                </tr>
+                </thead>
+            <tbody>
+                {% for u1 in users %}
+
+                {% if forloop.last %}
+                <tr>
+                    <td>{{ u1.first_name }}</td>
+                     <td>{{ u1.last_name }}</td>
+                    <td>{{ u1.reputation }}</td>
+
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+
+
+            </table>
+            </div>
+            </div>
+
+-->
+
+ </div>
 {% endblock %}
