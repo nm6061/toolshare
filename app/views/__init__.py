@@ -24,6 +24,8 @@ import datetime
 from django.utils.timezone import utc
 from django.http import HttpResponse
 import pdb
+
+
 @login_required(redirect_field_name='o')
 def home(request):
     #pdb.set_trace()
@@ -40,8 +42,9 @@ def home(request):
         #to_date=reservation.objects.get('to_date')
         #difference = to_date - today
         #print(difference)
-        return render_to_response('auth_home.html',{'tools':temp_list,'shed':temp2_list})
+        return render(request, 'auth_home.html', RequestContext(request, {'tools':temp_list,'shed':temp2_list}))
     return render(request, 'home.html')
+
 
 
 
