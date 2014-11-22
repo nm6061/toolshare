@@ -12,11 +12,11 @@
         <ul class="nav navbar-nav">
             <li><a href="{% url "account:update" %}" class="navbar-link"><span class="glyphicon glyphicon-cog"></span>
                 Profile</a></li>
-            <!--<li>
+            <li>
              <a href="{% url "presentstatistics" %}" class="navbar-link">
                 Present Statistics</a>
             </li>
-            -->
+
             <li>
                 <form action="{% url "account:signout" %}" method="POST" class="navbar-form">
                     {% csrf_token %}
