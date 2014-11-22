@@ -171,7 +171,8 @@
             "category": "SC",
             "owner": 1,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Knock on the door"
         }
     },
     {
@@ -185,7 +186,8 @@
             "category": "HA",
             "owner": 1,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Knock on the door"
         }
     },
     {
@@ -199,7 +201,8 @@
             "category": "WR",
             "owner": 1,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Knock on the door"
         }
     },
     {
@@ -213,7 +216,8 @@
             "category": "HA",
             "owner": 1,
             "location": "S",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Knock on the door"
         }
     },
     {
@@ -227,7 +231,8 @@
             "category": "SH",
             "owner": 1,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Knock on the door"
         }
     },
     {
@@ -241,7 +246,8 @@
             "category": "HA",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -255,7 +261,8 @@
             "category": "LM",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -269,7 +276,8 @@
             "category": "SC",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -283,7 +291,8 @@
             "category": "SH",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -297,7 +306,8 @@
             "category": "WR",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -311,7 +321,8 @@
             "category": "HA",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -325,7 +336,8 @@
             "category": "LM",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -339,7 +351,8 @@
             "category": "SC",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -353,7 +366,8 @@
             "category": "SH",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -367,7 +381,8 @@
             "category": "WR",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -381,7 +396,8 @@
             "category": "HA",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -395,7 +411,8 @@
             "category": "LM",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -409,7 +426,8 @@
             "category": "SC",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -423,7 +441,8 @@
             "category": "SH",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -437,7 +456,8 @@
             "category": "WR",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -451,7 +471,8 @@
             "category": "HA",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -465,7 +486,8 @@
             "category": "LM",
             "owner": 2,
             "location": "H",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -479,7 +501,8 @@
             "category": "SC",
             "owner": 2,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -493,7 +516,8 @@
             "category": "SH",
             "owner": 2,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -507,7 +531,8 @@
             "category": "SC",
             "owner": 3,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Back of the bowling alley at midnight"
         }
     },
     {
@@ -521,7 +546,8 @@
             "category": "HA",
             "owner": 3,
             "location": "H",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Back of the bowling alley at midnight"
         }
     },
     {
@@ -535,7 +561,8 @@
             "category": "WR",
             "owner": 3,
             "location": "S",
-            "shed": null
+            "shed": null,
+            "pickupArrangement": "Back of the bowling alley at midnight"
         }
     },
     {
@@ -549,7 +576,8 @@
             "category": "SH",
             "owner": 3,
             "location": "S",
-            "shed": 1
+            "shed": 1,
+            "pickupArrangement": "Back of the bowling alley at midnight"
         }
     },
     {
