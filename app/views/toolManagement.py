@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from app.forms.toolRegistration import AddToolForm
 from app.models.tool import Tool
+from app.models import Reservation
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -82,6 +83,12 @@ def toolbox(request, tool_filter):
         toolList = Tool.objects.filter(owner_id=user).filter(location='H')
     elif tool_filter == 'shedtools':
         toolList = Tool.objects.filter(owner_id=user).filter(location='S')
+    elif tool_filter == 'borrowedtools':
+        approvedrequests = Reservation.objects.filter(user_id=user).filter(status="Approved")
+        toolIDs = []
+        for res in approvedrequests:
+            toolIDs.append(res.tool_id)
+        toolList = Tool.objects.filter(pk__in=toolIDs)
     else:
         toolList = Tool.objects.filter(owner_id=user)
     paginator = Paginator(toolList, 12, 1)

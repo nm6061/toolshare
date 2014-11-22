@@ -67,7 +67,8 @@
                             <h4>Toolbox</h4>
                             <ul>
                                 <li><a href="{% url "toolManagement:toolbox"%}">My Tools</a></li>
-                                <li><a href="#">Borrowed Tools</a></li>
+
+                                <li><a href="{% url "toolManagement:borrowedtools" %}"> Borrowed Tools </a></li>
                                 <li>
                                     <a href="{% url "toolManagement:registerTool" %}">Register a New Tool</a>
                                 </li>

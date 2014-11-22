@@ -57,7 +57,10 @@ def browsetool(request):
        It currently filters tools by:
             -excluding tools belonging to the logged in user
             -excluding tools that have a 'deactivated' status
+
     """
+    #TODO : Add filter for share zone
+
     user = request.user
     tools = Tool.objects.exclude(owner_id=user).exclude(status='D')
     maxToolsPerPage = 12
@@ -194,7 +197,6 @@ def Borrow(request, tool_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Reservation created successfully.')
-            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
             return render(request, 'borrow.html', RequestContext(request, {'form': form}))
         else:
             return render(request, 'borrow.html', RequestContext(request, {'form': form}))
