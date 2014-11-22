@@ -7,43 +7,7 @@
 {% block auth-content %}
     <h1>Requests From Other Users</h1>
 
-
-
-
-
-<!-- Pagination -->
-
-{% for reservation in reservations %}
-{# Each "reservation" is a reservation model object. #}
-{{ reservation.full_name|upper }}<br />
-{% endfor %}
-<style>
-    .pagination {
-    position: absolute;
-    top:500px;
-    left:600px;
-    }
-</style>
-<div class="pagination">
-    <span class="step-links">
-        {% if reservations.has_previous %}
-            <a href="?page={{ reservations.previous_page_number }}" >previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ reservations.number }} of {{ reservations.paginator.num_pages }}.
-        </span>
-
-        {% if reservations.has_next %}
-            <a href="?page={{ reservations.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
-<!-- Pagination -->
-
-
     <div class="spacer-50"></div>
-
 
     {% if reservations %}
         <table class="table table-striped">
@@ -64,14 +28,14 @@
                     <td>{{ reservation.from_date }}</td>
                     <td>{{ reservation.to_date }}</td>
                     <td>
-                        <td>
+                    <td>
                         <form action="{% url 'approve' reservation.pk %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary">Approve</button>
 
                         </form>
-                        </td>
-                        <td>
+                    </td>
+                    <td>
                         <form action="{% url 'reject' reservation.pk %}" method="POST" style="margin-left: -120px; color: red">
                             {% csrf_token %}
 
@@ -79,8 +43,8 @@
 
                             <a href="#"></a>
                         </form>
-                        </td>
-                        </td>
+                    </td>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -90,4 +54,43 @@
             You Don't have any requests.
         </div>
     {% endif %}
+
+    {% if reservations.paginator.num_pages >  1 %}
+        <div class="row text-center toolPaginator">
+            <div class="col-sm-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="?page=1"> &laquo; First Page </a>
+                    </li>
+                    {% if reservations.has_previous %}
+                        <li>
+                            <a href="?page={{ reservations.previous_page_number }}"> &lsaquo; Previous </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href=""> &lsaquo; Previous </a>
+                        </li>
+                    {% endif %}
+
+                    <li>
+                        <a class = "pageTracker"> Page {{ reservations.number }} of {{ reservations.paginator.num_pages }} </a>
+                    </li>
+
+                    {% if reservations.has_next %}
+                        <li>
+                            <a href="?page={{ reservations.next_page_number }}"> Next &rsaquo; </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href=""> Next &rsaquo; </a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="?page={{ reservations.paginator.num_pages }}"> Last Page &raquo; </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock %}

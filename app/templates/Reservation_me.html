@@ -36,7 +36,46 @@
         </table>
     {% else %}
         <div class="alert alert-info" role="alert">
-             You have no requests <strong>Made!<strong>
+             You have no requests!
         </div>
     {% endif %}
+
+    {% if reservation.paginator.num_pages >  1 %}
+        <div class="row text-center toolPaginator">
+            <div class="col-sm-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="?page=1"> &laquo; First Page </a>
+                    </li>
+                    {% if reservation.has_previous %}
+                        <li>
+                            <a href="?page={{ reservation.previous_page_number }}"> &lsaquo; Previous </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href=""> &lsaquo; Previous </a>
+                        </li>
+                    {% endif %}
+
+                    <li>
+                        <a class = "pageTracker"> Page {{ reservation.number }} of {{ reservation.paginator.num_pages }} </a>
+                    </li>
+
+                    {% if reservation.has_next %}
+                        <li>
+                            <a href="?page={{ reservation.next_page_number }}"> Next &rsaquo; </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href=""> Next &rsaquo; </a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="?page={{ reservation.paginator.num_pages }}"> Last Page &raquo; </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock %}

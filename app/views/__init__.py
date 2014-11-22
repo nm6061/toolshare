@@ -110,7 +110,7 @@ def presentstatistics(request):
 def reservation(request):
     reservations = Reservation.objects.filter(tool__owner=request.user, status='Pending')
 
-    paginator = Paginator(reservations, 1) # Show 25 reservations per page
+    paginator = Paginator(reservations, 2) # Show 25 reservations per page
 
     page = request.GET.get('page')
     try:
@@ -170,6 +170,17 @@ def rejectmessage(request, reservation_id):
 def requestsend(request):
     reservation = Reservation.objects.filter(user=request.user, status='Pending')
 
+    paginator = Paginator(reservation, 2) # Show 25 reservations per page
+
+    page = request.GET.get('page')
+    try:
+        reservation = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        reservation = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        reservation = paginator.page(paginator.num_pages)
     return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
 
 
