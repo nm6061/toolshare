@@ -121,11 +121,12 @@ body {
 }
 
 figcaption {
-    padding-left: 5px;
+    margin-left: 5px;
     margin-top: -10px;
     font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .toolPaginator{

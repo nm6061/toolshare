@@ -24,6 +24,8 @@ import datetime
 from django.utils.timezone import utc
 from django.http import HttpResponse
 import pdb
+
+
 @login_required(redirect_field_name='o')
 def home(request):
     #pdb.set_trace()
@@ -40,8 +42,9 @@ def home(request):
         #to_date=reservation.objects.get('to_date')
         #difference = to_date - today
         #print(difference)
-        return render_to_response('auth_home.html',{'tools':temp_list,'shed':temp2_list})
+        return render(request, 'auth_home.html', RequestContext(request, {'tools':temp_list,'shed':temp2_list}))
     return render(request, 'home.html')
+
 
 
 
@@ -54,7 +57,10 @@ def browsetool(request):
        It currently filters tools by:
             -excluding tools belonging to the logged in user
             -excluding tools that have a 'deactivated' status
+
     """
+    #TODO : Add filter for share zone
+
     user = request.user
     tools = Tool.objects.exclude(owner_id=user).exclude(status='D')
     maxToolsPerPage = 12
@@ -121,8 +127,11 @@ def reservation(request):
 
 @login_required(redirect_field_name='o')
 def ReservationHistory(request):
-    reservations = Reservation.objects.filter(Q(status = "Reject") | Q(status = "Approved") |Q(status = "Cancel"), tool__owner=request.user)
-    return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations': reservations}))
+    reservations1 = Reservation.objects.filter(Q(status = "Reject") , tool__owner=request.user)
+    reservations2 = Reservation.objects.filter(Q(status = "Approved") , tool__owner=request.user)
+    reservations3 = Reservation.objects.filter(Q(status = "Cancel"), tool__owner=request.user )
+
+    return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations1': reservations1,'reservations2':reservations2,'reservations3':reservations3}))
 
 
 
@@ -188,7 +197,6 @@ def Borrow(request, tool_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Reservation created successfully.')
-            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
             return render(request, 'borrow.html', RequestContext(request, {'form': form}))
         else:
             return render(request, 'borrow.html', RequestContext(request, {'form': form}))
