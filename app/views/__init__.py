@@ -26,7 +26,6 @@ from django.http import HttpResponse
 import pdb
 
 
-@login_required(redirect_field_name='o')
 def home(request):
     #pdb.set_trace()
     if request.user.is_authenticated():
