@@ -30,12 +30,16 @@ import pdb
 def home(request):
     #pdb.set_trace()
     if request.user.is_authenticated():
-
-        temp_list = list()
+        toolsToShow = 6;
+        shedsToShow = 3;
         temp_list = Tool.objects.all()
-        temp2_list = list()
+        temp_list = temp_list.order_by('pk')
+        temp_list = temp_list.reverse()[:toolsToShow]
+
         temp2_list = Shed.objects.all()
-        #temp3_list = list()
+        temp2_list = temp2_list.order_by('pk')
+        temp2_list = temp2_list.reverse()[:shedsToShow]
+
         #temp3_list = User.objects.all()
         #pdb.set_trace()
         #today = datetime.date.today()
