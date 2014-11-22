@@ -15,9 +15,9 @@
         <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>
 
         {% if not isToolOwner %}
-            <a href="/tool/{{ tooldata.id }}/borrow">Borrow</a>
+            <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary" style="margin-top: 40px; margin-left: 60%;">Borrow This Tool</a>
         {% else %}
-            <a href="/tool/{{ tooldata.id }}/update_tool">Update</a>
+            <a href="/tool/{{ tooldata.id }}/update_tool" class="btn btn-primary" style="margin-top: 40px; margin-left: 60%;">Update Tool Info</a>
         {% endif %}
     </div>
 
