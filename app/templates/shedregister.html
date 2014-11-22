@@ -1,31 +1,18 @@
 {% extends "auth_base.html" %}
-
+{% load staticfiles %}
 {% block title %} Shed Creation {%  endblock %}
 
 {% block content %}
-		
-{#		<h1>#}
-{#          Create a Shed#}
-{#		</h1>#}
-{##}
-{#  		<form action="" method="post">#}
-{#			{% csrf_token %}#}
-{#			<table>#}
-{#				{{ f }}#}
-{#			</table>#}
-{#			<hr>#}
-{#      		<input type="submit" class="btn btn-primary" value="Create the Shed">#}
-{#  		</form>#}
 
-    <div class="container">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form method="post" action="shedregister.html">
+    <div>
+        <div>
+            <div>
+                <div>
+                    <form method="POST" action={% url 'makeShed' %}>
                         {% csrf_token %}
                         {{ shed_form }}
                         {{ address_form }}
-                        <input type="submit" value="save" class="btn btn-primary btn-block btn-lg">
+                        <input type="submit" value="save" class="btn btn-primary">
                     </form>
                 </div>
             </div>

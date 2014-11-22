@@ -154,6 +154,7 @@
         "fields": {
             "owner": "1",
             "name": "Shed1",
+            "street": "bennington",
             "isActive": "1",
             "isPrivate": "1",
             "dateCreated": "2014-04-24 16:38:29.246000",

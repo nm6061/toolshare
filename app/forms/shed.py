@@ -2,18 +2,37 @@ from django import forms
 from django.forms import ModelForm
 from app.models.shed import Shed
 from app.models.account import Address
-from django.forms.models import formset_factory
+from django.core.exceptions import ObjectDoesNotExist
 
-class shedForm(ModelForm):
-    name = forms.CharField(max_length=100)
-    address = forms.CharField(max_length=100)
+class shedForm(forms.ModelForm):
 
     class Meta:
         model = Shed
-        fields = ['name', 'address']
+        fields = ['name']
+
+        def clean_name(self):
+            locname = self.cleaned_data['name']
+            try:
+                Shed.objects.get(name=locname)
+            except ObjectDoesNotExist:
+                return locname
+            else:
+                raise forms.ValidationError('Shed name is already taken')
+
+        def save(self,commit=True):
+            loc = super(shedForm, self).save(commit=False)
+            if commit:
+                loc.save()
+                return loc
 
 
-class shedAddress(ModelForm):
+class shedAddress(forms.ModelForm):
     class Meta:
         model = Address
-        exclude = ['country']
+        fields = ['street']
+
+    def save(self, commit=True):
+        add = super(shedAddress,self).save(commit=False)
+        if commit:
+            add.save()
+            return add

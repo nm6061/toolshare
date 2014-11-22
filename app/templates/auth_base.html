@@ -108,7 +108,7 @@
                         </div>
                     </li>
                     <li class="{% block ShedsNav %}{% endblock %}">
-                        <a href="#">
+                        <a href="{% url 'mySheds' %}">
                             <div class="icon">
                                 <svg version="1.1" class="menuIcon" xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"
@@ -122,8 +122,8 @@
                         <div class="sub-menu">
                             <h4>Community Sheds</h4>
                             <ul>
-                                <li><a href="#">Available Sheds</a></li>
-                                <li><a href="#">My Sheds</a></li>
+                                <li><a href="{% url 'mySheds' %}">Available Sheds</a></li>
+{#                                <li><a href="shedlist.html">My Sheds</a></li>#}
                             </ul>
                         </div>
                     </li>

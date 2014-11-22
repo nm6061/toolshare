@@ -2,38 +2,46 @@
 
 {% block title %}All Sheds {% endblock %}
 
-{% block content%}
+{% block auth-content%}
 
-{#	<div id="placeHeader">#}
-{#		<h1>#}
-{#			Sheds located in sharezone: {{ share_zone }}#}
-{#		</h1>#}
-{#		<p>#}
-{#		This page shows all of the sheds associated with this sharezone.#}
-{#		</p>#}
-{#	</div>#}
-{##}
-{#	<div id="createShed" style="height: 60px">#}
-{#		<div id="createShedButton" style="float: left">#}
-{#			<!-- place holder form -->#}
-{#			<form method="GET" action= '/shedregister/' >#}
-{#				<input type="SUBMIT" class="btn btn-primary" value="Create Shed">#}
-{#	#}
-{#			</form>#}
-{#			#}
-{#		</div>#}
-{#		#}
-{#	</div>#}
-{#	<hr>#}
-{##}
-{#<!-- include code for liusting of pages -->#}
-
-<div>
-<div class="button-group">
-<a href="{% url 'makeShed' %}"><button type="submit" class="btn btn-primary">Create New Shed </button> </a>
+<div class="container">
+<div class="">
+    <a href ="{% url 'makeShed' %}"><button type = "button" class = "btn btn-primary">Create New Shed</button></a>
 </div>
 
-<!-- list sheds here -->
+<!-- shed listing -->
+<div class = "row">
+
+    {% for membership in membership %}
+    <div class="">
+    <div class = "">
+        <!-- heading -->
+        <div class="">
+            <h1>
+                {% if membership.shed.isPrivate %}
+
+                {% endif %}
+            <a href =" {%  url 'makeShed' membership.shed.id %} ">
+                {{ membership.shed.name }}
+            </a>
+            </h1>
+        </div>
+
+    <!-- body or description of shed -->
+
+    <div class="">
+        <p>{{ membership.location.street }}</p>
+    </div>
+
+    </div>
+
+    </div>
+        {% empty %}
+        <div>
+        <h3 class=""> You have no sheds :'( Have an hassle free sharing experience </h3>
+        </div>
+    {% endfor %}
 </div>
 
+</div>
 {% endblock %}

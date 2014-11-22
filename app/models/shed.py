@@ -7,6 +7,7 @@ class Shed(models.Model):
 
     owner = models.ForeignKey(User)
     name = models.CharField(max_length=100)
+    street = models.CharField(max_length=100)
     # address = models.ForeignKey(Address)
     #to check whether the shed is active
     isActive = models.BooleanField(default=True)
