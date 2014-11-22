@@ -14,39 +14,42 @@
             Showing only tools shared from home
         {% elif filter == 'shedtools' %}
             Showing only tools shared from a shed
+        {% elif filter == 'borrowedtools' %}
+            Showing tools that you are borrowing
         {% else %}
             Showing all your tools
         {% endif %}
     </h3>
 
+        <div class="container">
+            <div class="row">
+                {% if filter != 'borrowedtools' %}
+                    <div class="toolFilters">
+                        <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
+                        <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
+                        <a href="{% url "toolManagement:shedtools" %}"> Show Shed Tools </a></a>
+                    </div>
+                {% endif %}
 
-    <div class="container">
-        <div class="row">
-            <div class="toolFilters">
-                <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
-                <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
-                <a href="{% url "toolManagement:shedtools" %}"> Show Shed Tools </a></a>
-            </div>
-
-            {% if myTools %}
-                {% for tool in myTools %}
-                    <div class="toolList">
-                        <div {% if tool.location == 'H' %} class="homeTools" {% else %}class="shedTools"{% endif %}>
-                            <div class="col-sm-2">
-                                <figure>
-                                    <div id="toolThumbnail" >
-                                        <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
-                                            <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
-                                        </a>
-                                    </div>
-                                    <figcaption>{{ tool.name }}</figcaption>
-                                </figure>
+                {% if myTools %}
+                    {% for tool in myTools %}
+                        <div class="toolList">
+                            <div {% if tool.location == 'H' %} class="homeTools" {% else %}class="shedTools"{% endif %}>
+                                <div class="col-sm-2">
+                                    <figure>
+                                        <div id="toolThumbnail" >
+                                            <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                                <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
+                                            </a>
+                                        </div>
+                                        <figcaption>{{ tool.name }}</figcaption>
+                                    </figure>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
 
 
         {% if myTools.paginator.num_pages >  1 %}
@@ -85,10 +88,7 @@
                     </ul>
                 </div>
             </div>
-
-            </div>
         {% endif %}
-
-
+    </div>
 {% endblock %}
 
