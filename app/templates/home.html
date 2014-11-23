@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-
-{% block head %}
+{% block stylesheets %}
+    {{ block.super }}
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static "styles/carousel.css" %}"/>
 {% endblock %}
