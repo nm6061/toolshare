@@ -1,28 +1,14 @@
+{% extends "email/base.html" %}
 {% url "account:activation_mailer" activation_key as uri %}
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>ToolShare | Activate your ToolShare account</title>
-    <style type="text/css">
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        p.safe-link {
-            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
-            font-size: 10pt;
-        }
-    </style>
-</head>
-<body>
-<div>
+{% block title %}ToolShare | Activate your ToolShare account{% endblock %}
+{% block content %}
     <p>
         Greetings {{ user.get_full_name }},
     </p>
 
     <p>
-        Thank you for signing up for a {{ site.name }} account. Please activate your account by clicking the link shown
+        Thank you for signing up for a {{ site.name }} account. Please activate your account by clicking the link
+        shown
         below:
     </p>
 
@@ -43,6 +29,4 @@
             <strong>Note</strong>: The activation link expires in {{ expiration_days }} days.
         </p>
     {% endif %}
-</div>
-</body>
-</html>
+{% endblock %}

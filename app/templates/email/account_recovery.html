@@ -1,22 +1,7 @@
+{% extends "email/base.html" %}
 {% url "account:recovery_mailer" uidb64 token as uri %}
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>ToolShare | Reset Password</title>
-    <style type="text/css">
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        p.safe-link {
-            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
-            font-size: 10pt;
-        }
-    </style>
-</head>
-<body>
-<div>
+{% block title %}ToolShare | Reset Password{% endblock %}
+{% block content %}
     <p>
         Greetings {{ user.get_full_name }},
     </p>
@@ -31,14 +16,11 @@
     </p>
 
     <p>
-        Alternatively, you could copy the link and paste it into the address bar of your favorite web
-        browser.
+        Alternatively, you could copy the link and paste it into the address bar of your favorite web browser.
     </p>
 
     <p>
         Cheers,<br/>
         The ToolShare Team
     </p>
-</div>
-</body>
-</html>
+{% endblock %}
