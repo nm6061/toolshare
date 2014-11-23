@@ -11,6 +11,8 @@ from django.views.generic import edit
 from django.views.decorators.http import require_POST
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template.loader import render_to_string
+from django.conf import settings
 
 from app import forms
 from app import models
@@ -42,9 +44,9 @@ def home(request):
         # temp3_list = User.objects.all()
         # pdb.set_trace()
         # today = datetime.date.today()
-        #to_date=reservation.objects.get('to_date')
-        #difference = to_date - today
-        #print(difference)
+        # to_date=reservation.objects.get('to_date')
+        # difference = to_date - today
+        # print(difference)
         return render(request, 'auth_home.html', RequestContext(request, {'tools': temp_list, 'shed': temp2_list}))
     return render(request, 'home.html')
 
@@ -200,23 +202,24 @@ def cancel(request, reservation_id):
 
 
 @login_required(redirect_field_name='o')
-def Borrow(request, tool_id):
+def borrow(request, tool_id):
     tool = Tool.objects.get(pk=tool_id)
 
     if request.method == 'POST':
         form = forms.BorrowToolForm(tool, request.user, request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'A request was successfully created. You will receive an email from us when the '
-                                      'owner of the tool approves your request.')
-            return redirect(reverse_lazy('Borrow', kwargs={'tool_id': tool_id}))
+            reservation = form.save()
+
+            # Send the owner of the tool an email
+            subject = '[ToolShare] Request to borrow your tool'
+            message = render_to_string('email/tool_reservation.html', {'reservation': reservation})
+            tool.owner.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+
+            messages.success(request, 'A request was successfully created. You will receive an email when the owner of '
+                                      'the tool takes an action on your request.')
+            return redirect(reverse_lazy('borrow', kwargs={'tool_id': tool_id}))
         else:
-            return render(request, 'Borrow.html', RequestContext(request, {'form': form}))
+            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
     else:
         form = forms.BorrowToolForm(tool, request.user)
-        return render(request, 'Borrow.html', RequestContext(request, {'form': form}))
-
-
-
-
-
+        return render(request, 'borrow.html', RequestContext(request, {'form': form}))
