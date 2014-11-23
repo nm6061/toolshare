@@ -86,6 +86,8 @@ class BorrowToolForm(forms.ModelForm):
         reservation = Reservation.objects.create(**data)
         reservation.save()
 
+        return reservation
+
     def get_unavailable_dates(self):
         unavailable_dates = []
 
