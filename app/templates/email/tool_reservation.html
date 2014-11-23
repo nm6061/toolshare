@@ -1,0 +1,19 @@
+{% extends "email/base.html" %}
+{% url "account:activation_mailer" activation_key as uri %}
+{% block title %}ToolShare | Request to Borrow your Tool{% endblock %}
+{% block content %}
+    <p>
+        Greetings {{ reservation.tool.owner.get_full_name }},
+    </p>
+
+    <p>
+        {{ reservation.user.get_full_name }} has requested to borrow your {{ reservation.tool.name }}
+        from {{ reservation.from_date|date }} to {{ reservation.to_date|date }}. Please sign in to ToolShare and either
+        approve or reject this request.
+    </p>
+
+    <p>
+        Cheers,<br/>
+        The ToolShare Team
+    </p>
+{% endblock %}
