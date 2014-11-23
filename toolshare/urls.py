@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^tool/', include('app.urls.toolManagement', namespace='toolManagement')),
     url(r'^browsetool/$', 'app.views.browsetool', name = 'browsetool'),
     url(r'^presentstatistics/$', 'app.views.presentstatistics', name = 'presentstatistics'),
-    url(r'^tool/(?P<tool_id>\d+)/borrow/$', 'app.views.Borrow', name = 'Borrow'),
+    url(r'^tool/(?P<tool_id>\d+)/borrow/$', 'app.views.borrow', name = 'borrow'),
     #Reservations
     url(r'^reservation/$', 'app.views.reservation', name = 'reservation'),
     url(r'^ReservationHistory/$', 'app.views.ReservationHistory', name = 'ReservationHistory'),
