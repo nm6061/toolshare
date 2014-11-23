@@ -69,13 +69,10 @@ class BorrowToolForm(forms.ModelForm):
                 self._errors['to_date'] = self.error_class(' cannot be earlier than from date')
 
             for ud in self.get_unavailable_dates():
-                print(ud['start'])
-                print(ud['end'])
                 if not (fd > ud['end'] or td < ud['start']):
                     raise forms.ValidationError('The tool is not available on the dates selected.')
 
         return self.cleaned_data
-
 
     def save(self, commit=True):
         data = {
@@ -115,4 +112,5 @@ class BorrowToolForm(forms.ModelForm):
 class JSONDateEncoder(json.JSONEncoder):
     def default(self, o):
         if hasattr(o, 'isoformat'):
+            o = datetime.datetime.strptime(o.isoformat(),'%Y-%m-%d')
             return o.isoformat()
