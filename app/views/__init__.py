@@ -27,7 +27,7 @@ import pdb
 
 
 def home(request):
-    #pdb.set_trace()
+    # pdb.set_trace()
     if request.user.is_authenticated():
         toolsToShow = 6;
         shedsToShow = 3;
@@ -39,17 +39,14 @@ def home(request):
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
-        #temp3_list = User.objects.all()
-        #pdb.set_trace()
-        #today = datetime.date.today()
+        # temp3_list = User.objects.all()
+        # pdb.set_trace()
+        # today = datetime.date.today()
         #to_date=reservation.objects.get('to_date')
         #difference = to_date - today
         #print(difference)
-        return render(request, 'auth_home.html', RequestContext(request, {'tools':temp_list,'shed':temp2_list}))
+        return render(request, 'auth_home.html', RequestContext(request, {'tools': temp_list, 'shed': temp2_list}))
     return render(request, 'home.html')
-
-
-
 
 
 @login_required(redirect_field_name='o')
@@ -62,7 +59,7 @@ def browsetool(request):
             -excluding tools that have a 'deactivated' status
 
     """
-    #TODO : Add filter for share zone
+    # TODO : Add filter for share zone
 
     user = request.user
     tools = Tool.objects.exclude(owner_id=user).exclude(status='D')
@@ -79,6 +76,7 @@ def browsetool(request):
 
     context = {'toolsList': toolsList}
     return render(request, 'browsetool.html', context)
+
 
 @login_required(redirect_field_name='o')
 def presentstatistics(request):
@@ -98,22 +96,21 @@ def presentstatistics(request):
     for iter_tool in temp3_list:
         popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
 
-    #temp3_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
-    #popular_lender_list = list()
-    #for iter_tool in temp3_list:
-     #   popular_lender_list.append(Tool.objects.filter(id=iter_tool['owner_id']).get())
-
+        # temp3_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
+        # popular_lender_list = list()
+        # for iter_tool in temp3_list:
+        # popular_lender_list.append(Tool.objects.filter(id=iter_tool['owner_id']).get())
 
     return render(request, 'presentstatistics.html', RequestContext(request, {'reservations': popular_tool_list,
                                                                               'borrower_list': popular_borrower_list,
-                                                                                'lender_list': popular_lender_list}))
+                                                                              'lender_list': popular_lender_list}))
 
 
 @login_required(redirect_field_name='o')
 def reservation(request):
     reservations = Reservation.objects.filter(tool__owner=request.user, status='Pending')
 
-    paginator = Paginator(reservations, 2) # Show 25 reservations per page
+    paginator = Paginator(reservations, 2)  # Show 25 reservations per page
 
     page = request.GET.get('page')
     try:
@@ -130,13 +127,13 @@ def reservation(request):
 
 @login_required(redirect_field_name='o')
 def ReservationHistory(request):
-    reservations1 = Reservation.objects.filter(Q(status = "Reject") , tool__owner=request.user)
-    reservations2 = Reservation.objects.filter(Q(status = "Approved") , tool__owner=request.user)
-    reservations3 = Reservation.objects.filter(Q(status = "Cancel"), tool__owner=request.user )
+    reservations1 = Reservation.objects.filter(Q(status="Reject"), tool__owner=request.user)
+    reservations2 = Reservation.objects.filter(Q(status="Approved"), tool__owner=request.user)
+    reservations3 = Reservation.objects.filter(Q(status="Cancel"), tool__owner=request.user)
 
-    return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations1': reservations1,'reservations2':reservations2,'reservations3':reservations3}))
-
-
+    return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations1': reservations1,
+                                                                               'reservations2': reservations2,
+                                                                               'reservations3': reservations3}))
 
 
 @login_required(redirect_field_name='o')
@@ -173,7 +170,7 @@ def rejectmessage(request, reservation_id):
 def requestsend(request):
     reservation = Reservation.objects.filter(user=request.user, status='Pending')
 
-    paginator = Paginator(reservation, 2) # Show 25 reservations per page
+    paginator = Paginator(reservation, 2)  # Show 25 reservations per page
 
     page = request.GET.get('page')
     try:
@@ -210,13 +207,14 @@ def Borrow(request, tool_id):
         form = forms.BorrowToolForm(tool, request.user, request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Reservation created successfully.')
-            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
+            messages.success(request, 'A request was successfully created. You will receive an email from us when the '
+                                      'owner of the tool approves your request.')
+            return redirect(reverse_lazy('Borrow', kwargs={'tool_id': tool_id}))
         else:
-            return render(request, 'borrow.html', RequestContext(request, {'form': form}))
+            return render(request, 'Borrow.html', RequestContext(request, {'form': form}))
     else:
         form = forms.BorrowToolForm(tool, request.user)
-        return render(request, 'borrow.html', RequestContext(request, {'form': form}))
+        return render(request, 'Borrow.html', RequestContext(request, {'form': form}))
 
 
 
