@@ -12,7 +12,7 @@
         var unavailable_dates = {{ form.unavailable_dates|safe }};
 
         $(document).ready(function () {
-            $('.datepicker').datepicker({autoclose: true, beforeShowDay: onBeforeShowDay});
+            $('.datepicker').datepicker({autoclose: true, beforeShowDay: onBeforeShowDay, startDate: new Date()});
 
             $('#{{ form.from_date.auto_id }}').datepicker()
                     .on('changeDate', function (e) {
@@ -25,10 +25,11 @@
             for (var index = 0; index < unavailable_dates.length; index++) {
                 sd = new Date(unavailable_dates[index].start);
                 ed = new Date(unavailable_dates[index].end);
-                if (date >= sd && date <= ed) {
-                    return {'enabled': false, 'classes': 'unavailable', 'tooltip': 'Tool unavailable on this day.'};
+                if (sd <= date && date <= ed) {
+                    return {'enabled': false, 'classes': 'unavailable', 'tooltip': 'Tool is not available on this day.'};
                 }
             }
+            return {'enabled': true, 'classes': '', 'tooltip': ' '};
         }
     </script>
 {% endblock %}
@@ -66,12 +67,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="input-group">
-                                {{ form.from_date|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
+                            {{ form.from_date|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
                         </div>
                     </div>
                     <div class="row">
@@ -81,17 +77,15 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="input-group">
                             {{ form.to_date|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
                         </div>
                     </div>
                     <div class="spacer-15"></div>
                     <div class="row pull-right">
-
+                        <div class="col-md-12">
+                            <a class="btn btn-link" href="{% url "toolManagement:viewTool" form.tool.id %}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Borrow</button>
+                        </div>
                     </div>
                 </div>
             </div>
