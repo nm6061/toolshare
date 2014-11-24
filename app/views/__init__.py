@@ -131,7 +131,7 @@ def reservation(request):
 def ReservationHistory(request):
     reservations1 = Reservation.objects.filter(Q(status="Reject"), tool__owner=request.user)
     reservations2 = Reservation.objects.filter(Q(status="Approved"), tool__owner=request.user)
-    reservations3 = Reservation.objects.filter(Q(status="Cancel"), tool__owner=request.user)
+    reservations3 = Reservation.objects.filter(Q(status="Cancel"))
 
     return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations1': reservations1,
                                                                                'reservations2': reservations2,
