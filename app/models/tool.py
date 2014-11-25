@@ -5,7 +5,6 @@ from pilkit.processors import Resize
 from app.models.shed import Shed
 
 
-
 class Tool(models.Model):
     class Meta:
         app_label = 'app'
@@ -73,6 +72,13 @@ class Tool(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def address(self):
+        # TODO: Uncomment when Shed has an address
+        # if self.location == 'S':
+        #   return self.shed.address
+        return self.owner.address
 
 
 class BlackoutDate(models.Model):
