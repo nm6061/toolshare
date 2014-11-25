@@ -1,0 +1,29 @@
+{% extends "email/base.html" %}
+{% url "account:activation_mailer" activation_key as uri %}
+{% block title %}ToolShare | Request to Borrow Approved{% endblock %}
+{% block content %}
+    <p>
+        Hello {{ reservation.user.get_full_name }},
+    </p>
+    <p>
+        {{ reservation.tool.owner.get_full_name }} has approved your request to borrow {{ reservation.tool.name }}
+        from {{ reservation.from_date|date }} to {{ reservation.to_date|date }}.
+    </p>
+    <p>
+        Tool Location:
+        {% with address=reservation.tool.address %}
+            <div class="pad-left-10">
+                {% if address.apt_num %}{{ address.apt_num|upper }} {% endif %}{{ address.street|upper }}<br/>
+                {% if address.county %}{{ address.county|upper }},{% endif %} {{ address.city|upper }}<br/>
+                {{ address.state|upper }}, {{ address.country|upper }} {{ address.zip }}
+            </div>
+        {% endwith %}
+    </p>
+    <p>
+        Tool Owner's Pickup Preference: <span class="italics">{{ reservation.tool.pickupArrangement }}</span>
+    </p>
+    <p>
+        Cheers,<br/>
+        The ToolShare Team
+    </p>
+{% endblock %}
