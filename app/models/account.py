@@ -13,31 +13,6 @@ from app.models.validators import *
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
-class ShareZoneManager(models.Manager):
-    def get_or_create(self, **kwargs):
-        created = False
-        try:
-            share_zone = self.get(**kwargs)
-        except ShareZone.DoesNotExist:
-            share_zone = self.create(**kwargs)
-            share_zone.save()
-            created = True
-        return [share_zone, created]
-
-
-class ShareZone(models.Model):
-    zip = models.CharField(max_length=9, default='', blank=False)
-
-    objects = ShareZoneManager()
-
-    class Meta:
-        app_label = 'app'
-
-    # TODO : Define get_tools method
-    def get_tools(self):
-        pass
-
-
 class Address(models.Model):
     apt_num = models.CharField('apartment number', max_length=10, blank=True)
     street = models.CharField('street', max_length=50)
@@ -59,22 +34,10 @@ class UserManager(BaseUserManager):
         user_fields = self._get_fields(model='user', **extra_fields)
         address_fields = self._get_fields(model='address', **extra_fields)
 
-        # ShareZone.zip is 9 characters wide for flexibility
-        zip = (address_fields['zip'][:5]).ljust(9, '0')
-        share_zone, created = ShareZone.objects.get_or_create(zip=zip)
-        if created:
-            share_zone.save(using=self._db)
-
-        address = Address.objects.create(**address_fields)
-        address.save(using=self._db)
-
-        now = timezone.now()
         user_fields['email'] = self.normalize_email(user_fields['email'])
-        user = self.model(date_joined=now, **user_fields)
+        user = self.model(date_joined=timezone.now(), **user_fields)
         user.set_password(extra_fields['password1'])
-        user.address = address
-        user.share_zone = share_zone
-
+        user.address = Address.objects.create(**address_fields)
         user.save(using=self._db)
 
         return user
@@ -117,16 +80,13 @@ class User(AbstractBaseUser):
 
     # Foreign keys
     address = models.ForeignKey(Address, unique=True)
-    share_zone = models.ForeignKey(ShareZone)
+
+    @property
+    def share_zone(self):
+        return (self.address.zip[:5]).ljust(9, '0')
 
     class Meta:
         app_label = 'app'
-
-    def Update(self):
-        pass
-
-    def Register(self, Tool):
-        pass
 
     def get_short_name(self):
         return self.first_name
