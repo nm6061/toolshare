@@ -8,27 +8,6 @@
         }
     },
     {
-        "model": "app.ShareZone",
-        "pk": 1,
-        "fields": {
-            "zip": "142580000"
-        }
-    },
-    {
-        "model": "app.ShareZone",
-        "pk": 2,
-        "fields": {
-            "zip": "028860000"
-        }
-    },
-    {
-        "model": "app.ShareZone",
-        "pk": 3,
-        "fields": {
-            "zip": "029200000"
-        }
-    },
-    {
         "model": "app.Address",
         "pk": 1,
         "fields": {
@@ -93,8 +72,7 @@
             "phone_num": "4013268457",
             "pickup_arrangements": "Knock on the door.",
             "reputation": 0,
-            "address": 1,
-            "share_zone": 1
+            "address": 1
         }
     },
     {
@@ -110,8 +88,7 @@
             "phone_num": "8589569212",
             "pickup_arrangements": "Pick-up from the garage.",
             "reputation": 0,
-            "address": 2,
-            "share_zone": 2
+            "address": 2
         }
     },
     {
@@ -127,8 +104,7 @@
             "phone_num": "",
             "pickup_arrangements": "Back of the bowling alley at midnight",
             "reputation": 0,
-            "address": 3,
-            "share_zone": 3
+            "address": 3
         }
     },
     {
@@ -144,8 +120,7 @@
             "phone_num": "",
             "pickup_arrangements": "Call me beep me if you wanna reach me",
             "reputation": 9001,
-            "address": 4,
-            "share_zone": 1
+            "address": 4
         }
     },
     {
