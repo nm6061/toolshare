@@ -23,6 +23,15 @@ body {
 }
 
 
+
+.regToolBtn{
+    margin-left: auto;
+    margin-right: 0px;
+    margin-bottom: 25px;
+    margin-top: -55px;
+    width: 105px;
+}
+
 .sidebar {
     position: fixed;
     top: 51px;
@@ -75,7 +84,7 @@ body {
     left: 69px;
     top: 1px;
     display: none;
-    width: 225px;
+    width: 200px;
     min-height: 70px;
     padding: 5px 0px 5px 25px;
     background-color: #fff;
@@ -86,7 +95,7 @@ body {
 }
 
 .sub-menu > ul {
-    padding: 5px 0px 15px 0px;
+    padding: 5px 0px 10px 0px;
 }
 
 .sub-menu > ul > li {
@@ -144,3 +153,4 @@ figcaption {
 .toolFilters > a {
     padding-left: 20px;
 }
+
