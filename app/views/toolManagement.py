@@ -29,9 +29,9 @@ def registerTool(request):
 
             #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
             #It SHOULD NOT be used unless you need to add a hyperlink to your message!
-            messages.success(request,'You have successfully registered a new tool! <br> <br> '
-                                     '<a href="/tool/register_tool">Click here register another tool</a><br> OR <br> '
-                                     '<a href=".">click here to return to your toolbox.</a>', extra_tags='safe')
+            messages.success(request,'You have successfully added a new tool! <br> <br> '
+                                     '<a href="/tool/register_tool">Click here to add another tool </a><br> OR <br> '
+                                     '<a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
 
             success_url = reverse_lazy("toolManagement:toolbox")
             return redirect(success_url)
@@ -56,7 +56,7 @@ def updateTool(request, tool_id):
     tooldata = get_object_or_404(Tool, pk=tool_id)
     if not tooldata.owner == request.user:
         error_url = reverse_lazy("toolManagement:toolbox")
-        messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to the toolbox.</a>', extra_tags='safe')
+        messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
         return redirect(error_url)
     if request.method == 'POST':
         tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
@@ -65,7 +65,9 @@ def updateTool(request, tool_id):
 
             #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
             #It SHOULD NOT be used unless you need to add a hyperlink to your message!
-            messages.success(request,'Your tool has been successfully updated! <br> <br> <a href=".">Click here to go back to your tool.</a>', extra_tags='safe')
+            messages.success(request,'Your tool has been successfully updated! <br> <br> '
+                                     '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
+                                     '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
 
             success_url = reverse_lazy("toolManagement:viewTool", kwargs={'tool_id':tool_id})
             return redirect(success_url)
