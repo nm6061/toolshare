@@ -66,7 +66,7 @@ class Tool(models.Model):
     category = models.CharField(max_length=2, choices=CATEGORY)
     location = models.CharField(max_length=1, choices=LOCATION, blank=False, default=0)
     models.CharField()
-    shed = models.ForeignKey(Shed, blank=True, null=True)
+    shed = models.ForeignKey(Shed, null=True, on_delete=models.SET_NULL)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     pickupArrangement = models.TextField(max_length=500)
 
@@ -75,9 +75,8 @@ class Tool(models.Model):
 
     @property
     def address(self):
-        # TODO: Uncomment when Shed has an address
-        # if self.location == 'S':
-        #   return self.shed.address
+        if self.location == 'S':
+            return self.shed.address
         return self.owner.address
 
 
