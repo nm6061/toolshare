@@ -44,7 +44,9 @@ class Address(models.Model):
         return html.mark_safe(self._get_format_string().format('<br />'))
 
     def get_formatted_zip(self):
-        return self.zip[:5] + '-' + self.zip[5:]
+        if len(self.zip) == 9:
+            return self.zip[:5] + '-' + self.zip[5:]
+        return self.zip
 
 
 class UserManager(BaseUserManager):
