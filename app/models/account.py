@@ -1,6 +1,6 @@
 import datetime, hashlib, random, re
 from django.core.validators import *
-from django.utils import timezone
+from django.utils import timezone, html
 from django.conf import settings
 from django.db import models, transaction
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
@@ -14,7 +14,7 @@ SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
 class Address(models.Model):
-    apt_num = models.CharField('apartment number', max_length=10, blank=True)
+    apt_num = models.CharField('apartment number', max_length=10, blank=True, validators=[AlphaNumericOnlyValidator()])
     street = models.CharField('street', max_length=50)
     city = models.CharField('city', max_length=50, validators=[AlphabetOnlyValidator()])
     county = models.CharField('county', max_length=50, default='', blank=True, validators=[AlphabetOnlyValidator()])
@@ -26,6 +26,25 @@ class Address(models.Model):
 
     class Meta:
         app_label = 'app'
+
+    def _get_format_string(self):
+        address = self.street
+        if self.apt_num:
+            address = self.apt_num + ' ' + address + '{0}'
+        if self.county:
+            address = address + ' ' + self.county
+        address = address + ' ' + self.city + '{0}' + self.state + ' ' + self.get_formatted_zip() + '{0}' + self.country
+
+        return address
+
+    def get_single_line(self):
+        return self._get_format_string().format(', ')
+
+    def get_multi_line(self):
+        return html.mark_safe(self._get_format_string().format('<br />'))
+
+    def get_formatted_zip(self):
+        return self.zip[:5] + '-' + self.zip[5:]
 
 
 class UserManager(BaseUserManager):
