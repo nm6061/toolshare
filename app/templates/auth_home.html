@@ -2,8 +2,11 @@
 {% block title %}Home{% endblock %}
 
 {% block auth-content %}
-    <!--<h1>Welcome To Toolshare!!</h1>-->
-
+    <div class="container">
+        <div class="row">
+            <h1>Homepage</h1>
+        </div>
+    </div>
     <div class="spacer-50"></div>
 
     <div class="container">
@@ -144,6 +147,39 @@
     </div>
     </div>
 
+    <div class="spacer-50"></div>
+        <div class="container">
+            <div class="row">
+
+             <h2 class="sub-header">Tools that are to be returned to me</h2>
+                {% if coming %}
+                <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Tool Name</th>
+                <th>Due</th>
+                <th>Number of days Left</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for u1 in coming %}
+                <tr>
+                    <td>{{ u1.tool.name }}</td>
+                    <td>{{ u1.to_date }}</td>
+                    <td>{{ u1.diff }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+             All the tools are returned to me
+        </div>
+    {% endif %}
+
+    </div>
+    </div>
 
 
 
