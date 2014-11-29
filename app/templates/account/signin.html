@@ -36,6 +36,8 @@
                         <div class="col-md-12">
                             <a class="btn btn-link" href="{% url "account:recover" %}">Forget password?</a>
                             <button type=" submit" class="btn btn-primary">Sign in</button>
+                            <input type="hidden" id="id_{{ REDIRECT_FIELD_NAME }}" name="{{ REDIRECT_FIELD_NAME }}"
+                                   value="{{ redirect_to }}"/>
                         </div>
                     </div>
                 </div>
