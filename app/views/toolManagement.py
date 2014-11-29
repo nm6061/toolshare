@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def registerTool(request):
     currentUser = request.user
     if request.method == 'POST':
@@ -42,7 +42,7 @@ def registerTool(request):
         return render(request, 'registertool.html', RequestContext(request, {'form': tool_form}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def viewTool(request, tool_id):
     currentUser = request.user
     tooldata = get_object_or_404(Tool, pk=tool_id)
@@ -51,7 +51,7 @@ def viewTool(request, tool_id):
     return render(request, 'tool.html', context)
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def updateTool(request, tool_id):
     tooldata = get_object_or_404(Tool, pk=tool_id)
     if not tooldata.owner == request.user:
@@ -76,7 +76,7 @@ def updateTool(request, tool_id):
         return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def toolbox(request, tool_filter):
     user = request.user
     if tool_filter == 'hometools':

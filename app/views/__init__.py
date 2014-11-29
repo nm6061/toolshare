@@ -27,7 +27,6 @@ from django.utils.timezone import utc
 from django.http import HttpResponse
 import pdb
 
-
 def home(request):
     # pdb.set_trace()
     if request.user.is_authenticated():
@@ -51,7 +50,7 @@ def home(request):
     return render(request, 'home.html')
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def browsetool(request):
     """
        browsetool() is responsible for rendering a web page displaying tools available
@@ -80,7 +79,7 @@ def browsetool(request):
     return render(request, 'browsetool.html', context)
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def presentstatistics(request):
     # presentstatistics= Reservation.objects.order_by('tool')
     temp_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
@@ -108,7 +107,7 @@ def presentstatistics(request):
                                                                               'lender_list': popular_lender_list}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def reservation(request):
     reservations = Reservation.objects.filter(tool__owner=request.user, status='Pending')
 
@@ -127,7 +126,7 @@ def reservation(request):
     return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def ReservationHistory(request):
     reservations1 = Reservation.objects.filter(Q(status="Reject"), tool__owner=request.user)
     reservations2 = Reservation.objects.filter(Q(status="Approved"), tool__owner=request.user)
@@ -138,7 +137,7 @@ def ReservationHistory(request):
                                                                                'reservations3': reservations3}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 @require_POST
 def approve(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
@@ -155,14 +154,14 @@ def approve(request, reservation_id):
     return redirect(reverse_lazy('reservation'))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 @require_POST
 def reject(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
     return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 @require_POST
 def rejectmessage(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
@@ -180,7 +179,7 @@ def rejectmessage(request, reservation_id):
     return redirect(reverse_lazy('reservation'))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def requestsend(request):
     reservation = Reservation.objects.filter(user=request.user, status='Pending')
 
@@ -198,7 +197,7 @@ def requestsend(request):
     return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 @require_POST
 def cancel(request, reservation_id):
     reservation = models.Reservation.objects.get(pk=reservation_id)
@@ -207,7 +206,7 @@ def cancel(request, reservation_id):
     return render(request, 'cancel_reservation.html', RequestContext(request, {'reservation': reservation}))
 
 
-@login_required(redirect_field_name='o')
+@login_required()
 def borrow(request, tool_id):
     tool = Tool.objects.get(pk=tool_id)
 
