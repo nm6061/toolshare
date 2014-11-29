@@ -1,31 +1,26 @@
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.template.context import RequestContext
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
-from django.contrib.messages import views
-from django.views.generic import edit
 from django.views.decorators.http import require_POST
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
 from django.conf import settings
-
 from app import forms
 from app import models
-from app.forms.toolRegistration import AddToolForm
 from app.models.reservation import Reservation
 from app.models.tool import Tool
 from django.db.models import Count
 from app.models import User
 from app.models import Shed
 import datetime
-from django.utils.timezone import utc
-from django.http import HttpResponse
+
+
 import pdb
+
 
 
 def home(request):
@@ -41,13 +36,25 @@ def home(request):
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
-        # temp3_list = User.objects.all()
-        # pdb.set_trace()
-        # today = datetime.date.today()
-        # to_date=reservation.objects.get('to_date')
-        # difference = to_date - today
-        # print(difference)
-        return render(request, 'auth_home.html', RequestContext(request, {'tools': temp_list, 'shed': temp2_list}))
+
+        returned = Reservation.objects.filter(user=request.user, status='Approved')
+        today1=datetime.date.today()
+        final_list = list()
+
+        for iter_reservation in returned:
+            fromdate = iter_reservation.from_date
+            todate = iter_reservation.to_date
+            if fromdate >= today1:
+                    delta=todate-today1
+                    iter_reservation.diff = delta.days
+                    final_list.append(iter_reservation)
+                    print(str(iter_reservation.id)+"====>"+str(iter_reservation.diff))
+
+
+
+
+
+        return render(request, 'auth_home.html', RequestContext(request, {'tools': temp_list, 'shed': temp2_list,  'returned': final_list,'now':datetime.date.today()}))
     return render(request, 'home.html')
 
 

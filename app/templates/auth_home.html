@@ -109,45 +109,48 @@
             </div>
         </div>
 
-        <!--
+
+        <div class="spacer-50"></div>
+        <div class="container">
             <div class="row">
-            <div class="col-lg-2">
-            </div>
-            <div class="col-lg-6">
 
-
-            <h2 class="sub-header">Newly Registered User</h2>
-
-
-            <table class="table table-striped">
-                <thead>
-
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Reputation</th>
-                </tr>
-                </thead>
+             <h2 class="sub-header">Tools that are to be returned by me</h2>
+                {% if returned %}
+                <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Tool Name</th>
+                <th>Due</th>
+                <th>Number of days Left</th>
+            </tr>
+            </thead>
             <tbody>
-                {% for u1 in users %}
-
-                {% if forloop.last %}
+            {% for u1 in returned %}
                 <tr>
-                    <td>{{ u1.first_name }}</td>
-                     <td>{{ u1.last_name }}</td>
-                    <td>{{ u1.reputation }}</td>
+                    <td>{{ u1.tool.name }}</td>
+                    <td>{{ u1.to_date }}</td>
+                    <td>{{ u1.diff }}</td>
 
                 </tr>
-                {% endif %}
-                {% endfor %}
-                </tbody>
-
-
-            </table>
-            </div>
-            </div>
-
--->
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+             All the tools are returned by me
+        </div>
+    {% endif %}
 
     </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
