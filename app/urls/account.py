@@ -2,9 +2,6 @@ from django.conf.urls import patterns, include, url
 
 from app.views.account import *
 
-# TODO : Remove
-from app.views.profile import *
-
 urlpatterns = \
     patterns('',
              url(r'^signin/$', SignInView.as_view(), name='signin'),
