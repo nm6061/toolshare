@@ -1,0 +1,82 @@
+{% extends "auth_base.html" %}
+{% block ShedsNav %} active {% endblock %}
+{% load filters %}
+{% block title %}Update Community Shed{% endblock %}
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    <div id="change-password-box" class="auth-box">
+        <form role="form" action="." method="post">
+            {% csrf_token %}
+            {% load errors %}
+            {% errors form formset %}
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Update community shed</h3>
+                        </div>
+                    </div>
+                    <div class="spacer-25"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.name|add_attrs:"{'class':'form-control','placeholder':'Name'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Address</label>
+                            <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="right"
+                                    title="Shed's address must have the same zip code as that of the person registering it.">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-sm-3">
+                            {{ formset.apt_num|add_attrs:"{'class':'form-control','placeholder':'Apt #'}" }}
+                        </div>
+                        <div class="col-md-9">
+                            {{ formset.street|add_attrs:"{'class':'form-control','placeholder':'Street'}" }}
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-4">
+                            {{ formset.county|add_attrs:"{'class':'form-control','placeholder':'County','readonly':True}" }}
+                        </div>
+                        <div class="col-md-8">
+                            {{ formset.city|add_attrs:"{'class':'form-control','placeholder':'City','readonly':True}" }}
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-md-8">
+                            {{ formset.state|add_attrs:"{'id':'id_state_disabled', 'name': 'id_state_disabled', 'class':'form-control','disabled':True}" }}
+                            {# Hack Alert: If a form field is marked disabled, it is not posted. If a value is not #}
+                            {# posted, form validation fails. Overcoming this quirk using the hidden field with the #}
+                            {# same id as the disabled select element. #}
+                            <input type="hidden" id="{{ formset.state.auto_id }}" name="{{ formset.state.name }}"
+                                   value="{{ formset.state.value }}"/>
+                        </div>
+                        <div class="col-md-4">
+                            {{ formset.zip|add_attrs:"{'class':'form-control','placeholder':'Zip','readonly':True}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <a class="btn btn-link" href="{% url "shed:detail" shed.id %}">Cancel</a>
+                            <button type=" submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
