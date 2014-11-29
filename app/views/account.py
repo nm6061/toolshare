@@ -1,13 +1,15 @@
 from collections import ChainMap
+from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, resolve_url
 from django.contrib import messages
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import get_current_site
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth import login, logout
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_safe_url
 from django.utils.encoding import force_bytes
 from django.utils.decorators import method_decorator
 
@@ -54,7 +56,22 @@ class SignInView(FormView):
     http_method_names = ['get', 'post']
     success_url = reverse_lazy('home')
 
+    def get(self, request, *args, **kwargs):
+        redirect_to = self.request.REQUEST.get(REDIRECT_FIELD_NAME, '')
+
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        kwargs = {'form': form, 'REDIRECT_FIELD_NAME': REDIRECT_FIELD_NAME, 'redirect_to': redirect_to}
+        return self.render_to_response(self.get_context_data(**kwargs))
+
+
     def form_valid(self, form):
+        redirect_to = self.request.REQUEST.get(REDIRECT_FIELD_NAME, '')
+
+        # If redirection URL is un-safe redirect to default home
+        if is_safe_url(url=redirect_to, host=self.request.get_host()):
+            self.success_url = redirect_to
+
         login(self.request, form.get_user())
         return super(SignInView, self).form_valid(form)
 
