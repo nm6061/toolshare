@@ -152,7 +152,14 @@ def approve(request, reservation_id):
     reservation.status = 'Approved'
     reservation.save()
 
-    return render(request, 'approve_reservation.html', RequestContext(request, {'reservation': reservation}))
+    # Send the user who requested to borrow the tool an email
+    subject = '[ToolShare] %(owner)s approved your request' % {'owner': reservation.tool.owner.get_short_name()}
+    message = render_to_string('email/reservation_accepted.html', {'reservation': reservation})
+    reservation.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+    messages.success(request, '%(borrower)s\'s request to borrow %(tool)s was approved.' % {
+        'borrower': reservation.user.get_short_name(), 'tool': reservation.tool.name})
+
+    return redirect(reverse_lazy('reservation'))
 
 
 @login_required(redirect_field_name='o')
@@ -165,14 +172,19 @@ def reject(request, reservation_id):
 @login_required(redirect_field_name='o')
 @require_POST
 def rejectmessage(request, reservation_id):
-    csrfContext = RequestContext(request)
     reservation = Reservation.objects.get(pk=reservation_id)
     reservation.status = 'Reject'
-    reservation.save()
     reservation.message = request.POST['message']
     reservation.save()
 
-    return render(request, 'reject_accept.html', RequestContext(request, {'reservation': reservation}))
+    # Send the user who requested to borrow the tool an email
+    subject = '[ToolShare] %(owner)s rejected your request' % {'owner': reservation.tool.owner.get_short_name()}
+    message = render_to_string('email/reservation_rejected.html', {'reservation': reservation})
+    reservation.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+    messages.success(request, '%(borrower)s\'s request to borrow %(tool)s was rejected.' % {
+        'borrower': reservation.user.get_short_name(), 'tool': reservation.tool.name})
+
+    return redirect(reverse_lazy('reservation'))
 
 
 @login_required(redirect_field_name='o')
@@ -202,12 +214,6 @@ def cancel(request, reservation_id):
     return render(request, 'cancel_reservation.html', RequestContext(request, {'reservation': reservation}))
 
 
-# @login_required(redirect_field_name='o')
-# @require_POST
-# def reject(request, reservation_id):
-# pass
-
-
 @login_required(redirect_field_name='o')
 def borrow(request, tool_id):
     tool = Tool.objects.get(pk=tool_id)
@@ -218,7 +224,8 @@ def borrow(request, tool_id):
             reservation = form.save()
 
             # Send the owner of the tool an email
-            subject = '[ToolShare] Request to borrow your tool'
+            subject = '[ToolShare] %(borrower)s wants to borrow your tool' % {
+                'borrower': reservation.user.get_short_name()}
             message = render_to_string('email/tool_reservation.html', {'reservation': reservation})
             tool.owner.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 

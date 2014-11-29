@@ -1,7 +1,7 @@
 {% extends "email/base.html" %}
-{% url "account:activation_mailer" activation_key as uri %}
 {% block title %}ToolShare | Activate your ToolShare account{% endblock %}
 {% block content %}
+    {% url "account:activation_mailer" activation_key as uri %}
     <p>
         Greetings {{ user.get_full_name }},
     </p>

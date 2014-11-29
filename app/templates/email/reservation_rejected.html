@@ -1,0 +1,20 @@
+{% extends "email/base.html" %}
+{% url "account:activation_mailer" activation_key as uri %}
+{% block title %}ToolShare | Request to Borrow Rejected{% endblock %}
+{% block content %}
+    <p>
+        Hello {{ reservation.user.get_full_name }},
+    </p>
+
+    <p>
+        {{ reservation.tool.owner.get_full_name }} has rejected your request to borrow {{ reservation.tool.name }}
+        from {{ reservation.from_date|date }} to {{ reservation.to_date|date }}.
+    </p>
+    <p>
+        The reason quoted by the tool owner was <span class="italics">{{ reservation.message }}</span>.
+    </p>
+    <p>
+        Cheers,<br/>
+        The ToolShare Team
+    </p>
+{% endblock %}
