@@ -1,0 +1,113 @@
+{% extends "auth_base.html" %}
+{% load staticfiles %}
+{% block title %}{{ shed }} Details{% endblock %}
+{% block ShedsNav %} active {% endblock %}
+{% block auth-content %}
+    <h1 class="page-header">{{ shed }} Details</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1">
+                <strong>Owner</strong>
+            </div>
+            <div class="col-md-10">
+                {{ shed.owner.get_full_name }}
+            </div>
+        </div>
+        <div class="spacer-5"></div>
+        <div class="row">
+            <div class="col-md-1">
+                <strong>Registered On</strong>
+            </div>
+            <div class="col-md-10">
+                {{ shed.registered_on|date }}
+            </div>
+        </div>
+        <div class="spacer-5"></div>
+        <div class="row">
+            <div class="col-md-1">
+                <strong>Address</strong>
+            </div>
+            <div class="col-md-11">
+                {{ shed.address.get_multi_line }}
+            </div>
+        </div>
+        {% if user == shed.owner %}
+        <div class="row pull-right">
+            <div class="col-md-12">
+                <a href="{% url "shed:update" shed.id %}" class="btn btn-primary">Update</a>
+                <button type="submit" class="btn btn-warning">Delete</button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="spacer-25"></div>
+    <h4>Tools In The Community Shed</h4>
+    <div class="spacer-25"></div>
+    <div class="container">
+        <div class="row">
+            {% if tools %}
+                {% for tool in tools %}
+                    <div class="toolList">
+                        <div>
+                            <div class="col-sm-2">
+                                <figure>
+                                    <div id="toolThumbnail">
+                                        <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                            <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
+                                        </a>
+                                    </div>
+                                    <figcaption>{{ tool.name }}</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <div class="alert alert-info">
+                        There are no tools in the community shed.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% if tools.paginator.num_pages > 1 %}
+            <div class="row text-center toolPaginator">
+                <div class="col-sm-12">
+                    <ul class="pagination">
+                        <li>
+                            <a href="?page=1"> &laquo; First Page </a>
+                        </li>
+                        {% if tools.has_previous %}
+                            <li>
+                                <a href="?page={{ tools.previous_page_number }}"> &lsaquo; Previous </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href=""> &lsaquo; Previous </a>
+                            </li>
+                        {% endif %}
+
+                        <li>
+                            <a class="pageTracker"> Page {{ tools.number }} of {{ tools.paginator.num_pages }} </a>
+                        </li>
+
+                        {% if tools.has_next %}
+                            <li>
+                                <a href="?page={{ tools.next_page_number }}"> Next &rsaquo; </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href=""> Next &rsaquo; </a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="?page={{ tools.paginator.num_pages }}"> Last Page &raquo; </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="spacer-25"></div>
+{% endblock %}
+
