@@ -20,7 +20,6 @@ from app.views.edit import FormsetView
 
 class SignUpView(FormsetView):
     template_name = 'account/signup.html'
-    success_url = reverse_lazy('account:signup')
     form_class = SignUpUserForm
     formset_class = SignUpAddressFormSet
     http_method_names = ['get', 'post']
