@@ -76,31 +76,30 @@
                             <p class="formErrorMessage">{{ form.name.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
-
                             <label for="id_category">Please select the appropriate category for your tool</label>
                                 {{ form.category }}
                             <p class="formErrorMessage">{{ form.category.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
-
-                            <div class="locationChoices">
-                                <label for="id_location">Where would you like the tool to be shared from?</label>
-                                    {{ form.location }}
-                                <fieldset>
-                                    <div id="shedSelect" class="formset">
-                                        <label> Which shed?</label>
-                                        </br>
-                                        <select>
-                                          <option>Shed 1 at 123 Lane</option>
-                                          <option>Shed 2 at 610 Blvd</option>
-                                          <option>Shed 3 at 1600 Pennsylvania Ave NW</option>
-                                        </select>
-                                    </div>
-                                </fieldset>
+                            <div {% if not sheds %} style="display: none" {% endif %}>
+                                <div class="locationChoices">
+                                    <label for="id_location">Where would you like the tool to be shared from?</label>
+                                        {{ form.location }}
+                                    <fieldset>
+                                        <div id="shedSelect" class="formset">
+                                            <label> Which shed?</label>
+                                            <br>
+                                            <select name="shedChoice">
+                                                    {% for shed in sheds %}
+                                                        <option value="{{ shed.id }}">{{ shed }}: {{ shed.address.apt_num }} {{ shed.address.street }}</option>
+                                                    {% endfor %}
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <p class="formErrorMessage">{{ form.location.errors|striptags }}</p>
+                                <div class="spacer-20"></div>
                             </div>
-                            <p class="formErrorMessage">{{ form.location.errors|striptags }}</p>
-                            <div class="spacer-20"></div>
-
 
                             <label>Please accept the default pickup arrangements or specify a new one for this tool</label>
                                 <div class="{% if form.pickupArrangement.errors %} has-error{% endif %}">
