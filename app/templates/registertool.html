@@ -111,7 +111,7 @@
 
                             <label>Please add a detailed description of the tool</label>
                                 <div class="{% if form.description.errors %} has-error{% endif %}">
-                                    {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'10','placeholder':'Example: Fiskars brand 8 inch scissors with red plastic handles. Minor scuff marks on thumb hole.'}" }}
+                                    {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'8','placeholder':'Example: Fiskars brand 8 inch scissors with red plastic handles. Minor scuff marks on thumb hole.'}" }}
                                 </div>
                             <p class="formErrorMessage">{{ form.description.errors|striptags }}</p>
 
