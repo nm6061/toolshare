@@ -25,6 +25,7 @@
             for (var index = 0; index < unavailable_dates.length; index++) {
                 sd = new Date(unavailable_dates[index].start);
                 ed = new Date(unavailable_dates[index].end);
+                ed.setDate(ed.getDate() + 1);
                 if (sd <= date && date <= ed) {
                     return {'enabled': false, 'classes': 'unavailable', 'tooltip': 'Tool is not available on this day.'};
                 }
