@@ -111,6 +111,87 @@ class BorrowToolForm(forms.ModelForm):
         return json.dumps(self.get_unavailable_dates(), cls=JSONDateEncoder)
 
 
+class BlackoutDateForm(forms.ModelForm):
+    class Meta:
+        model = BlackoutDate
+        fields = ['blackoutStart', 'blackoutEnd']
+
+
+    def __init__(self, tool, *args, **kwargs):
+        super(BlackoutDateForm, self).__init__(*args, **kwargs)
+        self.tool = tool
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required'}
+
+    def clean_blackoutStart(self):
+        blackoutStart = self.cleaned_data['blackoutStart']
+
+        if blackoutStart < datetime.date.today():
+            raise forms.ValidationError('cannot be earlier than today.')
+
+        if 'blackoutEnd' in self.cleaned_data:
+            blackoutEnd = self.cleaned_data['blackoutEnd']
+            if blackoutStart > blackoutEnd:
+                raise forms.ValidationError('cannot be earlier than ' + self.fields['blackoutEnd'].auto_id)
+        return blackoutStart
+
+    def clean_blackoutEnd(self):
+        blackoutEnd = self.cleaned_data['blackoutEnd']
+
+        if blackoutEnd < datetime.date.today():
+            raise forms.ValidationError('cannot be earlier than today.')
+
+        return blackoutEnd
+
+    def clean(self):
+        super(BlackoutDateForm, self).clean()
+
+        if 'blackoutStart' in self.cleaned_data and 'blackoutEnd' in self.cleaned_data:
+            fd = self.cleaned_data['blackoutStart']
+            td = self.cleaned_data['blackoutEnd']
+
+            if fd > td:
+                self._errors['blackoutEnd'] = self.error_class(' cannot be earlier than from date')
+
+            for ud in self.get_unavailable_dates():
+                if not (fd > ud['end'] or td < ud['start']):
+                    raise forms.ValidationError('The tool is not available on the dates selected.')
+
+        return self.cleaned_data
+
+    def save(self, commit=True):
+        data = {
+            'blackoutStart': self.cleaned_data['blackoutStart'],
+            'blackoutEnd': self.cleaned_data['blackoutEnd'],
+            'tool': self.tool,
+        }
+
+        blackout = BlackoutDate.objects.create(**data)
+        blackout.save()
+
+        return blackout
+
+    def get_unavailable_dates(self):
+        unavailable_dates = []
+
+        # Cannot be blacked out during existing blackout days
+        unavailable_dates = unavailable_dates + [{'start': bd.blackoutStart, 'end': bd.blackoutEnd} for bd in
+                                                 self.tool.blackoutdate_set.all()]
+
+        # Cannot be blacked out when tools has been approved
+        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
+                                                 self.tool.reservation_set.filter(status='Approved')]
+
+        # Cannot be blacked when tool is reserved
+        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
+                                                 self.tool.reservation_set.filter(status='Pending')]
+        return unavailable_dates
+
+    @property
+    def unavailable_dates(self):
+        return json.dumps(self.get_unavailable_dates(), cls=JSONDateEncoder)
+
+
 class JSONDateEncoder(json.JSONEncoder):
     def default(self, o):
         if hasattr(o, 'isoformat'):
