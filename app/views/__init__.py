@@ -18,9 +18,7 @@ from app.models import User
 from app.models import Shed
 import datetime
 
-
 import pdb
-
 
 
 def home(request):
@@ -36,39 +34,35 @@ def home(request):
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
-
         returned = Reservation.objects.filter(user=request.user, status='Approved')
-        today1=datetime.date.today()
+        today1 = datetime.date.today()
         final_list = list()
 
         for iter_reservation in returned:
             fromdate = iter_reservation.from_date
             todate = iter_reservation.to_date
             if fromdate >= today1:
-                    delta=todate-today1
-                    iter_reservation.diff = delta.days
-                    final_list.append(iter_reservation)
-                    print(str(iter_reservation.id)+"====>"+str(iter_reservation.diff))
+                delta = todate - today1
+                iter_reservation.diff = delta.days
+                final_list.append(iter_reservation)
+                print(str(iter_reservation.id) + "====>" + str(iter_reservation.diff))
 
         coming = Reservation.objects.filter(tool__owner=request.user, status='Approved')
-        today1=datetime.date.today()
+        today1 = datetime.date.today()
         final_list1 = list()
-
 
         for iter_reservation in coming:
             fromdate = iter_reservation.from_date
             todate = iter_reservation.to_date
             if fromdate >= today1:
-                    delta=todate-today1
-                    iter_reservation.diff = delta.days
-                    final_list1.append(iter_reservation)
-                    print(str(iter_reservation.id)+"====>"+str(iter_reservation.diff))
+                delta = todate - today1
+                iter_reservation.diff = delta.days
+                final_list1.append(iter_reservation)
+                print(str(iter_reservation.id) + "====>" + str(iter_reservation.diff))
 
-
-
-
-
-        return render(request, 'auth_home.html', RequestContext(request, {'tools': temp_list, 'shed': temp2_list,  'returned': final_list,'coming':final_list1,'now':datetime.date.today()}))
+        return render(request, 'auth_home.html', RequestContext(request, {'tools': temp_list, 'shed': temp2_list,
+                                                                          'returned': final_list, 'coming': final_list1,
+                                                                          'now': datetime.date.today()}))
     return render(request, 'home.html')
 
 
@@ -168,7 +162,7 @@ def approve(request, reservation_id):
 
     # Send the user who requested to borrow the tool an email
     subject = '[ToolShare] %(owner)s approved your request' % {'owner': reservation.tool.owner.get_short_name()}
-    message = render_to_string('email/reservation_accepted.html', {'reservation': reservation})
+    message = render_to_string('email/reservation_approved.html', {'reservation': reservation})
     reservation.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
     messages.success(request, '%(borrower)s\'s request to borrow %(tool)s was approved.' % {
         'borrower': reservation.user.get_short_name(), 'tool': reservation.tool.name})
@@ -237,14 +231,24 @@ def borrow(request, tool_id):
         if form.is_valid():
             reservation = form.save()
 
-            # Send the owner of the tool an email
-            subject = '[ToolShare] %(borrower)s wants to borrow your tool' % {
-                'borrower': reservation.user.get_short_name()}
-            message = render_to_string('email/tool_reservation.html', {'reservation': reservation})
-            tool.owner.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+            if reservation.status == 'Approved':
+                # Send the borrower of the tool an email informing that the request was auto approved
+                subject = '[ToolShare] Request to borrow %(tool)s was auto-approved' % {'tool': reservation.tool.name}
+                message = render_to_string('email/reservation_auto_approved.html', {'reservation': reservation})
+                reservation.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+                messages.success(request,
+                                 'Request to borrow <strong>%(tool)s</strong> from the community shed was '
+                                 'auto-approved. You should receive an email momentarily with more details.' % {
+                                     'tool': reservation.tool.name}, extra_tags='safe')
+            else:
+                # Send the owner of the tool an email
+                subject = '[ToolShare] %(borrower)s wants to borrow your tool' % {
+                    'borrower': reservation.user.get_short_name()}
+                message = render_to_string('email/tool_reservation.html', {'reservation': reservation})
+                tool.owner.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+                messages.success(request, 'A request was successfully created. You will receive an email when the '
+                                          'owner of the tool takes an action on your request.')
 
-            messages.success(request, 'A request was successfully created. You will receive an email when the owner of '
-                                      'the tool takes an action on your request.')
             return redirect(reverse_lazy('borrow', kwargs={'tool_id': tool_id}))
         else:
             return render(request, 'borrow.html', RequestContext(request, {'form': form}))
