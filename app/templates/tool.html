@@ -2,23 +2,41 @@
 
 {% block title %}Tool Details{% endblock %}
 
-{% block auth-content %}
-    <div class="auth-box">
-        <img class="img-square" src="{{tooldata.picture.url}}" alt="{{tooldata.name}}" style="width: 100%; height: 350px;"/>
+{% block auth-content%}
+    <div class="tool_details">
+        <h2><strong>{{ tooldata.name }}</strong></h2>
 
-        <p> Name of tool: {{ tooldata.name }}</p>
-        <p> Category: {{ tooldata.get_category_display }}</p>
-        <p> Tool Status: {{ tooldata.get_status_display}}</p>
-        <p> Sharing Location: {{ tooldata.get_location_display }}</p>
-        <p> Owner: {{ tooldata.owner.get_full_name }}</p>
-        <p> Tool Description: {{ tooldata.description }}</p>
-        <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>
+        <div class="tool_details_status">
+            {% if tooldata.status == 'A' %}
+                <span class="label label-success">Tool Avaliable!</span>
+            {% elif tooldata.status == 'D' %}
+                <span class="label label-danger">Deactivated</span>
+            {% elif tooldata.status == 'L' %}
+                <span class="label label-warning">Currently Lent Out</span>
+            {% endif %}
+        </div>
 
-        {% if not isToolOwner %}
-            <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary" style="margin-top: 40px; margin-left: 60%;">Borrow This Tool</a>
-        {% else %}
-            <a href="/tool/{{ tooldata.id }}/update_tool" class="btn btn-primary" style="margin-top: 40px; margin-left: 60%;">Update Tool Info</a>
-        {% endif %}
+        <img class="thumbnail tool_details_pic" src="{{tooldata.picture.url}}" alt="{{tooldata.name}}"/>
+
+        <div class="thumbnail tool_details_desc">
+
+            <p> Category: {{ tooldata.get_category_display }}</p>
+            <p> Tool Status: {{ tooldata.get_status_display}}</p>
+            <p> Sharing Location: {{ tooldata.get_location_display }}</p>
+            <p> Owner: {{ tooldata.owner.get_full_name }}</p>
+            <p> Tool Description: {{ tooldata.description }}</p>
+            <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>
+
+            <div class="spacer-50"></div>
+
+            <div class="tool_details_btn">
+                {% if tooldata.status == 'A' %}
+                    <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Borrow This Tool</a>
+                {% else %}
+                    <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Reserve This Tool</a>
+                {% endif %}
+            </div>
+        </div>
+
     </div>
-
 {% endblock %}
