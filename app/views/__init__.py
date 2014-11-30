@@ -26,13 +26,14 @@ import pdb
 def home(request):
     # pdb.set_trace()
     if request.user.is_authenticated():
+        user = request.user
         toolsToShow = 6;
         shedsToShow = 3;
-        temp_list = Tool.objects.all()
+        temp_list = Tool.objects.exclude(owner_id=user).exclude(status='D')
         temp_list = temp_list.order_by('pk')
         temp_list = temp_list.reverse()[:toolsToShow]
 
-        temp2_list = Shed.objects.all()
+        temp2_list = Shed.objects.exclude(owner_id=user)
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
