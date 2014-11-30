@@ -160,12 +160,22 @@ figcaption {
     margin-right: auto;
 }
 
-.tool_details_pic{
+.tool_details_left{
     float: left;
     margin-right: 1%;
     width: 49.5%;
     min-width: 300px;
     max-width: 550px;
+}
+
+.tool_details_pic{
+    width: 100%;
+}
+
+.tool_details_blackout{
+    width: 100%;
+    overflow-wrap: break-word;
+    border-color: darkslategray;
 }
 
 .tool_details_desc{
@@ -176,6 +186,7 @@ figcaption {
     overflow-wrap: break-word;
     border-color: darkslategray;
 }
+
 
 .tool_details_btn{
     float: right;

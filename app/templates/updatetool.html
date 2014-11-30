@@ -1,5 +1,5 @@
 {% extends "auth_base.html" %}
-{% block title %}Update Tool{% endblock %}
+{% block title %}Manage Tool{% endblock %}
 {% load filters %}
 {% load staticfiles %}
 {% block ToolsNav %} active {% endblock %}
@@ -82,10 +82,53 @@
 {% endblock %}
 
 {% block auth-content %}
-    <h1 class = 'page-header'>View/Update Tool Details</h1>
+    <h1 class = 'page-header'>Manage Tool</h1>
     <div class="spacer-10"></div>
     <div class="tool_details">
-        <img class="thumbnail tool_details_pic" src="{{tool.picture.url}}" alt="{{tool.name}}"/>
+        <div class="tool_details_left">
+            <img class="thumbnail tool_details_pic" src="{{tool.picture.url}}" alt="{{tool.name}}"/>
+
+            <div class="thumbnail tool_details_blackout">
+                <form role="form" action="." method="post">
+                    {% csrf_token %}
+                    {% load errors %}
+                    {% errors blackoutform %}
+                    <div class="form-group">
+                        <div class="container-fluid">
+                            <h4>Add Blackout Dates</h4>
+                            <div class="spacer-20"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>From</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ blackoutform.blackoutStart|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
+                                </div>
+                            </div>
+                            <div class="spacer-10"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>To</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ blackoutform.blackoutEnd|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
+                                </div>
+                            </div>
+                            <div class="spacer-15"></div>
+                            <div class="row pull-right">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary" value="addblackout" name="addblackout">Add Blackout Date</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div class="thumbnail tool_details_desc">
             <form enctype="multipart/form-data" action="." method="post">
@@ -95,28 +138,28 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12" >
-                                <div class="spacer-10"></div>
-                                <label for="id_picture">Keep the existing picture or upload a new picture.</label>
+                                <div class="spacer-20"></div>
+                                <label for="id_picture">Keep the existing picture or upload a new picture</label>
                                 <input  type="file" accept="image/*" name="picture" onchange="imagePreview(this)" />
                                 <div id="toolThumbnail" class="thumbnail" style=" display: none ">
                                 <img id="thumbnail" src="">
                                 </div>
                                 <p class="formErrorMessage">{{ updateform.picture.errors|striptags }}</p>
                                 {{ updateform.picture.errors }}
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
                                 <label for="id_name">Name of the tool</label>
                                     <div class="{% if updateform.name.errors %} has-error{% endif %}">
                                         {{ updateform.name|add_attrs:"{'class':'form-control'}" }}
                                     </div>
                                 <p class="formErrorMessage">{{ updateform.name.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
 
                                 <label for="id_category">Tool category</label><br>
                                     {{ updateform.category }}
                                 <p class="formErrorMessage">{{ updateform.category.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
 
                                 <div class="locationChoices">
@@ -135,7 +178,7 @@
                                     </fieldset>
                                 </div>
                                 <p class="formErrorMessage">{{ updateform.location.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
 
                                 <label>Tool pickup arrangement</label>
@@ -143,7 +186,7 @@
                                         {{ updateform.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
                                     </div>
                                 <p class="formErrorMessage">{{ updateform.pickupArrangement.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
                                 <label>Tool description</label>
                                     <div class="{% if updateform.description.errors %} has-error{% endif %}">
@@ -157,54 +200,18 @@
                 </div>
 
                 <div class="container-fluid">
-                    <div class="pull-right">
-                        <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
-                        <button type="submit" class="btn btn-primary" value="updatetool" name="updatetool">Update Tool</button>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
+                            <button type="submit" class="btn btn-primary" value="updatetool" name="updatetool">Update Tool</button>
+                        </div>
                     </div>
                 </div>
+                <div class="spacer-15"></div>
             </form>
         </div>
 
 
-        <div class="thumbnail tool_details_desc">
-            <form role="form" action="." method="post">
-                {% csrf_token %}
-                {% load errors %}
-                {% errors blackoutform %}
-                <div class="form-group">
-                    <div class="container-fluid">
-                        <h4>Add Blackout Dates</h4>
-                        <div class="spacer-20"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>From</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                {{ blackoutform.blackoutStart|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                            </div>
-                        </div>
-                        <div class="spacer-10"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>To</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                {{ blackoutform.blackoutEnd|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                            </div>
-                        </div>
-                        <div class="spacer-15"></div>
-                        <div class="row pull-right">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary" value="addblackout" name="addblackout">Add Blackout Date</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+
     </div>
 {% endblock %}
