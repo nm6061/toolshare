@@ -165,7 +165,7 @@ figcaption {
     margin-right: 1%;
     width: 49.5%;
     min-width: 300px;
-    max-width: 550px;
+    max-width: 515px;
 }
 
 .tool_details_pic{
@@ -195,7 +195,7 @@ figcaption {
 .tool_details_status{
     clear: both;
     min-width: 300px;
-    max-width: 550px;
+    max-width: 515px;
     width: 49.5%;
     position: relative;
 }

@@ -32,3 +32,7 @@
     background-color: white;
     cursor: default;
 }
+
+.modal-dialog {
+  padding-top: 15%;
+}
