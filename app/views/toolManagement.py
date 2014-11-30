@@ -17,7 +17,8 @@ from django.db.models import Q
 @login_required()
 def registerTool(request):
     currentUser = request.user
-    sheds = Shed.objects.all()
+    sharezone = currentUser.share_zone[:5]
+    sheds = Shed.objects.filter(address__zip__startswith = sharezone)
     if request.method == 'POST':
         tool_form = AddToolForm(request.POST, request.FILES)
         shedChoice = request.POST.get('shedChoice')
@@ -57,6 +58,9 @@ def viewTool(request, tool_id):
 
 @login_required()
 def updateTool(request, tool_id):
+    currentUser = request.user
+    sharezone = currentUser.share_zone[:5]
+    sheds = Shed.objects.filter(address__zip__startswith = sharezone)
     tooldata = get_object_or_404(Tool, pk=tool_id)
     if not tooldata.owner == request.user:
         error_url = reverse_lazy("toolManagement:toolbox")
@@ -78,7 +82,8 @@ def updateTool(request, tool_id):
                                          '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
                 return redirect('.')
             else:
-                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes}))
+                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
+                                'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes, 'sheds':sheds}))
         elif 'addblackout' in request.POST:
             updateform = AddToolForm(instance=tooldata)
             blackoutform = forms.BlackoutDateForm(tooldata, request.POST)
@@ -89,7 +94,8 @@ def updateTool(request, tool_id):
                                          '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
                 return redirect('.')
             else:
-                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes}))
+                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
+                                'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes, 'sheds':sheds}))
         elif 'deactivate' in request.POST:
             updateform = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
             blackoutform = forms.BlackoutDateForm(tooldata)
@@ -104,7 +110,8 @@ def updateTool(request, tool_id):
                 return redirect('.')
             else:
                 updateform = AddToolForm(instance=tooldata)
-                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes}))
+                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
+                                'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes, 'sheds':sheds}))
         elif 'activate' in request.POST:
             updateform = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
             blackoutform = forms.BlackoutDateForm(tooldata)
@@ -118,11 +125,13 @@ def updateTool(request, tool_id):
                                          '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
                 return redirect('.')
             else:
-                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes}))
+                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
+                                'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes, 'sheds':sheds}))
     else:
         updateform = AddToolForm(instance=tooldata)
         blackoutform = forms.BlackoutDateForm(tooldata)
-        return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes}))
+        return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
+                                'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes, 'sheds':sheds}))
 
 
 @login_required()

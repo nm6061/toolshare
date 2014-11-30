@@ -63,36 +63,36 @@
                             <label for="id_picture">Upload a picture of the tool</label>
                             <input  type="file" accept="image/*" name="picture" onchange="imagePreview(this)" />
                             <div id="toolThumbnail" class="thumbnail" style=" display: none ">
-                            <img id="thumbnail" src="">
+                                <img id="thumbnail" src="">
                             </div>
                             <p class="formErrorMessage">{{ form.picture.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
 
                             <label for="id_name">Enter the name of your tool</label>
-                                <div class="{% if form.name.errors %} has-error{% endif %}">
-                                    {{ form.name|add_attrs:"{'class':'form-control','placeholder':'Example: Scissor'}" }}
-                                </div>
+                            <div class="{% if form.name.errors %} has-error{% endif %}">
+                                {{ form.name|add_attrs:"{'class':'form-control','placeholder':'Example: Scissor'}" }}
+                            </div>
                             <p class="formErrorMessage">{{ form.name.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
                             <label for="id_category">Please select the appropriate category for your tool</label>
-                                {{ form.category }}
+                            {{ form.category }}
                             <p class="formErrorMessage">{{ form.category.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
                             <div {% if not sheds %} style="display: none" {% endif %}>
                                 <div class="locationChoices">
                                     <label for="id_location">Where would you like the tool to be shared from?</label>
-                                        {{ form.location }}
+                                    {{ form.location }}
                                     <fieldset>
                                         <div id="shedSelect" class="formset">
                                             <label> Which shed?</label>
                                             <br>
                                             <select name="shedChoice">
-                                                    {% for shed in sheds %}
-                                                        <option value="{{ shed.id }}">{{ shed }}: {{ shed.address.apt_num }} {{ shed.address.street }}</option>
-                                                    {% endfor %}
+                                                {% for shed in sheds %}
+                                                    <option value="{{ shed.id }}">{{ shed }}: {{ shed.address.apt_num }} {{ shed.address.street }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </fieldset>
@@ -101,17 +101,27 @@
                                 <div class="spacer-20"></div>
                             </div>
 
-                            <label>Please accept the default pickup arrangements or specify a new one for this tool</label>
-                                <div class="{% if form.pickupArrangement.errors %} has-error{% endif %}">
-                                    {{ form.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
+                            {% if not sheds %}
+                                <label>Where would you like the tool to be shared from?</label><br>
+                                <input type="radio" name="locRadio" value="homeRadio" id="homeRadio" checked="checked"><label for ="homeRadio"> Home </label><br>
+                                <div style="pointer-events: none; color: gray">
+                                    <input type="radio" name="locRadio" value="shedRadio" id="shedRadio"><label for ="shedRadio"> Shed </label>
+                                    <p>Currently, there are no sheds in your share zone.</p>
                                 </div>
+                                <div class="spacer-20"></div>
+                            {% endif %}
+
+                            <label>Please accept the default pickup arrangements or specify a new one for this tool</label>
+                            <div class="{% if form.pickupArrangement.errors %} has-error{% endif %}">
+                                {{ form.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
+                            </div>
                             <p class="formErrorMessage">{{ form.pickupArrangement.errors|striptags }}</p>
                             <div class="spacer-20"></div>
 
                             <label>Please add a detailed description of the tool</label>
-                                <div class="{% if form.description.errors %} has-error{% endif %}">
-                                    {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'8','placeholder':'Example: Fiskars brand 8 inch scissors with red plastic handles. Minor scuff marks on thumb hole.'}" }}
-                                </div>
+                            <div class="{% if form.description.errors %} has-error{% endif %}">
+                                {{ form.description|add_attrs:"{'class':'form-control no-resize','rows':'8','placeholder':'Example: Fiskars brand 8 inch scissors with red plastic handles. Minor scuff marks on thumb hole.'}" }}
+                            </div>
                             <p class="formErrorMessage">{{ form.description.errors|striptags }}</p>
 
                         </div>

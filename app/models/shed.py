@@ -11,6 +11,10 @@ class Shed(models.Model):
     owner = models.ForeignKey(User)
     address = models.ForeignKey(Address)
 
+    @property
+    def share_zone(self):
+        return (self.address.zip[:5]).ljust(9, '0')
+
     class Meta:
         app_label = 'app'
 
