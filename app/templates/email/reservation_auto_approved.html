@@ -1,0 +1,22 @@
+{% extends "email/base.html" %}
+{% url "account:activation_mailer" activation_key as uri %}
+{% block title %}ToolShare | Request to Borrow Auto-approved{% endblock %}
+{% block content %}
+    <p>
+        Hello {{ reservation.user.get_full_name }},
+    </p>
+    <p>
+        Since {{ reservation.tool.name }} is currently in a community shed, your request to borrow it
+        from {{ reservation.from_date|date }} to {{ reservation.to_date|date }} was auto-approved.
+    </p>
+    <p>
+        Tool Location:
+    <div>
+        {{ reservation.tool.address.get_multi_line }}
+    </div>
+    </p>
+    <p>
+        Cheers,<br/>
+        The ToolShare Team
+    </p>
+{% endblock %}
