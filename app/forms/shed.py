@@ -1,38 +1,69 @@
 from django import forms
-from django.forms import ModelForm
-from app.models.shed import Shed
-from app.models.account import Address
-from django.core.exceptions import ObjectDoesNotExist
+from django.forms.models import save_instance
+from django.forms.models import formset_factory
 
-class shedForm(forms.ModelForm):
+from app.models.shed import *
+from app.models.account import Address
+
+
+class RegisterShedForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(RegisterShedForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
+
+    def save(self, owner, address, commit=True):
+        shed = Shed.objects.create(owner=owner, address=address, **self.cleaned_data)
+        self.instance = shed
+        fail_message = 'created'
+        return save_instance(self, self.instance, self._meta.fields,
+                             fail_message, commit, self._meta.exclude,
+                             construct=False)
+
 
     class Meta:
         model = Shed
         fields = ['name']
 
-        def clean_name(self):
-            locname = self.cleaned_data['name']
-            try:
-                Shed.objects.get(name=locname)
-            except ObjectDoesNotExist:
-                return locname
-            else:
-                raise forms.ValidationError('Shed name is already taken')
 
-        def save(self,commit=True):
-            loc = super(shedForm, self).save(commit=False)
-            if commit:
-                loc.save()
-                return loc
+class RegisterShedAddressForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(RegisterShedAddressForm, self).__init__(*args, **kwargs)
 
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
 
-class shedAddress(forms.ModelForm):
     class Meta:
         model = Address
-        fields = ['street']
+        exclude = ['country']
 
-    def save(self, commit=True):
-        add = super(shedAddress,self).save(commit=False)
-        if commit:
-            add.save()
-            return add
+
+RegisterShedAddressFormSet = formset_factory(RegisterShedForm, RegisterShedAddressForm)
+
+
+class UpdateShedForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UpdateShedForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
+
+    class Meta:
+        model = Shed
+        fields = ['name']
+
+
+class UpdateShedAddressForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UpdateShedAddressForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
+
+    class Meta:
+        model = Address
+        exclude = ['country']
+
+
+UpdateShedAddressFormSet = formset_factory(UpdateShedForm, UpdateShedAddressForm)
