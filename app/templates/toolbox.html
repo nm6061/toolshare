@@ -7,7 +7,11 @@
 {% block ToolsNav %} active {% endblock %}
 
 {% block auth-content %}
-    <h1 class="page-header">Toolbox: My Tools</h1>
+    {% if filter == 'borrowedtools' %}
+        <h1 class="page-header">Toolbox: Borrowed Tools</h1>
+    {% else %}
+        <h1 class="page-header">Toolbox: My Tools</h1>
+    {% endif %}
 
     <h3 class="sub-header">
         {% if filter == 'hometools' %}
@@ -41,9 +45,15 @@
                                 <div class="col-sm-2">
                                     <figure>
                                         <div id="toolThumbnail" >
-                                            <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
-                                                <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
-                                            </a>
+                                            {% if filter == 'borrowedtools' %}
+                                                <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                                    <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}">
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url "toolManagement:updateTool" tool.id %}" class="thumbnail">
+                                                    <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
+                                                </a>
+                                            {% endif %}
                                         </div>
                                         <figcaption>{{ tool.name }}</figcaption>
                                     </figure>

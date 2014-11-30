@@ -9,6 +9,7 @@ from app.models.tool import Tool
 from app.models import Reservation
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from app import forms
 
 
 @login_required()
@@ -46,8 +47,7 @@ def registerTool(request):
 def viewTool(request, tool_id):
     currentUser = request.user
     tooldata = get_object_or_404(Tool, pk=tool_id)
-    isToolOwner = tooldata.owner == currentUser
-    context = {'tooldata': tooldata, 'isToolOwner':isToolOwner}
+    context = {'tooldata': tooldata}
     return render(request, 'tool.html', context)
 
 
@@ -59,23 +59,35 @@ def updateTool(request, tool_id):
         messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
         return redirect(error_url)
     if request.method == 'POST':
-        tool_form = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
-        if tool_form.is_valid():
-            tool_form.save()
+        if 'updatetool' in request.POST:
+            updateform = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
+            blackoutform = forms.BlackoutDateForm(tooldata)
+            if updateform.is_valid():
+                updateform.save()
 
-            #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
-            #It SHOULD NOT be used unless you need to add a hyperlink to your message!
-            messages.success(request,'Your tool has been successfully updated! <br> <br> '
-                                     '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
-                                     '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
-
-            success_url = reverse_lazy("toolManagement:viewTool", kwargs={'tool_id':tool_id})
-            return redirect(success_url)
-        else:
-            return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
+                #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
+                #It SHOULD NOT be used unless you need to add a hyperlink to your message!
+                messages.success(request,'Your tool has been successfully updated! <br> <br> '
+                                         '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
+                                         '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
+                return redirect('.')
+            else:
+                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata}))
+        elif 'addblackout' in request.POST:
+            updateform = AddToolForm(instance=tooldata)
+            blackoutform = forms.BlackoutDateForm(tooldata, request.POST)
+            if blackoutform.is_valid():
+                blackoutform.save()
+                messages.success(request, 'A request was successfully created. You will receive an email when the owner of '
+                                          'the tool takes an action on your request.')
+                return redirect('.')
+            else:
+                return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata}))
     else:
-        tool_form = AddToolForm(instance=tooldata)
-        return render(request, 'updatetool.html', RequestContext(request, {'form': tool_form}))
+        updateform = AddToolForm(instance=tooldata)
+        blackoutform = forms.BlackoutDateForm(tooldata)
+        return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform, 'blackoutform': blackoutform, 'tool':tooldata}))
+
 
 
 @login_required()

@@ -154,3 +154,46 @@ figcaption {
     padding-left: 20px;
 }
 
+.tool_details{
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tool_details_pic{
+    float: left;
+    margin-right: 1%;
+    width: 49.5%;
+    min-width: 300px;
+    max-width: 550px;
+}
+
+.tool_details_desc{
+    width: 49.5%;
+    float: left;
+    min-width: 300px;
+    max-width: 550px;
+    overflow-wrap: break-word;
+    border-color: darkslategray;
+}
+
+.tool_details_btn{
+    float: right;
+}
+
+.tool_details_status{
+    clear: both;
+    min-width: 300px;
+    max-width: 550px;
+    width: 49.5%;
+    position: relative;
+}
+
+.tool_details_status > span{
+    padding: 5px 10px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 90%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
