@@ -75,10 +75,14 @@ class BorrowToolForm(forms.ModelForm):
         return self.cleaned_data
 
     def save(self, commit=True):
+        status = 'Pending'
+        if self.tool.location == 'S':
+            status = 'Approved'
+
         data = {
             'from_date': self.cleaned_data['from_date'],
             'to_date': self.cleaned_data['to_date'],
-            'status': 'Pending',
+            'status': status,
             'tool': self.tool,
             'user': self.user
         }
