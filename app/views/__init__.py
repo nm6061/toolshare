@@ -1,22 +1,16 @@
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.template.context import RequestContext
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
-from django.contrib.messages import views
-from django.views.generic import edit
 from django.views.decorators.http import require_POST
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
 from django.conf import settings
-
 from app import forms
 from app import models
-from app.forms.toolRegistration import AddToolForm
 from app.models.reservation import Reservation
 from app.models.tool import Tool
 from django.db.models import Count
@@ -26,6 +20,7 @@ import datetime
 
 
 import pdb
+
 
 
 def home(request):
