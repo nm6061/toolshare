@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block title %}Register Tool{% endblock %}
+{% block title %}Add New Tool{% endblock %}
 
 {% block ToolsNav %} active {% endblock %}
 
@@ -55,7 +55,7 @@
                 <div class="container-fluid">
 
                     <div class="row">
-                        <div class="col-md-12"><h3>Register a Tool</h3></div>
+                        <div class="col-md-12"><h3>Add a New Tool</h3></div>
                     </div>
 
                     <div class="row">
@@ -123,7 +123,7 @@
             <div class="container-fluid">
                 <div class="pull-right">
                     <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Register Tool</button>
+                    <button type="submit" class="btn btn-primary">Add Tool</button>
                 </div>
             </div>
         </form>

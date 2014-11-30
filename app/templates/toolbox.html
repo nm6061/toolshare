@@ -24,6 +24,9 @@
         <div class="container">
             <div class="row">
                 {% if filter != 'borrowedtools' %}
+                    <div class="regToolBtn">
+                        <a href="{% url "toolManagement:registerTool" %}"><button type="button" class="btn btn-primary">Add a Tool</button></a>
+                    </div>
                     <div class="toolFilters">
                         <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
                         <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
