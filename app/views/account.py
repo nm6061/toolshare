@@ -163,9 +163,11 @@ class UpdateAccountView(FormsetView):
     template_name = 'account/update.html'
     success_url = reverse_lazy('account:update')
     success_message = 'Your ToolShare account was successfully updated.'
+    failure_message = 'You cannot move when one or more of your tools have unresolved future reservations. Please ' \
+                      '<a href="%(r)s" title="View reservations for my tools">cancel</a> these reservations and try ' \
+                      'again.'
     form_class = UpdateUserForm
     formset_class = UpdateAddressFormSet
-    success_url = reverse_lazy('account:update')
 
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
@@ -175,13 +177,19 @@ class UpdateAccountView(FormsetView):
         return render(request, self.template_name, {'form': form, 'formset': formset})
 
     def post(self, request, *args, **kwargs):
+        prev_sz = request.user.share_zone
+
         form_class = self.get_form_class()
         form = form_class(request.POST, instance=request.user)
         formset_class = self.get_formset_class()
         formset = formset_class(request.POST, instance=request.user.address)
 
         if form.is_valid() and formset.is_valid():
-            return self.form_valid(request, form, formset)
+            if self.is_relocation_allowed(prev_sz, formset.instance.share_zone, request.user):
+                return self.form_valid(request, form, formset)
+            else:
+                messages.error(request, self.failure_message % {'r': reverse_lazy('reservation')}, extra_tags='safe')
+                return self.form_invalid(request, form, formset)
         else:
             return self.form_invalid(request, form, formset)
 
@@ -194,6 +202,11 @@ class UpdateAccountView(FormsetView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(UpdateAccountView, self).dispatch(request, *args, **kwargs)
+
+    def is_relocation_allowed(self, prev_sz, curr_sz, user):
+        if prev_sz != curr_sz and user.get_unresolved_future_reservations():
+            return False
+        return True
 
 
 class ChangePasswordView(FormView):

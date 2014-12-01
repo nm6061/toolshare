@@ -1,4 +1,5 @@
 import datetime, hashlib, random, re
+from datetime import date
 from django.core.validators import *
 from django.utils import timezone, html
 from django.conf import settings
@@ -47,6 +48,10 @@ class Address(models.Model):
         if len(self.zip) == 9:
             return self.zip[:5] + '-' + self.zip[5:]
         return self.zip
+
+    @property
+    def share_zone(self):
+        return (self.zip[:5]).ljust(9, '0')
 
 
 class UserManager(BaseUserManager):
@@ -102,10 +107,6 @@ class User(AbstractBaseUser):
     # Foreign keys
     address = models.ForeignKey(Address, unique=True)
 
-    @property
-    def share_zone(self):
-        return (self.address.zip[:5]).ljust(9, '0')
-
     class Meta:
         app_label = 'app'
 
@@ -122,6 +123,17 @@ class User(AbstractBaseUser):
 
     def email_user(self, subject, message, from_addr):
         send_email(subject, message, [self.email], from_addr)
+
+    def get_unresolved_future_reservations(self):
+        reservations = []
+        for tool in self.tool_set.all():
+            reservations = reservations + list(
+                tool.reservation_set.filter(from_date__gte=datetime.date.today(), status='Approved'))
+        return reservations
+
+    @property
+    def share_zone(self):
+        return self.address.share_zone
 
 
 class RegistrationManager(models.Manager):
