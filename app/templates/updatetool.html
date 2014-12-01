@@ -85,16 +85,16 @@
     <h1 class = 'page-header'>Manage Tool</h1>
     <div class="spacer-10"></div>
     <div class="tool_details">
-        <div class="tool_details_status">
-            {% if tool.status == 'A' %}
-                <span class="label label-success">Tool Active</span>
-            {% elif tool.status == 'D' %}
-                <span class="label label-danger">Deactivated</span>
-            {% elif tool.status == 'L' %}
-                <span class="label label-warning">Lent Out</span>
-            {% endif %}
-        </div>
         <div class="tool_details_left">
+            <div class="tool_details_status">
+                {% if tool.status == 'A' %}
+                    <span class="label label-success">Tool Active</span>
+                {% elif tool.status == 'D' %}
+                    <span class="label label-danger">Deactivated</span>
+                {% elif tool.status == 'L' %}
+                    <span class="label label-warning">Lent Out</span>
+                {% endif %}
+            </div>
             <img class="thumbnail tool_details_pic" src="{{tool.picture.url}}" alt="{{tool.name}}"/>
 
             <div class="thumbnail tool_details_blackout">

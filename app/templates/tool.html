@@ -6,21 +6,20 @@
     <div class="tool_details">
         <h2><strong>{{ tooldata.name }}</strong></h2>
 
-        <div class="tool_details_status">
-            {% if tooldata.status == 'A' %}
-                <span class="label label-success">Tool Avaliable!</span>
-            {% elif tooldata.status == 'D' %}
-                <span class="label label-danger">Deactivated</span>
-            {% elif tooldata.status == 'L' %}
-                <span class="label label-warning">Currently Lent Out</span>
-            {% endif %}
-        </div>
-
         <div class="tool_details_left">
+            <div class="tool_details_status">
+                {% if tooldata.status == 'A' %}
+                    <span class="label label-success">Tool Avaliable!</span>
+                {% elif tooldata.status == 'D' %}
+                    <span class="label label-danger">Deactivated</span>
+                {% elif tooldata.status == 'L' %}
+                    <span class="label label-warning">Currently Lent Out</span>
+                {% endif %}
+            </div>
             <img class="thumbnail tool_details_pic" src="{{tooldata.picture.url}}" alt="{{tooldata.name}}"/>
         </div>
 
-        <div class="thumbnail tool_details_desc">
+        <div class="tool_details_desc">
 
             <p> Category: {{ tooldata.get_category_display }}</p>
             <p> Tool Status: {{ tooldata.get_status_display}}</p>
@@ -29,7 +28,6 @@
             <p> Tool Description: {{ tooldata.description }}</p>
             <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>
 
-            <div class="spacer-50"></div>
 
             <div class="tool_details_btn">
                 {% if tooldata.status == 'A' %}

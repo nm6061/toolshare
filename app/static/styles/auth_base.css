@@ -170,6 +170,7 @@ figcaption {
     width: 49.5%;
     min-width: 300px;
     max-width: 520px;
+    position: relative;
 }
 
 .tool_details_pic{
@@ -188,20 +189,25 @@ figcaption {
     min-width: 300px;
     max-width: 550px;
     overflow-wrap: break-word;
-    border-color: darkslategray;
+    height: auto;
+    min-height: 520px;
+    border: 1px solid darkslategray;
+    border-radius: 4px;
+    padding: 10px;
+    position: relative;
 }
 
 
 .tool_details_btn{
     float: right;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 .tool_details_status{
-    clear: both;
-    min-width: 300px;
-    max-width: 520px;
-    width: 49.5%;
-    position: relative;
+    position: absolute;
+    right: 0;
 }
 
 .tool_details_status > span{
@@ -280,7 +286,7 @@ p:hover.tooltips span {
     margin-bottom: 20px;
     padding: 0px 10px;
     border: 1px solid darkslategray;
-    border-radius: 6px;
+    border-radius: 4px;
     max-width: 1070px;
 }
 
