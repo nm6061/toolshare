@@ -10,7 +10,6 @@
             {% csrf_token %}
             {% load errors %}
             {% errors form formset %}
-            {{ request.user.get_unresolved_future_reservations }}
             <div class="form-group">
                 <div class="container-fluid">
                     <div class="row">
