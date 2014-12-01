@@ -16,6 +16,15 @@
                 {% for tool in toolsList %}
                     <div class="toolList">
                         <div class="col-sm-2">
+                            <div class="toolStatusIndicator">
+                                {% if tool.status == 'D' %}
+                                    <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
+                                {% elif tool.status == 'L' %}
+                                    <p class="tooltips label label-warning">L<span>Currently lent out</span></p>
+                                {% else %}
+                                    <p class="tooltips label label-success">A<span>Tool available</span></p>
+                                {% endif %}
+                            </div>
                             <figure>
                                 <div id="toolThumbnail">
                                     <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
