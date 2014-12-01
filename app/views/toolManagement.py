@@ -56,7 +56,8 @@ def viewTool(request, tool_id):
     toolname = tooldata.name
     toolcategory = tooldata.category
     print(toolname, toolcategory)
-    temp_list = Tool.objects.filter( Q( category = toolcategory) | Q( name__contains=toolname)).exclude(status='D')
+    temp_list = Tool.objects.filter( Q( category = toolcategory) | Q( name__contains=toolname)).exclude(status='D')\
+        .exclude(owner_id=request.user).exclude(pk = tool_id)
     similartools = temp_list.order_by('?')[:6]
     context = {'tooldata': tooldata, 'similartools':similartools}
     return render(request, 'tool.html', context)
