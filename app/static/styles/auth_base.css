@@ -290,7 +290,7 @@ p:hover.tooltips span {
     max-width: 1070px;
 }
 
-.suggestions h3, h4{
+.suggestions .row > h3, .row > h4{
     margin: 0;
     padding: 10px 0px 10px 15px;
 }
