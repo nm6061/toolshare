@@ -35,7 +35,7 @@ def home(request):
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
-        returned = Reservation.objects.filter(user=request.user, status='Approved')
+        returned = Reservation.objects.filter(user=request.user).filter(status='Approved')
         today1 = datetime.date.today()
         final_list = list()
 
