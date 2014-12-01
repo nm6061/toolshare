@@ -18,6 +18,7 @@
         <th>Requested By</th>
         <th>From</th>
         <th>To</th>
+        <th>Message</th>
 
         <th></th>
     </tr>
@@ -29,6 +30,7 @@
         <td>{{ reservation.user.get_full_name }}</td>
         <td>{{ reservation.from_date }}</td>
         <td>{{ reservation.to_date }}</td>
+        <td>{{ reservation.message }}</td>
 
     </tr>
     {% endfor %}
