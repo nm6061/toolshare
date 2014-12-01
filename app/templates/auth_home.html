@@ -2,16 +2,13 @@
 {% block title %}Home{% endblock %}
 
 {% block auth-content %}
-    <div class="container">
-        <div class="row">
-            <h1>Homepage</h1>
-        </div>
-    </div>
-    <div class="spacer-50"></div>
+    <h1 class="page-header">Homepage</h1>
+
+
 
     <div class="container">
         <div class="row">
-            <h2 class="sub-header">Recently Added Tools</h2>
+            <h3 class="sub-header">Recently Added Tools</h3>
 
 
             <table class="table table-striped">
@@ -77,12 +74,12 @@
             </div>
             </div>
             -->
-        <div class="spacer-50"></div>
+        <div class="spacer-20"></div>
 
         <div class="container">
             <div class="row">
 
-                <h2 class="sub-header">Recently Added Sheds</h2>
+                <h3 class="sub-header">Recently Added Sheds</h3>
 
 
                 <table class="table table-striped">
@@ -113,11 +110,11 @@
         </div>
 
 
-        <div class="spacer-50"></div>
+        <div class="spacer-20"></div>
         <div class="container">
             <div class="row">
 
-             <h2 class="sub-header">Tools that are to be returned by me</h2>
+             <h3 class="sub-header">Tools that are to be returned by me</h3>
                 {% if returned %}
                 <table class="table table-striped">
             <thead>
@@ -147,11 +144,11 @@
     </div>
     </div>
 
-    <div class="spacer-50"></div>
+    <div class="spacer-20"></div>
         <div class="container">
             <div class="row">
 
-             <h2 class="sub-header">Tools that are to be returned to me</h2>
+             <h3 class="sub-header">Tools that are to be returned to me</h3>
                 {% if coming %}
                 <table class="table table-striped">
             <thead>
@@ -180,13 +177,5 @@
 
     </div>
     </div>
-
-
-
-
-
-
-
-
 
 {% endblock %}

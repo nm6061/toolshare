@@ -180,7 +180,7 @@ figcaption {
 .tool_details_blackout{
     width: 100%;
     overflow-wrap: break-word;
-    border-color: darkslategray;
+    border-color: slategray;
 }
 
 .tool_details_desc{
@@ -191,7 +191,7 @@ figcaption {
     overflow-wrap: break-word;
     height: auto;
     min-height: 520px;
-    border: 1px solid darkslategray;
+    border: 1px solid slategray;
     border-radius: 4px;
     padding: 10px;
     position: relative;
@@ -231,10 +231,11 @@ figcaption {
 p.tooltips {
     position: relative;
     display: inline;
-    font-size: 95%;
+    font-size: 85%;
     border-radius: 20px;
-    top: 4px;
-    cursor: help;
+    top: 2px;
+    cursor: default;
+    right: 2px;
 }
 
 p.tooltips span {
@@ -248,7 +249,7 @@ p.tooltips span {
     visibility: hidden;
     border-radius: 6px;
     opacity: 0.7;
-    bottom: 35px;
+    bottom: 33px;
     left: -50px;
 }
 
@@ -285,9 +286,9 @@ p:hover.tooltips span {
     margin-top: 30px;
     margin-bottom: 20px;
     padding: 0px 10px;
-    border: 1px solid darkslategray;
+    border: 1px solid slategray;
     border-radius: 4px;
-    max-width: 1070px;
+    max-width: 1080px;
 }
 
 .suggestions .row > h3, .row > h4{
