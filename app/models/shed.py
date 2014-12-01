@@ -13,7 +13,7 @@ class Shed(models.Model):
 
     @property
     def share_zone(self):
-        return (self.address.zip[:5]).ljust(9, '0')
+        return self.address.share_zone
 
     class Meta:
         app_label = 'app'
