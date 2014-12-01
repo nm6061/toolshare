@@ -685,7 +685,17 @@
             "status": "Approved"
         }
     },
-
+    {
+        "model": "app.Reservation",
+        "pk": 13,
+        "fields": {
+            "user": 2,
+            "tool": 4,
+            "from_date": "2014-11-01",
+            "to_date": "2014-11-30",
+            "status": "Approved"
+        }
+    },
     {
         "model": "app.BlackoutDate",
         "pk": 1,
