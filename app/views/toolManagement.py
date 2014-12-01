@@ -12,7 +12,8 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from app import forms
 from django.db.models import Q
-
+import datetime
+import operator
 
 @login_required()
 def registerTool(request):
@@ -137,6 +138,7 @@ def updateTool(request, tool_id):
 @login_required()
 def toolbox(request, tool_filter):
     user = request.user
+    dueDates = []
     if tool_filter == 'hometools':
         toolList = Tool.objects.filter(owner_id=user).filter(location='H')
     elif tool_filter == 'shedtools':
@@ -146,7 +148,14 @@ def toolbox(request, tool_filter):
         toolIDs = []
         for res in approvedrequests:
             toolIDs.append(res.tool_id)
+            today = datetime.date.today()
+            fromdate = res.from_date
+            todate = res.to_date
+            if fromdate >= today:
+                daysleft = todate - today
+                dueDates.append(daysleft.days)
         toolList = Tool.objects.filter(pk__in=toolIDs)
+
     else:
         toolList = Tool.objects.filter(owner_id=user)
     paginator = Paginator(toolList, 12, 1)
@@ -161,5 +170,36 @@ def toolbox(request, tool_filter):
         # If page is out of range (e.g. 9999), deliver last page of results.
         myTools = paginator.page(paginator.num_pages)
 
-    context = {'myTools': myTools, 'filter': tool_filter}
+    context = {'myTools': myTools, 'filter': tool_filter, 'dueDates':dueDates}
     return render(request, 'toolbox.html', context)
+
+
+@login_required()
+def toolreturn(request):
+    user = request.user
+    today = datetime.date.today()
+    approvedrequests = Reservation.objects.filter(user_id=user).filter(status="Approved")
+    toolduedates = dict()
+
+    for res in approvedrequests:
+        if res.from_date <= today:
+            daysleft = res.to_date - today
+            tool = Tool.objects.get(pk = res.tool_id)
+            toolduedates[tool] = daysleft.days
+
+    sortedDates = sorted(toolduedates.items(), key=operator.itemgetter(1))
+
+    paginator = Paginator(sortedDates, 12, 1)
+    page = request.GET.get('page')
+
+    try:
+        toolreturns = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        toolreturns = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        toolreturns = paginator.page(paginator.num_pages)
+
+    context = {'toolreturns': toolreturns, 'toolduedates':toolduedates,  'sortedDates':sortedDates}
+    return render(request, 'toolreturn.html', context)

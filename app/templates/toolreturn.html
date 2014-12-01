@@ -2,53 +2,38 @@
 
 {% load staticfiles %}
 
-{% block title %}Toolbox{% endblock %}
+{% block title %}Return Borrowed Tools{% endblock %}
 
 {% block ToolsNav %} active {% endblock %}
 
 {% block auth-content %}
-    <h1 class="page-header">Toolbox: Manage Tools</h1>
+    <h1 class="page-header">Return Borrowed Tools</h1>
 
-    <h3 class="sub-header">
-        {% if filter == 'hometools' %}
-            Showing only tools shared from home
-        {% elif filter == 'shedtools' %}
-            Showing only tools shared from a shed
-        {% else %}
-            Showing all your tools
-        {% endif %}
-    </h3>
+    <h3 class="sub-header">Showing tools that you are borrowing</h3>
+
+    {{ toolduedates }} <br>
+    {{ toolreturns }} <br>
+    {{ sortedDates }} <br>
+
+    {% for k,v in d.items %}
+        {{ k }}
+        {{ v }}
+    {% endfor %}
 
     <div class="container">
         <div class="row">
-
-            <div class="regToolBtn">
-                <a href="{% url "toolManagement:registerTool" %}"><button type="button" class="btn btn-primary">Add a Tool</button></a>
-            </div>
-            <div class="toolFilters">
-                <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
-                <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
-                <a href="{% url "toolManagement:shedtools" %}"> Show Shed Tools </a></a>
-            </div>
-
             {% if myTools %}
                 {% for tool in myTools %}
                     <div class="toolList">
                         <div class="col-sm-2">
-                            <div class="toolStatusIndicator">
-                                {% if tool.status == 'D' %}
-                                    <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
-                                {% elif tool.status == 'L' %}
-                                    <p class="tooltips label label-warning">L<span>Tool is lent out</span></p>
-                                {% else %}
-                                    <p class="tooltips label label-success">A<span>Tool is active</span></p>
-                                {% endif %}
-                            </div>
+
+                                <span class="label label-success">4 days left</span>
+
                             <figure>
                                 <div id="toolThumbnail" >
-                                    <a href="{% url "toolManagement:updateTool" tool.id %}" class="thumbnail">
-                                        <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
-                                    </a>
+                                        <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                            <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}">
+                                        </a>
                                 </div>
                                 <figcaption>{{ tool.name }}</figcaption>
                             </figure>
@@ -57,6 +42,7 @@
                 {% endfor %}
             {% endif %}
         </div>
+
 
         {% if myTools.paginator.num_pages >  1 %}
             <div class="row text-center toolPaginator">
