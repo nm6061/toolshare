@@ -64,7 +64,7 @@ class Tool(models.Model):
     description = models.TextField(max_length=500)
     status = models.CharField(max_length=1, choices=STATUS)
     category = models.CharField(max_length=2, choices=CATEGORY)
-    location = models.CharField(max_length=1, choices=LOCATION, blank=False, default=0)
+    location = models.CharField(max_length=1, choices=LOCATION, blank=False, default='H')
     models.CharField()
     shed = models.ForeignKey(Shed, null=True, on_delete=models.SET_NULL)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)

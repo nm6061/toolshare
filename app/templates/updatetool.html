@@ -1,5 +1,5 @@
 {% extends "auth_base.html" %}
-{% block title %}Update Tool{% endblock %}
+{% block title %}Manage Tool{% endblock %}
 {% load filters %}
 {% load staticfiles %}
 {% block ToolsNav %} active {% endblock %}
@@ -38,7 +38,7 @@
                     $("#shedSelect").slideUp("fast");  //Slide Up Effect
                 }
             });
-        })
+        });
     </script>
 
     <script type="text/javascript" src="{% static "scripts/bootstrap-datepicker.js" %}"></script>
@@ -82,10 +82,62 @@
 {% endblock %}
 
 {% block auth-content %}
-    <h1 class = 'page-header'>View/Update Tool Details</h1>
+    <h1 class = 'page-header'>Manage Tool</h1>
     <div class="spacer-10"></div>
     <div class="tool_details">
-        <img class="thumbnail tool_details_pic" src="{{tool.picture.url}}" alt="{{tool.name}}"/>
+        <div class="tool_details_status">
+            {% if tool.status == 'A' %}
+                <span class="label label-success">Tool Active</span>
+            {% elif tool.status == 'D' %}
+                <span class="label label-danger">Deactivated</span>
+            {% elif tool.status == 'L' %}
+                <span class="label label-warning">Lent Out</span>
+            {% endif %}
+        </div>
+        <div class="tool_details_left">
+            <img class="thumbnail tool_details_pic" src="{{tool.picture.url}}" alt="{{tool.name}}"/>
+
+            <div class="thumbnail tool_details_blackout">
+                <form role="form" action="." method="post">
+                    {% csrf_token %}
+                    {% load errors %}
+                    {% errors blackoutform %}
+                    <div class="form-group">
+                        <div class="container-fluid">
+                            <h4>Add Blackout Dates</h4>
+                            <div class="spacer-20"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>From</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ blackoutform.blackoutStart|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
+                                </div>
+                            </div>
+                            <div class="spacer-10"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>To</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ blackoutform.blackoutEnd|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
+                                </div>
+                            </div>
+                            <div class="spacer-15"></div>
+                            <div class="row pull-right">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary" value="addblackout" name="addblackout">Add Blackout Date</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div class="thumbnail tool_details_desc">
             <form enctype="multipart/form-data" action="." method="post">
@@ -95,115 +147,123 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12" >
-                                <div class="spacer-10"></div>
-                                <label for="id_picture">Keep the existing picture or upload a new picture.</label>
+                                <div class="spacer-20"></div>
+                                <label for="id_picture">Keep the existing picture or upload a new picture</label>
                                 <input  type="file" accept="image/*" name="picture" onchange="imagePreview(this)" />
                                 <div id="toolThumbnail" class="thumbnail" style=" display: none ">
-                                <img id="thumbnail" src="">
+                                    <img id="thumbnail" src="">
                                 </div>
                                 <p class="formErrorMessage">{{ updateform.picture.errors|striptags }}</p>
                                 {{ updateform.picture.errors }}
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
                                 <label for="id_name">Name of the tool</label>
-                                    <div class="{% if updateform.name.errors %} has-error{% endif %}">
-                                        {{ updateform.name|add_attrs:"{'class':'form-control'}" }}
-                                    </div>
+                                <div class="{% if updateform.name.errors %} has-error{% endif %}">
+                                    {{ updateform.name|add_attrs:"{'class':'form-control'}" }}
+                                </div>
                                 <p class="formErrorMessage">{{ updateform.name.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
 
                                 <label for="id_category">Tool category</label><br>
-                                    {{ updateform.category }}
+                                {{ updateform.category }}
                                 <p class="formErrorMessage">{{ updateform.category.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
-
+                            <div {% if not sheds %} style="display: none" {% endif %}>
                                 <div class="locationChoices">
                                     <label for="id_location">Share the tool from:</label>
-                                        {{ updateform.location }}
+                                    {{ updateform.location }}
                                     <fieldset>
                                         <div id="shedSelect" class="formset">
                                             <label> Which shed?</label>
-                                            </br>
-                                            <select>
-                                              <option>Shed 1 at 123 Lane</option>
-                                              <option>Shed 2 at 610 Blvd</option>
-                                              <option>Shed 3 at 1600 Pennsylvania Ave NW</option>
+                                            <br>
+                                            <select name="shedChoice">
+                                                {% for shed in sheds %}
+                                                    <option value="{{ shed.id }}">{{ shed }}: {{ shed.address.apt_num }} {{ shed.address.street }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </fieldset>
                                 </div>
                                 <p class="formErrorMessage">{{ updateform.location.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
+                            </div>
+
+                            {% if not sheds %}
+                                <label>Share the tool from:</label><br>
+                                <input type="radio" name="locRadio" value="homeRadio" id="homeRadio" checked="checked"><label for ="homeRadio"> Home </label><br>
+                                <div style="pointer-events: none; color: gray">
+                                    <input type="radio" name="locRadio" value="shedRadio" id="shedRadio"><label for ="shedRadio"> Shed </label>
+                                    <p>Currently, there are no sheds in your share zone.</p>
+                                </div>
+                                <div class="spacer-20"></div>
+                            {% endif %}
+
+
 
 
                                 <label>Tool pickup arrangement</label>
-                                    <div class="{% if updateform.pickupArrangement.errors %} has-error{% endif %}">
-                                        {{ updateform.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
-                                    </div>
+                                <div class="{% if updateform.pickupArrangement.errors %} has-error{% endif %}">
+                                    {{ updateform.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
+                                </div>
                                 <p class="formErrorMessage">{{ updateform.pickupArrangement.errors|striptags }}</p>
-                                <div class="spacer-10"></div>
+                                <div class="spacer-20"></div>
 
                                 <label>Tool description</label>
-                                    <div class="{% if updateform.description.errors %} has-error{% endif %}">
-                                        {{ updateform.description|add_attrs:"{'class':'form-control no-resize','rows':'8'}" }}
-                                    </div>
+                                <div class="{% if updateform.description.errors %} has-error{% endif %}">
+                                    {{ updateform.description|add_attrs:"{'class':'form-control no-resize','rows':'8'}" }}
+                                </div>
                                 <p class="formErrorMessage">{{ updateform.description.errors|striptags }}</p>
-
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="container-fluid">
-                    <div class="pull-right">
-                        <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
-                        <button type="submit" class="btn btn-primary" value="updatetool" name="updatetool">Update Tool</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-
-        <div class="thumbnail tool_details_desc">
-            <form role="form" action="." method="post">
-                {% csrf_token %}
-                {% load errors %}
-                {% errors blackoutform %}
-                <div class="form-group">
-                    <div class="container-fluid">
-                        <h4>Add Blackout Dates</h4>
-                        <div class="spacer-20"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>From</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                {{ blackoutform.blackoutStart|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                            </div>
-                        </div>
-                        <div class="spacer-10"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>To</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                {{ blackoutform.blackoutEnd|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                            </div>
-                        </div>
-                        <div class="spacer-15"></div>
-                        <div class="row pull-right">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary" value="addblackout" name="addblackout">Add Blackout Date</button>
+                    {% if tool.status == 'D' %}
+                        <button type="submit" class="btn btn-success" value="activate" name="activate">Re-activate Tool</button>
+                    {% else %}
+                        <label class="btn btn-danger" data-toggle="modal" data-target="#confirm">Deactivate Tool</label>
+                    {% endif %}
+                    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+                        <div class="modal-dialog ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> x </button>
+                                    <h3 class="modal-title" id="myModalLabel">Deactivate Tool</h3>
+                                </div>
+                                {% if tool.status == 'L' or futureRes.count > 0 %}
+                                    <div class="modal-body">
+                                        <p>You cannot deactivate this tool because it still has unresolved future reservations.</p><br>
+                                        <p>If you wish to resolve these reservations, <a href="/reservation">click here.</a></p>
+                                        <p>Otherwise, hit "Okay" to return.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+                                    </div>
+                                {% else %}
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to deactivate this tool?</p>
+                                        <p>Once deactivated, other users can no longer search for it. However, it will still remain in your toolbox.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary" value="deactivate" name="deactivate">Deactivate</button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
+
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
+                            <button type="submit" class="btn btn-primary" value="updatetool" name="updatetool">Update Tool</button>
+                        </div>
+                    </div>
                 </div>
+                <div class="spacer-15"></div>
             </form>
         </div>
     </div>
