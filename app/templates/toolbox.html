@@ -42,8 +42,24 @@
                 {% for tool in myTools %}
                     <div class="toolList">
                         <div class="col-sm-2">
+                            <div class="toolStatusIndicator">
+                                {% if tool.status == 'D' %}
+                                    <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
+{#                                    <span class="label label-danger " title="Tool is deactivated">D</span>#}
+
+                                {% elif tool.status == 'L' %}
+                                    <p class="tooltips label label-warning">L<span>Tool is lent out</span></p>
+{#                                    <span class="label label-warning" title="Tool is lent out">L</span>#}
+
+                                {% else %}
+                                    <p class="tooltips label label-success">A<span>Tool is active</span></p>
+{#                                    <span class="label label-success" title="Tool is active">A</span>#}
+
+                                {% endif %}
+                            </div>
                             <figure>
                                 <div id="toolThumbnail" >
+
                                     {% if filter == 'borrowedtools' %}
                                         <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
                                             <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}">
