@@ -15,6 +15,7 @@ from django.db.models import Q
 import datetime
 import operator
 
+
 @login_required()
 def registerTool(request):
     currentUser = request.user
@@ -51,9 +52,13 @@ def registerTool(request):
 
 @login_required()
 def viewTool(request, tool_id):
-    currentUser = request.user
     tooldata = get_object_or_404(Tool, pk=tool_id)
-    context = {'tooldata': tooldata}
+    toolname = tooldata.name
+    toolcategory = tooldata.category
+    print(toolname, toolcategory)
+    temp_list = Tool.objects.filter( Q( category = toolcategory) | Q( name__contains=toolname)).exclude(status='D')
+    similartools = temp_list.order_by('?')[:6]
+    context = {'tooldata': tooldata, 'similartools':similartools}
     return render(request, 'tool.html', context)
 
 
