@@ -66,7 +66,7 @@ class ShedDetailView(TemplateView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             tools = paginator.page(paginator.num_pages)
 
-        return self.render_to_response(self.get_context_data(shed=shed, user=request.user, tools=tools))
+        return self.render_to_response(self.get_context_data(shed=shed, tools=tools))
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

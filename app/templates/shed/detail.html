@@ -31,13 +31,13 @@
                 {{ shed.address.get_multi_line }}
             </div>
         </div>
-        {% if user == shed.owner %}
-        <div class="row pull-right">
-            <div class="col-md-12">
-                <a href="{% url "shed:update" shed.id %}" class="btn btn-primary">Update</a>
-                <button type="submit" class="btn btn-warning">Delete</button>
+        {% if request.user == shed.owner %}
+            <div class="row pull-right">
+                <div class="col-md-12">
+                    <a href="{% url "shed:update" shed.id %}" class="btn btn-primary">Update</a>
+                    <button type="submit" class="btn btn-warning">Delete</button>
+                </div>
             </div>
-        </div>
         {% endif %}
     </div>
     <div class="spacer-25"></div>
@@ -50,6 +50,15 @@
                     <div class="toolList">
                         <div>
                             <div class="col-sm-2">
+                                <div class="toolStatusIndicator">
+                                    {% if tool.status == 'D' %}
+                                        <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
+                                    {% elif tool.status == 'L' %}
+                                        <p class="tooltips label label-warning">L<span>Tool is lent out</span></p>
+                                    {% else %}
+                                        <p class="tooltips label label-success">A<span>Tool is active</span></p>
+                                    {% endif %}
+                                </div>
                                 <figure>
                                     <div id="toolThumbnail">
                                         <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
