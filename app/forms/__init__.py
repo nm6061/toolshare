@@ -1,8 +1,11 @@
 import datetime, json
-from django import forms
+from django import forms, conf
+from pytz import timezone
 
-from app.models.reservation import Reservation
-from app.models import BlackoutDate
+from app.models.reservation import *
+from app.models.tool import *
+
+server_timezone = timezone(conf.settings.TIME_ZONE)
 
 
 class ApproveReservationForm(forms.ModelForm):
@@ -199,5 +202,5 @@ class BlackoutDateForm(forms.ModelForm):
 class JSONDateEncoder(json.JSONEncoder):
     def default(self, o):
         if hasattr(o, 'isoformat'):
-            o = datetime.datetime.strptime(o.isoformat(),'%Y-%m-%d')
+            o = server_timezone.localize(datetime.datetime.strptime(o.isoformat(), '%Y-%m-%d'))
             return o.isoformat()
