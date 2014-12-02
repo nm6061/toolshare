@@ -7,6 +7,15 @@
 {% block javascript %}
     {{ block.super }}
     <script>
+        function makeDoubleDelegate(function1, function2) {
+            return function() {
+                if (function1)
+                    function1();
+                if (function2)
+                    function2();
+            }
+        }
+
         function imagePreview(fileInput) {
             var files = fileInput.files;
             for (var i = 0; i < files.length; i++) {
@@ -29,16 +38,24 @@
             }
         }
 
-        $(document).ready(function(){
-            $("#shedSelect").css("display","none");
+        function showsheds(){
+            $("#shedSelect").css("display", "none");
+            if ($('input[name=location]:checked').val() == "S") {
+                $("#shedSelect").slideDown("fast"); //Slide Down Effect
+            } else {
+                $("#shedSelect").slideUp("fast");  //Slide Up Effect
+            }
             $("form input[name='location']").click(function () {
-                if ($('input[name=location]:checked').val() == "S" ) {
+                if ($('input[name=location]:checked').val() == "S") {
                     $("#shedSelect").slideDown("fast"); //Slide Down Effect
                 } else {
                     $("#shedSelect").slideUp("fast");  //Slide Up Effect
                 }
             });
-        });
+        }
+
+        window.onload = makeDoubleDelegate(window.onload, showsheds );
+
     </script>
 
     <script type="text/javascript" src="{% static "scripts/bootstrap-datepicker.js" %}"></script>
@@ -171,35 +188,35 @@
                                 <p class="formErrorMessage">{{ updateform.category.errors|striptags }}</p>
                                 <div class="spacer-15"></div>
 
-                            <div {% if not sheds %} style="display: none" {% endif %}>
-                                <div class="locationChoices">
-                                    <label for="id_location">Share the tool from:</label>
-                                    {{ updateform.location }}
-                                    <fieldset>
-                                        <div id="shedSelect" class="formset">
-                                            <label for="shedChoice"> Which shed?</label>
-                                            <br>
-                                            <select name="shedChoice" id="shedChoice">
-                                                {% for shed in sheds %}
-                                                    <option value="{{ shed.id }}">{{ shed }}: {{ shed.address.apt_num }} {{ shed.address.street }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </fieldset>
+                                <div {% if not sheds %} style="display: none" {% endif %}>
+                                    <div class="locationChoices">
+                                        <label for="id_location">Share the tool from:</label>
+                                        {{ updateform.location }}
+                                        <fieldset>
+                                            <div id="shedSelect" class="formset">
+                                                <label for="shedChoice"> Which shed?</label>
+                                                <br>
+                                                <select name="shedChoice" id="shedChoice">
+                                                    {% for shed in sheds %}
+                                                        <option value="{{ shed.id }}">{{ shed }}: {{ shed.address.apt_num }} {{ shed.address.street }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <p class="formErrorMessage">{{ updateform.location.errors|striptags }}</p>
+                                    <div class="spacer-15"></div>
                                 </div>
-                                <p class="formErrorMessage">{{ updateform.location.errors|striptags }}</p>
-                                <div class="spacer-15"></div>
-                            </div>
 
-                            {% if not sheds %}
-                                <label>Share the tool from:</label><br>
-                                <input type="radio" name="locRadio" value="homeRadio" id="homeRadio" checked="checked"><label for ="homeRadio"> Home </label><br>
-                                <div style="pointer-events: none; color: gray">
-                                    <input type="radio" name="locRadio" value="shedRadio" id="shedRadio"><label for ="shedRadio"> Shed </label>
-                                    <p>Currently, there are no sheds in your share zone.</p>
-                                </div>
-                                <div class="spacer-15"></div>
-                            {% endif %}
+                                {% if not sheds %}
+                                    <label>Share the tool from:</label><br>
+                                    <input type="radio" name="locRadio" value="homeRadio" id="homeRadio" checked="checked"><label for ="homeRadio"> Home </label><br>
+                                    <div style="pointer-events: none; color: gray">
+                                        <input type="radio" name="locRadio" value="shedRadio" id="shedRadio"><label for ="shedRadio"> Shed </label>
+                                        <p>Currently, there are no sheds in your share zone.</p>
+                                    </div>
+                                    <div class="spacer-15"></div>
+                                {% endif %}
 
                                 <label>Tool pickup arrangement</label>
                                 <div class="{% if updateform.pickupArrangement.errors %} has-error{% endif %}">
