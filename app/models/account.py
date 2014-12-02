@@ -51,7 +51,7 @@ class Address(models.Model):
 
     @property
     def share_zone(self):
-        return (self.zip[:5]).ljust(9, '0')
+        return self.zip[:5]
 
 
 class UserManager(BaseUserManager):
