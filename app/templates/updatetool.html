@@ -177,9 +177,9 @@
                                     {{ updateform.location }}
                                     <fieldset>
                                         <div id="shedSelect" class="formset">
-                                            <label> Which shed?</label>
+                                            <label for="shedChoice"> Which shed?</label>
                                             <br>
-                                            <select name="shedChoice">
+                                            <select name="shedChoice" id="shedChoice">
                                                 {% for shed in sheds %}
                                                     <option value="{{ shed.id }}">{{ shed }}: {{ shed.address.apt_num }} {{ shed.address.street }}</option>
                                                 {% endfor %}
