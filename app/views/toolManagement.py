@@ -55,7 +55,6 @@ def viewTool(request, tool_id):
     tooldata = get_object_or_404(Tool, pk=tool_id)
     toolname = tooldata.name
     toolcategory = tooldata.category
-    print(toolname, toolcategory)
     temp_list = Tool.objects.filter( Q( category = toolcategory) | Q( name__contains=toolname)).exclude(status='D')\
         .exclude(owner_id=request.user).exclude(pk = tool_id)
     similartools = temp_list.order_by('?')[:6]
@@ -69,7 +68,16 @@ def updateTool(request, tool_id):
     sharezone = currentUser.share_zone[:5]
     sheds = Shed.objects.filter(address__zip__startswith = sharezone)
     tooldata = get_object_or_404(Tool, pk=tool_id)
-    if not tooldata.owner == request.user:
+    denyAccess = True
+
+    if tooldata.owner == request.user:
+        denyAccess = False
+
+    if tooldata.location == 'S':
+        if tooldata.shed.owner == request.user:
+            denyAccess = False
+
+    if denyAccess:
         error_url = reverse_lazy("toolManagement:toolbox")
         messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
         return redirect(error_url)

@@ -36,3 +36,9 @@
 .modal-dialog {
   padding-top: 15%;
 }
+
+a.thumbnail:hover,
+a.thumbnail:focus,
+a.thumbnail.active {
+  border-width: 2px;
+}

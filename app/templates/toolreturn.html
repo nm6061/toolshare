@@ -16,20 +16,20 @@
             {% for tool in toolreturns %}
                 <div class="toolList">
                     <div class="col-sm-2">
-                        {% if tool.1 < 0 %}
-                            <span class="label label-danger toolduedate" title="OVERDUE!!"> OVERDUE!!</span>
-                        {% elif tool.1 == 0 %}
-                            <span class="label label-danger toolduedate" title="DUE TODAY!!"> DUE TODAY!!</span>
-                        {% elif tool.1 == 1 %}
-                            <span class="label label-danger toolduedate" title="Due in {{ tool.1 }} day"> Due in {{ tool.1 }} day</span>
-                        {% elif tool.1 >= 1 and tool.1 <= 4 %}
-                            <span class="label label-warning toolduedate" title="Due in {{ tool.1 }} days">Due in {{ tool.1 }} days</span>
-                        {% else %}
-                            <span class="label label-success toolduedate" title="Due in {{ tool.1 }} days">Due in {{ tool.1 }} days</span>
-                        {% endif %}
                         <figure>
                             <div id="toolThumbnail" >
                                 <a href="{% url "toolManagement:viewTool" tool.0.id %}" class="thumbnail">
+                                    {% if tool.1 < 0 %}
+                                        <span class="label label-danger toolduedate" title="OVERDUE!!"> OVERDUE!!</span>
+                                    {% elif tool.1 == 0 %}
+                                        <span class="label label-danger toolduedate" title="DUE TODAY!!"> DUE TODAY!!</span>
+                                    {% elif tool.1 == 1 %}
+                                        <span class="label label-danger toolduedate" title="Due in {{ tool.1 }} day"> Due in {{ tool.1 }} day</span>
+                                    {% elif tool.1 >= 1 and tool.1 <= 4 %}
+                                        <span class="label label-warning toolduedate" title="Due in {{ tool.1 }} days">Due in {{ tool.1 }} days</span>
+                                    {% else %}
+                                        <span class="label label-success toolduedate" title="Due in {{ tool.1 }} days">Due in {{ tool.1 }} days</span>
+                                    {% endif %}
                                     <img class="img-square" src="{{tool.0.picture.url}}" alt="{{tool.0.name}}">
                                 </a>
                             </div>

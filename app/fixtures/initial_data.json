@@ -134,6 +134,16 @@
         }
     },
     {
+        "model": "app.Shed",
+        "pk": 2,
+        "fields": {
+            "owner": "2",
+            "name": "Shed2",
+            "registered_on": "2011-11-11 11:11:11.110000",
+            "address" : "2"
+        }
+    },
+    {
         "model": "app.Tool",
         "pk": 1,
         "fields": {
@@ -189,7 +199,7 @@
             "category": "HA",
             "owner": 1,
             "location": "S",
-            "shed": null,
+            "shed": 1,
             "pickupArrangement": "Knock on the door"
         }
     },
@@ -234,7 +244,7 @@
             "category": "LM",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -264,7 +274,7 @@
             "category": "SH",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -294,7 +304,7 @@
             "category": "HA",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -324,7 +334,7 @@
             "category": "SC",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -384,7 +394,7 @@
             "category": "LM",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -429,7 +439,7 @@
             "category": "WR",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -444,7 +454,7 @@
             "category": "HA",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -459,7 +469,7 @@
             "category": "LM",
             "owner": 2,
             "location": "H",
-            "shed": 1,
+            "shed": null,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -474,7 +484,7 @@
             "category": "SC",
             "owner": 2,
             "location": "S",
-            "shed": 1,
+            "shed": 2,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -516,7 +526,7 @@
             "picture": "toolpics/shovel.jpg",
             "description": "Good for digging holes (based on personal experience)",
             "status": "L",
-            "category": "HA",
+            "category": "SH",
             "owner": 3,
             "location": "H",
             "shed": null,
@@ -534,7 +544,7 @@
             "category": "WR",
             "owner": 3,
             "location": "S",
-            "shed": null,
+            "shed": 1,
             "pickupArrangement": "Back of the bowling alley at midnight"
         }
     },
@@ -546,7 +556,7 @@
             "picture": "toolpics/lawn mower.jpg",
             "description": "A Snapper brand lawn mower. Serial number: S6W1E0N",
             "status": "L",
-            "category": "SH",
+            "category": "LM",
             "owner": 3,
             "location": "S",
             "shed": 1,
