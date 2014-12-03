@@ -6,7 +6,7 @@
 
 {% block javascript %}
     {{ block.super }}
-    <script>
+    <script type="text/javascript">
         function imagePreview(fileInput) {
             var files = fileInput.files;
             for (var i = 0; i < files.length; i++) {
@@ -42,45 +42,18 @@
     </script>
 
     <script type="text/javascript" src="{% static "scripts/bootstrap-datepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "scripts/init-datepicker.js" %}"></script>
     <script type="text/javascript">
-        var unavailable_dates = {{ blackoutform.unavailable_dates|safe }};
-
         $(document).ready(function () {
-            $('.datepicker').datepicker({autoclose: true, beforeShowDay: onBeforeShowDay, startDate: new Date()});
-
-            $('#{{ blackoutform.blackoutstart.auto_id }}').datepicker()
-                    .on('changeDate', function (e) {
-                        $('#{{ blackoutform.blackoutend.auto_id }}')
-                                .datepicker('setStartDate', $('#{{ blackoutform.blackoutstart.auto_id }}').val());
-                    });
+            init_datepicker('{{ blackoutform.blackoutStart.auto_id }}', '{{ blackoutform.blackoutEnd.auto_id }}',
+                    {{ blackoutform.unavailable_dates|safe }}, 'Tool cannot be blacked-out on this day.');
         });
-
-        function onBeforeShowDay(date) {
-            for (var index = 0; index < unavailable_dates.length; index++) {
-                sd = new Date(unavailable_dates[index].start);
-                ed = new Date(unavailable_dates[index].end);
-                ed.setDate(ed.getDate() + 1);
-                if (sd <= date && date <= ed) {
-                    return {'enabled': false, 'classes': 'unavailable', 'tooltip': 'Tool is not available on this day.'};
-                }
-            }
-            return {'enabled': true, 'classes': '', 'tooltip': ' '};
-        }
     </script>
 {% endblock %}
 {% block stylesheets %}
     {{ block.super }}
     <link href="{% static "styles/datepicker3.css" %}" rel="stylesheet"/>
 {% endblock %}
-{% block head %}
-    <style type="text/css">
-        .unavailable {
-            color: #a94442 !important;
-            opacity: 0.5;
-        }
-    </style>
-{% endblock %}
-
 {% block auth-content %}
     <h1 class = 'page-header'>Manage Tool</h1>
     <div class="spacer-10"></div>
