@@ -226,17 +226,21 @@ figcaption {
     float: right;
     clear: both;
     margin-bottom: -30px;
+    position: relative;
+    right: 1px;
+    font-size: 120%;
 }
 
+.Inactive{
+    opacity: .5;
+}
 
 p.tooltips {
     position: relative;
-    display: inline;
-    font-size: 85%;
     border-radius: 20px;
     top: 2px;
     cursor: default;
-    right: 2px;
+    right: 1px;
 }
 
 p.tooltips span {
@@ -270,7 +274,7 @@ p:hover.tooltips span {
     visibility: visible;
 }
 
-.toolduedate{
+.toolstatus{
     width:100%;
     font-size: 90%;
     float: left;
