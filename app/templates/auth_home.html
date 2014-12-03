@@ -134,10 +134,22 @@
             </thead>
             <tbody>
             {% for u1 in returned %}
-                <tr>
+                <tr {%  if u1.diff < 0 %}
+                        style="color: red; font-weight: bold"
+                    {%  elif u1.diff == 0 %}
+                        style="font-weight: bold"
+                    {% endif %}>
                     <td>{{ u1.tool.name }}</td>
                     <td>{{ u1.to_date }}</td>
-                    <td>{{ u1.diff }}</td>
+                    {%  if u1.diff < -1 %}
+                        <td>{{ u1.diff|stringformat:"+d"|slice:"1:" }} DAYS OVERDUE!!!</td>
+                    {%  elif u1.diff == -1 %}
+                        <td>1 DAY OVERDUE!!</td>
+                    {%  elif u1.diff == 0 %}
+                        <td>DUE TODAY!</td>
+                    {% else %}
+                        <td>{{ u1.diff }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
@@ -167,11 +179,22 @@
             </thead>
             <tbody>
             {% for u1 in coming %}
-                <tr>
+                <tr {%  if u1.diff < 0 %}
+                        style="color: red; font-weight: bold"
+                    {%  elif u1.diff == 0 %}
+                        style="font-weight: bold"
+                    {% endif %}>
                     <td>{{ u1.tool.name }}</td>
                     <td>{{ u1.to_date }}</td>
-                    <td>{{ u1.diff }}</td>
-
+                    {%  if u1.diff < -1 %}
+                        <td>{{ u1.diff|stringformat:"+d"|slice:"1:" }} DAYS OVERDUE!!!</td>
+                    {%  elif u1.diff == -1 %}
+                        <td>1 DAY OVERDUE!!</td>
+                    {%  elif u1.diff == 0 %}
+                        <td>DUE TODAY!</td>
+                    {% else %}
+                        <td>{{ u1.diff }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
