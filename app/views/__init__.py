@@ -27,11 +27,11 @@ def home(request):
         user = request.user
         toolsToShow = 6;
         shedsToShow = 3;
-        temp_list = Tool.objects.exclude(owner_id=user).exclude(status='D')
+        temp_list = Tool.objects.filter(owner_id=user).exclude(status='D')
         temp_list = temp_list.order_by('pk')
         temp_list = temp_list.reverse()[:toolsToShow]
 
-        temp2_list = Shed.objects.exclude(owner_id=user)
+        temp2_list = Shed.objects.all()
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
@@ -42,7 +42,7 @@ def home(request):
         for iter_reservation in returned:
             fromdate = iter_reservation.from_date
             todate = iter_reservation.to_date
-            if fromdate >= today1:
+            if fromdate <= today1:
                 delta = todate - today1
                 iter_reservation.diff = delta.days
                 final_list.append(iter_reservation)
@@ -55,7 +55,7 @@ def home(request):
         for iter_reservation in coming:
             fromdate = iter_reservation.from_date
             todate = iter_reservation.to_date
-            if fromdate >= today1:
+            if fromdate <= today1:
                 delta = todate - today1
                 iter_reservation.diff = delta.days
                 final_list1.append(iter_reservation)

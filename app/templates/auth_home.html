@@ -93,7 +93,8 @@
                     <thead>
 
                     <tr>
-                        <th>Shed Name</th>
+                        <th>Name</th>
+                        <th>Address</th>
                         <!--<th>Date Created</th>-->
                     </tr>
                     </thead>
@@ -104,6 +105,7 @@
                         {% if forloop.counter %}
                             <tr>
                                 <td>{{ u1.name }}</td>
+                                <td>{{u1.address.get_multi_line}}</td>
                                 <!-- <td>{{ u1.dateCreated }}</td>-->
                             </tr>
                         {% endif %}
@@ -136,7 +138,7 @@
                     <td>{{ u1.tool.name }}</td>
                     <td>{{ u1.to_date }}</td>
                     <td>{{ u1.diff }}</td>
-
+             {% endif  %}
                 </tr>
             {% endfor %}
             </tbody>
