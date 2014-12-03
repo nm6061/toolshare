@@ -35,18 +35,16 @@
                 {% for tool in myTools %}
                     <div class="toolList">
                         <div class="col-sm-2">
-                            <div class="toolStatusIndicator">
-                                {% if tool.status == 'D' %}
-                                    <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
-                                {% elif tool.status == 'L' %}
-                                    <p class="tooltips label label-warning">L<span>Tool is lent out</span></p>
-                                {% else %}
-                                    <p class="tooltips label label-success">A<span>Tool is active</span></p>
-                                {% endif %}
-                            </div>
                             <figure>
                                 <div id="toolThumbnail" >
-                                    <a href="{% url "toolManagement:updateTool" tool.id %}" class="thumbnail">
+                                    <a href="{% url "toolManagement:updateTool" tool.id %}" class="thumbnail {% if tool.status == 'D' %}Inactive{% endif %}">
+                                        {% if tool.status == 'D' %}
+                                            <span class="toolstatus label label-danger" title="Deactivated">Deactivated</span>
+                                        {% elif tool.status == 'L' %}
+                                            <span class="toolstatus label label-warning" title="Lent Out">Lent Out</span>
+                                        {% else %}
+                                            <span class="toolstatus label label-success" title="Active">Active</span>
+                                        {% endif %}
                                         <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
                                     </a>
                                 </div>
