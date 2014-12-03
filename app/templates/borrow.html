@@ -1,49 +1,23 @@
 {% extends "auth_base.html" %}
 {% load filters %}
-
 {% block title %}Request To Borrow{% endblock %}
-
+{# TODO: Activate depending on the page user was on when visiting this page #}
 {% block BrowseNav %} active {% endblock %}
 {% load staticfiles %}
 {% block javascript %}
     {{ block.super }}
     <script type="text/javascript" src="{% static "scripts/bootstrap-datepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "scripts/init-datepicker.js" %}"></script>
     <script type="text/javascript">
-        var unavailable_dates = {{ form.unavailable_dates|safe }};
-
         $(document).ready(function () {
-            $('.datepicker').datepicker({autoclose: true, beforeShowDay: onBeforeShowDay, startDate: new Date()});
-
-            $('#{{ form.from_date.auto_id }}').datepicker()
-                    .on('changeDate', function (e) {
-                        $('#{{ form.to_date.auto_id }}')
-                                .datepicker('setStartDate', $('#{{ form.from_date.auto_id }}').val());
-                    });
+            init_datepicker('{{ form.from_date.auto_id }}', '{{ form.to_date.auto_id }}',
+                    {{ form.unavailable_dates|safe }});
         });
-
-        function onBeforeShowDay(date) {
-            for (var index = 0; index < unavailable_dates.length; index++) {
-                sd = new Date(unavailable_dates[index].start);
-                ed = new Date(unavailable_dates[index].end);
-                if (sd <= date && date <= ed) {
-                    return {'enabled': false, 'classes': 'unavailable', 'tooltip': 'Tool is not available on this day.'};
-                }
-            }
-            return {'enabled': true, 'classes': '', 'tooltip': ' '};
-        }
     </script>
 {% endblock %}
 {% block stylesheets %}
     {{ block.super }}
     <link href="{% static "styles/datepicker3.css" %}" rel="stylesheet"/>
-{% endblock %}
-{% block head %}
-    <style type="text/css">
-        .unavailable {
-            color: #a94442 !important;
-            opacity: 0.5;
-        }
-    </style>
 {% endblock %}
 {% block auth-content %}
     <h1 class="page-header">Borrow Tool</h1>
