@@ -7,6 +7,13 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  */
+
+/* Appearance of a disabled on the date picker */
+.disabled-date {
+    color: #a94442 !important;
+    opacity: 0.5;
+}
+
 .datepicker {
   padding: 4px;
   border-radius: 4px;
@@ -787,9 +794,4 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .datepicker.dropdown-menu th,
 .datepicker.dropdown-menu td {
   padding: 4px 5px;
-}
-
-.disabled-date {
-    color: #a94442 !important;
-    opacity: 0.5;
 }
