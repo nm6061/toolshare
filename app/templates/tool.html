@@ -41,20 +41,14 @@
             <div class="spacer-50"></div>
             <div class="spacer-20"></div>
 
-
-{#            <p> Category: {{ tooldata.get_category_display }}</p>#}
-{#            <p> Tool Status: {{ tooldata.get_status_display}}</p>#}
-{#            <p> Sharing Location: {{ tooldata.get_location_display }}</p>#}
-{#            <p> Owner: {{ tooldata.owner.get_full_name }}</p>#}
-{#            <p> Tool Description: {{ tooldata.description }}</p>#}
-{#            <p> Pickup Arrangements: {{ tooldata.pickupArrangement }}</p>#}
-
-
             <div class="tool_details_btn">
+                {% if tooldata.shed.owner == request.user %}
+                    <a href="{% url "toolManagement:updateTool" tooldata.id %}" class="btn btn-primary">Update Tool</a>
+                {% endif %}
                 {% if tooldata.status == 'A' %}
-                    <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Borrow This Tool</a>
-                {% else %}
-                    <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Reserve This Tool</a>
+                    <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Borrow Tool</a>
+                {% elif tooldata.status == 'L'%}
+                    <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Reserve Tool</a>
                 {% endif %}
             </div>
         </div>

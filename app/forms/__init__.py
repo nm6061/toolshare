@@ -1,8 +1,11 @@
 import datetime, json
-from django import forms
+from django import forms, conf
+from pytz import timezone
 
-from app.models.reservation import Reservation
-from app.models import BlackoutDate
+from app.models.reservation import *
+from app.models.tool import *
+
+server_timezone = timezone(conf.settings.TIME_ZONE)
 
 
 class ApproveReservationForm(forms.ModelForm):
@@ -93,22 +96,22 @@ class BorrowToolForm(forms.ModelForm):
         return reservation
 
     def get_unavailable_dates(self):
-        unavailable_dates = []
+        ud = []
 
         # Tool is unavailable when during its blackout dates
-        unavailable_dates = unavailable_dates + [{'start': bd.blackoutStart, 'end': bd.blackoutEnd} for bd in
-                                                 self.tool.blackoutdate_set.all()]
+        ud = ud + [{'start': bd.blackoutStart, 'end': bd.blackoutEnd} for bd in self.tool.blackoutdate_set.filter(
+            blackoutEnd__gte=datetime.date.today())]
 
         # Tool is considered unavailable for dates that it has an approved reservation
-        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
-                                                 self.tool.reservation_set.filter(status='Approved')]
+        ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
+                   self.tool.reservation_set.filter(status='Approved', to_date__gte=datetime.date.today())]
 
         # Tool is considered unavailable for dates that the user has requested to borrow the tool irrespective of the
         # status of the reservation
-        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
-                                                 self.tool.reservation_set.filter(user=self.user)]
+        ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
+                   self.tool.reservation_set.filter(user=self.user, to_date__gte=datetime.date.today())]
 
-        return unavailable_dates
+        return ud
 
     @property
     def unavailable_dates(self):
@@ -199,5 +202,5 @@ class BlackoutDateForm(forms.ModelForm):
 class JSONDateEncoder(json.JSONEncoder):
     def default(self, o):
         if hasattr(o, 'isoformat'):
-            o = datetime.datetime.strptime(o.isoformat(),'%Y-%m-%d')
+            o = server_timezone.localize(datetime.datetime.strptime(o.isoformat(), '%Y-%m-%d'))
             return o.isoformat()
