@@ -77,10 +77,8 @@ def browsetool(request):
             -excluding tools that have a 'deactivated' status
 
     """
-    # TODO : Add filter for share zone
-
     user = request.user
-    tools = Tool.objects.exclude(owner_id=user).exclude(status='D')
+    tools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(owner__address__zip__startswith = user.address.share_zone)
     maxToolsPerPage = 12
     minToolsPerPage = 1
     paginator = Paginator(tools, maxToolsPerPage, minToolsPerPage)
