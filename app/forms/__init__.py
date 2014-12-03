@@ -96,22 +96,22 @@ class BorrowToolForm(forms.ModelForm):
         return reservation
 
     def get_unavailable_dates(self):
-        unavailable_dates = []
+        ud = []
 
         # Tool is unavailable when during its blackout dates
-        unavailable_dates = unavailable_dates + [{'start': bd.blackoutStart, 'end': bd.blackoutEnd} for bd in
-                                                 self.tool.blackoutdate_set.all()]
+        ud = ud + [{'start': bd.blackoutStart, 'end': bd.blackoutEnd} for bd in self.tool.blackoutdate_set.filter(
+            blackoutEnd__gte=datetime.date.today())]
 
         # Tool is considered unavailable for dates that it has an approved reservation
-        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
-                                                 self.tool.reservation_set.filter(status='Approved')]
+        ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
+                   self.tool.reservation_set.filter(status='Approved', to_date__gte=datetime.date.today())]
 
         # Tool is considered unavailable for dates that the user has requested to borrow the tool irrespective of the
         # status of the reservation
-        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
-                                                 self.tool.reservation_set.filter(user=self.user)]
+        ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
+                   self.tool.reservation_set.filter(user=self.user, to_date__gte=datetime.date.today())]
 
-        return unavailable_dates
+        return ud
 
     @property
     def unavailable_dates(self):
