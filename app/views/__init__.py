@@ -39,27 +39,29 @@ def home(request):
         today1 = datetime.date.today()
         final_list = list()
 
-        for iter_reservation in returned:
+        sortedReturn = returned.order_by('to_date')
+
+        for iter_reservation in sortedReturn:
             fromdate = iter_reservation.from_date
             todate = iter_reservation.to_date
             if fromdate <= today1:
                 delta = todate - today1
                 iter_reservation.diff = delta.days
                 final_list.append(iter_reservation)
-                print(str(iter_reservation.id) + "====>" + str(iter_reservation.diff))
 
         coming = Reservation.objects.filter(tool__owner=request.user, status='Approved')
         today1 = datetime.date.today()
         final_list1 = list()
 
-        for iter_reservation in coming:
+        sortedComing = coming.order_by('to_date')
+
+        for iter_reservation in sortedComing:
             fromdate = iter_reservation.from_date
             todate = iter_reservation.to_date
             if fromdate <= today1:
                 delta = todate - today1
                 iter_reservation.diff = delta.days
                 final_list1.append(iter_reservation)
-                print(str(iter_reservation.id) + "====>" + str(iter_reservation.diff))
 
         return render(request, 'auth_home.html', RequestContext(request, {'tools': temp_list, 'shed': temp2_list,
                                                                           'returned': final_list, 'coming': final_list1,
