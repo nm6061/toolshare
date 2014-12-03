@@ -56,31 +56,33 @@
         <div class="suggestions">
             <div class="row">
                 <h3 > Other similar tools in your share zone </h3>
-                    {% for tool in similartools %}
-                        <div class="toolList">
-                            <div class="col-sm-2">
-                                <div class="toolStatusIndicator">
-                                    {% if tool.status == 'D' %}
-                                        <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
-                                    {% elif tool.status == 'L' %}
-                                        <p class="tooltips label label-warning">L<span>Tool is lent out</span></p>
-                                    {% else %}
-                                        <p class="tooltips label label-success">A<span>Tool is active</span></p>
-                                    {% endif %}
-                                </div>
-                                <figure>
-                                    <div id="toolThumbnail" >
-                                        <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
-                                            <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
-                                        </a>
-                                    </div>
-                                    <figcaption>{{ tool.name }}</figcaption>
-                                </figure>
+                {% for tool in similartools %}
+                    <div class="toolList">
+                        <div class="col-sm-2">
+                            <div class="toolStatusIndicator">
+                                {% if tool.status == 'D' %}
+                                    <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
+                                {% elif tool.status == 'L' %}
+                                    <p class="tooltips label label-warning">L<span>Tool is lent out</span></p>
+                                {% else %}
+                                    <p class="tooltips label label-success">A<span>Tool is active</span></p>
+                                {% endif %}
                             </div>
+                            <figure>
+                                <div id="toolThumbnail" >
+                                    <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                        <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
+                                    </a>
+                                </div>
+                                <figcaption>{{ tool.name }}</figcaption>
+                            </figure>
                         </div>
-                    {% empty %}
-                        <h4>Sorry, there are no similar tools in your share zone</h4>
-                    {% endfor %}
+                    </div>
+                {% empty %}
+                    <div class="alert alert-info" role="alert">
+                        Sorry, there are no other similar tools.
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
