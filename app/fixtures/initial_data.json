@@ -60,6 +60,19 @@
         }
     },
     {
+        "model": "app.Address",
+        "pk": 5,
+        "fields": {
+            "apt_num": "blank",
+            "street": "blankity",
+            "city": "blank",
+            "county": "blah",
+            "state": "NY",
+            "country": "Canada",
+            "zip": "11235"
+        }
+    },
+    {
         "model": "app.User",
         "pk": 1,
         "fields": {
@@ -114,13 +127,29 @@
             "is_active": true,
             "date_joined": "2014-11-11",
             "email": "zc3896@rit.edu",
-            "password": "pbkdf2_sha256$12000$wkhpGxr1AfEa$RyAcqftcQcz35p+0ILlrLiq4kYWzYLbJ6OL/lJrsbKw=",
+            "password": "pbkdf2_sha256$12000$DJDlZCEnBze8$0J7Iye9sKos0HWWs9rw7SqaaIAmfzMkfkN7ctSdQLmU=",
             "first_name": "Mike",
             "last_name": "C",
             "phone_num": "",
             "pickup_arrangements": "Call me beep me if you wanna reach me",
-            "reputation": 9001,
+            "reputation": 1337,
             "address": 4
+        }
+    },
+        {
+        "model": "app.User",
+        "pk": 5,
+        "fields": {
+            "is_active": true,
+            "date_joined": "2014-11-11",
+            "email": "tester@toolshare.com",
+            "password": "pbkdf2_sha256$12000$RxReTIz4H6uk$uPqChJ04yF8xNDdmZs92fU/UcxwAqjQah3uO0OaVpGc=",
+            "first_name": "TestNothing",
+            "last_name": "",
+            "phone_num": "",
+            "pickup_arrangements": "I have nothing shared",
+            "reputation": 0,
+            "address": 5
         }
     },
     {
@@ -543,8 +572,8 @@
             "status": "A",
             "category": "WR",
             "owner": 3,
-            "location": "S",
-            "shed": 1,
+            "location": "H",
+            "shed": null,
             "pickupArrangement": "Back of the bowling alley at midnight"
         }
     },
@@ -558,9 +587,39 @@
             "status": "L",
             "category": "LM",
             "owner": 3,
+            "location": "H",
+            "shed": null,
+            "pickupArrangement": "Back of the bowling alley at midnight"
+        }
+    },
+        {
+        "model": "app.Tool",
+        "pk": 29,
+        "fields": {
+            "name": "Test Tool In Shed",
+            "picture": "toolpics/hammer.jpg",
+            "description": "John(the shed coordinator) should be able to update this since this is in his shed",
+            "status": "A",
+            "category": "HA",
+            "owner": 4,
             "location": "S",
             "shed": 1,
-            "pickupArrangement": "Back of the bowling alley at midnight"
+            "pickupArrangement": "Call me beep me if you wanna reach me"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 30,
+        "fields": {
+            "name": "Test Tool At Home",
+            "picture": "toolpics/lawn mower.jpg",
+            "description": "John the shed coordinator should not be able to update this tool",
+            "status": "A",
+            "category": "LM",
+            "owner": 4,
+            "location": "H",
+            "shed": null,
+            "pickupArrangement": "Call me beep me if you wanna reach me"
         }
     },
     {
