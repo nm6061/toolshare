@@ -1,7 +1,11 @@
 var _unavailable_dates = undefined;
+var _tooltip = 'Tool is not available on this day.'
 
-function init_datepicker(id_from, id_to, unavailable_dates) {
+function init_datepicker(id_from, id_to, unavailable_dates, tooltip) {
     if (unavailable_dates !== undefined && unavailable_dates.length > 0) {
+        if (tooltip !== undefined) {
+            _tooltip = tooltip;
+        }
         _unavailable_dates = unavailable_dates;
         $('.datepicker').datepicker({autoclose: true, beforeShowDay: onBeforeShowDay, startDate: new Date()});
     }
@@ -19,7 +23,7 @@ function onBeforeShowDay(date) {
         sd = new Date(_unavailable_dates[index].start);
         ed = new Date(_unavailable_dates[index].end);
         if (sd <= date && date <= ed) {
-            return {'enabled': false, 'classes': 'disabled-date', 'tooltip': 'Tool is not available on this day.'};
+            return {'enabled': false, 'classes': 'disabled-date', 'tooltip': _tooltip};
         }
     }
     return {'enabled': true, 'classes': '', 'tooltip': ' '};
