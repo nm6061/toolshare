@@ -35,6 +35,7 @@
 
 .modal-dialog {
   padding-top: 15%;
+  width: 500px;
 }
 
 a.thumbnail:hover,
