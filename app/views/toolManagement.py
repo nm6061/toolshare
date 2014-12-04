@@ -21,9 +21,22 @@ def registerTool(request):
     currentUser = request.user
     sharezone = currentUser.share_zone[:5]
     sheds = Shed.objects.filter(address__zip__startswith = sharezone)
+    invalidImage = False
+
+    #check if uploaded file is an image or not
+    for key,value in request.FILES.items():
+        if not 'image' in value.content_type:
+            invalidImage = True
+
     if request.method == 'POST':
-        tool_form = AddToolForm(request.POST, request.FILES)
         shedChoice = request.POST.get('shedChoice')
+
+        if invalidImage:
+            tool_form = AddToolForm(request.POST)
+
+        else:
+            tool_form = AddToolForm(request.POST, request.FILES)
+
 
         if tool_form.is_valid():
             with transaction.atomic():
@@ -44,7 +57,7 @@ def registerTool(request):
             success_url = reverse_lazy("toolManagement:toolbox")
             return redirect(success_url)
         else:
-            return render(request, 'registertool.html', RequestContext(request, {'form': tool_form, 'sheds':sheds}))
+            return render(request, 'registertool.html', RequestContext(request, {'form': tool_form, 'sheds':sheds, 'invalidImage':invalidImage}))
     else:
         tool_form = AddToolForm(initial = {'pickupArrangement': currentUser.pickup_arrangements})
         return render(request, 'registertool.html', RequestContext(request, {'form': tool_form, 'sheds':sheds}))
