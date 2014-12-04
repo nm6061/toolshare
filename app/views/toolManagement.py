@@ -146,6 +146,14 @@ def updateTool(request, tool_id):
             else:
                 return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
                                 'blackoutform': blackoutform, 'tool':tooldata, 'futureRes':futureRes, 'sheds':sheds, 'blackoutdates':blackoutdates}))
+        elif 'delete' in request.POST:
+            dateID = request.POST['delete']
+            dateToDelete = blackoutdates.get(pk=dateID)
+            dateToDelete.delete()
+            messages.success(request,'Blackout date was successfully deleted! <br> <br> '
+                                         '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
+                                         '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
+            return redirect('.')
     else:
         updateform = AddToolForm(instance=tooldata)
         blackoutform = forms.BlackoutDateForm(tooldata)
