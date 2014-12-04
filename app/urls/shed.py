@@ -8,4 +8,5 @@ urlpatterns = \
              url(r'^$', IndexShedView.as_view(), name='index'),
              url(r'^(?P<shed_id>\d+)/$', ShedDetailView.as_view(), name='detail'),
              url(r'^(?P<shed_id>\d+)/update/$', UpdateShedView.as_view(), name='update'),
+             url(r'^(?P<shed_id>\d+)/delete/$', DeleteShedView.as_view(), name='delete'),
     )
