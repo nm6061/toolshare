@@ -208,6 +208,16 @@ figcaption {
     padding-top: 15px;
 }
 
+.tool_details_blackoutDelete{
+    cursor: pointer;
+    font-size: 115%;
+}
+
+.tool_details_blackoutDelete:hover{
+    color: #428bca;
+    cursor: pointer;
+}
+
 .tool_details_desc{
     width: 49.5%;
     float: left;
