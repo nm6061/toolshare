@@ -199,7 +199,7 @@ def rejectmessage(request, reservation_id):
 @login_required()
 def requestsend(request):
     reservation = Reservation.objects.filter(user=request.user, status='Pending')
-
+    reservationA = Reservation.objects.filter(user=request.user, status='Approved')
     paginator = Paginator(reservation, 5)  # Show 25 reservations per page
 
     page = request.GET.get('page')
@@ -211,7 +211,7 @@ def requestsend(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         reservation = paginator.page(paginator.num_pages)
-    return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation}))
+    return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation,'reservationA': reservationA}))
 
 
 @login_required()
