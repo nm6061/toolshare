@@ -32,10 +32,36 @@
             </div>
         </div>
         {% if request.user == shed.owner %}
+            <form action="{% url 'shed:delete' shed.pk %}" method="POST">
+                {% csrf_token %}
+                <div id="confirm-modal" class="modal fade in" aria-hidden="false" aria-labelledby="confirm"
+                     role="dialog"
+                     tabindex="-1">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 id="myModalLabel" class="modal-title">Delete Community Shed</h4>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to <strong>delete</strong> this community shed?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" aria-hidden="true" data-dismiss="modal" class="btn btn-link">No
+                                </button>
+                                <button type="submit" class="btn btn-primary">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="row pull-right">
                 <div class="col-md-12">
-                    <a href="{% url "shed:update" shed.id %}" class="btn btn-primary">Update</a>
-                    <button type="submit" class="btn btn-warning">Delete</button>
+                    <a href="{% url "shed:update" shed.pk %}" class="btn btn-primary">Update</a>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#confirm-modal">
+                        Delete
+                    </button>
                 </div>
             </div>
         {% endif %}
