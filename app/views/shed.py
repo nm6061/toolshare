@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, TemplateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import HttpResponseRedirect
@@ -122,3 +122,20 @@ class UpdateShedView(FormsetView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(UpdateShedView, self).dispatch(request, *args, **kwargs)
+
+
+class DeleteShedView(DeleteView):
+    model = Shed
+    pk_url_kwarg = 'shed_id'
+    http_method_names = ['post']
+    success_message = '<strong>%(shed_name)s</strong> was successfully deleted.'
+    success_url = reverse_lazy('shed:index')
+
+    def post(self, request, *args, **kwargs):
+        shed = self.get_object()
+        messages.success(request, self.success_message % {'shed_name': shed.name}, extra_tags='safe')
+        return super(DeleteShedView, self).post(request, *args, **kwargs)
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DeleteShedView, self).dispatch(request, *args, **kwargs)
