@@ -91,8 +91,13 @@ def updateTool(request, tool_id):
         if 'updatetool' in request.POST:
             updateform = AddToolForm(request.POST or None, request.FILES or None, instance=tooldata)
             blackoutform = forms.BlackoutDateForm(tooldata)
+            shedChoice = request.POST.get('shedChoice')
             if updateform.is_valid():
-                updateform.save()
+                tool = updateform.save(commit=False)
+                if tool.location == 'S':
+                    tool.shed = Shed.objects.get(pk=shedChoice)
+                tool.save()
+                updateform.save_m2m()
 
                 #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
                 #It SHOULD NOT be used unless you need to add a hyperlink to your message!
