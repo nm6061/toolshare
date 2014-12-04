@@ -180,7 +180,32 @@ figcaption {
 .tool_details_blackout{
     width: 100%;
     overflow-wrap: break-word;
-    border-color: slategray;
+    border-color: #c6c6c6;
+}
+
+.tool_details_blackoutdates{
+    position: relative;
+}
+
+.tool_details_blackoutBtn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-left: 5px;
+}
+
+.tool_details_blackoutBtn > button{
+    float: right;
+}
+
+.tool_details_blackoutPicker{
+    max-width: 200px;
+}
+
+.tool_details_blackoutlist{
+    margin-top: 25px;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
 }
 
 .tool_details_desc{
@@ -191,7 +216,7 @@ figcaption {
     overflow-wrap: break-word;
     height: auto;
     min-height: 520px;
-    border: 1px solid slategray;
+    border: 1px solid #c6c6c6;
     border-radius: 4px;
     padding: 10px;
     position: relative;
@@ -291,12 +316,17 @@ p:hover.tooltips span {
     margin-top: 30px;
     margin-bottom: 20px;
     padding: 0px 10px;
-    border: 1px solid slategray;
+    border: 1px solid #c6c6c6;
     border-radius: 4px;
     max-width: 1080px;
 }
 
-.suggestions .row > h3, .row > h4{
+.suggestions .row > h3{
     margin: 0;
     padding: 10px 0px 10px 15px;
+}
+
+.suggestions .alert{
+    margin: 10px 15px 10px 15px;
+    font-size: 120%;
 }

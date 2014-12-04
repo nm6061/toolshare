@@ -92,36 +92,57 @@
                     {% csrf_token %}
                     {% load errors %}
                     {% errors blackoutform %}
-                    <div class="form-group">
-                        <div class="container-fluid">
-                            <h4><strong>Blackout Dates</strong></h4>
-                            <div class="spacer-20"></div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>From</label>
-                                </div>
+                    <div class="container-fluid">
+                        <h3><strong>Edit Tool Blackout Dates</strong></h3>
+                        <div class="spacer-30"></div>
+                        <div class="row tool_details_blackoutdates">
+                            <div class="col-md-4 tool_details_blackoutPicker">
+                                <label>From</label>
+                                {{ blackoutform.blackoutStart|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{ blackoutform.blackoutStart|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                                </div>
+
+                            <div class="col-md-4 tool_details_blackoutPicker">
+                                <label>To</label>
+                                {{ blackoutform.blackoutEnd|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
                             </div>
-                            <div class="spacer-20"></div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>To</label>
-                                </div>
+
+                            <div class="col-md-4 tool_details_blackoutBtn">
+                                <button type="submit" class="btn btn-primary" value="addblackout" name="addblackout">Add Date</button>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{ blackoutform.blackoutEnd|add_attrs:"{'class':'form-control datepicker','placeholder':'mm/dd/yyyy'}" }}
-                                </div>
-                            </div>
-                            <div class="spacer-45"></div>
-                            <div class="row pull-right">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary" value="addblackout" name="addblackout">Add Blackout Date</button>
-                                </div>
+                        </div>
+
+                        <div class="row tool_details_blackoutlist">
+                            <div class="col-md-12">
+                            <h4>Current Blackout Dates</h4>
+
+                            <div class="spacer-10"></div>
+                                {% if blackoutdates %}
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for date in blackoutdates %}
+                                            <tr>
+                                                <td>{{ date.blackoutStart }}</td>
+                                                <td>{{ date.blackoutEnd }}</td>
+                                                <td> delete </td>
+
+                                            </tr>
+
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="alert alert-info" role="alert">
+                                        This tool does not have any blackout dates.
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -135,7 +156,7 @@
 
                 <div class="form-group">
                     <div class="container-fluid">
-                        <h4><strong>Edit Tool Information</strong></h4>
+                        <h3><strong>Edit Tool Information</strong></h3>
                         <div class="row">
                             <div class="col-md-12" >
                                 <div class="spacer-15"></div>
@@ -248,7 +269,7 @@
                     <div class="row pull-right">
                         <div class="col-md-12">
                             <a href="{% url "toolManagement:toolbox" %}" class="btn btn-default" role="button">Cancel</a>
-                            <button type="submit" class="btn btn-primary" value="updatetool" name="updatetool">Update Tool</button>
+                            <button type="submit" class="btn btn-primary" value="updatetool" name="updatetool" style="width: 80px">Save</button>
                         </div>
                     </div>
                 </div>
