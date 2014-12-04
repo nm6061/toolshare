@@ -25,35 +25,41 @@
             <div class="regToolBtn">
                 <a href="{% url "toolManagement:registerTool" %}"><button type="button" class="btn btn-primary">Add a Tool</button></a>
             </div>
-            <div class="toolFilters">
-                <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
-                <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
-                <a href="{% url "toolManagement:shedtools" %}"> Show Shed Tools </a></a>
-            </div>
-
             {% if myTools %}
-                {% for tool in myTools %}
-                    <div class="toolList">
-                        <div class="col-sm-2">
-                            <figure>
-                                <div id="toolThumbnail" >
-                                    <a href="{% url "toolManagement:updateTool" tool.id %}" class="thumbnail {% if tool.status == 'D' %}Inactive{% endif %}">
-                                        {% if tool.status == 'D' %}
-                                            <span class="toolstatus label label-danger" title="Deactivated">Deactivated</span>
-                                        {% elif tool.status == 'L' %}
-                                            <span class="toolstatus label label-warning" title="Lent Out">Lent Out</span>
-                                        {% else %}
-                                            <span class="toolstatus label label-success" title="Active">Active</span>
-                                        {% endif %}
-                                        <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
-                                    </a>
-                                </div>
-                                <figcaption>{{ tool.name }}</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                {% endfor %}
+                <div class="toolFilters">
+                    <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
+                    <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
+                    <a href="{% url "toolManagement:shedtools" %}"> Show Shed Tools </a></a>
+                </div>
             {% endif %}
+
+            {% for tool in myTools %}
+                <div class="toolList">
+                    <div class="col-sm-2">
+                        <figure>
+                            <div id="toolThumbnail" >
+                                <a href="{% url "toolManagement:updateTool" tool.id %}" class="thumbnail {% if tool.status == 'D' %}Inactive{% endif %}">
+                                    {% if tool.status == 'D' %}
+                                        <span class="toolstatus label label-danger" title="Deactivated">Deactivated</span>
+                                    {% elif tool.status == 'L' %}
+                                        <span class="toolstatus label label-warning" title="Lent Out">Lent Out</span>
+                                    {% else %}
+                                        <span class="toolstatus label label-success" title="Active">Active</span>
+                                    {% endif %}
+                                    <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
+                                </a>
+                            </div>
+                            <figcaption>{{ tool.name }}</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-info" role="alert">
+                    You have not registered any tools.
+                    <br><br>
+                    Would you like to <a href="{% url "toolManagement:registerTool" %}"><strong>add a tool?</strong></a>
+                </div>
+            {% endfor %}
         </div>
 
         {% if myTools.paginator.num_pages >  1 %}

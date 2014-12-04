@@ -8,91 +8,72 @@
 
     <div class="container">
         <div class="row">
-            <h3 class="sub-header">Recently Added Tools</h3>
+            {% if not tools and not shed and not returned and not coming %}
+                <div class="alert alert-info" role="alert">
+                    No recent activity in your community.
+                </div>
+            {% endif %}
             {% if tools %}
+                <h3 class="sub-header">Recently Added Tools</h3>
+                <table class="table table-striped">
+                    <!--<thead>
 
-            <table class="table table-striped">
-                <!--<thead>
-
-                 <tr>
-                     <th>Tool Name</th>
-                     <th>Location</th>
-                 </tr>
-                 </thead>
-                 -->
-                <tbody>
+                     <tr>
+                         <th>Tool Name</th>
+                         <th>Location</th>
+                     </tr>
+                     </thead>
+                     -->
+                    <tbody>
 
 
-                {% for u1 in tools %}
+                    {% for u1 in tools %}
 
-                    {% if forloop.counter %}
-                        <!--<tr>
+                        {% if forloop.counter %}
+                            <!--<tr>
                     <td>{{ u1.name }}</td>
                     <td>{{ u1.location }}</td>
                 </tr>-->
-                 <div class="toolList">
-                        <div class="col-sm-2">
-                            <div class="toolStatusIndicator">
-                                {% if u1.status == 'D' %}
-                                    <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
-                                {% elif u1.status == 'L' %}
-                                    <p class="tooltips label label-warning">L<span>Currently lent out</span></p>
-                                {% else %}
-                                    <p class="tooltips label label-success">A<span>Tool available!</span></p>
-                                {% endif %}
-                            </div>
-                            <figure>
-                                <div id="toolThumbnail">
+                            <div class="toolList">
+                                <div class="col-sm-2">
+                                    <div class="toolStatusIndicator">
+                                        {% if u1.status == 'D' %}
+                                            <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
+                                        {% elif u1.status == 'L' %}
+                                            <p class="tooltips label label-warning">L<span>Currently lent out</span></p>
+                                        {% else %}
+                                            <p class="tooltips label label-success">A<span>Tool available!</span></p>
+                                        {% endif %}
+                                    </div>
+                                    <figure>
+                                        <div id="toolThumbnail">
 
-                                    <a href="{% url "toolManagement:viewTool" u1.id %}" class="thumbnail">
-                                        <img class="img-square" src="{{u1.picture.url}}" alt="{{u1.name}}">
-                                    </a>
+                                            <a href="{% url "toolManagement:viewTool" u1.id %}" class="thumbnail">
+                                                <img class="img-square" src="{{u1.picture.url}}" alt="{{u1.name}}">
+                                            </a>
 
+                                        </div>
+                                        <figcaption>{{u1.name}}</figcaption>
+                                    </figure>
                                 </div>
-                                <figcaption>{{u1.name}}</figcaption>
-                            </figure>
-                        </div>
-                        </div>
-                    {% endif %}
+                            </div>
+                        {% endif %}
 
-                {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-        <div class="alert alert-info" role="alert">
-             There are no recently added tools to your sharezone
-        </div>
-    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </div>
     </div>
 
 
-        <!--
-            <div class="col-lg-4">
+    <div class="container">
+        <div class="row">
 
 
-                <h2>Toolshare Server Time</h2>
-                {% now "H:i" %}
-
-            </div>
-
-            <div class="col-lg-4">
-
-
-                <h2>Calendar</h2>
-
-                {% now "jS F Y" %}
-            </div>
-            </div>
-            -->
-        <div class="spacer-20"></div>
-
-        <div class="container">
-            <div class="row">
-
+            {% if shed %}
+                <div class="spacer-20"></div>
                 <h3 class="sub-header">Recently Added Sheds</h3>
-                {% if shed %}
-
                 <table class="table table-striped">
 
                     <thead>
@@ -119,103 +100,96 @@
 
 
                 </table>
-                {% else %}
-        <div class="alert alert-info" role="alert">
-             There are no recently added sheds to your sharezone
+            {% else %}
+            {% endif %}
         </div>
-    {% endif %}
-            </div>
-        </div>
+    </div>
 
 
-        <div class="spacer-20"></div>
-        <div class="container">
-            <div class="row">
 
-             <h3 class="sub-header">Tools that are to be returned by me</h3>
-                {% if returned %}
+    <div class="container">
+        <div class="row">
+
+
+            {% if returned %}
+                <div class="spacer-20"></div>
+                <h3 class="sub-header">Tools that are to be returned by me</h3>
                 <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Tool Name</th>
-                <th>Due</th>
-                <th>Number of days Left</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for u1 in returned %}
-                <tr {%  if u1.diff < 0 %}
-                        style="color: red; font-weight: bold"
-                    {%  elif u1.diff == 0 %}
-                        style="font-weight: bold"
-                    {% endif %}>
-                    <td>{{ u1.tool.name }}</td>
-                    <td>{{ u1.to_date }}</td>
-                    {%  if u1.diff < -1 %}
-                        <td>{{ u1.diff|stringformat:"+d"|slice:"1:" }} DAYS OVERDUE!!!</td>
-                    {%  elif u1.diff == -1 %}
-                        <td>1 DAY OVERDUE!!</td>
-                    {%  elif u1.diff == 0 %}
-                        <td>DUE TODAY!</td>
-                    {% else %}
-                        <td>{{ u1.diff }}</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-             All the tools are returned by me
+                    <thead>
+                    <tr>
+                        <th>Tool Name</th>
+                        <th>Due</th>
+                        <th>Number of days Left</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u1 in returned %}
+                        <tr {%  if u1.diff < 0 %}
+                            style="color: red; font-weight: bold"
+                        {%  elif u1.diff == 0 %}
+                            style="font-weight: bold"
+                        {% endif %}>
+                            <td>{{ u1.tool.name }}</td>
+                            <td>{{ u1.to_date }}</td>
+                            {%  if u1.diff < -1 %}
+                                <td>{{ u1.diff|stringformat:"+d"|slice:"1:" }} DAYS OVERDUE!!!</td>
+                            {%  elif u1.diff == -1 %}
+                                <td>1 DAY OVERDUE!!</td>
+                            {%  elif u1.diff == 0 %}
+                                <td>DUE TODAY!</td>
+                            {% else %}
+                                <td>{{ u1.diff }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
         </div>
-    {% endif %}
-
-    </div>
     </div>
 
-    <div class="spacer-20"></div>
-        <div class="container">
-            <div class="row">
 
-             <h3 class="sub-header">Tools that are to be returned to me</h3>
-                {% if coming %}
+    <div class="container">
+        <div class="row">
+
+
+            {% if coming %}
+                <div class="spacer-20"></div>
+                <h3 class="sub-header">Tools that are to be returned to me</h3>
                 <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Tool Name</th>
-                <th>Due</th>
-                <th>Number of days Left</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for u1 in coming %}
-                <tr {%  if u1.diff < 0 %}
-                        style="color: red; font-weight: bold"
-                    {%  elif u1.diff == 0 %}
-                        style="font-weight: bold"
-                    {% endif %}>
-                    <td>{{ u1.tool.name }}</td>
-                    <td>{{ u1.to_date }}</td>
-                    {%  if u1.diff < -1 %}
-                        <td>{{ u1.diff|stringformat:"+d"|slice:"1:" }} DAYS OVERDUE!!!</td>
-                    {%  elif u1.diff == -1 %}
-                        <td>1 DAY OVERDUE!!</td>
-                    {%  elif u1.diff == 0 %}
-                        <td>DUE TODAY!</td>
-                    {% else %}
-                        <td>{{ u1.diff }}</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-             All the tools are returned to me
-        </div>
-    {% endif %}
+                    <thead>
+                    <tr>
+                        <th>Tool Name</th>
+                        <th>Due</th>
+                        <th>Number of days Left</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u1 in coming %}
+                        <tr {%  if u1.diff < 0 %}
+                            style="color: red; font-weight: bold"
+                        {%  elif u1.diff == 0 %}
+                            style="font-weight: bold"
+                        {% endif %}>
+                            <td>{{ u1.tool.name }}</td>
+                            <td>{{ u1.to_date }}</td>
+                            {%  if u1.diff < -1 %}
+                                <td>{{ u1.diff|stringformat:"+d"|slice:"1:" }} DAYS OVERDUE!!!</td>
+                            {%  elif u1.diff == -1 %}
+                                <td>1 DAY OVERDUE!!</td>
+                            {%  elif u1.diff == 0 %}
+                                <td>DUE TODAY!</td>
+                            {% else %}
+                                <td>{{ u1.diff }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
 
-    </div>
+        </div>
     </div>
 
 {% endblock %}
