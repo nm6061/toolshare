@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <h3 class="sub-header">Recently Added Tools</h3>
-
+            {% if tools %}
 
             <table class="table table-striped">
                 <!--<thead>
@@ -58,6 +58,11 @@
                 {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+        <div class="alert alert-info" role="alert">
+             There are no recently added tools to your sharezone
+        </div>
+    {% endif %}
         </div>
     </div>
 
@@ -86,7 +91,7 @@
             <div class="row">
 
                 <h3 class="sub-header">Recently Added Sheds</h3>
-
+                {% if shed %}
 
                 <table class="table table-striped">
 
@@ -114,6 +119,11 @@
 
 
                 </table>
+                {% else %}
+        <div class="alert alert-info" role="alert">
+             There are no recently added sheds to your sharezone
+        </div>
+    {% endif %}
             </div>
         </div>
 
