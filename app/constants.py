@@ -50,3 +50,14 @@ US_STATES = (
     ('WI', 'Wisconsin'),
     ('WY', 'Wyoming'),
 )
+
+RESERVATION_STATUSES = (
+    ('P', 'Pending'),
+    ('C', 'Cancelled'),
+    ('A', 'Approved'),
+    ('R', 'Rejected'),
+    ('AC', 'Active'),
+    ('O', 'Overdue'),
+    ('RI', 'Return Initiated'),
+    ('RA', 'Return Acknowledged'),
+)
