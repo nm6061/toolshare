@@ -61,3 +61,48 @@ RESERVATION_STATUSES = (
     ('RI', 'Return Initiated'),
     ('RA', 'Return Acknowledged'),
 )
+
+TOOL_STATUS = (
+    ('A', 'Available'),
+    ('D', 'Deactivated'),
+)
+
+TOOL_LOCATION = (
+    ('H', 'Home'),
+    ('S', 'Shed')
+)
+
+TOOL_CATEGORY = (
+    ('BL', 'Blades'),
+    ('BR', 'Braces'),
+    ('BS', 'Brushes'),
+    ('CA', 'Calipers'),
+    ('CH', 'Chisel'),
+    ('CL', 'Clamps'),
+    ('CP', 'Clips'),
+    ('CM', 'Compressors'),
+    ('CU', 'Cutters'),
+    ('DI', 'Dispenser'),
+    ('DR', 'Drills'),
+    ('GA', 'Gauges'),
+    ('GR', 'Grinder'),
+    ('HA', 'Hammer'),
+    ('HX', 'Hand Axe'),
+    ('HT', 'Hedge Trimmers'),
+    ('LA', 'Ladders'),
+    ('LM', 'Lawn Mowers'),
+    ('MT', 'Measuring Tape/Ruler'),
+    ('MI', 'Micrometer'),
+    ('NG', 'Nail Gun'),
+    ('PL', 'Pliers'),
+    ('SA', 'Sanders'),
+    ('SW', 'Saws'),
+    ('SC', 'Scissors'),
+    ('SD', 'Screwdrivers'),
+    ('SH', 'Shovel'),
+    ('TB', 'Toolbox'),
+    ('TR', 'Trowel'),
+    ('WE', 'Welding/ Soldering'),
+    ('WR', 'Wrenches'),
+    ('OT', 'Other'),
+)

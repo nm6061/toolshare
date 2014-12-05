@@ -3,56 +3,11 @@ from django.db import models
 from imagekit.models import ProcessedImageField
 from pilkit.processors import Resize
 from app.models.shed import Shed
-
+import app.constants
 
 class Tool(models.Model):
     class Meta:
         app_label = 'app'
-
-    STATUS = (
-        ('A', 'Available'),
-        ('D', 'Deactivated'),
-    )
-
-    LOCATION = (
-        ('H', 'Home'),
-        ('S', 'Shed')
-    )
-
-    CATEGORY = (
-        ('BL', 'Blades'),
-        ('BR', 'Braces'),
-        ('BS', 'Brushes'),
-        ('CA', 'Calipers'),
-        ('CH', 'Chisel'),
-        ('CL', 'Clamps'),
-        ('CP', 'Clips'),
-        ('CM', 'Compressors'),
-        ('CU', 'Cutters'),
-        ('DI', 'Dispenser'),
-        ('DR', 'Drills'),
-        ('GA', 'Gauges'),
-        ('GR', 'Grinder'),
-        ('HA', 'Hammer'),
-        ('HX', 'Hand Axe'),
-        ('HT', 'Hedge Trimmers'),
-        ('LA', 'Ladders'),
-        ('LM', 'Lawn Mowers'),
-        ('MT', 'Measuring Tape/Ruler'),
-        ('MI', 'Micrometer'),
-        ('NG', 'Nail Gun'),
-        ('PL', 'Pliers'),
-        ('SA', 'Sanders'),
-        ('SW', 'Saws'),
-        ('SC', 'Scissors'),
-        ('SD', 'Screwdrivers'),
-        ('SH', 'Shovel'),
-        ('TB', 'Toolbox'),
-        ('TR', 'Trowel'),
-        ('WE', 'Welding/ Soldering'),
-        ('WR', 'Wrenches'),
-        ('OT', 'Other'),
-    )
 
     def toolPictureName(instance, filename):
         ext = filename.split('.')[-1]
@@ -61,9 +16,9 @@ class Tool(models.Model):
     name = models.CharField(max_length=25)
     picture = ProcessedImageField(processors=[Resize(500, 500)], format='JPEG', upload_to=toolPictureName)
     description = models.TextField(max_length=500)
-    status = models.CharField(max_length=1, choices=STATUS)
-    category = models.CharField(max_length=2, choices=CATEGORY)
-    location = models.CharField(max_length=1, choices=LOCATION, blank=False, default='H')
+    status = models.CharField(max_length=1, choices=app.constants.TOOL_STATUS)
+    category = models.CharField(max_length=2, choices=app.constants.TOOL_CATEGORY)
+    location = models.CharField(max_length=1, choices=app.constants.TOOL_LOCATION, blank=False, default='H')
     models.CharField()
     shed = models.ForeignKey(Shed, null=True, on_delete=models.SET_NULL)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
