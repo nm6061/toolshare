@@ -35,7 +35,7 @@ def home(request):
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
-        returned = Reservation.objects.filter(user=request.user).filter(status='Approved')
+        returned = Reservation.objects.filter(user=request.user).filter(status='A')
         today1 = datetime.date.today()
         final_list = list()
 
@@ -49,7 +49,7 @@ def home(request):
                 iter_reservation.diff = delta.days
                 final_list.append(iter_reservation)
 
-        coming = Reservation.objects.filter(tool__owner=request.user, status='Approved')
+        coming = Reservation.objects.filter(tool__owner=request.user, status='A')
         today1 = datetime.date.today()
         final_list1 = list()
 
@@ -126,7 +126,7 @@ def presentstatistics(request):
 
 @login_required()
 def reservation(request):
-    reservations = Reservation.objects.filter(tool__owner=request.user, status='Pending')
+    reservations = Reservation.objects.filter(tool__owner=request.user, status='P')
 
     paginator = Paginator(reservations, 5)  # Show 25 reservations per page
 
@@ -145,9 +145,9 @@ def reservation(request):
 
 @login_required()
 def ReservationHistory(request):
-    reservations1 = Reservation.objects.filter(Q(status="Reject"), tool__owner=request.user)
-    reservations2 = Reservation.objects.filter(Q(status="Approved"), tool__owner=request.user)
-    reservations3 = Reservation.objects.filter(Q(status="Cancel"))
+    reservations1 = Reservation.objects.filter(Q(status="R"), tool__owner=request.user)
+    reservations2 = Reservation.objects.filter(Q(status="A"), tool__owner=request.user)
+    reservations3 = Reservation.objects.filter(Q(status="C"))
 
     return render(request, 'ReservationHistory.html', RequestContext(request, {'reservations1': reservations1,
                                                                                'reservations2': reservations2,
@@ -158,7 +158,7 @@ def ReservationHistory(request):
 @require_POST
 def approve(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
-    reservation.status = 'Approved'
+    reservation.status = 'A'
     reservation.save()
 
     # Send the user who requested to borrow the tool an email
@@ -182,7 +182,7 @@ def reject(request, reservation_id):
 @require_POST
 def rejectmessage(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
-    reservation.status = 'Reject'
+    reservation.status = 'R'
     reservation.message = request.POST['message']
     reservation.save()
 
@@ -198,8 +198,8 @@ def rejectmessage(request, reservation_id):
 
 @login_required()
 def requestsend(request):
-    reservation = Reservation.objects.filter(user=request.user, status='Pending')
-    reservationA = Reservation.objects.filter(user=request.user, status='Approved')
+    reservation = Reservation.objects.filter(user=request.user, status='P')
+    reservationA = Reservation.objects.filter(user=request.user, status='A')
     paginator = Paginator(reservation, 5)  # Show 25 reservations per page
 
     page = request.GET.get('page')
@@ -218,7 +218,7 @@ def requestsend(request):
 @require_POST
 def cancel(request, reservation_id):
     reservation = models.Reservation.objects.get(pk=reservation_id)
-    reservation.status = 'Cancel'
+    reservation.status = 'C'
     reservation.save()
     return render(request, 'cancel_reservation.html', RequestContext(request, {'reservation': reservation}))
 
@@ -232,7 +232,7 @@ def borrow(request, tool_id):
         if form.is_valid():
             reservation = form.save()
 
-            if reservation.status == 'Approved':
+            if reservation.status == 'A':
                 # Send the borrower of the tool an email informing that the request was auto approved
                 subject = '[ToolShare] Request to borrow %(tool)s was auto-approved' % {'tool': reservation.tool.name}
                 message = render_to_string('email/reservation_auto_approved.html', {'reservation': reservation})

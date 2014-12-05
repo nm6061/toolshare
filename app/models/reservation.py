@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from app.models import Tool
-
+import app.constants
 
 class Reservation(models.Model):
     class Meta:
@@ -9,6 +9,7 @@ class Reservation(models.Model):
 
     from_date = models.DateField()
     to_date = models.DateField()
+    status = models.CharField(max_length=2, choices=app.constants.RESERVATION_STATUSES)
     status = models.CharField(max_length=15)
     message = models.TextField(max_length = 200)
     tool = models.ForeignKey(Tool)

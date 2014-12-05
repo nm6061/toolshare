@@ -630,7 +630,7 @@
             "tool": 1,
             "from_date": "2014-12-01",
             "to_date": "2014-12-10",
-            "status": "Pending"
+            "status": "P"
         }
     },
     {
@@ -641,7 +641,7 @@
             "tool": 2,
             "from_date": "2014-12-01",
             "to_date": "2014-12-10",
-            "status": "Pending"
+            "status": "P"
         }
     },
     {
@@ -652,7 +652,7 @@
             "tool": 3,
             "from_date": "2014-12-01",
             "to_date": "2014-12-10",
-            "status": "Pending"
+            "status": "P"
         }
     },
     {
@@ -663,7 +663,7 @@
             "tool": 1,
             "from_date": "2014-12-11",
             "to_date": "2015-11-11",
-            "status": "Approved"
+            "status": "A"
         }
     },
     {
@@ -674,7 +674,7 @@
             "tool": 1,
             "from_date": "2014-12-12",
             "to_date": "2015-10-10",
-            "status": "Reject"
+            "status": "R"
         }
     },
     {
@@ -685,7 +685,7 @@
             "tool": 11,
             "from_date": "2014-11-22",
             "to_date": "2014-11-30",
-            "status": "Pending"
+            "status": "P"
         }
     },
     {
@@ -696,7 +696,7 @@
             "tool": 2,
             "from_date": "2014-11-01",
             "to_date": "2015-11-01",
-            "status": "Approved"
+            "status": "A"
         }
     },
     {
@@ -707,7 +707,7 @@
             "tool": 2,
             "from_date": "2015-02-02",
             "to_date": "2015-02-10",
-            "status": "Approved"
+            "status": "A"
         }
     },
     {
@@ -718,7 +718,7 @@
             "tool": 1,
             "from_date": "2015-11-12",
             "to_date": "2015-11-22",
-            "status": "Pending"
+            "status": "P"
         }
     },
     {
@@ -729,7 +729,7 @@
             "tool": 3,
             "from_date": "2015-01-01",
             "to_date": "2015-02-02",
-            "status": "Approved"
+            "status": "A"
         }
     },
     {
@@ -740,7 +740,7 @@
             "tool": 1,
             "from_date": "2014-11-01",
             "to_date": "2015-12-01",
-            "status": "Approved"
+            "status": "A"
         }
     },
     {
@@ -751,7 +751,7 @@
             "tool": 3,
             "from_date": "2014-11-01",
             "to_date": "2015-10-01",
-            "status": "Approved"
+            "status": "A"
         }
     },
     {
@@ -762,7 +762,7 @@
             "tool": 4,
             "from_date": "2014-11-01",
             "to_date": "2014-11-30",
-            "status": "Approved"
+            "status": "A"
         }
     },
     {

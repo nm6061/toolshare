@@ -78,9 +78,9 @@ class BorrowToolForm(forms.ModelForm):
         return self.cleaned_data
 
     def save(self, commit=True):
-        status = 'Pending'
+        status = 'P'
         if self.tool.location == 'S':
-            status = 'Approved'
+            status = 'A'
 
         data = {
             'from_date': self.cleaned_data['from_date'],
@@ -104,7 +104,7 @@ class BorrowToolForm(forms.ModelForm):
 
         # Tool is considered unavailable for dates that it has an approved reservation
         ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
-                   self.tool.reservation_set.filter(status='Approved', to_date__gte=datetime.date.today())]
+                   self.tool.reservation_set.filter(status='A', to_date__gte=datetime.date.today())]
 
         # Tool is considered unavailable for dates that the user has requested to borrow the tool irrespective of the
         # status of the reservation
@@ -187,11 +187,11 @@ class BlackoutDateForm(forms.ModelForm):
 
         # Cannot be blacked out when tools has been approved
         unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
-                                                 self.tool.reservation_set.filter(status='Approved')]
+                                                 self.tool.reservation_set.filter(status='A')]
 
         # Cannot be blacked when tool is reserved
         unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
-                                                 self.tool.reservation_set.filter(status='Pending')]
+                                                 self.tool.reservation_set.filter(status='P')]
         return unavailable_dates
 
     @property

@@ -128,7 +128,7 @@ class User(AbstractBaseUser):
         reservations = []
         for tool in self.tool_set.all():
             reservations = reservations + list(
-                tool.reservation_set.filter(from_date__gte=datetime.date.today(), status='Approved'))
+                tool.reservation_set.filter(from_date__gte=datetime.date.today(), status='A'))
         return reservations
 
     @property

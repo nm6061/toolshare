@@ -102,7 +102,7 @@ def updateTool(request, tool_id):
         messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
         return redirect(error_url)
 
-    futureRes = tooldata.reservation_set.filter(Q( status='Pending') | Q( status='Approved'))
+    futureRes = tooldata.reservation_set.filter(Q( status='P') | Q( status='A'))
     unorderedDates = tooldata.blackoutdate_set.exclude(blackoutEnd__lt = today)
     blackoutdates = unorderedDates.order_by('blackoutStart')
 
@@ -199,7 +199,7 @@ def toolbox(request, tool_filter):
     elif tool_filter == 'shedtools':
         toolList = Tool.objects.filter(owner_id=user).filter(location='S')
     elif tool_filter == 'borrowedtools':
-        approvedrequests = Reservation.objects.filter(user_id=user).filter(status="Approved")
+        approvedrequests = Reservation.objects.filter(user_id=user).filter(status="A")
         toolIDs = []
         for res in approvedrequests:
             toolIDs.append(res.tool_id)
@@ -233,7 +233,7 @@ def toolbox(request, tool_filter):
 def toolreturn(request):
     user = request.user
     today = datetime.date.today()
-    approvedrequests = Reservation.objects.filter(user_id=user).filter(status="Approved")
+    approvedrequests = Reservation.objects.filter(user_id=user).filter(status="A")
     toolduedates = dict()
 
     for res in approvedrequests:
