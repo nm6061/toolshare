@@ -8,22 +8,23 @@ from app.models.tool import *
 server_timezone = timezone(conf.settings.TIME_ZONE)
 
 
-class ApproveReservationForm(forms.ModelForm):
-    class Meta:
-        model = Reservation
-        Fields = ['from_date', 'to_date', 'tool', 'reservedBy']
-
-    def clean(self):
-        return self.cleaned_data
-
-
 class RejectReservationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(RejectReservationForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required': 'is required', 'invalid': 'is invalid'}
+
+        # Hack Alert: Message field is not required by default
+        self.fields['message'].required = True
+
     class Meta:
         model = Reservation
-        Fields = ['message']
+        fields = ['message']
 
-    def clean(self):
-        return self.cleaned_data
+    def save(self, commit=True):
+        self.instance.status = 'R'
+        return super(RejectReservationForm, self).save(commit)
 
 
 class BorrowToolForm(forms.ModelForm):

@@ -1,20 +1,41 @@
 {% extends "auth_base.html" %}
-
-{% block title %}Request Rejected{% endblock %}
-
+{% load filters %}
+{% block title %}Reject Reservation{% endblock %}
 {% block RequestsNav %} active {% endblock %}
-
 {% block auth-content %}
-    <div class="container">
-        <div class="alert alert-fail" role="alert">
-            <p>Please let us know why you are rejecting this request.</p>
-            <div class="spacer-10"></div>
-            <form action="{% url 'rejectmessage' reservation.pk %}" method="post" >
-                {% csrf_token %}
-                Message: <input type="text" name="message" required>
-                <button type="submit" class="btn btn-primary">submit</button>
-            </form>
-        </div>
-        <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</a>
+    <div id="reservation-reject-box" class="auth-box">
+        <form role="form" action="." method="post">
+            {% csrf_token %}
+            {% load errors %}
+            {% errors form %}
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Reject Reservation</h3>
+                        </div>
+                    </div>
+                    <div class="spacer-25"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Please provide a reason for rejecting this reservation
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.message|add_attrs:"{'class':'form-control no-resize','rows':'3','placeholder':'Reject reason'}" }}
+                        </div>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <div class="row pull-right">
+                        <div class="col-md-12">
+                            <a class="btn btn-link" href="{% url "reservation" %}">Cancel</a>
+                            <button type=" submit" class="btn btn-primary">Reject</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}

@@ -27,11 +27,12 @@ def home(request):
         user = request.user
         toolsToShow = 6;
         shedsToShow = 3;
-        temp_list = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(owner__address__zip__startswith = user.address.zip)
+        temp_list = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
+            owner__address__zip__startswith=user.address.zip)
         temp_list = temp_list.order_by('pk')
         temp_list = temp_list.reverse()[:toolsToShow]
 
-        temp2_list = Shed.objects.exclude(owner_id=user).filter(owner__address__zip__startswith = user.address.zip)
+        temp2_list = Shed.objects.exclude(owner_id=user).filter(owner__address__zip__startswith=user.address.zip)
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
@@ -80,7 +81,8 @@ def browsetool(request):
 
     """
     user = request.user
-    tools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(owner__address__zip__startswith = user.address.share_zone)
+    tools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
+        owner__address__zip__startswith=user.address.share_zone)
     maxToolsPerPage = 12
     minToolsPerPage = 1
     paginator = Paginator(tools, maxToolsPerPage, minToolsPerPage)
@@ -172,28 +174,28 @@ def approve(request, reservation_id):
 
 
 @login_required()
-@require_POST
 def reject(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
-    return render(request, 'reject_reservation.html', RequestContext(request, {'reservation': reservation}))
 
+    if request.method == 'POST':
+        form = forms.RejectReservationForm(instance=reservation, data=request.POST)
 
-@login_required()
-@require_POST
-def rejectmessage(request, reservation_id):
-    reservation = Reservation.objects.get(pk=reservation_id)
-    reservation.status = 'R'
-    reservation.message = request.POST['message']
-    reservation.save()
+        if form.is_valid():
+            form.save()
 
-    # Send the user who requested to borrow the tool an email
-    subject = '[ToolShare] %(owner)s rejected your request' % {'owner': reservation.tool.owner.get_short_name()}
-    message = render_to_string('email/reservation_rejected.html', {'reservation': reservation})
-    reservation.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
-    messages.success(request, '%(borrower)s\'s request to borrow %(tool)s was rejected.' % {
-        'borrower': reservation.user.get_short_name(), 'tool': reservation.tool.name})
+            # Send the user who requested to borrow the tool an email
+            subject = '[ToolShare] %(owner)s rejected your request' % {'owner': reservation.tool.owner.get_short_name()}
+            message = render_to_string('email/reservation_rejected.html', {'reservation': reservation})
+            reservation.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+            messages.success(request, '%(borrower)s\'s request to borrow %(tool)s was rejected.' % {
+                'borrower': reservation.user.get_short_name(), 'tool': reservation.tool.name})
 
-    return redirect(reverse_lazy('reservation'))
+            return redirect(reverse_lazy('reservation'))
+        else:
+            return render(request, 'reject_reservation.html', RequestContext(request, {'form': form}))
+
+    form = forms.RejectReservationForm(instance=reservation)
+    return render(request, 'reject_reservation.html', RequestContext(request, {'form': form}))
 
 
 @login_required()
@@ -211,7 +213,8 @@ def requestsend(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         reservation = paginator.page(paginator.num_pages)
-    return render(request, 'Reservation_me.html', RequestContext(request, {'reservation': reservation,'reservationA': reservationA}))
+    return render(request, 'Reservation_me.html',
+                  RequestContext(request, {'reservation': reservation, 'reservationA': reservationA}))
 
 
 @login_required()
