@@ -9,12 +9,20 @@
         Since {{ reservation.tool.name }} is currently in a community shed, your request to borrow it
         from {{ reservation.from_date|date }} to {{ reservation.to_date|date }} was auto-approved.
     </p>
-    <p>
-        Tool Location:
     <div>
-        {{ reservation.tool.address.get_multi_line }}
+        <div>
+            <h4>Tool Location*</h4>
+            {{ reservation.tool.address.get_multi_line }}
+        </div>
+        <span class="note">* Tool's location may change between now and when you pick it up. Please be sure to check
+        {{ site }} for the most current location of the tool.</span>
     </div>
-    </p>
+    <div>
+        <div>
+            <h4>Tool Owner's Pickup Preference: </h4>
+            <span class="italics">{{ reservation.tool.pickupArrangement }}</span>
+        </div>
+    </div>
     <p>
         Cheers,<br/>
         The ToolShare Team
