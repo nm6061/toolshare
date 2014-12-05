@@ -43,3 +43,7 @@ a.thumbnail:focus,
 a.thumbnail.active {
   border-width: 2px;
 }
+
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}
