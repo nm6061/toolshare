@@ -12,7 +12,6 @@ class Tool(models.Model):
     STATUS = (
         ('A', 'Available'),
         ('D', 'Deactivated'),
-        ('L', 'Lent out'),
     )
 
     LOCATION = (
