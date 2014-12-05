@@ -1,108 +1,95 @@
 {% extends "auth_base.html" %}
-
 {% block title %}Reservations{% endblock %}
-
 {% block RequestsNav %} active {% endblock %}
-
 {% block auth-content %}
     <h1 class="page-header">Reservation History</h1>
-
     <div class="container">
-        <div class="spacer-20"></div>
-        {% if reservations1 %}
-            <table class="table table-striped">
-                <thead>
-                <h3>Reject Requests</h3>
-                <tr>
-                    <th>Tool Name</th>
-                    <th>Requested By</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Message</th>
-
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for reservation in reservations1 %}
+        {% if reservations1 or reservation2 or reservation3 %}
+            {% if reservations3 %}
+                <h2 class="sub-header">Reservations Requests <u>I've Made</u></h2>
+                <div class="spacer-15"></div>
+                <h3>Cancelled Reservations</h3>
+                <div class="spacer-10"></div>
+                <table class="table table-striped">
+                    <thead>
                     <tr>
-                        <td>{{ reservation.tool.name }}</td>
-                        <td>{{ reservation.user.get_full_name }}</td>
-                        <td>{{ reservation.from_date }}</td>
-                        <td>{{ reservation.to_date }}</td>
-                        <td>{{ reservation.message }}</td>
-
+                        <th>Tool Name</th>
+                        <th>Tool Owner</th>
+                        <th>From</th>
+                        <th>To</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations3 %}
+                        <tr>
+                            <td>{{ reservation.tool.name }}</td>
+                            <td>{{ reservation.tool.owner.get_full_name }}</td>
+                            <td>{{ reservation.from_date }}</td>
+                            <td>{{ reservation.to_date }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="spacer-30"></div>
+            {% endif %}
+            {% if reservations1 or reservation2 %}
+                <h2 class="sub-header">Reservations Requests <u>I've Had</u></h2>
+                <div class="spacer-15"></div>
+                {% if reservations1 %}
+                    <h3>Rejected Reservations</h3>
+                    <div class="spacer-10"></div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Tool Name</th>
+                            <th>Requested By</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Message</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for reservation in reservations1 %}
+                            <tr>
+                                <td>{{ reservation.tool.name }}</td>
+                                <td>{{ reservation.user.get_full_name }}</td>
+                                <td>{{ reservation.from_date }}</td>
+                                <td>{{ reservation.to_date }}</td>
+                                <td>{{ reservation.message }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                <div class="spacer-10"></div>
+                {% if reservations2 %}
+                    <h3>Approved Reservations</h3>
+                    <div class="spacer-10"></div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Tool Name</th>
+                            <th>Requested By</th>
+                            <th>From</th>
+                            <th>To</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for reservation in reservations2 %}
+                            <tr>
+                                <td>{{ reservation.tool.name }}</td>
+                                <td>{{ reservation.user.get_full_name }}</td>
+                                <td>{{ reservation.from_date }}</td>
+                                <td>{{ reservation.to_date }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endif %}
         {% else %}
             <div class="alert alert-info" role="alert">
-                You have no <strong>Reject Requests History</strong> for Reservation.
-            </div>
-        {% endif %}
-
-        <div class="spacer-50"></div>
-        {% if reservations2 %}
-            <table class="table table-striped">
-                <thead>
-                <h3>Approved Requests</h3>
-                <tr>
-                    <th>Tool Name</th>
-                    <th>Requested By</th>
-                    <th>From</th>
-                    <th>To</th>
-
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for reservation in reservations2 %}
-                    <tr>
-                        <td>{{ reservation.tool.name }}</td>
-                        <td>{{ reservation.user.get_full_name }}</td>
-                        <td>{{ reservation.from_date }}</td>
-                        <td>{{ reservation.to_date }}</td>
-
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                You have no <strong>Approved Requests History</strong> for Reservation.
-            </div>
-        {% endif %}
-
-        <div class="spacer-50"></div>
-        {% if reservations3 %}
-            <table class="table table-striped">
-                <thead>
-                <h3>Cancel Requests</h3>
-                <tr>
-                    <th>Tool Name</th>
-                    <th>Requested By</th>
-                    <th>From</th>
-                    <th>To</th>
-
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for reservation in reservations3 %}
-                    <tr>
-                        <td>{{ reservation.tool.name }}</td>
-                        <td>{{ reservation.user.get_full_name }}</td>
-                        <td>{{ reservation.from_date }}</td>
-                        <td>{{ reservation.to_date }}</td>
-
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                You have no <strong>Cancel Requests History</strong> for Reservation.
+                You do not have a reservation history yet.
             </div>
         {% endif %}
     </div>
