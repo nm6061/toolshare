@@ -5,8 +5,10 @@
 {% block RequestsNav %} active {% endblock %}
 
 {% block auth-content %}
-    <div class="alert alert-success" role="alert">
-        <p><strong>Done,</strong> a request to cancel your {{ reservation.tool.name }} was cancelled.</p>
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            <p>Your request to borrow the {{ reservation.tool.name }} has been cancelled.</p>
+        </div>
+        <a type="button" class="btn btn-link" href="{% url "Reservation_me" %}">Back</a>
     </div>
-    <a type="button" class="btn btn-link" href="{% url "Reservation_me" %}">Back</a>
 {% endblock %}

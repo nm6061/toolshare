@@ -4,7 +4,7 @@
 {% block ShedsNav %} active {% endblock %}
 {% block auth-content %}
     <h1 class="page-header">{{ shed }} Details</h1>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-1">
                 <strong>Owner</strong>
@@ -67,9 +67,11 @@
         {% endif %}
     </div>
     <div class="spacer-25"></div>
-    <h4>Tools In The Community Shed</h4>
-    <div class="spacer-25"></div>
+
     <div class="container">
+        <div class="spacer-25"></div>
+        <h4>Tools In The Community Shed</h4>
+
         <div class="row">
             {% if tools %}
                 {% for tool in tools %}

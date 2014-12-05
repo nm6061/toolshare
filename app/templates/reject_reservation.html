@@ -5,13 +5,16 @@
 {% block RequestsNav %} active {% endblock %}
 
 {% block auth-content %}
-    <div class="alert alert-fail" role="alert">
-        <p><strong>Please</strong> leave a comment for reject</p>
-        <form action="{% url 'rejectmessage' reservation.pk %}" method="post" >
-                    {% csrf_token %}
-            Message: <input type="text" name="message" required>
-            <button type="submit" class="btn btn-primary">submit</button>
-        </form>
+    <div class="container">
+        <div class="alert alert-fail" role="alert">
+            <p>Please let us know why you are rejecting this request.</p>
+            <div class="spacer-10"></div>
+            <form action="{% url 'rejectmessage' reservation.pk %}" method="post" >
+                {% csrf_token %}
+                Message: <input type="text" name="message" required>
+                <button type="submit" class="btn btn-primary">submit</button>
+            </form>
+        </div>
+        <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</a>
     </div>
-    <a type="button" class="btn btn-link" href="{% url "reservation" %}">Back</a>
 {% endblock %}
