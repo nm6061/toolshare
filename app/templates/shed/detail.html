@@ -6,7 +6,7 @@
     <h1 class="page-header">{{ shed }} Details</h1>
     <div class="container">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <strong>Owner</strong>
             </div>
             <div class="col-md-10">
@@ -15,7 +15,7 @@
         </div>
         <div class="spacer-5"></div>
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <strong>Registered On</strong>
             </div>
             <div class="col-md-10">
@@ -24,10 +24,10 @@
         </div>
         <div class="spacer-5"></div>
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <strong>Address</strong>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 {{ shed.address.get_multi_line }}
             </div>
         </div>
@@ -70,7 +70,7 @@
 
     <div class="container">
         <div class="spacer-25"></div>
-        <h4>Tools In The Community Shed</h4>
+        <h4>Tools In This Community Shed</h4>
 
         <div class="row">
             {% if tools %}
