@@ -176,12 +176,12 @@
                         <div class="col-md-12" >
                             <div class="spacer-15"></div>
                             <label for="id_picture">Keep the existing picture or upload a new picture</label>
-                            <input  type="file" accept="image/*" name="picture" onchange="imagePreview(this)" />
+                            <input type="file" accept="image/*" id="id_picture" name="picture" onchange="imagePreview(this)" />
                             <div id="toolThumbnail" class="thumbnail" style=" display: none ">
                                 <img id="thumbnail" src="">
                             </div>
                             <p class="formErrorMessage">{{ updateform.picture.errors|striptags }}</p>
-                            {{ updateform.picture.errors }}
+                            {{ updateform.picture.errors|striptags }}
                             <div class="spacer-15"></div>
 
                             <label for="id_name">Name of the tool</label>
