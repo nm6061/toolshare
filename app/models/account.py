@@ -90,7 +90,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     is_active = models.BooleanField('is active', default=False)
-    date_joined = models.DateTimeField('Date joined', default=timezone.now)
+    date_joined = models.DateField('Date joined', auto_now_add=True)
     first_name = models.CharField('first name', max_length=30, validators=[AlphabetOnlyValidator()])
     last_name = models.CharField('last name', max_length=30, blank=True, validators=[AlphabetOnlyValidator()])
     phone_num = models.CharField('phone number', max_length=11, blank=True, validators=[

@@ -5,7 +5,7 @@ from app.models.account import *
 
 class Shed(models.Model):
     name = models.CharField(max_length=100, unique=True, blank=False)
-    registered_on = models.DateTimeField(auto_now_add=True)
+    registered_on = models.DateField(auto_now_add=True)
 
     # Foreign keys
     owner = models.ForeignKey(User)
