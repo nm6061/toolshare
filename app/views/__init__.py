@@ -223,7 +223,11 @@ def cancel(request, reservation_id):
     reservation = models.Reservation.objects.get(pk=reservation_id)
     reservation.status = 'C'
     reservation.save()
-    return render(request, 'cancel_reservation.html', RequestContext(request, {'reservation': reservation}))
+
+    messages.success(request,
+                     'Request to borrow %(tool)s was successfully cancelled.' % {'tool': reservation.tool.name})
+
+    return redirect(reverse_lazy('Reservation_me'))
 
 
 @login_required()
