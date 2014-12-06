@@ -6,10 +6,10 @@
     </p>
     <p>
         {{ reservation.user.get_full_name }} has requested to borrow your {{ reservation.tool.name }}
-        from {{ reservation.from_date|date }} to {{ reservation.to_date|date }}. Please sign in to ToolShare to approve
-        (or reject)* this request.
+        from {{ reservation.from_date|date }} to {{ reservation.to_date|date }}. Please sign in to ToolShare to repond*
+        this request.
     </p>
-    <span class="note">* If the request is not approved (or rejected) before {{ reservation.from_date|date }}, it will be
+    <span class="note">* If the request is not acted upon before {{ reservation.from_date|date }}, it will be
         automatically rejected.
     </span>
     <p>

@@ -11,10 +11,9 @@
         from {{ reservation.from_date|date }} to {{ reservation.to_date|date }}.
     </p>
     <p>
-        The reason quoted by the tool owner was <span class="italics">{{ reservation.message }}</span>.
+        The reason quoted by the tool owner was "{{ reservation.message }}"</span>
     </p>
     <p>
-        Cheers,<br/>
         The ToolShare Team
     </p>
 {% endblock %}
