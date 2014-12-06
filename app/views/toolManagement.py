@@ -198,7 +198,6 @@ def toolbox(request, tool_filter):
         toolList = Tool.objects.filter(owner_id=user).filter(location='H')
     elif tool_filter == 'shedtools':
         toolList = Tool.objects.filter(owner_id=user).filter(location='S')
-   
     else:
         toolList = Tool.objects.filter(owner_id=user)
     paginator = Paginator(toolList, 12, 1)

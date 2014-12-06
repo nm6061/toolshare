@@ -36,19 +36,22 @@
                 </tr>-->
                             <div class="toolList">
                                 <div class="col-sm-2">
-                                    <div class="toolStatusIndicator">
-                                        {% if u1.status == 'D' %}
-                                            <p class="tooltips label label-danger">D<span>Tool deactivated</span></p>
-                                        {% elif u1.status == 'L' %}
-                                            <p class="tooltips label label-warning">L<span>Currently lent out</span></p>
-                                        {% else %}
-                                            <p class="tooltips label label-success">A<span>Tool available!</span></p>
-                                        {% endif %}
-                                    </div>
                                     <figure>
                                         <div id="toolThumbnail">
 
                                             <a href="{% url "toolManagement:viewTool" u1.id %}" class="thumbnail">
+                                                <div class="tool_status_label">
+                                                    {% if u1.get_days_until_available == 0 %}
+                                                        <span class="label label-success toolstatus"> Available </span>
+                                                        <span class="tooltips">Tool is available!</span>
+                                                    {% elif u1.get_days_until_available == 1 %}
+                                                        <span class="label label-warning toolstatus"> {{ ul.get_next_available_date }} </span>
+                                                        <span class="tooltips">Tool will be available starting tomorrow!</span>
+                                                    {% elif u1.get_days_until_available > 1 %}
+                                                        <span class="label label-warning toolstatus"> {{ ul.get_next_available_date }} </span>
+                                                        <span class="tooltips">Tool will be available in {{ u1.get_days_until_available }} days!</span>
+                                                    {% endif %}
+                                                </div>
                                                 <img class="img-square" src="{{u1.picture.url}}" alt="{{u1.name}}">
                                             </a>
 

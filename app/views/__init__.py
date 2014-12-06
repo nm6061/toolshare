@@ -17,8 +17,8 @@ from django.db.models import Count
 from app.models import User
 from app.models import Shed
 import datetime
+import operator
 
-import pdb
 
 
 def home(request):
@@ -81,8 +81,16 @@ def browsetool(request):
 
     """
     user = request.user
-    tools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
+    temptools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
         owner__address__zip__startswith=user.address.share_zone)
+
+    toolavailability = dict()
+
+    for tool in temptools:
+       toolavailability[tool] = tool.get_days_until_available()
+
+    tools = sorted(toolavailability.items(), key=operator.itemgetter(1))
+
     maxToolsPerPage = 12
     minToolsPerPage = 1
     paginator = Paginator(tools, maxToolsPerPage, minToolsPerPage)

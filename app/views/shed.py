@@ -5,7 +5,7 @@ from django.views.generic import FormView, TemplateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import HttpResponseRedirect
-
+import operator
 from app.forms.shed import *
 from app.views.edit import FormsetView
 
@@ -54,7 +54,15 @@ class ShedDetailView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         shed = Shed.objects.get(pk=kwargs['shed_id'])
-        paginator = Paginator(shed.tool_set.all(), 12, 1)
+        temptools = shed.tool_set.all()
+        toolavailability = dict()
+
+        for tool in temptools:
+           toolavailability[tool] = tool.get_days_until_available()
+
+        sortedTools = sorted(toolavailability.items(), key=operator.itemgetter(1))
+
+        paginator = Paginator(sortedTools, 12, 1)
         page = request.GET.get('page', 1)
 
         try:

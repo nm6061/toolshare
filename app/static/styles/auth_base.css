@@ -255,45 +255,41 @@ figcaption {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-
-.toolStatusIndicator{
-    width: auto;
-    float: right;
-    clear: both;
-    margin-bottom: -30px;
-    position: relative;
-    right: 1px;
-    font-size: 120%;
-}
-
 .Inactive{
     opacity: .5;
 }
 
-p.tooltips {
+.tool_status_label{
+    width: 100%;
     position: relative;
-    border-radius: 20px;
-    top: 2px;
-    cursor: default;
-    right: 1px;
+    text-align: center;
 }
 
-p.tooltips span {
+.toolstatus{
+    width:100%;
+    font-size: 90%;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.tooltips {
+    width: 150px;
     position: absolute;
-    width:120px;
+    padding: 5px;
     color: #FFFFFF;
     background: darkslategray;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
+    line-height: 25px;
     visibility: hidden;
     border-radius: 6px;
-    opacity: 0.7;
-    bottom: 33px;
-    left: -50px;
+    opacity: 0.8;
+    bottom: 13px;
+    right: -20px;
 }
 
-p.tooltips span:after {
+.tooltips:after {
     content: '';
     position: absolute;
     top: 100%;
@@ -305,18 +301,8 @@ p.tooltips span:after {
     border-left: 8px solid transparent;
 }
 
-p:hover.tooltips span {
+.toolstatus:hover + .tooltips {
     visibility: visible;
-}
-
-.toolstatus{
-    width:100%;
-    font-size: 90%;
-    float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: default;
 }
 
 .suggestions{

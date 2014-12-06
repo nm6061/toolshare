@@ -39,13 +39,20 @@
                         <figure>
                             <div id="toolThumbnail" >
                                 <a href="{% url "toolManagement:updateTool" tool.id %}" class="thumbnail {% if tool.status == 'D' %}Inactive{% endif %}">
-                                    {% if tool.status == 'D' %}
-                                        <span class="toolstatus label label-danger" title="Deactivated">Deactivated</span>
-                                    {% elif tool.status == 'L' %}
-                                        <span class="toolstatus label label-warning" title="Lent Out">Lent Out</span>
-                                    {% else %}
-                                        <span class="toolstatus label label-success" title="Active">Active</span>
-                                    {% endif %}
+                                    <div class="tool_status_label">
+                                        {% if tool.status == 'D' %}
+                                            <span class="label label-danger toolstatus"> Deactivated </span>
+                                            <span class="tooltips">Tool is deactivated</span>
+                                        {% elif tool.status == 'A' %}
+                                            {% if tool.get_days_until_available == 0 %}
+                                                <span class="label label-success toolstatus"> Active </span>
+                                                <span class="tooltips">Tool is active</span>
+                                            {% elif tool.get_days_until_available > 0 %}
+                                                <span class="label label-warning toolstatus"> Lent Out </span>
+                                                <span class="tooltips">Tool is lent out until {{ tool.get_next_available_date }}</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
                                     <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
                                 </a>
                             </div>
