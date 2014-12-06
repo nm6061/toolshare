@@ -110,22 +110,24 @@ def browsetool(request):
 def presentstatistics(request):
     # presentstatistics= Reservation.objects.order_by('tool')
     user = request.user
+    toolsToShow = 10
     temp_list = Reservation.objects.filter(
             tool__owner__address__zip__startswith=user.address.zip).values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
-    popular_tool_list = list()
+    popular_tool_list = list()[:toolsToShow]
     for iter_tool in temp_list:
         popular_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).filter().get())
 
-    user = request.user
+    borrowersToShow = 10
     temp2_list = Reservation.objects.filter(
             user__address__zip__startswith=user.address.zip).values('user').distinct().annotate(total=Count('user')).order_by('-total')
-    popular_borrower_list = list()
+    popular_borrower_list = list()[:borrowersToShow]
     for iter_tool in temp2_list:
         popular_borrower_list.append(User.objects.filter(id=iter_tool['user']).get())
 
+    lendersToShow = 10
     temp3_list = Tool.objects.filter(
             owner__address__zip__startswith=user.address.zip).values('owner').distinct().annotate(total=Count('owner')).order_by('-total')
-    popular_lender_list = list()
+    popular_lender_list = list()[:lendersToShow]
     for iter_tool in temp3_list:
         popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
 
