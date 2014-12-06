@@ -17,7 +17,7 @@
                     <th>Tool Name</th>
                     <th>From</th>
                     <th>To</th>
-                    <th>Status</th>
+                    <!--<th>Status</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -26,7 +26,7 @@
                         <td>{{ reservation.tool.name }}</td>
                         <td>{{ reservation.from_date }}</td>
                         <td>{{ reservation.to_date }}</td>
-                        <td>{{ reservation.status }}</td>
+                        <!--<td>{{ reservation.status }}</td>-->
                         <td>
                             <form action="{% url 'cancel' reservation.pk %}" method="POST">
                                 {% csrf_token %}
@@ -54,7 +54,7 @@
                     <th>Tool Name</th>
                     <th>From</th>
                     <th>To</th>
-                    <th>Status</th>
+                    <!--<th>Status</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -63,7 +63,7 @@
                         <td>{{ reservation.tool.name }}</td>
                         <td>{{ reservation.from_date }}</td>
                         <td>{{ reservation.to_date }}</td>
-                        <td>{{ reservation.status }}</td>
+                        <!--<td>{{ reservation.status }}</td>-->
                     </tr>
                 {% endfor %}
                 </tbody>
