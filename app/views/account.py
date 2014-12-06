@@ -163,9 +163,15 @@ class UpdateAccountView(FormsetView):
     template_name = 'account/update.html'
     success_url = reverse_lazy('account:update')
     success_message = 'Your ToolShare account was successfully updated.'
-    failure_message = 'You cannot move when one or more of your tools have unresolved future reservations. Please ' \
-                      '<a href="%(r)s" title="View reservations for my tools">cancel</a> these reservations and try ' \
-                      'again.'
+    failure_message = \
+        '''
+        One or more reasons listed below is <strong>preventing</strong> the change from being saved:
+        <ul>
+            <li>You have <strong>borrowed tools</strong> in your possession that need to be returned.</li>
+            <li>You have <strong>tools in the community shed</strong> that you need to collect.</li>
+            <li>You have <strong>unresolved future reservations</strong>.</li>
+        </ul>
+        '''
     form_class = UpdateUserForm
     formset_class = UpdateAddressFormSet
 
@@ -204,7 +210,7 @@ class UpdateAccountView(FormsetView):
         return super(UpdateAccountView, self).dispatch(request, *args, **kwargs)
 
     def is_relocation_allowed(self, prev_sz, curr_sz, user):
-        if prev_sz != curr_sz and user.get_unresolved_future_reservations():
+        if prev_sz != curr_sz and not user.is_ready_to_move():
             return False
         return True
 

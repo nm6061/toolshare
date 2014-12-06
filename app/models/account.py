@@ -1,5 +1,6 @@
 import datetime, hashlib, random, re
 from datetime import date
+from itertools import chain
 from django.core.validators import *
 from django.utils import timezone, html
 from django.conf import settings
@@ -124,12 +125,14 @@ class User(AbstractBaseUser):
     def email_user(self, subject, message, from_addr):
         send_email(subject, message, [self.email], from_addr)
 
-    def get_unresolved_future_reservations(self):
-        reservations = []
+    def is_ready_to_move(self):
+        is_ready = True
         for tool in self.tool_set.all():
-            reservations = reservations + list(
-                tool.reservation_set.filter(from_date__gte=datetime.date.today(), status='A'))
-        return reservations
+            is_ready = tool.is_ready_to_move()
+            if not is_ready:
+                break
+
+        return is_ready
 
     @property
     def share_zone(self):
