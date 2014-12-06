@@ -6,9 +6,9 @@
     <div class="container">
         {% if reservations1 or reservation2 or reservation3 %}
             {% if reservations3 %}
-                <h2 class="sub-header">Reservations Requests <u>I've Made</u></h2>
+                <!--<h2 class="sub-header">Reservations Requests <u>I've Made</u></h2>-->
                 <div class="spacer-15"></div>
-                <h3>Cancelled Reservations</h3>
+                <h2>Cancelled Reservations</h2>
                 <div class="spacer-10"></div>
                 <table class="table table-striped">
                     <thead>
@@ -33,7 +33,7 @@
                 <div class="spacer-30"></div>
             {% endif %}
             {% if reservations1 or reservation2 %}
-                <h2 class="sub-header">Reservations Requests <u>I've Had</u></h2>
+                <!--<h2 class="sub-header">Reservations Requests <u>I've Had</u></h2>-->
                 <div class="spacer-15"></div>
                 {% if reservations1 %}
                     <h3>Rejected Reservations</h3>
@@ -63,7 +63,7 @@
                 {% endif %}
                 <div class="spacer-10"></div>
                 {% if reservations2 %}
-                    <h3>Approved Reservations</h3>
+                    <h4>Approved Reservations</h4>
                     <div class="spacer-10"></div>
                     <table class="table table-striped">
                         <thead>

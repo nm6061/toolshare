@@ -137,7 +137,7 @@ def presentstatistics(request):
 @login_required()
 def reservation(request):
     reservations = Reservation.objects.filter(tool__owner=request.user, status='P')
-    reservations1 = Reservation.objects.filter(tool__owner=request.user, status='A')
+    # reservations1 = Reservation.objects.filter(tool__owner=request.user, status='A')
 
 
     paginator = Paginator(reservations, 5)  # Show 25 reservations per page
@@ -152,8 +152,8 @@ def reservation(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         reservations = paginator.page(paginator.num_pages)
 
-    return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations,
-                                                                        'reservations1': reservations1}))
+    return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
+                                                                       # 'reservations1': reservations1
 
 
 @login_required()
@@ -239,20 +239,6 @@ def cancel(request, reservation_id):
                      'Request to borrow %(tool)s was successfully cancelled.' % {'tool': reservation.tool.name})
 
     return redirect(reverse_lazy('Reservation_me'))
-
-
-@login_required()
-@require_POST
-def abc(request, reservation_id):
-    reservation = models.Reservation.objects.get(pk=reservation_id)
-    reservation.status = 'C'
-    reservation.save()
-
-    messages.success(request,
-                     'Request to borrow %(tool)s was successfully cancelled.' % {'tool': reservation.tool.name})
-
-    return redirect(reverse_lazy('reservation'))
-
 
 
 @login_required()

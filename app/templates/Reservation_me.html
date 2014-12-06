@@ -12,7 +12,7 @@
         {% if reservation %}
             <table class="table table-striped">
                 <thead>
-                <h3>Request Still Pending</h3>
+                <h2>Request Still Pending</h2>
                 <tr>
                     <th>Tool Name</th>
                     <th>From</th>
@@ -21,13 +21,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for reservations1 in reservation %}
+                {% for reservation in reservation %}
                     <tr>
                         <td>{{ reservation.tool.name }}</td>
                         <td>{{ reservation.from_date }}</td>
                         <td>{{ reservation.to_date }}</td>
                         <td>{{ reservation.status }}</td>
+                        <td>
+                            <form action="{% url 'cancel' reservation.pk %}" method="POST">
+                                {% csrf_token %}
 
+                                <button type="submit" class="btn btn-primary">Cancel</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -43,7 +49,7 @@
         {% if reservation %}
             <table class="table table-striped">
                 <thead>
-                <h3>Request Approved</h3>
+                <h2>Request Approved</h2>
                 <tr>
                     <th>Tool Name</th>
                     <th>From</th>
