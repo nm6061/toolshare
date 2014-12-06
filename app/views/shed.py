@@ -41,7 +41,7 @@ class IndexShedView(TemplateView):
     template_name = 'shed/index.html'
 
     def get(self, request, *args, **kwargs):
-        sheds = Shed.objects.all()
+        sheds = Shed.objects.filter(address__zip__startswith = request.user.share_zone)
         return self.render_to_response(self.get_context_data(sheds=sheds))
 
     @method_decorator(login_required)
