@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from app.models import Tool
 import app.constants
+import datetime
 
 class Reservation(models.Model):
     class Meta:
@@ -20,3 +21,13 @@ class Reservation(models.Model):
 
     def reject_reservation(self):
         return self.user.username
+
+    def get_dates_covered(self):
+        startDate = self.from_date
+        endDate = self.to_date
+        addOneDay = datetime.timedelta(days=1)
+        datesCovered = []
+        while startDate <= endDate:
+            datesCovered.append(startDate)
+            startDate += addOneDay
+        return datesCovered

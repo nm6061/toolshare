@@ -4,6 +4,7 @@ from imagekit.models import ProcessedImageField
 from pilkit.processors import Resize
 from app.models.shed import Shed
 import app.constants
+import datetime
 
 class Tool(models.Model):
     class Meta:
@@ -56,6 +57,35 @@ class Tool(models.Model):
         else:
             return False
 
+    def get_next_available_date(self):
+        reservations = self.reservation_set.exclude(status='C').exclude(status='CL').exclude(status='O').\
+            exclude(status='P').exclude(status='R')
+        blackoutdates = self.blackoutdate_set.all()
+        availableDate = datetime.date.today()
+        addOneDay = datetime.timedelta(days=1)
+        setOfDates = set()
+
+        for res in reservations:
+            setOfDates = setOfDates.union(res.get_dates_covered())
+
+        for bd in blackoutdates:
+            setOfDates = setOfDates.union(bd.get_dates_covered())
+
+        unavailableDates = sorted(setOfDates)
+
+        for date in unavailableDates:
+            while availableDate == date:
+                availableDate = date + addOneDay
+
+        return availableDate
+
+
+    def get_days_until_available(self):
+        today = datetime.date.today()
+        delta = (self.get_next_available_date() - today).days
+        return delta
+
+
     @property
     def address(self):
         if self.location == 'S':
@@ -70,3 +100,13 @@ class BlackoutDate(models.Model):
     tool = models.ForeignKey(Tool)
     blackoutStart = models.DateField('From date')
     blackoutEnd = models.DateField('To date')
+
+    def get_dates_covered(self):
+        startDate = self.blackoutStart
+        endDate = self.blackoutEnd
+        addOneDay = datetime.timedelta(days=1)
+        datesCovered = []
+        while startDate <= endDate:
+            datesCovered.append(startDate)
+            startDate += addOneDay
+        return datesCovered
