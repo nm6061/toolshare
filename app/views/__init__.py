@@ -136,7 +136,7 @@ def presentstatistics(request):
 
 @login_required()
 def reservation(request):
-    reservations = Reservation.objects.filter(tool__owner=request.user, status='P')
+    reservations = Reservation.objects.filter(Q(status='P') | Q(status='A'),tool__owner=request.user)
     # reservations1 = Reservation.objects.filter(tool__owner=request.user, status='A')
 
 
@@ -183,6 +183,15 @@ def approve(request, reservation_id):
 
     return redirect(reverse_lazy('reservation'))
 
+
+@login_required()
+@require_POST
+def abc(request, reservation_id):
+    reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'C'
+    reservation.save()
+
+    return redirect(reverse_lazy('reservation'))
 
 @login_required()
 def reject(request, reservation_id):
