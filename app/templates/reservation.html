@@ -27,13 +27,13 @@
                                 <td class="vert-align">{{ reservation.to_date }}</td>
                                 <td>
                                     {% if reservation.status == 'P' %}
-                                        <form action="{% url 'approve' reservation.pk %}" method="POST" class="pull-right">
+                                        <form action="{% url 'approve' reservation.pk %}" method="POST">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-primary">Approve</button>
                                             <a href="{% url "reject" reservation.pk %}" class="btn btn-link">Reject</a>
                                         </form>
                                     {% elif reservation.status == 'A' %}
-                                        <form action="{% url 'abc' reservation.pk %}" method="POST" class="pull-right">
+                                        <form action="{% url 'abc' reservation.pk %}" method="POST">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-primary">Cancel</button>
                                         </form>

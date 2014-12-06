@@ -15,6 +15,7 @@
                 <h2>Request Still Pending</h2>
                 <tr>
                     <th>Tool Name</th>
+                    <th>Tool owner</th>
                     <th>From</th>
                     <th>To</th>
                     <!--<th>Status</th>-->
@@ -24,6 +25,7 @@
                 {% for reservation in reservation %}
                     <tr>
                         <td>{{ reservation.tool.name }}</td>
+                        <td>{{ reservation.user.get_full_name }}</td>
                         <td>{{ reservation.from_date }}</td>
                         <td>{{ reservation.to_date }}</td>
                         <!--<td>{{ reservation.status }}</td>-->
@@ -52,6 +54,7 @@
                 <h2>Request Approved</h2>
                 <tr>
                     <th>Tool Name</th>
+                    <th>Tool owner</th>
                     <th>From</th>
                     <th>To</th>
                     <!--<th>Status</th>-->
@@ -61,6 +64,7 @@
                 {% for reservation in reservationA %}
                     <tr>
                         <td>{{ reservation.tool.name }}</td>
+                        <td>{{ reservation.user.get_full_name }}</td>
                         <td>{{ reservation.from_date }}</td>
                         <td>{{ reservation.to_date }}</td>
                         <!--<td>{{ reservation.status }}</td>-->
