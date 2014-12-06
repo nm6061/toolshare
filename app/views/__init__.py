@@ -27,12 +27,12 @@ def home(request):
         user = request.user
         toolsToShow = 6;
         shedsToShow = 3;
-        temp_list = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
+        temp_list = Tool.objects.exclude(status='D').filter(
             owner__address__zip__startswith=user.address.zip)
         temp_list = temp_list.order_by('pk')
         temp_list = temp_list.reverse()[:toolsToShow]
 
-        temp2_list = Shed.objects.exclude(owner_id=user).filter(owner__address__zip__startswith=user.address.zip)
+        temp2_list = Shed.objects.filter(owner__address__zip__startswith=user.address.zip)
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
