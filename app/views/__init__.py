@@ -137,6 +137,8 @@ def presentstatistics(request):
 @login_required()
 def reservation(request):
     reservations = Reservation.objects.filter(tool__owner=request.user, status='P')
+    reservations1 = Reservation.objects.filter(tool__owner=request.user, status='A')
+
 
     paginator = Paginator(reservations, 5)  # Show 25 reservations per page
 
@@ -150,7 +152,8 @@ def reservation(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         reservations = paginator.page(paginator.num_pages)
 
-    return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
+    return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations,
+                                                                        'reservations1': reservations1}))
 
 
 @login_required()

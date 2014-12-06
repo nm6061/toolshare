@@ -21,19 +21,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for reservation in reservation %}
+                {% for reservations1 in reservation %}
                     <tr>
                         <td>{{ reservation.tool.name }}</td>
                         <td>{{ reservation.from_date }}</td>
                         <td>{{ reservation.to_date }}</td>
                         <td>{{ reservation.status }}</td>
-                        <td>
-                            <form action="{% url 'cancel' reservation.pk %}" method="POST">
-                                {% csrf_token %}
 
-                                <button type="submit" class="btn btn-primary">Cancel</button>
-                            </form>
-                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

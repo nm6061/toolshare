@@ -80,4 +80,42 @@
             </div>
         {% endif %}
     </div>
+    <h1 class="page-header">Requests Approved which is currently Active</h1>
+    <div class="spacer-20"></div>
+    <div class="container">
+        {% if reservations %}
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-lg-2">Tool Name</th>
+                        <th class="col-lg-1">Requested By</th>
+                        <th class="col-lg-1">From</th>
+                        <th class="col-lg-1">To</th>
+                        <th class="col-lg-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations1 %}
+                    <tr>
+                        <td class="vert-align">{{ reservation.tool.name }}</td>
+                        <td class="vert-align">{{ reservation.user.get_full_name }}</td>
+                        <td class="vert-align">{{ reservation.from_date }}</td>
+                        <td class="vert-align">{{ reservation.to_date }}</td>
+                        <td>
+                            <form action="{% url 'cancel' reservation.pk %}" method="POST">
+                                {% csrf_token %}
+
+                                <button type="submit" class="btn btn-primary">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        </div>
+
 {% endblock %}
