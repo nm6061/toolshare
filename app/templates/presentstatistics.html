@@ -9,7 +9,8 @@
         <div class="container">
             <div class="row">
                  <div class="col-lg-4">
-            <h2 class="sub-header">Most Popular Tool</h2>
+                     {% if reservations %}
+            <h2 class="sub-header">Popular Tools</h2>
 
 
             <table class="table table-striped">
@@ -30,10 +31,16 @@
                 {% endfor %}
                 </tbody>
             </table>
+                {% else %}
+            <div class="alert alert-info" role="alert">
+                There are no popular tools available in your sharezone .
+            </div>
+        {% endif %}
                 </div>
 
              <div class="col-lg-4">
-            <h2 class="sub-header">Most Active Borrower</h2>
+                 {% if borrower_list %}
+            <h2 class="sub-header">Active Borrowers</h2>
             <table class="table table-striped">
                <thead>
 
@@ -53,10 +60,16 @@
 
                 
             </table>
+                 {% else %}
+            <div class="alert alert-info" role="alert">
+                There are no active borrowers in your sharezone .
+            </div>
+        {% endif %}
              </div>
 
              <div class="col-lg-4">
-            <h2 class="sub-header">Most Active Lender</h2>
+                 {% if lender_list %}
+            <h2 class="sub-header">Active Lenders</h2>
             <table class="table table-striped">
                 <thead>
 
@@ -75,6 +88,11 @@
                 {% endfor %}
                 </tbody>
             </table>
+                 {% else %}
+            <div class="alert alert-info" role="alert">
+                There are no active lenders in your sharezone .
+            </div>
+        {% endif %}
                 </div>
 
             </div>

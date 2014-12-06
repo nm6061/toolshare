@@ -109,18 +109,25 @@ def browsetool(request):
 @login_required()
 def presentstatistics(request):
     # presentstatistics= Reservation.objects.order_by('tool')
-    temp_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
-    popular_tool_list = list()
+    user = request.user
+    toolsToShow = 10
+    temp_list = Reservation.objects.filter(
+            tool__owner__address__zip__startswith=user.address.zip).values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
+    popular_tool_list = list()[:toolsToShow]
     for iter_tool in temp_list:
-        popular_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).get())
+        popular_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).filter().get())
 
-    temp2_list = Reservation.objects.values('user').distinct().annotate(total=Count('user')).order_by('-total')
-    popular_borrower_list = list()
+    borrowersToShow = 10
+    temp2_list = Reservation.objects.filter(
+            user__address__zip__startswith=user.address.zip).values('user').distinct().annotate(total=Count('user')).order_by('-total')
+    popular_borrower_list = list()[:borrowersToShow]
     for iter_tool in temp2_list:
         popular_borrower_list.append(User.objects.filter(id=iter_tool['user']).get())
 
-    temp3_list = Tool.objects.values('owner').distinct().annotate(total=Count('owner')).order_by('-total')
-    popular_lender_list = list()
+    lendersToShow = 10
+    temp3_list = Tool.objects.filter(
+            owner__address__zip__startswith=user.address.zip).values('owner').distinct().annotate(total=Count('owner')).order_by('-total')
+    popular_lender_list = list()[:lendersToShow]
     for iter_tool in temp3_list:
         popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
 
@@ -136,11 +143,10 @@ def presentstatistics(request):
 
 @login_required()
 def reservation(request):
-    reservations = Reservation.objects.filter(tool__owner=request.user, status='P')
-    # reservations1 = Reservation.objects.filter(tool__owner=request.user, status='A')
+    reservations = Reservation.objects.filter(Q(status='P') | Q(status='A'),tool__owner=request.user)
 
 
-    paginator = Paginator(reservations, 5)  # Show 25 reservations per page
+    paginator = Paginator(reservations, 8)  # Show 25 reservations per page
 
     page = request.GET.get('page')
     try:
@@ -183,6 +189,15 @@ def approve(request, reservation_id):
 
     return redirect(reverse_lazy('reservation'))
 
+
+@login_required()
+@require_POST
+def abc(request, reservation_id):
+    reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'C'
+    reservation.save()
+
+    return redirect(reverse_lazy('reservation'))
 
 @login_required()
 def reject(request, reservation_id):
