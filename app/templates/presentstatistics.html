@@ -5,9 +5,10 @@
 {% block CommStatsNav %} active {% endblock %}
 
 {% block auth-content %}
-    <h1 class="page-header">Present Statistics</h1>
+    <h1 class="page-header">Community Statistics</h1>
         <div class="container">
             <div class="row">
+                 <div class="col-lg-4">
             <h2 class="sub-header">Most Popular Tool</h2>
 
 
@@ -29,8 +30,9 @@
                 {% endfor %}
                 </tbody>
             </table>
+                </div>
 
-
+             <div class="col-lg-4">
             <h2 class="sub-header">Most Active Borrower</h2>
             <table class="table table-striped">
                <thead>
@@ -51,8 +53,9 @@
 
                 
             </table>
+             </div>
 
-
+             <div class="col-lg-4">
             <h2 class="sub-header">Most Active Lender</h2>
             <table class="table table-striped">
                 <thead>
@@ -72,7 +75,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-
+                </div>
 
             </div>
         </div>

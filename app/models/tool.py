@@ -27,6 +27,35 @@ class Tool(models.Model):
     def __str__(self):
         return self.name
 
+    # returns a query of reservations on the tool based on the reservation_status arg (A, O, AC, R, C, etc.)
+    def get_reservations (self, reservation_status):
+        reservations = self.reservation_set.filter(status = reservation_status)
+        return reservations
+
+    # Checks if tool has unresolved future reservations that prevent it from moving
+    # Returns true if no unresolved future reservations on it, false otherwise
+    def is_ready_to_move(self):
+        # Keeps a count of all reservations that might be interfering with moving a tool.
+        blockingReservations = 0
+
+        # Checks tool for any active reservations
+        activeReservations = self.get_reservations('AC')
+        blockingReservations = blockingReservations + len(activeReservations)
+
+        # Checks tool for approved future reservations
+        approvedReservations = self.get_reservations('A')
+        blockingReservations = blockingReservations + len(approvedReservations)
+
+        # Add additional reservations that might block tool from moving here
+
+
+        # Check the sum of the lengths of the reservation lists described above.
+        # If sum is zero (no blocking reservations), return ready_to_move = True. Else, return ready_to_move = False
+        if blockingReservations == 0:
+            return True
+        else:
+            return False
+
     @property
     def address(self):
         if self.location == 'S':
