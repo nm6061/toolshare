@@ -242,6 +242,20 @@ def cancel(request, reservation_id):
 
 
 @login_required()
+@require_POST
+def abc(request, reservation_id):
+    reservation = models.Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'C'
+    reservation.save()
+
+    messages.success(request,
+                     'Request to borrow %(tool)s was successfully cancelled.' % {'tool': reservation.tool.name})
+
+    return redirect(reverse_lazy('reservation'))
+
+
+
+@login_required()
 def borrow(request, tool_id):
     tool = Tool.objects.get(pk=tool_id)
 
