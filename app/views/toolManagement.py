@@ -198,19 +198,7 @@ def toolbox(request, tool_filter):
         toolList = Tool.objects.filter(owner_id=user).filter(location='H')
     elif tool_filter == 'shedtools':
         toolList = Tool.objects.filter(owner_id=user).filter(location='S')
-    elif tool_filter == 'borrowedtools':
-        approvedrequests = Reservation.objects.filter(user_id=user).filter(status="A")
-        toolIDs = []
-        for res in approvedrequests:
-            toolIDs.append(res.tool_id)
-            today = datetime.date.today()
-            fromdate = res.from_date
-            todate = res.to_date
-            if fromdate >= today:
-                daysleft = todate - today
-                dueDates.append(daysleft.days)
-        toolList = Tool.objects.filter(pk__in=toolIDs)
-
+   
     else:
         toolList = Tool.objects.filter(owner_id=user)
     paginator = Paginator(toolList, 12, 1)
