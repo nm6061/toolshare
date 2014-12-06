@@ -78,11 +78,15 @@
     <div class="tool_details_left">
         <div class="tool_details_status">
             {% if tool.status == 'A' %}
-                <span class="label label-success">Tool Active</span>
+                {% if tool.get_days_until_available == 0 %}
+                    <span class="label label-success"> Tool Active </span>
+                {% elif tool.get_days_until_available == 1 %}
+                    <span class="label label-warning"> Tool expected back tomorrow </span>
+                {% elif tool.get_days_until_available > 1 %}
+                    <span class="label label-warning"> Expected back on {{ tool.get_next_available_date }} </span>
+                {% endif %}
             {% elif tool.status == 'D' %}
                 <span class="label label-danger">Deactivated</span>
-            {% elif tool.status == 'L' %}
-                <span class="label label-warning">Lent Out</span>
             {% endif %}
         </div>
         <img class="thumbnail tool_details_pic" src="{{tool.picture.url}}" alt="{{tool.name}}"/>

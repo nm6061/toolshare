@@ -102,6 +102,7 @@ def updateTool(request, tool_id):
         messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
         return redirect(error_url)
 
+    # TODO : use tool is ready to move instead of futureres
     futureRes = tooldata.reservation_set.filter(Q( status='P') | Q( status='A'))
     unorderedDates = tooldata.blackoutdate_set.exclude(blackoutEnd__lt = today)
     blackoutdates = unorderedDates.order_by('blackoutStart')
