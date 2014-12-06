@@ -144,10 +144,9 @@ def presentstatistics(request):
 @login_required()
 def reservation(request):
     reservations = Reservation.objects.filter(Q(status='P') | Q(status='A'),tool__owner=request.user)
-    # reservations1 = Reservation.objects.filter(tool__owner=request.user, status='A')
 
 
-    paginator = Paginator(reservations, 5)  # Show 25 reservations per page
+    paginator = Paginator(reservations, 8)  # Show 25 reservations per page
 
     page = request.GET.get('page')
     try:
