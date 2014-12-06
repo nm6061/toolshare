@@ -2,10 +2,9 @@
 
 {% block title %}Tool Details{% endblock %}
 
-{% block auth-content%}
+{% block auth-content %}
     <div class="tool_details">
         <h2><strong>{{ tooldata.name }}</strong></h2>
-
         <div class="tool_details_left">
             <div class="tool_details_status">
                 {% if tooldata.status == 'A' %}
@@ -20,55 +19,46 @@
                     <span class="label label-danger">Deactivated</span>
                 {% endif %}
             </div>
-            <img class="thumbnail tool_details_pic" src="{{tooldata.picture.url}}" alt="{{tooldata.name}}"/>
+            <img class="thumbnail tool_details_pic" src="{{ tooldata.picture.url }}" alt="{{ tooldata.name }}"/>
         </div>
-
         <div class="tool_details_desc">
-            <span><strong> Category: &nbsp</strong>{{ tooldata.get_category_display }}</span>
-            <div class="spacer-15"></div>
-
-            <span><strong> Tool Status: &nbsp</strong>{{ tooldata.get_status_display}}</span>
-            <div class="spacer-15"></div>
-
-            <span><strong> Shared From: &nbsp</strong>{{ tooldata.get_location_display }}</span>
-            <div class="spacer-15"></div>
-
-            <span><strong> Tool Owner: &nbsp</strong>{{ tooldata.owner.get_full_name }}</span>
-            <div class="spacer-20"></div>
-
-            <span><strong> Tool Description </strong></span>
+            <span><strong>Category: &nbsp</strong>{{ tooldata.get_category_display }}</span>
+            <div class="spacer-5"></div>
+            <span><strong>Owner: &nbsp</strong>{{ tooldata.owner.get_full_name }}</span>
+            <div class="spacer-10"></div>
+            <span><strong>Tool Description</strong></span>
             <p>{{ tooldata.description }}</p>
             <div class="spacer-10"></div>
-
-            <span><strong> Pickup Location </strong></span>
-            <p>{{ tooldata.address.get_single_line }}</p>
+            <span><strong> Pickup Location</strong></span>
+            <p>{{ tooldata.address.get_multi_line }}</p>
             <div class="spacer-10"></div>
-
-            <span><strong> Pickup Arrangements </strong></span>
+            <span><strong> Pickup Arrangements</strong></span>
             <p>{{ tooldata.pickupArrangement }}</p>
-            <div class="spacer-50"></div>
-            <div class="spacer-20"></div>
-
             <div class="tool_details_btn">
-                {% if tooldata.shed.owner == request.user %}
-                    <a href="{% url "toolManagement:updateTool" tooldata.id %}" class="btn btn-primary">Update Tool</a>
-                {% endif %}
-                {% if tooldata.status == 'A' %}
+                {% if tooldata.location == 'S' %}
                     <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Borrow Tool</a>
-                {% elif tooldata.status == 'L'%}
-                    <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Reserve Tool</a>
+                    {% if tooldata.owner == request.user or tooldata.shed.owner == request.user %}
+                        <a href="{% url "toolManagement:updateTool" tooldata.id %}" class="btn btn-primary">Update
+                            Tool</a>
+                    {% endif %}
+                {% elif tooldata.location == 'H' %}
+                    {% if tooldata.owner != request.user %}
+                        <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Borrow Tool</a>
+                    {% else %}
+                        <a href="{% url "toolManagement:updateTool" tooldata.id %}" class="btn btn-primary">Update
+                            Tool</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
-
         <div class="suggestions">
             <div class="row">
-                <h3 > Other similar tools in your share zone </h3>
+                <h3>Similar tools in your community</h3>
                 {% for tool in similartools %}
                     <div class="toolList">
                         <div class="col-sm-2">
                             <figure>
-                                <div id="toolThumbnail" >
+                                <div id="toolThumbnail">
                                     <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
                                         <div class="tool_status_label">
                                             {% if tool.get_days_until_available == 0 %}
@@ -97,5 +87,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
