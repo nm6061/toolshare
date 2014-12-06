@@ -68,5 +68,5 @@ class BlackoutDate(models.Model):
         app_label = 'app'
 
     tool = models.ForeignKey(Tool)
-    blackoutStart = models.DateField()
-    blackoutEnd = models.DateField()
+    blackoutStart = models.DateField('From date')
+    blackoutEnd = models.DateField('To date')

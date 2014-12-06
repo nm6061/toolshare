@@ -174,7 +174,7 @@
                     <h3><strong>Edit Tool Information</strong></h3>
                     <div class="row">
                         <div class="col-md-12" >
-                            <div class="spacer-15"></div>
+                            <div class="spacer-25"></div>
                             <label for="id_picture">Keep the existing picture or upload a new picture</label>
                             <input type="file" accept="image/*" id="id_picture" name="picture" onchange="imagePreview(this)" />
                             <div id="toolThumbnail" class="thumbnail" style=" display: none ">
@@ -182,20 +182,20 @@
                             </div>
                             <p class="formErrorMessage">{{ updateform.picture.errors|striptags }}</p>
                             {{ updateform.picture.errors|striptags }}
-                            <div class="spacer-15"></div>
+                            <div class="spacer-20"></div>
 
                             <label for="id_name">Name of the tool</label>
                             <div class="{% if updateform.name.errors %} has-error{% endif %}">
                                 {{ updateform.name|add_attrs:"{'class':'form-control'}" }}
                             </div>
                             <p class="formErrorMessage">{{ updateform.name.errors|striptags }}</p>
-                            <div class="spacer-15"></div>
+                            <div class="spacer-20"></div>
 
 
                             <label for="id_category">Tool category</label><br>
                             {{ updateform.category }}
                             <p class="formErrorMessage">{{ updateform.category.errors|striptags }}</p>
-                            <div class="spacer-15"></div>
+                            <div class="spacer-20"></div>
 
                             <div {% if not sheds %} style="display: none" {% endif %}>
                                 <div class="locationChoices">
@@ -214,7 +214,7 @@
                                     </fieldset>
                                 </div>
                                 <p class="formErrorMessage">{{ updateform.location.errors|striptags }}</p>
-                                <div class="spacer-15"></div>
+                                <div class="spacer-20"></div>
                             </div>
 
                             {% if not sheds %}
@@ -224,22 +224,22 @@
                                     <input type="radio" name="locRadio" value="shedRadio" id="shedRadio"><label for ="shedRadio"> Shed </label>
                                     <p>Currently, there are no sheds in your share zone.</p>
                                 </div>
-                                <div class="spacer-15"></div>
+                                <div class="spacer-20"></div>
                             {% endif %}
 
                             <label>Tool pickup arrangement</label>
                             <div class="{% if updateform.pickupArrangement.errors %} has-error{% endif %}">
-                                {{ updateform.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'3'}"}}
+                                {{ updateform.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'2'}"}}
                             </div>
                             <p class="formErrorMessage">{{ updateform.pickupArrangement.errors|striptags }}</p>
-                            <div class="spacer-15"></div>
+                            <div class="spacer-20"></div>
 
                             <label>Tool description</label>
                             <div class="{% if updateform.description.errors %} has-error{% endif %}">
-                                {{ updateform.description|add_attrs:"{'class':'form-control no-resize','rows':'8'}" }}
+                                {{ updateform.description|add_attrs:"{'class':'form-control no-resize','rows':'4'}" }}
                             </div>
                             <p class="formErrorMessage">{{ updateform.description.errors|striptags }}</p>
-                            <div class="spacer-15"></div>
+                            <div class="spacer-20"></div>
                         </div>
                     </div>
                 </div>

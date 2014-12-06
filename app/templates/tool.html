@@ -21,19 +21,23 @@
 
         <div class="tool_details_desc">
             <span><strong> Category: &nbsp</strong>{{ tooldata.get_category_display }}</span>
-            <div class="spacer-20"></div>
+            <div class="spacer-15"></div>
 
             <span><strong> Tool Status: &nbsp</strong>{{ tooldata.get_status_display}}</span>
-            <div class="spacer-20"></div>
+            <div class="spacer-15"></div>
 
             <span><strong> Shared From: &nbsp</strong>{{ tooldata.get_location_display }}</span>
-            <div class="spacer-20"></div>
+            <div class="spacer-15"></div>
 
             <span><strong> Tool Owner: &nbsp</strong>{{ tooldata.owner.get_full_name }}</span>
-            <div class="spacer-30"></div>
+            <div class="spacer-20"></div>
 
             <span><strong> Tool Description </strong></span>
             <p>{{ tooldata.description }}</p>
+            <div class="spacer-10"></div>
+
+            <span><strong> Pickup Location </strong></span>
+            <p>{{ tooldata.address.get_single_line }}</p>
             <div class="spacer-10"></div>
 
             <span><strong> Pickup Arrangements </strong></span>
