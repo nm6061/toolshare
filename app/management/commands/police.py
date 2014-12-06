@@ -34,6 +34,7 @@ class Command(BaseCommand):
             self.is_verbose = options['verbose']
 
         tomorrow = today + datetime.timedelta(days=1)
+        yesterday = today - datetime.timedelta(days=1)
 
         start = time()
         self.vwrite('#' * 40)
@@ -78,7 +79,6 @@ class Command(BaseCommand):
 
         # Change Status of Reservations
         self.vwrite('Changing Status of Reservations ' + '-' * 10, 1)
-
         self.vwrite('Approved > Active ' + '-' * 10, 2)
         approved_reservations = Reservation.objects.filter(status='A', from_date=today)
 
@@ -93,8 +93,10 @@ class Command(BaseCommand):
         else:
             self.vwrite('No Reservations To Process', 3)
 
+        self.vwrite('')
+
         self.vwrite('Active > Overdue ' + '-' * 10, 2)
-        active_reservations = Reservation.objects.filter(status='AC', to_date=today)
+        active_reservations = Reservation.objects.filter(status='AC', to_date=yesterday)
 
         if active_reservations:
             self.vwrite('Processing %d Reservations' % active_reservations.count(), 3)
@@ -104,6 +106,38 @@ class Command(BaseCommand):
                 for r in active_reservations:
                     self.vwrite('%s%s' % (r.tool.name.ljust(30), r.user.first_name.ljust(30)), 4)
             active_reservations.update(status='O')
+        else:
+            self.vwrite('No Reservations To Process', 3)
+
+        self.vwrite('')
+
+        self.vwrite('Pending > Rejected ' + '-' * 10, 2)
+        pending_reservations = Reservation.objects.filter(status='P', from_date=today)
+
+        if pending_reservations:
+            self.vwrite('Processing %d Reservations' % pending_reservations.count(), 3)
+            if self.is_verbose:
+                self.vwrite('%s%s' % ('Tool'.ljust(30), 'Tool Owner'.ljust(30)), 4)
+                self.vwrite('%s%s' % ('----'.ljust(30), '----------'), 4)
+                for r in pending_reservations:
+                    self.vwrite('%s%s' % (r.tool.name.ljust(30), r.tool.owner.first_name.ljust(30)), 4)
+            pending_reservations.update(status='R', message='Auto rejected by system')
+        else:
+            self.vwrite('No Reservations To Process', 3)
+
+        self.vwrite('')
+
+        self.vwrite('Return Acknowledged > Closed ' + '-' * 10, 2)
+        acknowledged_reservations = Reservation.objects.filter(status='RA')
+
+        if acknowledged_reservations:
+            self.vwrite('Processing %d Reservations' % acknowledged_reservations.count(), 3)
+            if self.is_verbose:
+                self.vwrite('%s%s' % ('Tool'.ljust(30), 'Tool Owner'.ljust(30)), 4)
+                self.vwrite('%s%s' % ('----'.ljust(30), '----------'), 4)
+                for r in acknowledged_reservations:
+                    self.vwrite('%s%s' % (r.tool.name.ljust(30), r.tool.owner.first_name.ljust(30)), 4)
+            acknowledged_reservations.update(status='CL')
         else:
             self.vwrite('No Reservations To Process', 3)
 
