@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>{% block title %}Page Not Found{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}"/>
+    <style type="text/css">
+        body {
+            font-family: Lucida Console;
+            background-color: #00A;
+            color: white;
+        }
+
+        .container {
+            margin: 0 auto;
+            margin-top: 15%;
+            width: 500px;
+            text-align: center;
+        }
+
+        .header {
+            background-color: #AAA;
+            margin: 0 auto;
+            color: #00A;
+            width: 250px;
+            padding: 5px 5px;
+        }
+
+        .content {
+            margin: 0 auto;
+            margin-top: 75px;
+            width: 100%;
+        }
+
+        .buttons {
+            margin-top: 50px;
+        }
+        a {
+            background-color: #AAA;
+            padding: 7px 25px;
+            text-decoration: none;
+        }
+
+        a:hover, a:active{
+            background-color: #00A;
+            color: #AAA;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="header">
+        Page Not Found
+    </h2>
+
+    <div class="content">
+        Unless you were looking for this error page, Congratulations! You totally found it.
+    </div>
+    <div class="buttons">
+        <a href="{% url 'home' %}">Get me out of here</a>
+    </div>
+</div>
+</body>
+</html>

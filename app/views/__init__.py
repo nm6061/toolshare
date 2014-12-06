@@ -263,3 +263,7 @@ def borrow(request, tool_id):
     else:
         form = forms.BorrowToolForm(tool, request.user)
         return render(request, 'borrow.html', RequestContext(request, {'form': form}))
+
+
+def page_not_found(request):
+    return render(request, '404.html')
