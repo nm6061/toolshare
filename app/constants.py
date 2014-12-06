@@ -52,14 +52,16 @@ US_STATES = (
 )
 
 RESERVATION_STATUSES = (
-    ('P', 'Pending'),
-    ('C', 'Cancelled'),
     ('A', 'Approved'),
-    ('R', 'Rejected'),
     ('AC', 'Active'),
+    ('C', 'Cancelled'),
+    ('CL', 'Closed'),
     ('O', 'Overdue'),
-    ('RI', 'Return Initiated'),
+    ('P', 'Pending'),
+    ('R', 'Rejected'),
     ('RA', 'Return Acknowledged'),
+    ('RC', 'Recalled'),
+    ('RI', 'Return Initiated'),
 )
 
 TOOL_STATUS = (
