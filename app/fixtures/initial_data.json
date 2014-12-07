@@ -13,9 +13,9 @@
         "fields": {
             "apt_num": "35B",
             "street": "256 Metro Center Blvd.",
-            "city": "Worcester",
+            "city": "Rochester",
             "county": "",
-            "state": "MA",
+            "state": "NY",
             "country": "USA",
             "zip": "142582458"
         }
@@ -26,11 +26,11 @@
         "fields": {
             "apt_num": "",
             "street": "22 Central Street",
-            "city": "Pasadena",
-            "county": "Kent",
-            "state": "RI",
+            "city": "Rochester",
+            "county": "Monroe",
+            "state": "NY",
             "country": "USA",
-            "zip": "02886"
+            "zip": "142582458"
         }
     },
     {
@@ -39,11 +39,11 @@
         "fields": {
             "apt_num": "",
             "street": "48 Sockanosset Cross Road",
-            "city": "Cranston",
+            "city": "Rochester",
             "county": "",
-            "state": "RI",
+            "state": "NY",
             "country": "USA",
-            "zip": "029204587"
+            "zip": "14258"
         }
     },
     {
@@ -63,12 +63,12 @@
         "model": "app.Address",
         "pk": 5,
         "fields": {
-            "apt_num": "blank",
-            "street": "blankity",
-            "city": "blank",
-            "county": "blah",
-            "state": "NY",
-            "country": "Canada",
+            "apt_num": "",
+            "street": "Fist Pump Lane",
+            "city": "Jersey Shore",
+            "county": "what",
+            "state": "NJ",
+            "country": "USA",
             "zip": "11235"
         }
     },
@@ -77,7 +77,7 @@
         "pk": 1,
         "fields": {
             "is_active": true,
-            "date_joined": "2014-10-10",
+            "date_joined": "1999-10-10",
             "email": "john.smith@toolshare.com",
             "password": "pbkdf2_sha256$12000$wkhpGxr1AfEa$RyAcqftcQcz35p+0ILlrLiq4kYWzYLbJ6OL/lJrsbKw=",
             "first_name": "John",
@@ -93,7 +93,7 @@
         "pk": 2,
         "fields": {
             "is_active": true,
-            "date_joined": "2014-10-10",
+            "date_joined": "2010-10-10",
             "email": "cameron@toolshare.com",
             "password": "pbkdf2_sha256$12000$Zo9oeS6rki2D$lsG2fJN4tsxvLSFydHf562XZICTLvRN8L7pjaz0VEPI=",
             "first_name": "Cameron",
@@ -109,39 +109,23 @@
         "pk": 3,
         "fields": {
             "is_active": true,
-            "date_joined": "2014-10-10",
+            "date_joined": "2012-12-12",
             "email": "rob.chase@toolshare.com",
             "password": "pbkdf2_sha256$12000$NvHcprIKzHYD$UcQQGyhQ853xp/3FO9sq42MdxDKoLKyrBUzyGlveGu8=",
             "first_name": "Robert",
             "last_name": "Chase",
             "phone_num": "",
-            "pickup_arrangements": "Back of the bowling alley at midnight",
+            "pickup_arrangements": "Call me beep me if you wanna reach me.",
             "reputation": 0,
             "address": 3
         }
     },
-    {
+        {
         "model": "app.User",
         "pk": 4,
         "fields": {
             "is_active": true,
-            "date_joined": "2014-11-11",
-            "email": "zc3896@rit.edu",
-            "password": "pbkdf2_sha256$12000$DJDlZCEnBze8$0J7Iye9sKos0HWWs9rw7SqaaIAmfzMkfkN7ctSdQLmU=",
-            "first_name": "Mike",
-            "last_name": "C",
-            "phone_num": "",
-            "pickup_arrangements": "Call me beep me if you wanna reach me",
-            "reputation": 1337,
-            "address": 4
-        }
-    },
-        {
-        "model": "app.User",
-        "pk": 5,
-        "fields": {
-            "is_active": true,
-            "date_joined": "2014-11-11",
+            "date_joined": "2013-12-13",
             "email": "tester@toolshare.com",
             "password": "pbkdf2_sha256$12000$RxReTIz4H6uk$uPqChJ04yF8xNDdmZs92fU/UcxwAqjQah3uO0OaVpGc=",
             "first_name": "TestNothing",
@@ -157,8 +141,8 @@
         "pk": 1,
         "fields": {
             "owner": "1",
-            "name": "Shed1",
-            "registered_on": "2014-04-24",
+            "name": "John's Shed",
+            "registered_on": "2000-05-05",
             "address" : "1"
         }
     },
@@ -167,19 +151,19 @@
         "pk": 2,
         "fields": {
             "owner": "2",
-            "name": "Shed2",
+            "name": "Cameron's shed",
             "registered_on": "2011-11-11",
-            "address" : "2"
+            "address" : "4"
         }
     },
     {
         "model": "app.Tool",
         "pk": 1,
         "fields": {
-            "name": "Scissor",
+            "name": "Scissor 1",
             "picture": "toolpics/scissor.jpg",
-            "description": "A scissor",
-            "status": "A",
+            "description": "Cut my life into pieces. With this scissor.",
+            "status": "D",
             "category": "SC",
             "owner": 1,
             "location": "H",
@@ -191,7 +175,7 @@
         "model": "app.Tool",
         "pk": 2,
         "fields": {
-            "name": "Hammer",
+            "name": "Hammer 1",
             "picture": "toolpics/hammer.jpg",
             "description": "Hammer time!",
             "status": "A",
@@ -206,7 +190,7 @@
         "model": "app.Tool",
         "pk": 3,
         "fields": {
-            "name": "Wrench",
+            "name": "Wrench 1",
             "picture": "toolpics/wrench.jpg",
             "description": "This is a wrench",
             "status": "A",
@@ -221,14 +205,14 @@
         "model": "app.Tool",
         "pk": 4,
         "fields": {
-            "name": "Hammer",
+            "name": "Hammer 2",
             "picture": "toolpics/hammer.jpg",
             "description": "My trusty hammer",
             "status": "A",
             "category": "HA",
             "owner": 1,
-            "location": "S",
-            "shed": 1,
+            "location": "H",
+            "shed": null,
             "pickupArrangement": "Knock on the door"
         }
     },
@@ -236,11 +220,26 @@
         "model": "app.Tool",
         "pk": 5,
         "fields": {
-            "name": "Shovel",
+            "name": "Shovel 1",
             "picture": "toolpics/shovel.jpg",
             "description": "It digs holes",
             "status": "A",
             "category": "SH",
+            "owner": 1,
+            "location": "H",
+            "shed": null,
+            "pickupArrangement": "Knock on the door"
+        }
+    },
+    {
+        "model": "app.Tool",
+        "pk": 6,
+        "fields": {
+            "name": "Hammer 3",
+            "picture": "toolpics/hammer.jpg",
+            "description": "Very useful hammer...as long as you are worthy.",
+            "status": "A",
+            "category": "HA",
             "owner": 1,
             "location": "S",
             "shed": 1,
@@ -249,32 +248,17 @@
     },
     {
         "model": "app.Tool",
-        "pk": 6,
-        "fields": {
-            "name": "Hammer",
-            "picture": "toolpics/hammer.jpg",
-            "description": "Very useful hammer...as long as you are worthy.",
-            "status": "A",
-            "category": "HA",
-            "owner": 2,
-            "location": "H",
-            "shed": null,
-            "pickupArrangement": "Pick-up from the garage."
-        }
-    },
-    {
-        "model": "app.Tool",
         "pk": 7,
         "fields": {
-            "name": "Lawn Mower",
+            "name": "Lawn Mower 1",
             "picture": "toolpics/lawn mower.jpg",
-            "description": "I wish my lawn was emo so it would cut itself. At least I have this lawn mower.",
+            "description": "I wish my lawn was emo so it would cut itself. Until then, this lawn mower does the trick.",
             "status": "A",
             "category": "LM",
-            "owner": 2,
+            "owner": 1,
             "location": "S",
-            "shed": 2,
-            "pickupArrangement": "Pick-up from the garage."
+            "shed": 1,
+            "pickupArrangement": "Knock on the door"
         }
     },
     {
@@ -283,22 +267,22 @@
         "fields": {
             "name": "Scizzurp",
             "picture": "toolpics/scissor.jpg",
-            "description": "siiizzzzuuurrrrppp",
+            "description": "How do I spell skizcor",
             "status": "A",
             "category": "SC",
-            "owner": 2,
+            "owner": 1,
             "location": "H",
             "shed": null,
-            "pickupArrangement": "Pick-up from the garage."
+            "pickupArrangement": "Knock on the door"
         }
     },
     {
         "model": "app.Tool",
         "pk": 9,
         "fields": {
-            "name": "Shovel",
+            "name": "Shovel 2",
             "picture": "toolpics/shovel.jpg",
-            "description": "Now I ain't saying she a gold digger. But she ain't messing with no trowel.",
+            "description": "Now I ain't saying she a gold digger. But she ain't diggin with no trowel.",
             "status": "A",
             "category": "SH",
             "owner": 2,
@@ -311,7 +295,7 @@
         "model": "app.Tool",
         "pk": 10,
         "fields": {
-            "name": "Wrench",
+            "name": "Wrench 2",
             "picture": "toolpics/wrench.jpg",
             "description": "If you can dodge this wrench, you can dodge dodgeballs.",
             "status": "D",
@@ -326,14 +310,14 @@
         "model": "app.Tool",
         "pk": 11,
         "fields": {
-            "name": "Hammer",
+            "name": "Hammer Thor",
             "picture": "toolpics/hammer.jpg",
             "description": "Warning: sometimes shoots out bolts of electricity.",
             "status": "A",
             "category": "HA",
             "owner": 2,
             "location": "S",
-            "shed": 2,
+            "shed": 1,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -341,7 +325,7 @@
         "model": "app.Tool",
         "pk": 12,
         "fields": {
-            "name": "Lawn Mower",
+            "name": "Lawn Mower 2",
             "picture": "toolpics/lawn mower.jpg",
             "description": "It cuts grass.",
             "status": "A",
@@ -356,7 +340,7 @@
         "model": "app.Tool",
         "pk": 13,
         "fields": {
-            "name": "Sissor",
+            "name": "Sissor 2",
             "picture": "toolpics/scissor.jpg",
             "description": "Great for arts and crafts!",
             "status": "A",
@@ -371,7 +355,7 @@
         "model": "app.Tool",
         "pk": 14,
         "fields": {
-            "name": "Shovel",
+            "name": "Shovel 3",
             "picture": "toolpics/shovel.jpg",
             "description": "Good for digging yourself out of trouble.",
             "status": "D",
@@ -386,7 +370,7 @@
         "model": "app.Tool",
         "pk": 15,
         "fields": {
-            "name": "Wrench",
+            "name": "Wrench 3",
             "picture": "toolpics/wrench.jpg",
             "description": "The best wrench ever made",
             "status": "A",
@@ -401,7 +385,7 @@
         "model": "app.Tool",
         "pk": 16,
         "fields": {
-            "name": "Hammer",
+            "name": "Hammer 4",
             "picture": "toolpics/hammer.jpg",
             "description": "It's more a mace than a hammer really.",
             "status": "A",
@@ -416,14 +400,14 @@
         "model": "app.Tool",
         "pk": 17,
         "fields": {
-            "name": "Lawn Mower",
+            "name": "Lawn Mower 3",
             "picture": "toolpics/lawn mower.jpg",
             "description": "It eats up the green faster than I do.",
             "status": "A",
             "category": "LM",
             "owner": 2,
             "location": "S",
-            "shed": 2,
+            "shed": 1,
             "pickupArrangement": "Pick-up from the garage."
         }
     },
@@ -431,7 +415,7 @@
         "model": "app.Tool",
         "pk": 18,
         "fields": {
-            "name": "Sissor",
+            "name": "Sissor 3",
             "picture": "toolpics/scissor.jpg",
             "description": "Cuts through butter like butter",
             "status": "D",
@@ -446,7 +430,7 @@
         "model": "app.Tool",
         "pk": 19,
         "fields": {
-            "name": "Shovel",
+            "name": "Shovel 4",
             "picture": "toolpics/shovel.jpg",
             "description": "Retired shovel from my prospecting days.",
             "status": "A",
@@ -461,7 +445,7 @@
         "model": "app.Tool",
         "pk": 20,
         "fields": {
-            "name": "Wrench",
+            "name": "Wrench 4",
             "picture": "toolpics/wrench.jpg",
             "description": "This wrench was given to me by Tony Stark.",
             "status": "A",
@@ -476,7 +460,7 @@
         "model": "app.Tool",
         "pk": 21,
         "fields": {
-            "name": "Hammer",
+            "name": "Hammer 5",
             "picture": "toolpics/hammer.jpg",
             "description": "I found this in a crater.",
             "status": "A",
@@ -491,7 +475,7 @@
         "model": "app.Tool",
         "pk": 22,
         "fields": {
-            "name": "Lawn Mower",
+            "name": "Lawn Mower 4",
             "picture": "toolpics/lawn mower.jpg",
             "description": "Cuts grass in no time",
             "status": "A",
@@ -506,7 +490,7 @@
         "model": "app.Tool",
         "pk": 23,
         "fields": {
-            "name": "Sissor",
+            "name": "Sissor 4",
             "picture": "toolpics/scissor.jpg",
             "description": "Child friendly scissor",
             "status": "A",
@@ -521,7 +505,7 @@
         "model": "app.Tool",
         "pk": 24,
         "fields": {
-            "name": "Shovel",
+            "name": "Shovel 5",
             "picture": "toolpics/shovel.jpg",
             "description": "Everyday I'm shovelling",
             "status": "A",
@@ -536,27 +520,27 @@
         "model": "app.Tool",
         "pk": 25,
         "fields": {
-            "name": "Scissor",
+            "name": "Scissor 5",
             "picture": "toolpics/scissor.jpg",
             "description": "Just a scissor. Works pretty well",
             "status": "A",
             "category": "SC",
-            "owner": 3,
+            "owner": 2,
             "location": "H",
             "shed": null,
-            "pickupArrangement": "Back of the bowling alley at midnight"
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
         "model": "app.Tool",
         "pk": 26,
         "fields": {
-            "name": "Shovel",
+            "name": "Shovel 6",
             "picture": "toolpics/shovel.jpg",
             "description": "Good for digging holes (based on personal experience)",
             "status": "A",
             "category": "SH",
-            "owner": 3,
+            "owner": 2,
             "location": "H",
             "shed": null,
             "pickupArrangement": "Back of the bowling alley at midnight"
@@ -566,30 +550,30 @@
         "model": "app.Tool",
         "pk": 27,
         "fields": {
-            "name": "Wrench",
+            "name": "Wrench 5",
             "picture": "toolpics/wrench.jpg",
             "description": "Wrench with red rubberized grip",
             "status": "A",
             "category": "WR",
-            "owner": 3,
+            "owner": 2,
             "location": "H",
             "shed": null,
-            "pickupArrangement": "Back of the bowling alley at midnight"
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
         "model": "app.Tool",
         "pk": 28,
         "fields": {
-            "name": "Lawn Mower",
+            "name": "Lawn Mower 5",
             "picture": "toolpics/lawn mower.jpg",
             "description": "A Snapper brand lawn mower. Serial number: S6W1E0N",
             "status": "A",
             "category": "LM",
-            "owner": 3,
+            "owner": 2,
             "location": "H",
             "shed": null,
-            "pickupArrangement": "Back of the bowling alley at midnight"
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
         {
@@ -601,10 +585,10 @@
             "description": "John(the shed coordinator) should be able to update this since this is in his shed",
             "status": "A",
             "category": "HA",
-            "owner": 4,
+            "owner": 2,
             "location": "S",
             "shed": 1,
-            "pickupArrangement": "Call me beep me if you wanna reach me"
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
@@ -616,63 +600,63 @@
             "description": "John the shed coordinator should not be able to update this tool",
             "status": "A",
             "category": "LM",
-            "owner": 4,
+            "owner": 2,
             "location": "H",
             "shed": null,
-            "pickupArrangement": "Call me beep me if you wanna reach me"
+            "pickupArrangement": "Pick-up from the garage."
         }
     },
     {
         "model": "app.Reservation",
         "pk": 1,
         "fields": {
-            "user": 1,
-            "tool": 1,
+            "user": 2,
+            "tool": 2,
             "from_date": "2014-12-01",
-            "to_date": "2014-12-10",
-            "status": "O"
+            "to_date": "2014-12-15",
+            "status": "AC"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 2,
         "fields": {
-            "user": 2,
+            "user": 3,
             "tool": 2,
-            "from_date": "2014-12-01",
-            "to_date": "2014-12-10",
-            "status": "P"
+            "from_date": "2014-12-20",
+            "to_date": "2014-12-25",
+            "status": "A"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 3,
         "fields": {
-            "user": 3,
-            "tool": 3,
+            "user": 2,
+            "tool": 8,
             "from_date": "2014-12-01",
-            "to_date": "2014-12-10",
-            "status": "P"
+            "to_date": "2014-12-30",
+            "status": "RI"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 4,
         "fields": {
-            "user": 1,
-            "tool": 1,
-            "from_date": "2014-12-11",
-            "to_date": "2015-11-11",
-            "status": "A"
+            "user": 2,
+            "tool": 3,
+            "from_date": "2012-12-12",
+            "to_date": "2012-12-14",
+            "status": "CL"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 5,
         "fields": {
-            "user": 1,
-            "tool": 1,
-            "from_date": "2014-12-12",
+            "user": 2,
+            "tool": 3,
+            "from_date": "2014-12-19",
             "to_date": "2015-10-10",
             "status": "R"
         }
@@ -681,11 +665,11 @@
         "model": "app.Reservation",
         "pk": 6,
         "fields": {
-            "user": 1,
-            "tool": 11,
-            "from_date": "2014-11-22",
+            "user": 2,
+            "tool": 4,
+            "from_date": "2014-08-09",
             "to_date": "2014-11-30",
-            "status": "P"
+            "status": "O"
         }
     },
     {
@@ -693,10 +677,10 @@
         "pk": 7,
         "fields": {
             "user": 2,
-            "tool": 2,
-            "from_date": "2014-11-01",
-            "to_date": "2015-11-01",
-            "status": "A"
+            "tool": 5,
+            "from_date": "2014-12-10",
+            "to_date": "2014-12-25",
+            "status": "C"
         }
     },
     {
@@ -704,30 +688,30 @@
         "pk": 8,
         "fields": {
             "user": 2,
-            "tool": 2,
-            "from_date": "2015-02-02",
-            "to_date": "2015-02-10",
-            "status": "A"
+            "tool": 5,
+            "from_date": "2015-02-12",
+            "to_date": "2015-02-22",
+            "status": "P"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 9,
         "fields": {
-            "user": 1,
-            "tool": 1,
-            "from_date": "2015-11-12",
-            "to_date": "2015-11-22",
-            "status": "P"
+            "user": 2,
+            "tool": 6,
+            "from_date": "2014-11-11",
+            "to_date": "2015-03-03",
+            "status": "RI"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 10,
         "fields": {
-            "user": 3,
-            "tool": 3,
-            "from_date": "2015-01-01",
+            "user": 2,
+            "tool": 7,
+            "from_date": "2014-12-20",
             "to_date": "2015-02-02",
             "status": "A"
         }
@@ -736,60 +720,60 @@
         "model": "app.Reservation",
         "pk": 11,
         "fields": {
-            "user": 2,
-            "tool": 1,
+            "user": 1,
+            "tool": 26,
             "from_date": "2014-11-01",
-            "to_date": "2015-12-01",
-            "status": "A"
+            "to_date": "2014-12-01",
+            "status": "O"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 12,
         "fields": {
-            "user": 2,
-            "tool": 3,
-            "from_date": "2014-11-01",
+            "user": 1,
+            "tool": 16,
+            "from_date": "2014-10-01",
             "to_date": "2015-10-01",
-            "status": "A"
+            "status": "RI"
         }
     },
     {
         "model": "app.Reservation",
         "pk": 13,
         "fields": {
-            "user": 2,
-            "tool": 4,
+            "user": 1,
+            "tool": 22,
             "from_date": "2014-11-01",
-            "to_date": "2014-11-30",
-            "status": "A"
+            "to_date": "2015-11-01",
+            "status": "AC"
         }
     },
     {
         "model": "app.BlackoutDate",
         "pk": 1,
         "fields": {
-            "tool": 1,
-            "blackoutStart": "1991-11-11",
-            "blackoutEnd": "1991-12-12"
+            "tool": 8,
+            "blackoutStart": "2015-01-01",
+            "blackoutEnd": "2015-02-01"
         }
     },
     {
         "model": "app.BlackoutDate",
         "pk": 2,
         "fields": {
-            "tool": 1,
-            "blackoutStart": "2015-11-11",
-            "blackoutEnd": "2015-12-12"
+            "tool": 3,
+            "blackoutStart": "2014-12-11",
+            "blackoutEnd": "2014-12-25"
         }
     },
     {
         "model": "app.BlackoutDate",
         "pk": 3,
         "fields": {
-            "tool": 2,
-            "blackoutStart": "2014-11-11",
-            "blackoutEnd": "2014-12-12"
+            "tool": 8,
+            "blackoutStart": "2015-08-01",
+            "blackoutEnd": "2015-09-01"
         }
     }
 ]
