@@ -7,6 +7,11 @@
 {% block javascript %}
     {{ block.super }}
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+    <script type="text/javascript">
         function makeDoubleDelegate(function1, function2) {
             return function() {
                 if (function1)
@@ -232,6 +237,10 @@
                             {% endif %}
 
                             <label>Tool pickup arrangement</label>
+                            <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="right"
+                                    title="How would you like to hand off the tool to a borrower?">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                            </button>
                             <div class="{% if updateform.pickupArrangement.errors %} has-error{% endif %}">
                                 {{ updateform.pickupArrangement |add_attrs:"{'class':'form-control no-resize','rows':'2'}"}}
                             </div>
