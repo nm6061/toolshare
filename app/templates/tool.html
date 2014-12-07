@@ -63,13 +63,13 @@
                                         <div class="tool_status_label">
                                             {% if tool.get_days_until_available == 0 %}
                                                 <span class="label label-success toolstatus"> Available </span>
-                                                <span class="tooltips">Tool is available!</span>
+                                                <span class="tooltips">Tool is available</span>
                                             {% elif tool.get_days_until_available == 1 %}
                                                 <span class="label label-warning toolstatus"> {{ tool.get_next_available_date }} </span>
-                                                <span class="tooltips">Tool will be available starting tomorrow!</span>
+                                                <span class="tooltips">Tool will be available starting tomorrow</span>
                                             {% elif tool.get_days_until_available > 1 %}
                                                 <span class="label label-warning toolstatus"> {{ tool.get_next_available_date }} </span>
-                                                <span class="tooltips">Tool will be available in {{ tool.get_days_until_available }} days!</span>
+                                                <span class="tooltips">Tool will be available in {{ tool.get_days_until_available }} days</span>
                                             {% endif %}
                                         </div>
                                         <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
