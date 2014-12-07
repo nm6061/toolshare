@@ -83,12 +83,16 @@
     <div class="tool_details_left">
         <div class="tool_details_status">
             {% if tool.status == 'A' %}
-                {% if tool.get_days_until_available == 0 %}
-                    <span class="label label-success"> Tool Active </span>
-                {% elif tool.get_days_until_available == 1 %}
-                    <span class="label label-warning"> Tool expected back tomorrow </span>
-                {% elif tool.get_days_until_available > 1 %}
-                    <span class="label label-warning"> Expected back on {{ tool.get_next_available_date }} </span>
+                {% if tool.get_status_label_owner == 'Overdue' %}
+                    <span class="label label-danger"> Tool is overdue </span>
+                {% else %}
+                    {% if tool.get_days_until_available == 0 %}
+                        <span class="label label-success"> Tool Active </span>
+                    {% elif tool.get_days_until_available == 1 %}
+                        <span class="label label-warning"> Tool expected back tomorrow </span>
+                    {% elif tool.get_days_until_available > 1 %}
+                        <span class="label label-warning"> Expected back on {{ tool.get_next_available_date }} </span>
+                    {% endif %}
                 {% endif %}
             {% elif tool.status == 'D' %}
                 <span class="label label-danger">Deactivated</span>
