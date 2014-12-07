@@ -163,7 +163,7 @@ class BlackoutDateForm(forms.ModelForm):
 
             for ud in self.get_unavailable_dates():
                 if not (fd > ud['end'] or td < ud['start']):
-                    raise forms.ValidationError('The tool is not available on the dates selected.')
+                    raise forms.ValidationError('Chosen dates conflict with existing reservations or blackouts.')
 
         return self.cleaned_data
 

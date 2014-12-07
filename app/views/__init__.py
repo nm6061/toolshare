@@ -309,7 +309,7 @@ def borrow(request, tool_id):
                 messages.success(request, 'A request was successfully created. You will receive an email when the '
                                           'owner of the tool takes an action on your request.')
 
-            return redirect(reverse_lazy('borrow', kwargs={'tool_id': tool_id}))
+            return redirect(reverse_lazy('toolManagement:viewTool', kwargs={'tool_id': tool_id}))
         else:
             return render(request, 'borrow.html', RequestContext(request, {'form': form}))
     else:
