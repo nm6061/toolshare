@@ -1,38 +1,35 @@
 {% extends "auth_base.html" %}
-
 {% block title %}Outgoing Requests{% endblock %}
-
 {% block RequestsNav %} active {% endblock %}
-
 {% block auth-content %}
     <h1 class="page-header">Outgoing Requests</h1>
-
     <div class="container">
-        <div class="spacer-20"></div>
-        {% if reservation %}
-            <table class="table table-striped">
+        {% if reservations %}
+            <div class="spacer-15"></div>
+            <table class="table">
                 <thead>
-                <h2>Request Still Pending</h2>
                 <tr>
-                    <th>Tool Name</th>
-                    <th>Tool owner</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <!--<th>Status</th>-->
+                    <th class="col-md-5">Tool Name</th>
+                    <th class="col-md-3">Tool owner</th>
+                    <th class="col-md-2">From</th>
+                    <th class="col-md-2">To</th>
+                    <th>Status</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for reservation in reservation %}
+                {% for reservation in reservations %}
                     <tr>
-                        <td>{{ reservation.tool.name }}</td>
-                        <td>{{ reservation.user.get_full_name }}</td>
-                        <td>{{ reservation.from_date }}</td>
-                        <td>{{ reservation.to_date }}</td>
-                        <!--<td>{{ reservation.status }}</td>-->
-                        <td>
+                        <td class="vert-align">{{ reservation.tool.name }}</td>
+                        <td class="vert-align">{{ reservation.user.get_full_name }}</td>
+                        <td class="vert-align">{{ reservation.from_date }}</td>
+                        <td class="vert-align">{{ reservation.to_date }}</td>
+                        <td class="vert-align {% if reservation.status == 'A' %}success{% else %}info{% endif %}">
+                            {{ reservation.get_status_display }}
+                        </td>
+                        <td class="vert-align {% if reservation.status == 'A' %}success{% else %}info{% endif %}">
                             <form action="{% url 'cancel' reservation.pk %}" method="POST">
                                 {% csrf_token %}
-
                                 <button type="submit" class="btn btn-primary">Cancel</button>
                             </form>
                         </td>
@@ -40,117 +37,49 @@
                 {% endfor %}
                 </tbody>
             </table>
+            {% if reservations.paginator.num_pages >  1 %}
+                <div class="row text-center">
+                    <div class="col-sm-12">
+                        <ul class="pagination">
+                            <li>
+                                <a href="?page=1"> &laquo; First Page </a>
+                            </li>
+                            {% if reservations.has_previous %}
+                                <li>
+                                    <a href="?page={{ reservations.previous_page_number }}"> &lsaquo;
+                                        Previous </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href=""> &lsaquo; Previous </a>
+                                </li>
+                            {% endif %}
+
+                            <li>
+                                <a class="pageTracker"> Page {{ reservations.number }}
+                                    of {{ reservations.paginator.num_pages }} </a>
+                            </li>
+
+                            {% if reservations.has_next %}
+                                <li>
+                                    <a href="?page={{ reservations.next_page_number }}"> Next &rsaquo; </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href=""> Next &rsaquo; </a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a href="?page={{ reservations.paginator.num_pages }}"> Last Page &raquo; </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
         {% else %}
             <div class="alert alert-info" role="alert">
-                You have no requests!
-            </div>
-        {% endif %}
-
-
-        <div class="spacer-20"></div>
-        {% if reservation %}
-            <table class="table table-striped">
-                <thead>
-                <h2>Request Approved</h2>
-                <tr>
-                    <th>Tool Name</th>
-                    <th>Tool owner</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <!--<th>Status</th>-->
-                </tr>
-                </thead>
-                <tbody>
-                {% for reservation in reservationA %}
-                    <tr>
-                        <td>{{ reservation.tool.name }}</td>
-                        <td>{{ reservation.user.get_full_name }}</td>
-                        <td>{{ reservation.from_date }}</td>
-                        <td>{{ reservation.to_date }}</td>
-                        <!--<td>{{ reservation.status }}</td>-->
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                You have no requests!
-            </div>
-        {% endif %}
-
-        {% if reservation.paginator.num_pages >  1 %}
-            <div class="row text-center toolPaginator">
-                <div class="col-sm-12">
-                    <ul class="pagination">
-                        <li>
-                            <a href="?page=1"> &laquo; First Page </a>
-                        </li>
-                        {% if reservation.has_previous %}
-                            <li>
-                                <a href="?page={{ reservation.previous_page_number }}"> &lsaquo; Previous </a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href=""> &lsaquo; Previous </a>
-                            </li>
-                        {% endif %}
-
-                        <li>
-                            <a class = "pageTracker"> Page {{ reservation.number }} of {{ reservation.paginator.num_pages }} </a>
-                        </li>
-
-                        {% if reservation.has_next %}
-                            <li>
-                                <a href="?page={{ reservation.next_page_number }}"> Next &rsaquo; </a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href=""> Next &rsaquo; </a>
-                            </li>
-                        {% endif %}
-                        <li>
-                            <a href="?page={{ reservation.paginator.num_pages }}"> Last Page &raquo; </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        {% endif %}
-
-        {% if reservation.paginator.num_pages >  1 %}
-            <div class="row text-center toolPaginator">
-                <div class="col-sm-12">
-                    <ul class="pagination">
-                        <li>
-                            <a href="?page=1"> &laquo; First Page </a>
-                        </li>
-                        {% if reservation.has_previous %}
-                            <li>
-                                <a href="?page={{ reservation.previous_page_number }}"> &lsaquo; Previous </a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href=""> &lsaquo; Previous </a>
-                            </li>
-                        {% endif %}
-
-                        <li>
-                            <a class = "pageTracker"> Page {{ reservation.number }} of {{ reservation.paginator.num_pages }} </a>
-                        </li>
-
-                        {% if reservation.has_next %}
-                            <li>
-                                <a href="?page={{ reservation.next_page_number }}"> Next &rsaquo; </a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href=""> Next &rsaquo; </a>
-                            </li>
-                        {% endif %}
-                        <li>
-                            <a href="?page={{ reservation.paginator.num_pages }}"> Last Page &raquo; </a>
-                        </li>
-                    </ul>
-                </div>
+                You have not yet requested to borrow a tool. Click <a href="{% url "browsetool" %}">here</a> to see
+                the tools being shared in your neighborhood.
             </div>
         {% endif %}
     </div>

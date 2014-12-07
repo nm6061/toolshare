@@ -20,7 +20,6 @@ import datetime
 import operator
 
 
-
 def home(request):
     # pdb.set_trace()
     if request.user.is_authenticated():
@@ -87,7 +86,7 @@ def browsetool(request):
     toolavailability = dict()
 
     for tool in temptools:
-       toolavailability[tool] = tool.get_days_until_available()
+        toolavailability[tool] = tool.get_days_until_available()
 
     tools = sorted(toolavailability.items(), key=operator.itemgetter(1))
 
@@ -112,21 +111,24 @@ def presentstatistics(request):
     user = request.user
     toolsToShow = 10
     temp_list = Reservation.objects.filter(
-            tool__owner__address__zip__startswith=user.address.zip).values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
+        tool__owner__address__zip__startswith=user.address.zip).values('tool').distinct().annotate(
+        total=Count('tool')).order_by('-total')
     popular_tool_list = list()[:toolsToShow]
     for iter_tool in temp_list:
         popular_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).filter().get())
 
     borrowersToShow = 10
     temp2_list = Reservation.objects.filter(
-            user__address__zip__startswith=user.address.zip).values('user').distinct().annotate(total=Count('user')).order_by('-total')
+        user__address__zip__startswith=user.address.zip).values('user').distinct().annotate(
+        total=Count('user')).order_by('-total')
     popular_borrower_list = list()[:borrowersToShow]
     for iter_tool in temp2_list:
         popular_borrower_list.append(User.objects.filter(id=iter_tool['user']).get())
 
     lendersToShow = 10
     temp3_list = Tool.objects.filter(
-            owner__address__zip__startswith=user.address.zip).values('owner').distinct().annotate(total=Count('owner')).order_by('-total')
+        owner__address__zip__startswith=user.address.zip).values('owner').distinct().annotate(
+        total=Count('owner')).order_by('-total')
     popular_lender_list = list()[:lendersToShow]
     for iter_tool in temp3_list:
         popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
@@ -143,12 +145,10 @@ def presentstatistics(request):
 
 @login_required()
 def reservation(request):
-    reservations = Reservation.objects.filter(Q(status='P') | Q(status='A'),tool__owner=request.user)
-
-
+    reservations = Reservation.objects.filter(Q(status='P') | Q(status='A'), tool__owner=request.user)
     paginator = Paginator(reservations, 8)  # Show 25 reservations per page
-
     page = request.GET.get('page')
+
     try:
         reservations = paginator.page(page)
     except PageNotAnInteger:
@@ -159,7 +159,7 @@ def reservation(request):
         reservations = paginator.page(paginator.num_pages)
 
     return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
-                                                                       # 'reservations1': reservations1
+    # 'reservations1': reservations1
 
 
 @login_required()
@@ -199,6 +199,7 @@ def abc(request, reservation_id):
 
     return redirect(reverse_lazy('reservation'))
 
+
 @login_required()
 def reject(request, reservation_id):
     reservation = Reservation.objects.get(pk=reservation_id)
@@ -226,21 +227,20 @@ def reject(request, reservation_id):
 
 @login_required()
 def requestsend(request):
-    reservation = Reservation.objects.filter(user=request.user, status='P')
-    reservationA = Reservation.objects.filter(user=request.user, status='A')
-    paginator = Paginator(reservation, 5)  # Show 25 reservations per page
-
+    reservations = Reservation.objects.filter(Q(status='P') | Q(status='A'), user=request.user).order_by('-status')
+    paginator = Paginator(reservations, 8)
     page = request.GET.get('page')
+
     try:
-        reservation = paginator.page(page)
+        reservations = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        reservation = paginator.page(1)
+        reservations = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        reservation = paginator.page(paginator.num_pages)
-    return render(request, 'Reservation_me.html',
-                  RequestContext(request, {'reservation': reservation, 'reservationA': reservationA}))
+        reservations = paginator.page(pending_paginator._num_pages)
+
+    return render(request, 'Reservation_me.html', RequestContext(request, {'reservations': reservations}))
 
 
 @login_required()
