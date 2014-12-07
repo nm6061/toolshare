@@ -6,6 +6,7 @@ from app.models.shed import Shed
 import app.constants
 import datetime
 
+
 class Tool(models.Model):
     class Meta:
         app_label = 'app'
@@ -43,6 +44,9 @@ class Tool(models.Model):
     # Checks if tool has unresolved future reservations that prevent it from moving
     # Returns true if no unresolved future reservations on it, false otherwise
     def is_ready_to_move(self):
+        if self.location == "S":
+            return False
+
         # Keeps a count of all reservations that might be interfering with moving a tool.
         blockingReservations = 0
 
@@ -55,7 +59,10 @@ class Tool(models.Model):
         blockingReservations = blockingReservations + len(approvedReservations)
 
         # Add additional reservations that might block tool from moving here
-
+        user = self.owner
+        ownReservations = app.models.Reservation.objects.filter(user = user)
+        ownReservations = ownReservations.filter(status = "AC").filter(status ="A")
+        blockingReservations = blockingReservations + len(ownReservations)
 
         # Check the sum of the lengths of the reservation lists described above.
         # If sum is zero (no blocking reservations), return ready_to_move = True. Else, return ready_to_move = False
