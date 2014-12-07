@@ -40,18 +40,7 @@
                             <div id="toolThumbnail" >
                                 <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail {% if tool.status == 'D' %}Inactive{% endif %}">
                                     <div class="tool_status_label">
-                                        {% if tool.status == 'D' %}
-                                            <span class="label label-danger toolstatus"> Deactivated </span>
-                                            <span class="tooltips">Tool is deactivated</span>
-                                        {% elif tool.status == 'A' %}
-                                            {% if tool.get_days_until_available == 0 %}
-                                                <span class="label label-success toolstatus"> Active </span>
-                                                <span class="tooltips">Tool is active</span>
-                                            {% elif tool.get_days_until_available > 0 %}
-                                                <span class="label label-warning toolstatus"> Lent Out </span>
-                                                <span class="tooltips">Tool is lent out until {{ tool.get_next_available_date }}</span>
-                                            {% endif %}
-                                        {% endif %}
+                                        <span class="label {{ tool.get_label_type_owner }} toolstatus"> {{ tool.get_status_label_owner }} </span>
                                     </div>
                                     <img class="img-square" src="{{ tool.picture.url }}" alt="{{ tool.name }}"/>
                                 </a>

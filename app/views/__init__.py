@@ -35,7 +35,7 @@ def home(request):
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
-        returned = Reservation.objects.filter(user=request.user).filter(status='A')
+        returned = Reservation.objects.filter(Q(status='AC') | Q(status='O'),user=request.user)
         today1 = datetime.date.today()
         final_list = list()
 
@@ -49,7 +49,7 @@ def home(request):
                 iter_reservation.diff = delta.days
                 final_list.append(iter_reservation)
 
-        coming = Reservation.objects.filter(tool__owner=request.user, status='A')
+        coming = Reservation.objects.filter(Q(status='AC') | Q(status='O'),tool__owner=request.user)
         today1 = datetime.date.today()
         final_list1 = list()
 
@@ -81,7 +81,7 @@ def browsetool(request):
     """
     user = request.user
     temptools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
-        owner__address__zip__startswith=user.address.share_zone)
+        owner__address__zip__startswith=user.address.share_zone).exclude(reservation__status = "O")
 
     toolavailability = dict()
 
