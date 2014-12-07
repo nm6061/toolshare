@@ -15,56 +15,31 @@
             {% endif %}
             {% if tools %}
                 <h3 class="sub-header">Recently Added Tools</h3>
-                <table class="table table-striped">
-                    <!--<thead>
 
-                     <tr>
-                         <th>Tool Name</th>
-                         <th>Location</th>
-                     </tr>
-                     </thead>
-                     -->
-                    <tbody>
+                {% for tool in tools %}
 
-
-                    {% for u1 in tools %}
-
-                        {% if forloop.counter %}
-                            <!--<tr>
-                    <td>{{ u1.name }}</td>
-                    <td>{{ u1.location }}</td>
-                </tr>-->
-                            <div class="toolList">
-                                <div class="col-sm-2">
-                                    <figure>
-                                        <div id="toolThumbnail">
-
-                                            <a href="{% url "toolManagement:viewTool" u1.id %}" class="thumbnail">
-                                                <div class="tool_status_label">
-                                                    {% if u1.get_days_until_available == 0 %}
-                                                        <span class="label label-success toolstatus"> Available </span>
-                                                        <span class="tooltips">Tool is available!</span>
-                                                    {% elif u1.get_days_until_available == 1 %}
-                                                        <span class="label label-warning toolstatus"> {{ ul.get_next_available_date }} </span>
-                                                        <span class="tooltips">Tool will be available starting tomorrow!</span>
-                                                    {% elif u1.get_days_until_available > 1 %}
-                                                        <span class="label label-warning toolstatus"> {{ ul.get_next_available_date }} </span>
-                                                        <span class="tooltips">Tool will be available in {{ u1.get_days_until_available }} days!</span>
-                                                    {% endif %}
-                                                </div>
-                                                <img class="img-square" src="{{u1.picture.url}}" alt="{{u1.name}}">
-                                            </a>
-
+                    <div class="toolList">
+                        <div class="col-sm-2">
+                            <figure>
+                                <div id="toolThumbnail">
+                                    <a href="{% url "toolManagement:viewTool" tool.id %}" class="thumbnail">
+                                        <div class="tool_status_label">
+                                            <span class="label {{ tool.get_label_type_borrower }} toolstatus"> {{ tool.get_status_label_borrower }} </span>
+                                            {% if tool.get_days_until_available == 1 %}
+                                                <span class="tooltips">Tool will be available starting tomorrow!</span>
+                                            {% elif tool.get_days_until_available > 1 %}
+                                                <span class="tooltips">Tool will be available in {{ tool.get_days_until_available }} days!</span>
+                                            {% endif %}
                                         </div>
-                                        <figcaption>{{u1.name}}</figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        {% endif %}
+                                        <img class="img-square" src="{{tool.picture.url}}" alt="{{tool.name}}">
+                                    </a>
 
-                    {% endfor %}
-                    </tbody>
-                </table>
+                                </div>
+                                <figcaption>{{tool.name}}</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                {% endfor %}
             {% endif %}
         </div>
     </div>

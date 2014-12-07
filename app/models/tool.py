@@ -28,10 +28,17 @@ class Tool(models.Model):
     def __str__(self):
         return self.name
 
+    def get_all_reservations (self):
+        reservations = self.reservation_set.all()
+        return reservations
+
     # returns a query of reservations on the tool based on the reservation_status arg (A, O, AC, R, C, etc.)
     def get_reservations (self, reservation_status):
         reservations = self.reservation_set.filter(status = reservation_status)
         return reservations
+
+
+
 
     # Checks if tool has unresolved future reservations that prevent it from moving
     # Returns true if no unresolved future reservations on it, false otherwise
@@ -84,6 +91,49 @@ class Tool(models.Model):
         today = datetime.date.today()
         delta = (self.get_next_available_date() - today).days
         return delta
+
+    def get_status_label_owner(self):
+        label = "Active"
+        if self.status == "D":
+            label = "Deactivated"
+        else:
+            reservations = self.get_all_reservations()
+            for reservation in reservations:
+                if reservation.status == "RI":
+                    label = "Return Initiated"
+                elif reservation.status == "O":
+                    label = "Overdue"
+                elif reservation.status == "AC":
+                    label = "Lent Out"
+        return label
+
+    def get_label_type_owner(self):
+        type = "label-success"
+        if self.get_status_label_owner() == "Deactivated":
+            type = "label-danger"
+        if self.get_status_label_owner() == "Return Initiated":
+            type = "label-warning"
+        if self.get_status_label_owner() == "Overdue":
+            type = "label-danger"
+        if self.get_status_label_owner() == "Lent Out":
+            type = "label-warning"
+        return type
+
+    def get_status_label_borrower(self):
+        label = "Available"
+        daysOnRes = self.get_days_until_available()
+        if daysOnRes > 0:
+            label = self.get_next_available_date()
+        return label
+
+
+    def get_label_type_borrower(self):
+        type = "label-warning"
+        if self.get_status_label_borrower() == "Available":
+            type = "label-success"
+        return type
+
+
 
 
     @property
