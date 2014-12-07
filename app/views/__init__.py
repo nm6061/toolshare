@@ -175,6 +175,20 @@ def initiate_return(request, reservation_id):
 
 
 @login_required()
+@require_POST
+def acknowledge_return(request, reservation_id):
+    reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'RA'
+    reservation.save()
+
+    messages.success(request,
+                     '<strong>%(tool)s</strong> was successfully acknowledged as returned by <strong>%(borrower)s</strong>.' % {
+                         'tool': reservation.tool.name, 'borrower': reservation.user.get_short_name()}, extra_tags='safe')
+
+    return redirect(reverse_lazy('toolManagement:viewTool', kwargs={'tool_id': reservation.tool.pk}))
+
+
+@login_required()
 def ReservationHistory(request):
     reservations1 = Reservation.objects.filter(Q(status="R"), tool__owner=request.user)
     reservations2 = Reservation.objects.filter(Q(status="A"), tool__owner=request.user)

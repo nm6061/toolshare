@@ -6,6 +6,7 @@ from app.models.shed import Shed
 import app.constants
 import datetime
 
+
 class Tool(models.Model):
     class Meta:
         app_label = 'app'
@@ -28,17 +29,14 @@ class Tool(models.Model):
     def __str__(self):
         return self.name
 
-    def get_all_reservations (self):
+    def get_all_reservations(self):
         reservations = self.reservation_set.all()
         return reservations
 
     # returns a query of reservations on the tool based on the reservation_status arg (A, O, AC, R, C, etc.)
-    def get_reservations (self, reservation_status):
-        reservations = self.reservation_set.filter(status = reservation_status)
+    def get_reservations(self, reservation_status):
+        reservations = self.reservation_set.filter(status=reservation_status)
         return reservations
-
-
-
 
     # Checks if tool has unresolved future reservations that prevent it from moving
     # Returns true if no unresolved future reservations on it, false otherwise
@@ -65,7 +63,7 @@ class Tool(models.Model):
             return False
 
     def get_next_available_date(self):
-        reservations = self.reservation_set.exclude(status='C').exclude(status='CL').exclude(status='O').\
+        reservations = self.reservation_set.exclude(status='C').exclude(status='CL').exclude(status='O'). \
             exclude(status='P').exclude(status='R')
         blackoutdates = self.blackoutdate_set.all()
         availableDate = datetime.date.today()
@@ -85,7 +83,6 @@ class Tool(models.Model):
                 availableDate = date + addOneDay
 
         return availableDate
-
 
     def get_days_until_available(self):
         today = datetime.date.today()
@@ -126,14 +123,17 @@ class Tool(models.Model):
             label = self.get_next_available_date()
         return label
 
-
     def get_label_type_borrower(self):
         type = "label-warning"
         if self.get_status_label_borrower() == "Available":
             type = "label-success"
         return type
 
-
+    def get_init_return_reservation(self):
+        reservations = self.get_reservations('RI')
+        if len(reservations) > 0:
+            return reservations[0]
+        return reservations
 
 
     @property

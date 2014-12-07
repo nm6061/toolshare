@@ -16,7 +16,7 @@
             {% for reservation in reservations %}
                 <div class="toolList">
                     <div class="col-sm-2">
-                        {% if reservation.status == 'AC' or reservation.status == 'OV' %}
+                        {% if reservation.status == 'AC' or reservation.status == 'O' %}
                             <div class="text-center">
                                 <form action="{% url "initiate_return" reservation.pk %}" method="POST">
                                     {% csrf_token %}
