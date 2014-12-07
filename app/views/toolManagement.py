@@ -51,8 +51,7 @@ def registerTool(request):
             #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
             #It SHOULD NOT be used unless you need to add a hyperlink to your message!
             messages.success(request,'You have successfully added a new tool! <br> <br> '
-                                     '<a href="/tool/register_tool">Click here to add another tool </a><br> OR <br> '
-                                     '<a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
+                                     '<a href="/tool/register_tool">Click here if you wish to add another tool. </a>', extra_tags='safe')
 
             success_url = reverse_lazy("toolManagement:toolbox")
             return redirect(success_url)
@@ -99,7 +98,7 @@ def updateTool(request, tool_id):
 
     if denyAccess:
         error_url = reverse_lazy("toolManagement:toolbox")
-        messages.error(request,'Error! You do not have permission to edit this tool.<br> <br> <a href=".">Click here to return to your toolbox </a>', extra_tags='safe')
+        messages.error(request,'Error! You do not have permission to edit this tool.', extra_tags='safe')
         return redirect(error_url)
 
     # TODO : use tool is ready to move instead of futureres
@@ -127,8 +126,7 @@ def updateTool(request, tool_id):
                 #NOTE: the 'safe' extra_tag allows the string to be autoescaped so that links can be processed by the template.
                 #It SHOULD NOT be used unless you need to add a hyperlink to your message!
                 messages.success(request,'Your tool was successfully updated! <br> <br> '
-                                         '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
-                                         '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
+                                         '<a href="/tool/toolbox">Click here if you wish to return to your toolbox </a>', extra_tags='safe')
                 return redirect('.')
             else:
                 return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
@@ -139,8 +137,7 @@ def updateTool(request, tool_id):
             if blackoutform.is_valid():
                 blackoutform.save()
                 messages.success(request,'Blackout dates have been added to this tool. <br> <br> '
-                                         '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
-                                         '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
+                                         '<a href="/tool/toolbox">Click here if you wish to return to your toolbox </a>', extra_tags='safe')
                 return redirect('.')
             else:
                 return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
@@ -154,8 +151,7 @@ def updateTool(request, tool_id):
                 tool.save()
                 updateform.save_m2m()
                 messages.success(request,'Your tool has been deactivated. <br> <br> '
-                                         '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
-                                         '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
+                                         '<a href="/tool/toolbox">Click here if you wish to return to your toolbox </a>', extra_tags='safe')
                 return redirect('.')
             else:
                 updateform = AddToolForm(instance=tooldata)
@@ -170,8 +166,7 @@ def updateTool(request, tool_id):
                 tool.save()
                 updateform.save_m2m()
                 messages.success(request,'Your tool was successfully activated! <br> <br> '
-                                         '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
-                                         '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
+                                         '<a href="/tool/toolbox">Click here if you wish to return to your toolbox </a>', extra_tags='safe')
                 return redirect('.')
             else:
                 return render(request, 'updatetool.html', RequestContext(request, {'updateform': updateform,
@@ -181,8 +176,7 @@ def updateTool(request, tool_id):
             dateToDelete = blackoutdates.get(pk=dateID)
             dateToDelete.delete()
             messages.success(request,'Blackout date was successfully deleted! <br> <br> '
-                                         '<a href=".">Click here to return to the tool details page </a> <br>   OR <br> '
-                                         '<a href="/tool/toolbox">Click here to return to your toolbox </a>', extra_tags='safe')
+                                         '<a href="/tool/toolbox">Click here if you wish to return to your toolbox </a>', extra_tags='safe')
             return redirect('.')
     else:
         updateform = AddToolForm(instance=tooldata)
