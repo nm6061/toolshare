@@ -25,7 +25,7 @@
             <div class="regToolBtn">
                 <a href="{% url "toolManagement:registerTool" %}"><button type="button" class="btn btn-primary">Add a Tool</button></a>
             </div>
-            {% if myTools %}
+            {% if myTools or filter == 'hometools' or filter == 'shedtools'%}
                 <div class="toolFilters">
                     <a href="{% url "toolManagement:toolbox" %}"> Show All Tools </a></a>
                     <a href="{% url "toolManagement:hometools" %}"> Show Home Tools </a></a>
