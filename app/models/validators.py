@@ -8,7 +8,7 @@ from django.utils.encoding import force_text
 class AlphabetOnlyValidator(BaseValidator):
     message = 'can contain only alphabets'
     code = 'alphabets_only'
-    regex = re.compile('^[a-zA-Z]+$')
+    regex = re.compile('^[a-zA-Z ]+$')
 
     def __init__(self, message=None, code=None):
         if message:
