@@ -82,7 +82,7 @@ def browsetool(request):
     """
     user = request.user
     temptools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
-        owner__address__zip__startswith=user.address.share_zone)
+        owner__address__zip__startswith=user.address.share_zone).exclude(reservation__status = "O")
 
     toolavailability = dict()
 
