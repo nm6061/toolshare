@@ -30,3 +30,7 @@ class Reservation(models.Model):
             datesCovered.append(startDate)
             startDate += addOneDay
         return datesCovered
+
+    @property
+    def days_left(self):
+        return (self.to_date - datetime.date.today()).days

@@ -35,7 +35,7 @@ def home(request):
         temp2_list = temp2_list.order_by('pk')
         temp2_list = temp2_list.reverse()[:shedsToShow]
 
-        returned = Reservation.objects.filter(Q(status='AC') | Q(status='O'),user=request.user)
+        returned = Reservation.objects.filter(Q(status='AC') | Q(status='O'), user=request.user)
         today1 = datetime.date.today()
         final_list = list()
 
@@ -49,7 +49,7 @@ def home(request):
                 iter_reservation.diff = delta.days
                 final_list.append(iter_reservation)
 
-        coming = Reservation.objects.filter(Q(status='AC') | Q(status='O'),tool__owner=request.user)
+        coming = Reservation.objects.filter(Q(status='AC') | Q(status='O'), tool__owner=request.user)
         today1 = datetime.date.today()
         final_list1 = list()
 
@@ -81,7 +81,7 @@ def browsetool(request):
     """
     user = request.user
     temptools = Tool.objects.exclude(owner_id=user).exclude(status='D').filter(
-        owner__address__zip__startswith=user.address.share_zone).exclude(reservation__status = "O")
+        owner__address__zip__startswith=user.address.share_zone).exclude(reservation__status="O")
 
     toolavailability = dict()
 
@@ -160,6 +160,18 @@ def reservation(request):
 
     return render(request, 'reservation.html', RequestContext(request, {'reservations': reservations}))
     # 'reservations1': reservations1
+
+
+@login_required()
+@require_POST
+def initiate_return(request, reservation_id):
+    reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.status = 'RI'
+    reservation.save()
+
+    messages.success(request, 'Tool return process initiated successfully. Awaiting confirmation from the owner.')
+
+    return redirect(reverse_lazy('toolManagement:toolreturn'))
 
 
 @login_required()

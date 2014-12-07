@@ -13,34 +13,47 @@
 
     <div class="container">
         <div class="row">
-            {% for tool in toolreturns %}
+            {% for reservation in reservations %}
                 <div class="toolList">
                     <div class="col-sm-2">
+                        {% if reservation.status == 'AC' or reservation.status == 'OV' %}
+                            <div class="text-center">
+                                <form action="{% url "initiate_return" reservation.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Initiate Return</button>
+                                </form>
+                            </div>
+                            <div class="spacer-15"></div>
+                        {% else %}
+                            <div class="spacer-50"></div>
+                        {% endif %}
                         <figure>
-                            <div id="toolThumbnail" >
-                                <a href="{% url "toolManagement:viewTool" tool.0.id %}" class="thumbnail">
-                                <div class="tool_status_label">
-                                    {% if tool.1 < 0 %}
-                                        <span class="label label-danger toolstatus"> OVERDUE!!</span>
-                                        <span class="tooltips">Tool is overdue! Please return it as soon as possible.</span>
-                                    {% elif tool.1 == 0 %}
-                                        <span class="label label-danger toolstatus"> DUE TODAY!!</span>
-                                        <span class="tooltips">Tool is due today!</span>
-                                    {% elif tool.1 == 1 %}
-                                        <span class="label label-danger toolstatus"> Due in {{ tool.1 }} day</span>
-                                        <span class="tooltips">Tool is due tomorrow</span>
-                                    {% elif tool.1 >= 1 and tool.1 <= 4 %}
-                                        <span class="label label-warning toolstatus">Due in {{ tool.1 }} days</span>
-                                        <span class="tooltips">Tool is due on {{ tool.0.get_next_available_date }}</span>
-                                    {% else %}
-                                        <span class="label label-success toolstatus">Due in {{ tool.1 }} days</span>
-                                        <span class="tooltips">Tool is due on {{ tool.0.get_next_available_date }}</span>
-                                    {% endif %}
-                                </div>
-                                    <img class="img-square" src="{{tool.0.picture.url}}" alt="{{tool.0.name}}">
+                            <div id="toolThumbnail">
+                                <a href="{% url "toolManagement:viewTool" reservation.tool.id %}" class="thumbnail">
+                                    <div class="tool_status_label">
+                                        {% if reservation.status == 'O' %}
+                                            <span class="label label-danger toolstatus">OVERDUE</span>
+                                            <span class="tooltips">Tool is overdue! Please return it as soon as possible.</span>
+                                        {% elif reservation.status == 'AC' %}
+                                            {% with reservation.days_left as days_left %}
+                                                {% if days_left == 1 %}
+                                                    <span class="label label-warning toolstatus"> Due Today</span>
+                                                    <span class="tooltips">Tool is due today. Please initiate return as soon as possible.</span>
+                                                {% else %}
+                                                    <span class="label label-success toolstatus">Due in {{ days_left }} days</span>
+                                                    <span class="tooltips">Tool is due in {{ days_left }} days</span>
+                                                {% endif %}
+                                            {% endwith %}
+                                        {% elif reservation.status == 'RI' %}
+                                            <span class="label label-info toolstatus">Return Initiated</span>
+                                            <span class="tooltips">Waiting for the owner of the tool to acknowledge.</span>
+                                        {% endif %}
+                                    </div>
+                                    <img class="img-square" src="{{ reservation.tool.picture.url }}"
+                                         alt="{{ reservation.tool.name }}">
                                 </a>
                             </div>
-                            <figcaption>{{ tool.0.name }}</figcaption>
+                            <figcaption>{{ reservation.tool.name }}</figcaption>
                         </figure>
                     </div>
                 </div>
@@ -50,21 +63,18 @@
                     <br><br>
                     Would you like to <a href="/browsetool"><strong>browse for tools?</strong></a>
                 </div>
-
             {% endfor %}
         </div>
-
-
-        {% if toolreturns.paginator.num_pages >  1 %}
+        {% if reservations.paginator.num_pages >  1 %}
             <div class="row text-center toolPaginator">
                 <div class="col-sm-12">
                     <ul class="pagination">
                         <li>
                             <a href="?page=1"> &laquo; First Page </a>
                         </li>
-                        {% if toolreturns.has_previous %}
+                        {% if reservations.has_previous %}
                             <li>
-                                <a href="?page={{ toolreturns.previous_page_number }}"> &lsaquo; Previous </a>
+                                <a href="?page={{ reservations.previous_page_number }}"> &lsaquo; Previous </a>
                             </li>
                         {% else %}
                             <li>
@@ -73,12 +83,13 @@
                         {% endif %}
 
                         <li>
-                            <a class = "pageTracker"> Page {{ toolreturns.number }} of {{ toolreturns.paginator.num_pages }} </a>
+                            <a class="pageTracker"> Page {{ reservations.number }}
+                                of {{ reservations.paginator.num_pages }} </a>
                         </li>
 
-                        {% if toolreturns.has_next %}
+                        {% if reservations.has_next %}
                             <li>
-                                <a href="?page={{ toolreturns.next_page_number }}"> Next &rsaquo; </a>
+                                <a href="?page={{ reservations.next_page_number }}"> Next &rsaquo; </a>
                             </li>
                         {% else %}
                             <li>
@@ -86,7 +97,7 @@
                             </li>
                         {% endif %}
                         <li>
-                            <a href="?page={{ toolreturns.paginator.num_pages }}"> Last Page &raquo; </a>
+                            <a href="?page={{ reservations.paginator.num_pages }}"> Last Page &raquo; </a>
                         </li>
                     </ul>
                 </div>
