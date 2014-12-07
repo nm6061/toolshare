@@ -8,15 +8,13 @@
         <div class="tool_details_left">
             <div class="tool_details_status">
                 {% if tooldata.status == 'A' %}
-                    {% if tooldata.get_days_until_available == 0 %}
-                        <span class="label label-success"> Available! </span>
-                    {% elif tooldata.get_days_until_available == 1 %}
-                        <span class="label label-warning"> Available starting tomorrow </span>
-                    {% elif tooldata.get_days_until_available > 1 %}
-                        <span class="label label-warning"> Available starting {{ tooldata.get_next_available_date }} </span>
+                    {% if tooldata.get_status_label_borrower == 'Available' %}
+                        <span class="label {{ tooldata.get_label_type_borrower }}"> {{ tooldata.get_status_label_borrower }} </span>
+                    {% else %}
+                        <span class="label {{ tooldata.get_label_type_borrower }}"> Available starting {{ tooldata.get_status_label_borrower }} </span>
                     {% endif %}
                 {% elif tooldata.status == 'D' %}
-                    <span class="label label-danger">Deactivated</span>
+                    <span class="label label-danger"> Deactivated </span>
                 {% endif %}
             </div>
             <img class="thumbnail tool_details_pic" src="{{ tooldata.picture.url }}" alt="{{ tooldata.name }}"/>
