@@ -278,7 +278,7 @@
                             {% if tool.status == 'L' or futureRes.count > 0 %}
                                 <div class="modal-body">
                                     <p>You cannot deactivate this tool because it still has unresolved future reservations.</p><br>
-                                    <p>If you wish to resolve these reservations, <a href="/reservation">click here.</a></p>
+                                    <p>If you wish to resolve these reservations, <a href="{% url "reservation" %}">click here.</a></p>
                                     <p>Otherwise, hit "Okay" to return.</p>
                                 </div>
                                 <div class="modal-footer">
