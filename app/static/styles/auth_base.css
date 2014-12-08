@@ -133,6 +133,10 @@ body {
     margin-top: 0;
 }
 
+figure {
+    position: relative;
+}
+
 figcaption {
     margin-left: 5px;
     margin-top: -10px;
@@ -140,6 +144,7 @@ figcaption {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    position: relative;
 }
 
 .toolPaginator{
@@ -265,9 +270,6 @@ figcaption {
     text-align: center;
 }
 
-figcaption{
-    position: relative;
-}
 
 .toolstatus{
     width:100%;
