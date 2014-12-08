@@ -91,13 +91,14 @@
 
             {% if returned %}
                 <div class="spacer-20"></div>
-                <h3 class="sub-header">Tools that are to be returned by me</h3>
+                <h3 class="sub-header">Tool Return Reminders</h3>
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>Tool Name</th>
                         <th>Due</th>
                         <th>Number of days Left</th>
+                        <th>Return Address</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -118,6 +119,12 @@
                             {% else %}
                                 <td>{{ u1.diff }}</td>
                             {% endif %}
+
+                            {%  if u1.tool.location == "S"%}
+                                <td>{{ u1.tool.shed.address.get_single_line }}</td>
+                            {% else %}
+                                <td>{{ u1.tool.owner.address.get_single_line }}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -134,12 +141,13 @@
 
             {% if coming %}
                 <div class="spacer-20"></div>
-                <h3 class="sub-header">Tools that are to be returned to me</h3>
+                <h3 class="sub-header">Tool Reclaim Reminders</h3>
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>Tool Name</th>
-                        <th>Due</th>
+                        <th>Borrowed by</th>
+                        <th>Expected Back</th>
                         <th>Number of days Left</th>
                     </tr>
                     </thead>
@@ -151,6 +159,7 @@
                             style="font-weight: bold"
                         {% endif %}>
                             <td>{{ u1.tool.name }}</td>
+                            <td>{{ u1.user.get_full_name }}</td>
                             <td>{{ u1.to_date }}</td>
                             {%  if u1.diff < -1 %}
                                 <td>{{ u1.diff|stringformat:"+d"|slice:"1:" }} DAYS OVERDUE!!!</td>
