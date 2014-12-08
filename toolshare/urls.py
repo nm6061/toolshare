@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler404
+from django.views.generic import TemplateView
 
 from django.contrib import admin
 admin.autodiscover()
@@ -9,6 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     #Home Page
     url(r'^$', 'app.views.home', name = 'home'),
+    url(r'^stack/$', TemplateView.as_view(template_name='stack.html'), name = 'stack'),
     url(r'^account/', include('app.urls.account', namespace='account')),
     url(r'^shed/', include('app.urls.shed', namespace='shed')),
     #Tools

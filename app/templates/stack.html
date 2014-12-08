@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block head %}
+    {{ block.super }}
+    <style type="text/css">
+        h1 {
+            padding-bottom: 15px;
+            border-bottom: 5px solid gray;
+            margin-bottom: 25px;
+        }
+
+        body {
+            margin-top: 50px;
+        }
+
+        .logo-row {
+            text-align: center;
+        }
+
+        .logo {
+            margin: 0px 25px;
+        }
+
+        .python {
+            width: 225px;
+            height: 65px;
+        }
+
+        .django {
+            width: 185px;
+            height: 65px;
+        }
+
+        .pycharm {
+            width: 270px;
+            height: 65px;
+        }
+
+        .sqlite {
+            width: 165px;
+            height: 75px;
+        }
+
+        .sendgrid {
+            width: 221px;
+            height: 75px;
+        }
+
+        .bootstrap {
+            width: 75px;
+            height: 75px;
+        }
+
+        .git {
+            width: 150px;
+            height: 65px;
+        }
+
+        .github {
+            width: 150px;
+            height: 65px;
+        }
+
+        .codeship {
+            width: 250px;
+            height: 60px;
+        }
+
+        .targetprocess {
+            width: 150px;
+            height: 150px;
+        }
+
+        .whatsapp {
+            width: 235px;
+            height: 65px;
+        }
+
+        .slack {
+            width: 250px;
+            height: 75px;
+        }
+
+        .nginx {
+            width: 200px;
+            height: 45px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="spacer-25"></div>
+        <h1>Tech. Stack</h1>
+
+        <div class="logo-row">
+            <span><img src="{% static "images/stack/python.svg" %}" class="logo python"/></span>
+            <span><img src="{% static "images/stack/django.svg" %}" class="logo django"/></span>
+            <span><img src="{% static "images/stack/sqlite.png" %}" class="logo sqlite"/></span>
+            <span><img src="{% static "images/stack/pycharm.svg" %}" class="logo pycharm"/></span>
+        </div>
+        <div class="spacer-25"></div>
+        <div class="logo-row">
+            <span><img src="{% static "images/stack/bootstrap.png" %}" class="logo bootstrap"/></span>
+            <span><img src="{% static "images/stack/sendgrid.png" %}" class="logo sendgrid"/></span>
+        </div>
+        <div class="spacer-25"></div>
+        <div class="logo-row">
+            <span><img src="{% static "images/stack/git.png" %}" class="logo git"/></span>
+            <span><img src="{% static "images/stack/github.png" %}" class="logo github"/></span>
+            <span><img src="{% static "images/stack/codeship.png" %}" class="logo codeship"/></span>
+        </div>
+        <div class="spacer-25"></div>
+        <h1>Mgmt. Stack</h1>
+
+        <div class="logo-row">
+            <span><img src="{% static "images/stack/targetprocess.png" %}" class="logo targetprocess"/></span>
+        </div>
+        <div class="spacer-25"></div>
+        <h1>Comm. Stack</h1>
+
+        <div class="logo-row">
+            <span><img src="{% static "images/stack/whatsapp.png" %}" class="logo whatsapp"/></span>
+            <span><img src="{% static "images/stack/slack.png" %}" class="logo slack"/></span>
+        </div>
+        <div class="spacer-25"></div>
+        <h1>Hosting Stack</h1>
+
+        <div class="logo-row">
+            <span><img src="{% static "images/stack/nginx.png" %}" class="logo nginx"/></span>
+        </div>
+
+        <div class="spacer-25"></div>
+    </div>
+{% endblock %}
