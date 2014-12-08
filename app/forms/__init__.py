@@ -107,10 +107,17 @@ class BorrowToolForm(forms.ModelForm):
         ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
                    self.tool.reservation_set.filter(status='A', to_date__gte=datetime.date.today())]
 
-        # Tool is considered unavailable for dates that the user has requested to borrow the tool irrespective of the
-        # status of the reservation
+        # Tool is considered unavailable for dates that it has an active reservation
         ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
-                   self.tool.reservation_set.filter(user=self.user, to_date__gte=datetime.date.today())]
+                   self.tool.reservation_set.filter(status='AC')]
+
+        # Tool is considered unavailable for dates that it has a return initiated reservation
+        ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
+                   self.tool.reservation_set.filter(status='RI')]
+
+        # Tool is unavailable for dates where the borrower has a pending borrow request on the tool
+        ud = ud + [{'start': r.from_date, 'end': r.to_date} for r in
+                   self.tool.reservation_set.filter(user=self.user, status='P')]
 
         return ud
 
@@ -186,13 +193,22 @@ class BlackoutDateForm(forms.ModelForm):
         unavailable_dates = unavailable_dates + [{'start': bd.blackoutStart, 'end': bd.blackoutEnd} for bd in
                                                  self.tool.blackoutdate_set.all()]
 
-        # Cannot be blacked out when tools has been approved
+        # Cannot be blacked out on dates with approved reservations
         unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
                                                  self.tool.reservation_set.filter(status='A')]
 
-        # Cannot be blacked when tool is reserved
+        # Cannot be blacked out on dates with pending reservations
         unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
                                                  self.tool.reservation_set.filter(status='P')]
+
+        # Cannot be blacked out on dates with active reservations
+        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
+                                                 self.tool.reservation_set.filter(status='AC')]
+
+        # Cannot be blacked out on dates with return initiated reservations
+        unavailable_dates = unavailable_dates + [{'start': r.from_date, 'end': r.to_date} for r in
+                                                 self.tool.reservation_set.filter(status='RI')]
+
         return unavailable_dates
 
     @property
