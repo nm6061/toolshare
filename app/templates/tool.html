@@ -9,10 +9,14 @@
         <div class="tool_details_left">
             <div class="tool_details_status">
                 {% if tooldata.status == 'A' %}
-                    {% if tooldata.get_status_label_borrower == 'Available' %}
-                        <span class="label {{ tooldata.get_label_type_borrower }}"> {{ tooldata.get_status_label_borrower }} </span>
+                    {% if tooldata.get_status_label_owner == 'Overdue' %}
+                        <span class="label label-danger"> Tool is overdue </span>
                     {% else %}
-                        <span class="label {{ tooldata.get_label_type_borrower }}"> Available starting {{ tooldata.get_status_label_borrower }} </span>
+                        {% if tooldata.get_status_label_borrower == 'Available' %}
+                            <span class="label {{ tooldata.get_label_type_borrower }}"> {{ tooldata.get_status_label_borrower }} </span>
+                        {% else %}
+                            <span class="label {{ tooldata.get_label_type_borrower }}"> Available starting {{ tooldata.get_status_label_borrower }} </span>
+                        {% endif %}
                     {% endif %}
                 {% elif tooldata.status == 'D' %}
                     <span class="label label-danger"> Deactivated </span>
@@ -59,6 +63,7 @@
                             {% elif tooldata.location == 'H' and request.user == tooldata.owner %}
                                 <button type="submit" class="btn btn-warning">Acknowledge Return</button>
                             {% endif %}
+
                             {% if tooldata.location == 'S' %}
                                 <a href="/tool/{{ tooldata.id }}/borrow" class="btn btn-primary">Borrow Tool</a>
                                 {% if tooldata.owner == request.user or tooldata.shed.owner == request.user %}

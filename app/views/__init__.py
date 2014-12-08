@@ -49,7 +49,7 @@ def home(request):
                 iter_reservation.diff = delta.days
                 final_list.append(iter_reservation)
 
-        coming = Reservation.objects.filter(Q(status='AC') | Q(status='O'), tool__owner=request.user)
+        coming = Reservation.objects.filter(Q(status='AC') | Q(status='O'), tool__owner=request.user).exclude(tool__location="S")
         today1 = datetime.date.today()
         final_list1 = list()
 
@@ -114,24 +114,30 @@ def presentstatistics(request):
         tool__owner__address__zip__startswith=user.address.zip).values('tool').distinct().annotate(
         total=Count('tool')).order_by('-total')
     popular_tool_list = list()[:toolsToShow]
+    count = 0
     for iter_tool in temp_list:
-        popular_tool_list.append(Tool.objects.filter(id=iter_tool['tool']).filter().get())
+        count += 1
+        popular_tool_list.append((count, Tool.objects.filter(id=iter_tool['tool']).filter().get()))
 
     borrowersToShow = 10
     temp2_list = Reservation.objects.filter(
         user__address__zip__startswith=user.address.zip).values('user').distinct().annotate(
         total=Count('user')).order_by('-total')
     popular_borrower_list = list()[:borrowersToShow]
+    count = 0
     for iter_tool in temp2_list:
-        popular_borrower_list.append(User.objects.filter(id=iter_tool['user']).get())
+        count += 1
+        popular_borrower_list.append((count, User.objects.filter(id=iter_tool['user']).get()))
 
     lendersToShow = 10
     temp3_list = Tool.objects.filter(
         owner__address__zip__startswith=user.address.zip).values('owner').distinct().annotate(
         total=Count('owner')).order_by('-total')
     popular_lender_list = list()[:lendersToShow]
+    count = 0
     for iter_tool in temp3_list:
-        popular_lender_list.append(User.objects.filter(id=iter_tool['owner']).get())
+        count += 1
+        popular_lender_list.append((count, User.objects.filter(id=iter_tool['owner']).get()))
 
         # temp3_list = Reservation.objects.values('tool').distinct().annotate(total=Count('tool')).order_by('-total')
         # popular_lender_list = list()
@@ -309,7 +315,7 @@ def borrow(request, tool_id):
                 messages.success(request, 'A request was successfully created. You will receive an email when the '
                                           'owner of the tool takes an action on your request.')
 
-            return redirect(reverse_lazy('borrow', kwargs={'tool_id': tool_id}))
+            return redirect(reverse_lazy('toolManagement:viewTool', kwargs={'tool_id': tool_id}))
         else:
             return render(request, 'borrow.html', RequestContext(request, {'form': form}))
     else:

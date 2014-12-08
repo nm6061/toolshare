@@ -6,97 +6,73 @@
 
 {% block auth-content %}
     <h1 class="page-header">Community Statistics</h1>
-        <div class="container">
-            <div class="row">
-                 <div class="col-lg-4">
-                     {% if reservations %}
-            <h2 class="sub-header">Popular Tools</h2>
-
-
-            <table class="table table-striped">
-                <thead>
-
-                <tr>
-                    <th>Tool Name</th>
-
-
-                </tr>
-                </thead>
-
-                <tbody>
-                {% for tool in reservations %}
-                <tr>
-                    <td>{{ tool.name }}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4" style="padding: 0px 30px;">
+                {% if reservations %}
+                    <h3>Most Popular Tools</h3>
+                    <div class="spacer-15"></div>
+                    <table class="table table-striped">
+                        <tbody>
+                        {% for tool in reservations %}
+                            <tr>
+                                <td align="right" style="width: 10px">{{ tool.0 }}.</td>
+                                <td>{{ tool.1.name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 {% else %}
-            <div class="alert alert-info" role="alert">
-                There are no popular tools available in your sharezone .
+                    <div class="alert alert-info" role="alert">
+                        There is no popular tool data to show for your community.
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
-                </div>
 
-             <div class="col-lg-4">
-                 {% if borrower_list %}
-            <h2 class="sub-header">Active Borrowers</h2>
-            <table class="table table-striped">
-               <thead>
-
-                <tr>
-                    <th>Borrower Name</th>
-
-
-                </tr>
-                </thead>
-                 <tbody>
-                {% for u1 in borrower_list %}
-                <tr>
-                    <td>{{ u1.first_name }}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-
-                
-            </table>
-                 {% else %}
-            <div class="alert alert-info" role="alert">
-                There are no active borrowers in your sharezone .
+            <div class="col-lg-4" style="padding: 0px 30px;">
+                {% if borrower_list %}
+                    <h3>Most Active Borrowers</h3>
+                    <div class="spacer-15"></div>
+                    <table class="table table-striped">
+                        <tbody>
+                        {% for u1 in borrower_list %}
+                            <tr>
+                                <td align="right" style="width: 10px">{{ u1.0 }}.</td>
+                                <td>{{ u1.1.first_name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        There are no active borrowers in your community.
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
-             </div>
 
-             <div class="col-lg-4">
-                 {% if lender_list %}
-            <h2 class="sub-header">Active Lenders</h2>
-            <table class="table table-striped">
-                <thead>
-
-                <tr>
-                    <th>Lender Name</th>
-
-
-                </tr>
-                </thead>
-
-                <tbody>
-                {% for u1 in lender_list %}
-                <tr>
-                    <td>{{ u1.first_name }}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-                 {% else %}
-            <div class="alert alert-info" role="alert">
-                There are no active lenders in your sharezone .
+            <div class="col-lg-4" style="padding: 0px 30px;">
+                {% if lender_list %}
+                    <h3>Most Active Lenders</h3>
+                    <div class="spacer-15"></div>
+                    <table class="table table-striped">
+                        <tbody>
+                        {% for u1 in lender_list %}
+                            <tr>
+                                <td align="right" style="width: 10px">{{ u1.0 }}.</td>
+                                <td>{{ u1.1.first_name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        There are no active lenders in your community.
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
-                </div>
 
-            </div>
         </div>
+    </div>
     </div>
 {% endblock %}
 

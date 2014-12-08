@@ -83,12 +83,16 @@
     <div class="tool_details_left">
         <div class="tool_details_status">
             {% if tool.status == 'A' %}
-                {% if tool.get_days_until_available == 0 %}
-                    <span class="label label-success"> Tool Active </span>
-                {% elif tool.get_days_until_available == 1 %}
-                    <span class="label label-warning"> Tool expected back tomorrow </span>
-                {% elif tool.get_days_until_available > 1 %}
-                    <span class="label label-warning"> Expected back on {{ tool.get_next_available_date }} </span>
+                {% if tool.get_status_label_owner == 'Overdue' %}
+                    <span class="label label-danger"> Tool is overdue </span>
+                {% else %}
+                    {% if tool.get_days_until_available == 0 %}
+                        <span class="label label-success"> Tool Active </span>
+                    {% elif tool.get_days_until_available == 1 %}
+                        <span class="label label-warning"> Tool expected back tomorrow </span>
+                    {% elif tool.get_days_until_available > 1 %}
+                        <span class="label label-warning"> Expected back before {{ tool.get_next_available_date }} </span>
+                    {% endif %}
                 {% endif %}
             {% elif tool.status == 'D' %}
                 <span class="label label-danger">Deactivated</span>
@@ -231,14 +235,14 @@
                                 <input type="radio" name="locRadio" value="homeRadio" id="homeRadio" checked="checked"><label for ="homeRadio"> Home </label><br>
                                 <div style="pointer-events: none; color: gray">
                                     <input type="radio" name="locRadio" value="shedRadio" id="shedRadio"><label for ="shedRadio"> Shed </label>
-                                    <p>Currently, there are no sheds in your share zone.</p>
+                                    <p>Currently, there are no sheds in your community.</p>
                                 </div>
                                 <div class="spacer-20"></div>
                             {% endif %}
 
                             <label>Tool pickup arrangement</label>
                             <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="right"
-                                    title="How would you like to hand off the tool to a borrower?">
+                                    title="Tell the borrower how to get your tool. (Where, when, how)">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                             </button>
                             <div class="{% if updateform.pickupArrangement.errors %} has-error{% endif %}">
@@ -283,7 +287,7 @@
                             {% else %}
                                 <div class="modal-body">
                                     <p>Are you sure you want to deactivate this tool?</p>
-                                    <p>Once deactivated, other users can no longer search for it. However, it will still remain in your toolbox.</p>
+                                    <p>Once deactivated, other users can no longer see it when browsing for tools. However, it will still remain in your toolbox.</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

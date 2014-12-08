@@ -6,3 +6,4 @@ pilkit==1.1.12
 six==1.8.0
 sendgrid==1.1.2
 pytz==2014.10
+uwsgi

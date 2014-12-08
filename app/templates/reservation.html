@@ -35,7 +35,7 @@
                                     {% elif reservation.status == 'A' %}
                                         <form action="{% url 'abc' reservation.pk %}" method="POST">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-primary">Cancel</button>
+                                            <button type="submit" class="btn btn-primary" style="width: 81px;">Cancel</button>
                                         </form>
                                     {% endif %}
                                 </td>
