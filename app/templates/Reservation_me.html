@@ -21,7 +21,7 @@
                 {% for reservation in reservations %}
                     <tr>
                         <td class="vert-align">{{ reservation.tool.name }}</td>
-                        <td class="vert-align">{{ reservation.tool.owner }}</td>
+                        <td class="vert-align">{{ reservation.tool.owner.get_full_name }}</td>
                         <td class="vert-align">{{ reservation.from_date }}</td>
                         <td class="vert-align">{{ reservation.to_date }}</td>
                         <td class="vert-align {% if reservation.status == 'A' %}success{% else %}info{% endif %}">
