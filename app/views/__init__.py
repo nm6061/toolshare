@@ -49,7 +49,7 @@ def home(request):
                 iter_reservation.diff = delta.days
                 final_list.append(iter_reservation)
 
-        coming = Reservation.objects.filter(Q(status='AC') | Q(status='O'), tool__owner=request.user)
+        coming = Reservation.objects.filter(Q(status='AC') | Q(status='O'), tool__owner=request.user).exclude(tool__location="S")
         today1 = datetime.date.today()
         final_list1 = list()
 
