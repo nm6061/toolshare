@@ -206,7 +206,7 @@
         "pk": 4,
         "fields": {
             "name": "Hammer 2",
-            "picture": "toolpics/hammer.jpg",
+            "picture": "toolpics/althammer.jpg",
             "description": "My trusty hammer",
             "status": "A",
             "category": "HA",
@@ -281,7 +281,7 @@
         "pk": 9,
         "fields": {
             "name": "Shovel 2",
-            "picture": "toolpics/shovel.jpg",
+            "picture": "toolpics/altshovel.jpg",
             "description": "Now I ain't saying she a gold digger. But she ain't diggin with no trowel.",
             "status": "A",
             "category": "SH",
@@ -296,7 +296,7 @@
         "pk": 10,
         "fields": {
             "name": "Wrench 2",
-            "picture": "toolpics/wrench.jpg",
+            "picture": "toolpics/altwrench.jpg",
             "description": "If you can dodge this wrench, you can dodge dodgeballs.",
             "status": "D",
             "category": "WR",
@@ -326,7 +326,7 @@
         "pk": 12,
         "fields": {
             "name": "Lawn Mower 2",
-            "picture": "toolpics/lawn mower.jpg",
+            "picture": "toolpics/altmower.jpg",
             "description": "It cuts grass.",
             "status": "A",
             "category": "LM",
@@ -341,7 +341,7 @@
         "pk": 13,
         "fields": {
             "name": "Sissor 2",
-            "picture": "toolpics/scissor.jpg",
+            "picture": "toolpics/altscissor.jpg",
             "description": "Great for arts and crafts!",
             "status": "A",
             "category": "SC",
@@ -386,7 +386,7 @@
         "pk": 16,
         "fields": {
             "name": "Hammer 4",
-            "picture": "toolpics/hammer.jpg",
+            "picture": "toolpics/althammer.jpg",
             "description": "It's more a mace than a hammer really.",
             "status": "A",
             "category": "HA",
@@ -431,7 +431,7 @@
         "pk": 19,
         "fields": {
             "name": "Shovel 4",
-            "picture": "toolpics/shovel.jpg",
+            "picture": "toolpics/altshovel.jpg",
             "description": "Retired shovel from my prospecting days.",
             "status": "A",
             "category": "SH",
@@ -446,7 +446,7 @@
         "pk": 20,
         "fields": {
             "name": "Wrench 4",
-            "picture": "toolpics/wrench.jpg",
+            "picture": "toolpics/altwrench.jpg",
             "description": "This wrench was given to me by Tony Stark.",
             "status": "A",
             "category": "WR",
@@ -476,7 +476,7 @@
         "pk": 22,
         "fields": {
             "name": "Lawn Mower 4",
-            "picture": "toolpics/lawn mower.jpg",
+            "picture": "toolpics/altmower.jpg",
             "description": "Cuts grass in no time",
             "status": "A",
             "category": "LM",
@@ -536,7 +536,7 @@
         "pk": 26,
         "fields": {
             "name": "Shovel 6",
-            "picture": "toolpics/shovel.jpg",
+            "picture": "toolpics/altshovel.jpg",
             "description": "Good for digging holes (based on personal experience)",
             "status": "A",
             "category": "SH",
@@ -596,7 +596,7 @@
         "pk": 30,
         "fields": {
             "name": "Test Tool At Home",
-            "picture": "toolpics/lawn mower.jpg",
+            "picture": "toolpics/altmower.jpg",
             "description": "John the shed coordinator should not be able to update this tool",
             "status": "A",
             "category": "LM",
