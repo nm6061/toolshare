@@ -11,7 +11,7 @@ Developer Instructions
 1. Clone the repository `git clone git@github.com:nm6061/toolshare.git`
 1. Install Python Virtual Environment `pip install virtualenv`
 1. Create a virtual environment `virtualenv venv`
-1. Activate the virtual environment `\venv\Scripts\active` on Windows and `source venv/bin/activate` on MAC/UNIX
+1. Activate the virtual environment `\venv\Scripts\activate` on Windows and `source venv/bin/activate` on MAC/UNIX
 1. Install the dependencies `pip install -r requirements.txt`
 1. Create the SQLite database file `python manage.py syncdb`
 1. Start the development server `python manage.py runserver`
@@ -20,7 +20,7 @@ Developer Instructions
 Note on Testing
 ===============
 
-The application sends out emails to the users. Please use valid email addresses when testing the application. 
+The application sends out emails to the users on several occasions. Please use valid email addresses when signing up new users.
 
 Initial Data
 ============
