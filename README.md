@@ -3,16 +3,24 @@
 What is ToolShare?
 ==================
 
-Well ToolShare is a community-oriented application that facilitates sharing tools between members of a community in a simple, easy-to-use way.
+ToolShare is a community-oriented application that facilitates sharing tools between members of a community in a simple, easy-to-use way.
 
 Developer Instructions
 ======================
 
 1. Clone the repository `git clone git@github.com:nm6061/toolshare.git`
-2. Install the dependencies `pip install -r requirements.txt`
-2. Create the SQLite database file `python manage.py syncdb`
-3. Start the development server `python manage.py runserver`
-4. Navigate to [http://localhost:8000/](http://localhost:8000/)
+1. Install Python Virtual Environment `pip install virtualenv`
+1. Create a virtual environment `virtualenv venv`
+1. Activate the virtual environment `\venv\Scripts\active` on Windows and `source venv/bin/activate` on MAC/UNIX
+1. Install the dependencies `pip install -r requirements.txt`
+1. Create the SQLite database file `python manage.py syncdb`
+1. Start the development server `python manage.py runserver`
+1. Navigate to [http://localhost:8000/](http://localhost:8000/)
+
+Note on Testing
+===============
+
+The application sends out emails to the users. Please use valid email addresses when testing the application. 
 
 Initial Data
 ============
@@ -25,3 +33,6 @@ Bundled with the source is a database fixtures file, app/fixtures/initial_data.j
 | john.smith@toolshare.com | john     |
 | cameron@toolshare.com    | cameron  |
 | rob.chase@toolshare.com  | rob      |
+| tester@toolshare.com     | test     |
+
+\* These email addresses are not valid and emails sent to these addresses will bounce. However, this will not cause the application to malfunction.
